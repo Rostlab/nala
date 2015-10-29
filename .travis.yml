@@ -14,7 +14,7 @@ after_success:
   - codecov
 script:
   - "nosetests -a \"!slow\""
-  - "python demo_predict.py -c ./crfsuite-0.12/bin/ -d ./resources/example.txt"
+  - "python nala.py -c ./crfsuite-0.12/bin/ -d ./resources/example.txt"
 branches:
   only:
     - master
