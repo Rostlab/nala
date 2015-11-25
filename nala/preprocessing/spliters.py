@@ -1,7 +1,6 @@
 import abc
 from nltk.tokenize import sent_tokenize
 
-
 class Splitter:
     """
     Abstract class for splitting the raw text (or tokens if Tokenizer was called first)
@@ -25,7 +24,7 @@ class NLTKSplitter(Splitter):
     Simple implementation using the function sent_tokenize
     provided by NLTK.
 
-    Implements the abstract class FeatureGenerator.
+    Implements the abstract class Splitter.
     """
 
     def split(self, dataset):

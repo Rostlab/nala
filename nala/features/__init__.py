@@ -17,6 +17,22 @@ class FeatureGenerator:
         return
 
 
+def eval_feature(feature_dict, feature_name, evaluator, value=1, *args):
+    """
+    Calls the provided callable with the provided arguments which evaluates to True or False.
+    If the evaluation results in True add a new feature to the features dictionary with the provided feature name.
+
+    :param feature_dict: the target feature dictionary where the feature should be added
+    :param feature_name: the feature name to be used
+    :param evaluator: any callable that evaluates to True or False
+    :param args: arguments needed for the callable
+    :type feature_dict: nala.structures.data.FeatureDictionary
+    :type feature_name: str
+    """
+    if evaluator(*args):
+        feature_dict[feature_name] = 1
+
+
 def eval_binary_feature(feature_dict, feature_name, evaluator, *args):
     """
     Calls the provided callable with the provided arguments which evaluates to True or False.

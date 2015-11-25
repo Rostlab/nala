@@ -9,7 +9,7 @@ Usage: ::
 if __name__ == '__main__':
     import nltk
 
-    CORPORA = ['punkt']
+    CORPORA = ['punkt', 'stopwords']
 
     for corpus in CORPORA:
         nltk.download(corpus)
