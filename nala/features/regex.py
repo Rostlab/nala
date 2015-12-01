@@ -33,5 +33,4 @@ class RegexNLFeatureGenerator(FeatureGenerator):
                         for start, end in match:
                             if start <= token.start < token.end <= end:
                                 token.features['nl_deletion'] = 1
-                                print(token)
                                 break
