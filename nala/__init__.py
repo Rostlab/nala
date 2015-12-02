@@ -1,3 +1,8 @@
+"""
+nala is the root packages and contains an init-file with a configparser.
+When installing nala, there is the possibility of downloading our corpus via download_corpora.py.
+Otherwise all the subpackages contain all nec- essary classes to execute the whole pipeline.
+"""
 import configparser
 import pkg_resources
 import os
