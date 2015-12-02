@@ -21,7 +21,7 @@ class CRFSuiteMutationTagger(Tagger):
 
     def tag(self, dataset):
         """
-        :type dataset: nala.structures.data.Dataset
+        :type dataset: nalaf.structures.data.Dataset
         """
         self.crf_suite.create_input_file(dataset, 'predict')
         self.crf_suite.tag('-m {} -i predict > output.txt'.format(self.model_file))
@@ -41,7 +41,7 @@ class GNormPlusGeneTagger(Tagger):
 
     def tag(self, dataset, annotated=False, uniprot=False, process_only_abstract=True):
         """
-        :type dataset: nala.structures.data.Dataset
+        :type dataset: nalaf.structures.data.Dataset
         :param annotated: if True then saved into annotations otherwise into predicted_annotations
         """
         with GNormPlus() as gnorm:

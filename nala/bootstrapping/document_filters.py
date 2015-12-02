@@ -33,7 +33,7 @@ class DocumentFilter:
     @abc.abstractmethod
     def filter(self, documents):
         """
-        :type documents: collections.Iterable[nala.structures.data.Document]
+        :type documents: collections.Iterable[nalaf.structures.data.Document]
         """
         pass
 
@@ -51,7 +51,7 @@ class KeywordsDocumentFilter(DocumentFilter):
 
     def filter(self, documents):
         """
-        :type documents: collections.Iterable[(str, nala.structures.data.Document)]
+        :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
         for pmid, doc in documents:
             # if any part of the document contains any of the keywords
@@ -72,7 +72,7 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
 
     def filter(self, documents):
         """
-        :type documents: collections.Iterable[(str, nala.structures.data.Document)]
+        :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
         for pmid, doc in documents:
             # if we can't find it in the cache
@@ -120,7 +120,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
 
     def filter(self, documents, min_found=10):
         """
-        :type documents: collections.Iterable[(str, nala.structures.data.Document)]
+        :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
 
         _progress = 1
