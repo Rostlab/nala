@@ -1,6 +1,6 @@
 import configparser
 from unittest import TestCase
-from nala.learning.taggers import GNormPlusGeneTagger, StubSameSentenceRelationExtractor
+# from nala.learning.taggers import GNormPlusGeneTagger, StubSameSentenceRelationExtractor
 from nala.bootstrapping.iteration import Iteration
 from nose.plugins.attrib import attr
 import os
@@ -23,8 +23,8 @@ class TestIteration(TestCase):
 
 
         # iteration = Iteration(crfsuite_path=os.path.abspath('crfsuite'), iteration_nr=2)
-        iteration = Iteration(crfsuite_path=os.path.abspath('crfsuite'), iteration_nr=3)
-        # iteration.before_annotation(nr_new_docs=10)
+        iteration = Iteration(crfsuite_path=os.path.abspath('/usr/local/Cellar/crfsuite/0.12'), iteration_nr=6)
+        iteration.before_annotation(nr_new_docs=10)
         # iteration.after_annotation()
 
         # iteration.cross_validation(5)
@@ -42,10 +42,11 @@ class TestIteration(TestCase):
         pass
 
     def test_init(self):
-        iteration = Iteration(iteration_nr=1, crfsuite_path=r'crfsuite')
+        print("rest for the wicked")
+        # iteration = Iteration(iteration_nr=1, crfsuite_path=r'crfsuite')
         # self.assertEqual(iteration.number, 2)
-        iteration.manual_review_import()
+        # iteration.manual_review_import()
         # print(iteration.reviewed)
-        GNormPlusGeneTagger().tag(iteration.reviewed, uniprot=True)
-        StubSameSentenceRelationExtractor().tag(iteration.reviewed)
-        TagTogFormat(iteration.reviewed, to_save_to='flowers').export(0.8)
+        # GNormPlusGeneTagger().tag(iteration.reviewed, uniprot=True)
+        # StubSameSentenceRelationExtractor().tag(iteration.reviewed)
+        # TagTogFormat(iteration.reviewed, to_save_to='flowers').export(0.8)
