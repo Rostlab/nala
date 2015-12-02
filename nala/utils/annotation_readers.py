@@ -105,7 +105,7 @@ class AnnJsonAnnotationReader(AnnotationReader):
                         if part_id not in ann_json['annotatable']['parts']:
                             part_ids_to_del.append(part_id)
                     for part_id in part_ids_to_del:
-                        del document[part_id]
+                        del document.parts[part_id]
 
                 except KeyError:
                     # TODO to be removed when external tagtog part_id is fixed, see issue #113
