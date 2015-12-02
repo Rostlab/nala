@@ -4,18 +4,17 @@ import json
 import re
 import time
 import pkg_resources
-from nala.learning.crfsuite import CRFSuite
+from nalaf.learning.crfsuite import CRFSuite
 from nala.learning.postprocessing import PostProcessing
 from nala.learning.taggers import CRFSuiteMutationTagger
-from nala import print_verbose
+from nalaf import print_verbose
 from nala.preprocessing.definers import InclusiveNLDefiner
 from nala.preprocessing.definers import ExclusiveNLDefiner
-from nala.preprocessing.spliters import NLTKSplitter
-from nala.structures.data import Dataset
-from nala.utils.cache import Cacheable
-from nala.utils.readers import TmVarReader
-from nala.utils.tagger import TmVarTagger
-from nala.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.preprocessing.spliters import NLTKSplitter
+from nalaf.structures.data import Dataset
+from nalaf.utils.cache import Cacheable
+from nalaf.utils.tagger import TmVarTagger
+from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 
 
 class DocumentFilter:

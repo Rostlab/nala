@@ -1,7 +1,7 @@
 import pkg_resources
 import csv
 import re
-from nala.structures.data import Entity
+from nalaf.structures.data import Entity
 from nala.utils import MUT_CLASS_ID
 
 

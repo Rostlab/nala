@@ -1,4 +1,4 @@
-from nala.features import FeatureGenerator
+from nalaf.features import FeatureGenerator
 import re
 
 

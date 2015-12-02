@@ -1,6 +1,6 @@
 import re
 
-from nala.features import FeatureGenerator
+from nalaf.features import FeatureGenerator
 
 
 class RegexNLFeatureGenerator(FeatureGenerator):

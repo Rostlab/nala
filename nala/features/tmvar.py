@@ -1,5 +1,5 @@
-from nala.features import FeatureGenerator
-from nala.features import eval_binary_feature
+from nalaf.features import FeatureGenerator
+from nalaf.features import eval_binary_feature
 import re
 
 

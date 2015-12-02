@@ -1,8 +1,8 @@
 from itertools import chain
 from xml.etree import ElementTree as ET
 import requests
-from nala.structures.data import Document, Part
-from nala.utils.cache import Cacheable
+from nalaf.structures.data import Document, Part
+from nalaf.utils.cache import Cacheable
 
 __author__ = 'Aleksandar'
 
