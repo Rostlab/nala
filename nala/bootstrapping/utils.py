@@ -113,27 +113,3 @@ class DownloadArticle(Cacheable):
             # yield the document but only if you found anything
             if len(doc.parts) > 0:
                 yield pmid, doc
-
-
-def generate_documents(n):
-    """
-    Generate a given number of documents for bootstrapping applying the default filters.
-
-    :param n: how many documents do you want
-    :type n: int
-    :returns: nala.structures.data.Dataset
-    """
-    from nala.structures.data import Dataset
-    from nala.structures.selection_pipelines import DocumentSelectorPipeline
-    from itertools import count
-    c = count(1)
-
-    dataset = Dataset()
-    with DocumentSelectorPipeline() as dsp:
-        for pmid, document in dsp.execute():
-            dataset.documents[pmid] = document
-            # if we have generated enough documents stop
-            if next(c) == n:
-                break
-
-    return dataset
