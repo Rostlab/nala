@@ -3,11 +3,11 @@ import os
 
 import pkg_resources
 
-from nala.utils.readers import TextFilesReader, PMIDReader
-from nala.utils.readers import StringReader
-from nala.utils.writers import ConsoleWriter, TagTogFormat, PubTatorFormat
-from nala.structures.dataset_pipelines import PrepareDatasetPipeline
-from nala.learning.crfsuite import CRFSuite
+from nalaf.utils.readers import TextFilesReader, PMIDReader
+from nalaf.utils.readers import StringReader
+from nalaf.utils.writers import ConsoleWriter, TagTogFormat, PubTatorFormat
+from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.learning.crfsuite import CRFSuite
 from nala.learning.taggers import CRFSuiteMutationTagger
 from nala.utils import MUT_CLASS_ID
 from nala.learning.taggers import GNormPlusGeneTagger
