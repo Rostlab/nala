@@ -185,14 +185,23 @@ class Iteration():
         dataset = Dataset()
         with DocumentSelectorPipeline(
                 pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                                      document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
-                                          binary_model=os.path.join(self.current_folder, 'bin_model'),
-                                          expected_max_results=nr), ManualDocumentFilter()]) as dsp:
+                                      document_filters=[KeywordsDocumentFilter(),
+                                          ManualDocumentFilter()]) as dsp:
             for pmid, document in dsp.execute():
                 dataset.documents[pmid] = document
                 # if we have generated enough documents stop
                 if next(c) == nr:
                     break
+        # with DocumentSelectorPipeline(
+        #         pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
+        #                               document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
+        #                                   binary_model=os.path.join(self.current_folder, 'bin_model'),
+        #                                   expected_max_results=nr), ManualDocumentFilter()]) as dsp:
+        #     for pmid, document in dsp.execute():
+        #         dataset.documents[pmid] = document
+        #         # if we have generated enough documents stop
+        #         if next(c) == nr:
+        #             break
         self.candidates = dataset
 
     def tagging(self, threshold_val=THRESHOLD_VALUE):
