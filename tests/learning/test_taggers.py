@@ -32,7 +32,7 @@ class TestGNormPlusGeneTagger(unittest.TestCase):
         # todo question is that the proper way? with predicts_classes
         GNormPlusGeneTagger().tag(self.data, uniprot=True)
         # crfsuite = CRFSuite('crfsuite')
-        # CRFSuiteMutationTagger(['Mutation'], crf_suite=crfsuite).tag(self.data)
+        # CRFSuiteTagger(['Mutation'], crf_suite=crfsuite).tag(self.data)
         NLTKSplitter().split(self.data)
         TmVarTokenizer().tokenize(self.data)
         StubSameSentenceRelationExtractor().tag(self.data)

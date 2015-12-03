@@ -5,29 +5,6 @@ from nalaf.structures.data import Entity, Relation
 from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID, PRO_REL_MUT_CLASS_ID, ENTREZ_GENE_ID, UNIPROT_ID
 
 
-class CRFSuiteMutationTagger(Tagger):
-    """
-    Performs tagging with a binary model using CRFSuite
-
-    :type crf_suite: nala.learning.crfsuite.CRFSuite
-    """
-
-    def __init__(self, predicts_classes, crf_suite, model_file='default_model'):
-        super().__init__(predicts_classes)
-        self.crf_suite = crf_suite
-        """an instance of CRFSuite used to actually generate predictions"""
-        self.model_file = model_file
-        """path to the binary model used for generating predictions"""
-
-    def tag(self, dataset):
-        """
-        :type dataset: nalaf.structures.data.Dataset
-        """
-        self.crf_suite.create_input_file(dataset, 'predict')
-        self.crf_suite.tag('-m {} -i predict > output.txt'.format(self.model_file))
-        self.crf_suite.read_predictions(dataset)
-
-
 class GNormPlusGeneTagger(Tagger):
     """
     Performs tagging for genes with GNormPlus.

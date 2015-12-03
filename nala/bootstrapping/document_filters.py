@@ -6,7 +6,7 @@ import time
 import pkg_resources
 from nalaf.learning.crfsuite import CRFSuite
 from nala.learning.postprocessing import PostProcessing
-from nala.learning.taggers import CRFSuiteMutationTagger
+from nalaf.learning.taggers import CRFSuiteTagger
 from nalaf import print_verbose
 from nala.preprocessing.definers import InclusiveNLDefiner
 from nala.preprocessing.definers import ExclusiveNLDefiner
@@ -141,7 +141,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         last_found = 0
         if self.crfsuite_path:
             crfsuite = CRFSuite(self.crfsuite_path)
-            crfsuitetagger = CRFSuiteMutationTagger(['e_2'], crf_suite=crfsuite, model_file=self.location_binary_model)
+            crfsuitetagger = CRFSuiteTagger(['e_2'], crf_suite=crfsuite, model_file=self.location_binary_model)
         for pmid, doc in documents:
             # if any part of the document contains any of the keywords
             # yield that document

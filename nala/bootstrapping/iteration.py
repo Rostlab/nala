@@ -17,7 +17,7 @@ from nalaf.preprocessing.labelers import BIEOLabeler
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nalaf.utils.writers import TagTogFormat
 from nala.preprocessing.definers import ExclusiveNLDefiner
-from nala.learning.taggers import CRFSuiteMutationTagger
+from nalaf.learning.taggers import CRFSuiteTagger
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
 from nalaf.structures.data import Entity
 from nala.learning.taggers import GNormPlusGeneTagger
@@ -175,7 +175,7 @@ class Iteration:
         """
         print_verbose("\n\n\n======DocSelection======\n\n\n")
         from nalaf.structures.data import Dataset
-        from nalaf.structures.selection_pipelines import DocumentSelectorPipeline
+        from nala.structures.selection_pipelines import DocumentSelectorPipeline
         from itertools import count
         c = count(1)
 
@@ -205,7 +205,7 @@ class Iteration:
         # tagging
         print_verbose("\n\n\n======Tagging======\n\n\n")
         PrepareDatasetPipeline().execute(self.candidates)
-        CRFSuiteMutationTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
         PostProcessing().process(self.candidates)
 
         GNormPlusGeneTagger().tag(self.candidates)
