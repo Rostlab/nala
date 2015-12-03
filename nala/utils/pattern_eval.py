@@ -2,7 +2,7 @@ import json
 import re
 import time
 from nala.preprocessing.definers import ExclusiveNLDefiner, InclusiveNLDefiner
-from nala.utils.readers import TmVarReader
+from nalaf.utils.readers import TmVarReader
 
 
 def pattern_stats(dataset):

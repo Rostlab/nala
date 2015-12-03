@@ -5,7 +5,7 @@ from nala.bootstrapping.iteration import Iteration
 from nose.plugins.attrib import attr
 import os
 from nala.utils import PRO_REL_MUT_CLASS_ID, UNIPROT_ID, ENTREZ_GENE_ID
-from nala.utils.writers import TagTogFormat
+from nalaf.utils.writers import TagTogFormat
 import argparse
 
 

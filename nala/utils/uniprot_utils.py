@@ -1,6 +1,6 @@
-from itertools import chain
 import requests
-from nala.utils.cache import Cacheable
+from nalaf.utils.cache import Cacheable
+
 
 class Uniprot(Cacheable):
     """

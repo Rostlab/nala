@@ -8,26 +8,23 @@ import shutil
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
 from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
-from nala import print_verbose
-from nala.learning.crfsuite import CRFSuite
-from nala.structures.dataset_pipelines import PrepareDatasetPipeline
-from nala.utils.annotation_readers import AnnJsonAnnotationReader
-from nala.utils.cache import Cacheable
-from nala.utils.readers import HTMLReader
-from nala.preprocessing.labelers import BIEOLabeler
-from nala.learning.evaluators import MentionLevelEvaluator
-from nala.bootstrapping.utils import generate_documents
-from nala.utils.writers import TagTogFormat
+from nalaf import print_verbose
+from nalaf.learning.crfsuite import CRFSuite
+from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
+from nalaf.utils.readers import HTMLReader
+from nalaf.preprocessing.labelers import BIEOLabeler
+from nalaf.learning.evaluators import MentionLevelEvaluator
+from nalaf.utils.writers import TagTogFormat
 from nala.preprocessing.definers import ExclusiveNLDefiner
-import pkg_resources
-from nala.learning.taggers import CRFSuiteMutationTagger
+from nalaf.learning.taggers import CRFSuiteTagger
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
-from nala.structures.data import Entity
+from nalaf.structures.data import Entity
 from nala.learning.taggers import GNormPlusGeneTagger
 import csv
 
 
-class Iteration():
+class Iteration:
     """
     This is the class to perform one iteration of bootstrapping. There are various options.
     """
@@ -177,7 +174,7 @@ class Iteration():
         :param nr: amount of new documents wanted
         """
         print_verbose("\n\n\n======DocSelection======\n\n\n")
-        from nala.structures.data import Dataset
+        from nalaf.structures.data import Dataset
         from nala.structures.selection_pipelines import DocumentSelectorPipeline
         from itertools import count
         c = count(1)
@@ -208,7 +205,7 @@ class Iteration():
         # tagging
         print_verbose("\n\n\n======Tagging======\n\n\n")
         PrepareDatasetPipeline().execute(self.candidates)
-        CRFSuiteMutationTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
         PostProcessing().process(self.candidates)
 
         GNormPlusGeneTagger().tag(self.candidates)
