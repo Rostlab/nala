@@ -6,6 +6,7 @@ python:
 install:
   - "pip install ."
 before_script:
+  - "pip install git+https://github.com/Rostlab/nalaf.git"
   - "python -m nalaf.download_corpora"
   - "curl -L https://github.com/downloads/chokkan/crfsuite/crfsuite-0.12-x86_64.tar.gz -o crfsuite.tar.gz"
   - "tar -xvf crfsuite.tar.gz"
