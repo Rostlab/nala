@@ -1,7 +1,8 @@
 from nala.bootstrapping.document_filters import DocumentFilter, KeywordsDocumentFilter, HighRecallRegexDocumentFilter
 from nala.bootstrapping.pmid_filters import PMIDFilter, AlreadyConsideredPMIDFilter
-from nala.bootstrapping.utils import UniprotDocumentSelector, DownloadArticle
-from nala.utils.cache import Cacheable
+from nala.bootstrapping.utils import UniprotDocumentSelector
+from nalaf.utils.download import  DownloadArticle
+from nalaf.utils.cache import Cacheable
 
 __author__ = 'Aleksandar'
 
@@ -15,11 +16,11 @@ class DocumentSelectorPipeline:
         * Then it transforms the stream of pmids into a stream of documents
         * Finally applies a series of document filters
 
-    :type initial_document_selector: nala.bootstrapping.utils.UniprotDocumentSelector
-    :type article_downloader: nala.bootstrapping.utils.DownloadArticle
-    :type pmid_filters: collections.Iterable[nala.bootstrapping.pmid_filters.PMIDFilter]
+    :type initial_document_selector: nalaf.bootstrapping.utils.UniprotDocumentSelector
+    :type article_downloader: nalaf.bootstrapping.utils.DownloadArticle
+    :type pmid_filters: collections.Iterable[nalaf.bootstrapping.pmid_filters.PMIDFilter]
     :param pmid_filters: one or more generator modules responsible for filtering pmids
-    :type document_filters: collections.Iterable[nala.bootstrapping.document_filters.DocumentFilter]
+    :type document_filters: collections.Iterable[nalaf.bootstrapping.document_filters.DocumentFilter]
     :param document_filters: one or more generator modules responsible for filtering documents
     """
     def __init__(self, pmid_filters=None, document_filters=None):

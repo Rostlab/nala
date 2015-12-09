@@ -1,4 +1,4 @@
-from nala.features import FeatureGenerator
+from nalaf.features import FeatureGenerator
 import re
 
 
@@ -36,7 +36,7 @@ class SemiStandardFeatureGenerator(FeatureGenerator):
 
     def generate(self, dataset):
         """
-        :type dataset: nala.structures.data.Dataset
+        :type dataset: nalaf.structures.data.Dataset
         """
         for part in dataset.parts():
             for sentence in part.sentences:

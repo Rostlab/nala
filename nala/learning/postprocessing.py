@@ -1,7 +1,7 @@
 import pkg_resources
 import csv
 import re
-from nala.structures.data import Entity
+from nalaf.structures.data import Entity
 from nala.utils import MUT_CLASS_ID
 
 
@@ -101,7 +101,7 @@ class PostProcessing:
 
 def construct_regex_patterns_from_predictions(dataset):
     """
-    :type dataset: nala.structures.data.Dataset
+    :type dataset: nalaf.structures.data.Dataset
     """
     regex_patterns = []
     for ann in dataset.predicted_annotations():

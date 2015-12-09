@@ -1,6 +1,6 @@
 import re
 
-from nala.features import FeatureGenerator
+from nalaf.features import FeatureGenerator
 
 
 class RegexNLFeatureGenerator(FeatureGenerator):
@@ -17,7 +17,7 @@ class RegexNLFeatureGenerator(FeatureGenerator):
 
     def generate(self, dataset):
         """
-        :type dataset: nala.structures.data.Dataset
+        :type dataset: nalaf.structures.data.Dataset
         """
         for part in dataset.parts():
             matches = {}

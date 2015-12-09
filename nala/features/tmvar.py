@@ -1,5 +1,5 @@
-from nala.features import FeatureGenerator
-from nala.features import eval_binary_feature
+from nalaf.features import FeatureGenerator
+from nalaf.features import eval_binary_feature
 import re
 
 
@@ -61,7 +61,7 @@ class TmVarFeatureGenerator(FeatureGenerator):
 
     def generate(self, dataset):
         """
-        :type dataset: nala.structures.data.Dataset
+        :type dataset: nalaf.structures.data.Dataset
         """
         last_token_str = ""
         for token in dataset.tokens():
@@ -271,7 +271,7 @@ class TmVarDictionaryFeatureGenerator(FeatureGenerator):
 
     def generate(self, dataset):
         """
-        :type dataset: nala.structures.data.Dataset
+        :type dataset: nalaf.structures.data.Dataset
         """
         for part in dataset.parts():
             matches = {}
