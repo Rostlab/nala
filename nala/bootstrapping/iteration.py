@@ -285,6 +285,10 @@ class Iteration():
         # optional group according to subclass (different sizes)
 
     def cross_validation(self, split):
+        """
+        does k fold cross validation with split being k
+        :param split: int
+        """
         base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
         data = HTMLReader(os.path.join(base_folder, 'html')).read()
         AnnJsonAnnotationReader(os.path.join(base_folder, 'annjson')).annotate(data)
