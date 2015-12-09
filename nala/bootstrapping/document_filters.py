@@ -4,18 +4,17 @@ import json
 import re
 import time
 import pkg_resources
-from nala.learning.crfsuite import CRFSuite
+from nalaf.learning.crfsuite import CRFSuite
 from nala.learning.postprocessing import PostProcessing
-from nala.learning.taggers import CRFSuiteMutationTagger
-from nala import print_verbose
+from nalaf.learning.taggers import CRFSuiteTagger
+from nalaf import print_verbose
 from nala.preprocessing.definers import InclusiveNLDefiner
 from nala.preprocessing.definers import ExclusiveNLDefiner
-from nala.preprocessing.spliters import NLTKSplitter
-from nala.structures.data import Dataset
-from nala.utils.cache import Cacheable
-from nala.utils.readers import TmVarReader
-from nala.utils.tagger import TmVarTagger
-from nala.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.preprocessing.spliters import NLTKSplitter
+from nalaf.structures.data import Dataset
+from nalaf.utils.cache import Cacheable
+from nalaf.utils.tagger import TmVarTagger
+from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 
 
 class DocumentFilter:
@@ -34,7 +33,7 @@ class DocumentFilter:
     @abc.abstractmethod
     def filter(self, documents):
         """
-        :type documents: collections.Iterable[nala.structures.data.Document]
+        :type documents: collections.Iterable[nalaf.structures.data.Document]
         """
         pass
 
@@ -52,7 +51,7 @@ class KeywordsDocumentFilter(DocumentFilter):
 
     def filter(self, documents):
         """
-        :type documents: collections.Iterable[(str, nala.structures.data.Document)]
+        :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
         for pmid, doc in documents:
             # if any part of the document contains any of the keywords
@@ -73,7 +72,7 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
 
     def filter(self, documents):
         """
-        :type documents: collections.Iterable[(str, nala.structures.data.Document)]
+        :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
         for pmid, doc in documents:
             # if we can't find it in the cache
@@ -121,7 +120,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
 
     def filter(self, documents, min_found=10):
         """
-        :type documents: collections.Iterable[(str, nala.structures.data.Document)]
+        :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
 
         _progress = 1
@@ -142,7 +141,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         last_found = 0
         if self.crfsuite_path:
             crfsuite = CRFSuite(self.crfsuite_path)
-            crfsuitetagger = CRFSuiteMutationTagger(['e_2'], crf_suite=crfsuite, model_file=self.location_binary_model)
+            crfsuitetagger = CRFSuiteTagger(['e_2'], crf_suite=crfsuite, model_file=self.location_binary_model)
         for pmid, doc in documents:
             # if any part of the document contains any of the keywords
             # yield that document

@@ -1,8 +1,8 @@
 from itertools import chain
 from xml.etree import ElementTree as ET
 import requests
-from nala.structures.data import Document, Part
-from nala.utils.cache import Cacheable
+from nalaf.structures.data import Document, Part
+from nalaf.utils.cache import Cacheable
 
 __author__ = 'Aleksandar'
 
@@ -67,73 +67,3 @@ class UniprotDocumentSelector(Cacheable):
         for uniprot_id in self._get_uniprot_ids():
             for pubmed_id in self._get_pubmed_ids_for_protein(uniprot_id):
                 yield pubmed_id
-
-
-class DownloadArticle(Cacheable):
-    """
-    A utility generator that for a given iterable of PMIDs generates Document objects
-    created by downloading the articles associated with the pmid.
-    """
-
-    def __init__(self, one_part=False):
-        super().__init__()
-        self.one_part = one_part
-        """whether to put everything (title, abstract, etc.) under the same part joined with new line"""
-        self.pubmed_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
-        self.is_timed = False
-
-    def download(self, pmids):
-        for pmid in pmids:
-            if pmid in self.cache:
-                xml = ET.fromstring(self.cache[pmid])
-            else:
-                req = requests.get(self.pubmed_url, {'db': 'pubmed', 'retmode': 'xml', 'id': pmid})
-                text = req.text
-                xml = ET.fromstring(text)
-                self.cache[pmid] = text
-
-            doc = Document()
-
-            if self.one_part:
-                joined_text = '\n'.join(element.text for element in
-                                        chain(xml.findall('.//ArticleTitle'), xml.findall('.//AbstractText')))
-                doc.parts['title_and_abstract'] = Part(joined_text)
-            else:
-                # for now only include title and abstract
-                doc.parts['title'] = Part(xml.find('.//ArticleTitle').text)
-                abstract = []
-                for elem in xml.findall('.//AbstractText'):
-                    if 'Label' in elem.attrib:
-                        abstract.append('{}: {}'.format(elem.attrib['Label'], elem.text))
-                    else:
-                        abstract.append(elem.text)
-
-                doc.parts['abstract'] = Part(' '.join(abstract))
-
-            # yield the document but only if you found anything
-            if len(doc.parts) > 0:
-                yield pmid, doc
-
-
-def generate_documents(n):
-    """
-    Generate a given number of documents for bootstrapping applying the default filters.
-
-    :param n: how many documents do you want
-    :type n: int
-    :returns: nala.structures.data.Dataset
-    """
-    from nala.structures.data import Dataset
-    from nala.structures.selection_pipelines import DocumentSelectorPipeline
-    from itertools import count
-    c = count(1)
-
-    dataset = Dataset()
-    with DocumentSelectorPipeline() as dsp:
-        for pmid, document in dsp.execute():
-            dataset.documents[pmid] = document
-            # if we have generated enough documents stop
-            if next(c) == n:
-                break
-
-    return dataset
