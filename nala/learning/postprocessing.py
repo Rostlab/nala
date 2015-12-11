@@ -143,6 +143,20 @@ class PostProcessing:
                     ann.text += ')'
             except IndexError:
                 pass
+
+            # fix boundary add missing number after fsX
+            try:
+                if ann.text.endswith('fs') or ann.text.endswith('fsX'):
+                    tmp = end
+                    if not ann.text.endswith('X') and part.text[tmp] == 'X':
+                        ann.text += 'X'
+                        tmp += 1
+                    while part.text[tmp].isnumeric():
+                        ann.text += part.text[tmp]
+                        tmp += 1
+            except IndexError:
+                pass
+
         part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
                                       if index not in to_be_removed]
 
