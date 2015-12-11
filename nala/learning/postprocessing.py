@@ -111,7 +111,7 @@ class PostProcessing:
             # split multiple mentions
             if re.search(r' *(\band\b|,|\bor\b) *', ann.text):
                 to_be_removed.append(index)
-                split = re.split(r' *(\band|,|or\b) *', ann.text)
+                split = re.split(r' *(\band\b|,|\bor\b) *', ann.text)
                 if split[0]:
                     part.predicted_annotations.append(Entity(ann.class_id, ann.offset, split[0]))
                 if split[2]:
