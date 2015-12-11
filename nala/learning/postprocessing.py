@@ -6,7 +6,7 @@ from nala.utils import MUT_CLASS_ID
 
 
 class PostProcessing2:
-    def __init__(self):
+    def __init__(self, keep_silent=True):
         amino_acids = [
             'alanine', 'ala', 'arginine', 'arg', 'asparagine', 'asn', 'aspartic acid', 'aspartate', 'asp',
             'cysteine', 'cys', 'glutamine', 'gln', 'glutamic acid', 'glutamate', 'glu', 'glycine', 'gly',
@@ -35,24 +35,30 @@ class PostProcessing2:
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
             re.compile(r'\b(c\. *)?[ATCG] *([-+]|\d)\d+ *[ATCG]\b'),
             re.compile(r'\bc\. *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
-            re.compile(r'\b[ATCG](/|-|-*>|)[ATCG] *[-+]*[0-9]+\b'),
+            re.compile(r'\b[ATCG](/|-|-*>|→|)[ATCG] *[-+]*[0-9]+\b'),
             re.compile(r'\b[-+]*\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
-            re.compile(r'\b[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9ATCGU]+\b'),
+            re.compile(r'\b[^\x00-\x7F]?[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9ATCGU]+\b'),
             re.compile(r'\b[ATCG]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'\b(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup) *(\d+(b|bp|N|ntb|p|BP|B)|[ATCG]{2,})\b'),
             re.compile(r'\b[-+]?\d+ *\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'\b[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[A-Z]+\b'),
-            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]\b'),
+            re.compile(r'\b[^\x00-\x7F]?[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]\b'),
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'\b[ATCG][-+]*\d+[ATCG]/[ATCG]\b')
         ]
 
-        self.single_aa_1 = re.compile('^({AA}) *\d+$'.format(AA='|'.join(amino_acids)), re.IGNORECASE)
-        self.single_aa_2 = re.compile('^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$')
-        self.single_aa_3 = re.compile('^({AA})([-/]({AA}))*$'.format(AA='|'.join(amino_acids + ['A', 'T', 'C', 'G'])),
-                                      re.IGNORECASE)
-        self.just_numbers = re.compile('^\d+([-+/ ]\d+)*$')
+        self.negative_patterns = [
+            # single AAs
+            re.compile('^({AA}) *\d+$'.format(AA='|'.join(amino_acids)), re.IGNORECASE),
+            re.compile('^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$'),
+            re.compile('^({AA})([-/>]({AA}))*$'
+                       .format(AA='|'.join(amino_acids + [aa for aa in 'CISQMNPKDTFAGHLRWVEYX'])), re.IGNORECASE),
+            # just numbers
+            re.compile('^[-+]?\d+([-+/ ]+\d+)*( *(b|bp|N|ntb|p|BP|B))?$')
+        ]
+
         self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
+        self.keep_silent = keep_silent
 
     def process(self, dataset):
         for doc_id, doc in dataset.documents.items():
@@ -75,10 +81,15 @@ class PostProcessing2:
                                     part.predicted_annotations[index] = ann
 
                 to_delete = [index for index, ann in enumerate(part.predicted_annotations)
-                             if any(r.search(ann.text) for r in (self.single_aa_1, self.single_aa_2,
-                                                                 self.single_aa_3, self.just_numbers))]
+                             if any(r.search(ann.text) for r in self.negative_patterns)
+                             or (not self.keep_silent and self.__is_silent(ann))]
+
                 part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
                                               if index not in to_delete]
+
+    def __is_silent(self, ann):
+        split = re.split('[-+]?[\d]+', ann.text)
+        return len(split) == 2 and split[0] == split[1]
 
     def __fix_issues(self, part):
         to_be_removed = []
