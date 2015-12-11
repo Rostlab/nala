@@ -5,6 +5,137 @@ from nalaf.structures.data import Entity
 from nala.utils import MUT_CLASS_ID
 
 
+class PostProcessing2:
+    def __init__(self):
+        amino_acids = [
+            'alanine', 'ala', 'arginine', 'arg', 'asparagine', 'asn', 'aspartic acid', 'aspartate', 'asp',
+            'cysteine', 'cys', 'glutamine', 'gln', 'glutamic acid', 'glutamate', 'glu', 'glycine', 'gly',
+            'histidine', 'his', 'isoleucine', 'ile', 'leucine', 'leu', 'lysine', 'lys', 'methionine', 'met',
+            'phenylalanine', 'phe', 'proline', 'pro', 'serine', 'ser', 'threonine', 'thr', 'tryptophan', 'trp',
+            'tyrosine', 'tyr', 'valine', 'val', 'aspartic acid', 'asparagine', 'asx', 'glutamine', 'glutamic acid',
+            'glx']
+
+        keywords = ['substit\w*', 'lead\w*', 'exchang\w*', 'chang\w*', 'mutant\w*', 'mutate\w*', 'devia\w*', 'modif\w*',
+                    'alter\w*', 'switch\w*', 'variat\w*', 'instead\w*', 'replac\w*', 'in place', 'convert\w*',
+                    'becom\w*']
+
+        self.patterns = [
+            re.compile('({AA})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({AA})( *(,|,?or|,?and) +({AA}))*'
+                       .format(AA='|'.join(amino_acids)), re.IGNORECASE),
+            re.compile('({AA}) +(in|to|into|for|of|by|with|at) +({AA})[- ]*[1-9][0-9]*'
+                       '( *(,|,?or|,?and) +({AA})[- ]*[1-9][0-9]*)*'
+                       .format(AA='|'.join(amino_acids)), re.IGNORECASE),
+            re.compile('({AA})(( (({SS})) (in|to|into|for|of|by|with|at) (a|an|the|) '
+                       '*({AA})[1-9]\d*( *(,|or|and|, and|, or) ({AA})[1-9]\d*)*)'
+                       '|([- ]*[1-9]\d*( +((has|have|had) +been|is|are|was|were|) '
+                       '+(({SS})))? +(in|to|into|for|of|by|with|at) +({AA})( *(,|or|and|, and|, or) +({AA}))*))'
+                       .format(AA='|'.join(amino_acids), SS='|'.join(keywords)), re.IGNORECASE),
+            re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA='|'.join(amino_acids)), re.IGNORECASE),
+            re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA='|'.join(amino_acids)), re.IGNORECASE),
+            re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
+            re.compile(r'\b(c\. *)?[ATCG] *([-+]|\d)\d+ *[ATCG]\b'),
+            re.compile(r'\bc\. *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
+            re.compile(r'\b[ATCG](/|-|-*>|)[ATCG] *[-+]*[0-9]+\b'),
+            re.compile(r'\b[-+]*\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
+            re.compile(r'\b[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9ATCGU]+\b'),
+            re.compile(r'\b[ATCG]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
+            re.compile(r'\b(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup) *(\d+(b|bp|N|ntb|p|BP|B)|[ATCG]{2,})\b'),
+            re.compile(r'\b[-+]?\d+ *\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
+            re.compile(r'\b[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[A-Z]+\b'),
+            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]\b'),
+            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
+            re.compile(r'\b[ATCG][-+]*\d+[ATCG]/[ATCG]\b')
+        ]
+
+        self.single_aa_1 = re.compile('^({AA}) *\d+$'.format(AA='|'.join(amino_acids)), re.IGNORECASE)
+        self.single_aa_2 = re.compile('^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$')
+        self.single_aa_3 = re.compile('^({AA})([-/]({AA}))*$'.format(AA='|'.join(amino_acids + ['A', 'T', 'C', 'G'])),
+                                      re.IGNORECASE)
+        self.just_numbers = re.compile('^\d+([-+/ ]\d+)*$')
+        self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
+
+    def process(self, dataset):
+        for doc_id, doc in dataset.documents.items():
+            for part_id, part in doc.parts.items():
+                self.__fix_issues(part)
+                for regex in self.patterns:
+                    for match in regex.finditer(part.text):
+                        start = match.start()
+                        end = match.end()
+                        matched_text = part.text[start:end]
+                        ann = Entity(MUT_CLASS_ID, start, matched_text)
+
+                        Entity.equality_operator = 'exact_or_overlapping'
+                        if ann not in part.predicted_annotations:
+                            part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, matched_text))
+                        Entity.equality_operator = 'overlapping'
+                        if ann in part.predicted_annotations:
+                            for index, ann_b in enumerate(part.predicted_annotations):
+                                if ann == ann_b and len(matched_text) > len(ann_b.text):
+                                    part.predicted_annotations[index] = ann
+
+                to_delete = [index for index, ann in enumerate(part.predicted_annotations)
+                             if any(r.search(ann.text) for r in (self.single_aa_1, self.single_aa_2,
+                                                                 self.single_aa_3, self.just_numbers))]
+                part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
+                                              if index not in to_delete]
+
+    def __fix_issues(self, part):
+        to_be_removed = []
+        for index, ann in enumerate(part.predicted_annotations):
+            start = ann.offset
+            end = ann.offset + len(ann.text)
+
+            # split multiple mentions
+            if re.search(' *(/) *', ann.text):
+                split = re.split(' *(/) *', ann.text)
+
+                if self.at_least_one_letter_n_number_letter_n_number.search(split[0]) \
+                        and self.at_least_one_letter_n_number_letter_n_number.search(split[2]):
+                    to_be_removed.append(index)
+                    part.predicted_annotations.append(Entity(ann.class_id, ann.offset, split[0]))
+                    part.predicted_annotations.append(
+                        Entity(ann.class_id, part.text.find(split[2], ann.offset), split[2]))
+
+            # split multiple mentions
+            if re.search(r' *(\band\b|,|\bor\b) *', ann.text):
+                to_be_removed.append(index)
+                split = re.split(r' *(\band|,|or\b) *', ann.text)
+                if split[0]:
+                    part.predicted_annotations.append(Entity(ann.class_id, ann.offset, split[0]))
+                if split[2]:
+                    part.predicted_annotations.append(
+                        Entity(ann.class_id, part.text.find(split[2], ann.offset), split[2]))
+
+            # fix boundary #17000021	251	258	1858C>T --> +1858C>T
+            if re.search('^[0-9]', ann.text) and re.search('([\-\+])', part.text[start - 1]):
+                ann.offset -= 1
+                ann.text = part.text[start - 1] + ann.text
+
+            # fix boundary delete (
+            if ann.text[0] == '(' and ')' not in ann.text:
+                ann.offset += 1
+                ann.text = ann.text[1:]
+
+            # fix boundary delete )
+            if ann.text[-1] == ')' and '(' not in ann.text:
+                ann.text = ann.text[:-1]
+
+            # fix boundary add missing (
+            if part.text[start - 1] == '(' and ')' in ann.text:
+                ann.offset -= 1
+                ann.text = '(' + ann.text
+
+            # fix boundary add missing )
+            try:
+                if part.text[end] == ')' and '(' in ann.text:
+                    ann.text += ')'
+            except IndexError:
+                pass
+        part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
+                                      if index not in to_be_removed]
+
+
 class PostProcessing:
     def __init__(self):
         self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
