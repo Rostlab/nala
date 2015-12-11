@@ -34,7 +34,7 @@ class PostProcessing:
             re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA='|'.join(amino_acids)), re.IGNORECASE),
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
             re.compile(r'\b(c\. *)?[ATCG] *([-+]|\d)\d+ *[ATCG]\b'),
-            re.compile(r'\bc\. *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
+            re.compile(r'\b(c\.|E(X|x)\d+) *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
             re.compile(r'\b[ATCG](/|-|-*>|→|)[ATCG] *[-+]*[0-9]+\b'),
             re.compile(r'\b[-+]*\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'\b[^\x00-\x7F]?[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9ATCGU]+\b'),
