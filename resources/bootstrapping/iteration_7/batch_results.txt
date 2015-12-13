@@ -1,4 +1,5 @@
 =====Annotated=====                                                                             	|	=====Predicted=====                                                                             
+somatic 16-bp deletion                                                                          	|	                                                                                                
 Tyr143His                                                                                       	|	Tyr143His                                                                                       
 Tyr143His                                                                                       	|	Tyr143His                                                                                       
 single (521)T>C substitution leading to a Tyr143His                                             	|	single (521)T>C substitution leading to a Tyr143His                                             
@@ -17,18 +18,17 @@ p.C163R                                                                         
 Methylation of Q105 or its substitution to alanine                                              	|	Methylation of Q105                                                                             
 Methylation of Q105 or its substitution to alanine                                              	|	its substitution to alanine                                                                     
 methylation of glutamine, occurring on yeast histone H2A at position 105 (Q105)                 	|	                                                                                                
+mutation at the phosphorylation site                                                            	|	                                                                                                
 c.636+1G>A                                                                                      	|	c.636+1G>A                                                                                      
 in-frame insertion of 45 nucleotides                                                            	|	in-frame insertion of 45 nucleotides                                                            
 c.947C>T                                                                                        	|	c.947C>T                                                                                        
 p.Thr316Met                                                                                     	|	p.Thr316Met                                                                                     
 c.161T>C                                                                                        	|	c.161T>C                                                                                        
 p.Phe54Ser                                                                                      	|	p.Phe54Ser                                                                                      
-mutation at the phosphorylation site                                                            	|	                                                                                                
+substitution 253 Gly leads to Arg                                                               	|	substitution 253 Gly leads to Arg                                                               
 substitution of glutamine for arginine at position 505                                          	|	substitution of glutamine for arginine at position 505                                          
 G-->A transition at nucleotide position 1514                                                    	|	consisting of a G-->A transition at nucleotide position 1514                                    
 changes the electric charge at amino acid position 505 by substitution of glutamine for arginine	|	changes the electric charge at amino acid position 505 by substitution of glutamine for arginine
-somatic 16-bp deletion                                                                          	|	                                                                                                
-substitution 253 Gly leads to Arg                                                               	|	substitution 253 Gly leads to Arg                                                               
 --------------------------------------------------------------------------------
 
 =====Detailed Results=====

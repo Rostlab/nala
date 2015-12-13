@@ -3,31 +3,6 @@ H1736L                                                                 	|	H1736L
 H1736L                                                                 	|	H1736L                                                                 
 H1736L                                                                 	|	H1736L                                                                 
                                                                        	|	loss of P                                                              
-mutation of Thr-206 to aspartic acid                                   	|	mutation of Thr-206 to aspartic acid                                   
-T206D                                                                  	|	T206D                                                                  
-T206D                                                                  	|	T206D                                                                  
-missense Glu285Ala                                                     	|	missense Glu285Ala                                                     
-A to C base change, at nucleotide 854                                  	|	                                                                       
-R293H                                                                  	|	R293H                                                                  
-R653Q                                                                  	|	R653Q                                                                  
-substitution of a glutamic acid for a lysine at amino acid position 304	|	substitution of a glutamic acid for a lysine at amino acid position 304
-A----G change at nucleotide position 985                               	|	                                                                       
-S1012I                                                                 	|	S1012I                                                                 
-synonymous 696T>C                                                      	|	synonymous 696T>C                                                      
-heterozygous missense 3035G>T                                          	|	                                                                       
-serine-to-alanine mutation at position 121                             	|	serine-to-alanine mutation at position 121                             
-                                                                       	|	pT69/71                                                                
-                                                                       	|	phosphorylation of ATF-2 at threonine residues 69                      
-                                                                       	|	71 (Thr-69/71                                                          
-                                                                       	|	pT69                                                                   
-                                                                       	|	pT69/71                                                                
-                                                                       	|	at Ser-340                                                             
-                                                                       	|	71                                                                     
-                                                                       	|	at Ser-340                                                             
-N133H                                                                  	|	N133H                                                                  
-T319M                                                                  	|	T319M                                                                  
-Y423X                                                                  	|	Y423X                                                                  
-P42S                                                                   	|	P42S                                                                   
 removal of an arginine residue from position 608                       	|	removal of an arginine residue from position 608                       
 delta R608                                                             	|	delta R608                                                             
 R496L                                                                  	|	R496L                                                                  
@@ -37,6 +12,31 @@ delta R608                                                             	|	delta 
 R496L                                                                  	|	R496L                                                                  
 delta R608                                                             	|	delta R608 mutation                                                    
 three-base deletion was identified of nucleotides 1821-1823            	|	                                                                       
+serine-to-alanine mutation at position 121                             	|	serine-to-alanine mutation at position 121                             
+                                                                       	|	pT69/71                                                                
+                                                                       	|	phosphorylation of ATF-2 at threonine residues 69                      
+                                                                       	|	71 (Thr-69/71                                                          
+                                                                       	|	pT69                                                                   
+                                                                       	|	pT69/71                                                                
+                                                                       	|	at Ser-340                                                             
+                                                                       	|	71                                                                     
+                                                                       	|	at Ser-340                                                             
+substitution of a glutamic acid for a lysine at amino acid position 304	|	substitution of a glutamic acid for a lysine at amino acid position 304
+A----G change at nucleotide position 985                               	|	                                                                       
+S1012I                                                                 	|	S1012I                                                                 
+synonymous 696T>C                                                      	|	synonymous 696T>C                                                      
+heterozygous missense 3035G>T                                          	|	                                                                       
+missense Glu285Ala                                                     	|	missense Glu285Ala                                                     
+A to C base change, at nucleotide 854                                  	|	                                                                       
+mutation of Thr-206 to aspartic acid                                   	|	mutation of Thr-206 to aspartic acid                                   
+T206D                                                                  	|	T206D                                                                  
+T206D                                                                  	|	T206D                                                                  
+N133H                                                                  	|	N133H                                                                  
+T319M                                                                  	|	T319M                                                                  
+Y423X                                                                  	|	Y423X                                                                  
+P42S                                                                   	|	P42S                                                                   
+R293H                                                                  	|	R293H                                                                  
+R653Q                                                                  	|	R653Q                                                                  
 --------------------------------------------------------------------------------
 
 =====Detailed Results=====
