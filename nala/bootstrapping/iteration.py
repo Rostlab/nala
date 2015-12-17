@@ -5,6 +5,8 @@ import json
 import os
 import re
 import shutil
+from nala.bootstrapping.utils import UniprotDocumentSelector
+from nala.bootstrapping.utils import PMIDDocumentSelector
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
 from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
@@ -190,10 +192,11 @@ class Iteration:
         #         if next(c) == nr:
         #             break
         with DocumentSelectorPipeline(
+                UniprotDocumentSelector(),
                 pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                                      document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
-                                          binary_model=os.path.join(self.current_folder, 'bin_model'),
-                                          expected_max_results=nr), ManualDocumentFilter()]) as dsp:
+                document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
+                    binary_model=os.path.join(self.current_folder, 'bin_model'),
+                    expected_max_results=nr), ManualDocumentFilter()]) as dsp:
             for pmid, document in dsp.execute():
                 dataset.documents[pmid] = document
                 # if we have generated enough documents stop
