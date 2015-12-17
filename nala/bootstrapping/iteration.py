@@ -192,7 +192,7 @@ class Iteration:
         #         if next(c) == nr:
         #             break
         with DocumentSelectorPipeline(
-                UniprotDocumentSelector(),
+                document_selector=UniprotDocumentSelector(),
                 pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
                 document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
                     binary_model=os.path.join(self.current_folder, 'bin_model'),
