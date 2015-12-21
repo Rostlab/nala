@@ -116,6 +116,8 @@ class Iteration:
                                  'tp', 'fp', 'fn', 'fp_overlap', 'fn_overlap', 'precision', 'recall', 'f1-score'])
 
     def before_annotation(self, nr_new_docs=10):
+        self.read_learning_data()
+        self.preprocessing()
         self.learning()
         self.docselection(nr=nr_new_docs)
         self.tagging(threshold_val=self.threshold_val)
@@ -124,18 +126,17 @@ class Iteration:
         self.manual_review_import()
         self.evaluation()
 
-    def learning(self):
+    def read_learning_data(self):
         """
-        Learning: base + iterations 1..n-1
-        :return:
+        Loads and parses the annotations from base + following iterations into self.train
         """
-        print_verbose("\n\n\n======Learning======\n\n\n")
-        # parse base + reviewed files
-        # base
+        print_verbose("\n\n\n======Data======\n\n\n")
+
         base_folder = os.path.join(self.bootstrapping_folder, "iteration_0/base/")
         html_base_folder = base_folder + "html/"
         annjson_base_folder = base_folder + "annjson/"
         self.train = HTMLReader(html_base_folder).read()
+        # TODO mergannotationreader --> change how to add annotations and read them from there...
         AnnJsonAnnotationReader(annjson_base_folder).annotate(self.train)
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
@@ -150,16 +151,30 @@ class Iteration:
                 # extend learning_data
                 self.train.extend_dataset(tmp_data)
 
+    def preprocessing(self):
+        """
+        Pre-processing including pruning, generating features, generating labels.
+        """
         # prune parts without annotations
         self.train.prune()
 
         # generate features etc.
         pipeline = PrepareDatasetPipeline()
+        # todo param in script to define featuregenerators
+        # --> one param for featuresgenerators
+        # --> one param for windowgenerators
         pipeline.execute(self.train)
         pipeline.serialize(self.train, to_file=self.debug_file)
-
+        # TODO QUESTION include Labeler into PrepareDatasetPipeline
         BIEOLabeler().label(self.train)
         print_verbose(len(self.train.documents), "documents are prepared for training dataset.")
+
+    def learning(self):
+        """
+        Learning: base + iterations 1..n-1
+        just the crfsuitepart and copying the model to the iteration folder
+        """
+        print_verbose("\n\n\n======Learning======\n\n\n")
 
         # crfsuite part
         self.crf.create_input_file(self.train, 'train')
