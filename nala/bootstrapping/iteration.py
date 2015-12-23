@@ -253,20 +253,23 @@ class Iteration:
                     #                                                 crfsuite_path=self.crfsuite_path, use_nala=False,
                     #                                                 min_found=0)]
                     ) as dsp:
+                _starttime = time.perf_counter()
                 for pmid, document in dsp.execute():
-                    _starttime = time.perf_counter()
 
                     dataset.documents[pmid] = document
 
                     _counter += 1
-                    _one_it = time.perf_counter() - _starttime
+                    _tmptime = time.perf_counter()
+                    _one_it = _tmptime - _starttime
+                    _starttime = _tmptime
+
                     _total += _one_it
                     # print_verbose('total', _total)
                     _eta_one = _total / _counter
                     _counter_left = nr - _counter
                     _eta_left = _eta_one * _counter_left
                     print_verbose(
-                        'NrOfDocs: {} | ETA Left for {}: {:3f} | ETA One for One: {:3f}'.format(_counter, _counter_left,
+                        'NrOfDocs: {} | ETA Left for {}: {:.3f} | ETA One for One: {:.3f}'.format(_counter, _counter_left,
                                                                                           _eta_left, _eta_one))
 
                     # if we have generated enough documents stop
