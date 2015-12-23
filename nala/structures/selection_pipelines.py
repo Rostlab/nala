@@ -1,4 +1,5 @@
-from nala.bootstrapping.document_filters import DocumentFilter, KeywordsDocumentFilter, HighRecallRegexDocumentFilter
+from nala.bootstrapping.document_filters import DocumentFilter, KeywordsDocumentFilter, HighRecallRegexDocumentFilter, \
+    StubDocumentFilter
 from nala.bootstrapping.pmid_filters import PMIDFilter, AlreadyConsideredPMIDFilter
 from nala.bootstrapping.utils import UniprotDocumentSelector
 from nalaf.utils.download import  DownloadArticle
@@ -39,7 +40,7 @@ class DocumentSelectorPipeline:
             else:
                 raise TypeError('not an instance that implements PMIDFilter')
         else:
-            self.pmid_filters = [AlreadyConsideredPMIDFilter('resources/bootstrapping', 4)]
+            self.pmid_filters = [AlreadyConsideredPMIDFilter('resources/bootstrapping', 7)]
 
         if document_filters:
             # check the type of the provided document filters
@@ -53,7 +54,7 @@ class DocumentSelectorPipeline:
             else:
                 raise TypeError('not an instance that implements DocumentFilter')
         else:
-            self.document_filters = [KeywordsDocumentFilter(), HighRecallRegexDocumentFilter()]
+            self.document_filters = [StubDocumentFilter()]
 
     def __enter__(self):
         if isinstance(self.initial_document_selector, Cacheable):

@@ -41,6 +41,15 @@ class DocumentFilter:
         pass
 
 
+class StubDocumentFilter(DocumentFilter):
+    """
+    Class to provide quick passing through (can be helpful for pre-caching).
+    """
+    def filter(self, documents):
+        for pmid, doc in documents:
+            yield pmid, doc
+
+
 class KeywordsDocumentFilter(DocumentFilter):
     """
     TODO document that this doesn't mean PubMed XML filters
@@ -106,20 +115,21 @@ class QuickNalaFilter(DocumentFilter):
         crfsuite = CRFSuite(self.crfsuite_path, minify=True)
         crfsuitetagger = CRFSuiteTagger(MUT_CLASS_ID, crfsuite, self.binary_model)
         for pmid, doc in documents:
-            print("document", pmid)
             dataset = Dataset()
             dataset.documents[pmid] = doc
             self.pipeline.execute(dataset)
             crfsuitetagger.tag(dataset)
             PostProcessing().process(dataset)
             ExclusiveNLDefiner().define(dataset)
+            total_nl_mentions = []
             for part in doc:
-                print(part.annotations)
-                print(part.predicted_annotations)
+                # print(part.annotations)
+                # print_verbose(part.predicted_annotations)
                 nl_mentions = [(ann.text, ann.subclass, ann.confidence) for ann in part.predicted_annotations if ann.subclass != 0 and ann.confidence < self.threshold]
-                if any(nl_mentions):
-                    print(nl_mentions)
-                    yield pmid, doc
+                total_nl_mentions += nl_mentions
+            if any(total_nl_mentions):
+                print(json.dumps(total_nl_mentions, indent=4))
+                yield pmid, doc
 
 
 class HighRecallRegexDocumentFilter(DocumentFilter):
@@ -134,7 +144,9 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
 
     tmVar will be used in early stages and discarded as soon as there are no more results, thus gets a parameter.
     """
-    def __init__(self, binary_model="nala/data/default_model", override_cache=False, expected_max_results=10, pattern_file_name=None, crfsuite_path=None, threshold=1):
+
+    def __init__(self, binary_model="nala/data/default_model", override_cache=False, expected_max_results=10,
+                 pattern_file_name=None, crfsuite_path=None, threshold=1, min_found=1, use_nala=False):
         self.location_binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
         self.override_cache=override_cache
@@ -148,6 +160,10 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline=get_prepare_pipeline_for_best_model()
         """ best setting (features, etc.) for tagging """
+        self.min_found = min_found
+        """ minimum found """
+        self.use_nala = use_nala
+        """ if use nala predictions """
 
         # read in nl_patterns
         if not pattern_file_name:
@@ -160,7 +176,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             """ compiled regex patterns from pattern_file param to specify custom json file,
              containing regexs for high recall finding of nl mentions. (or sth else) """
 
-    def filter(self, documents, min_found=1, use_nala=True):
+    def filter(self, documents, min_found=1, use_nala=False):
         """
         :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
@@ -260,20 +276,19 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                             if use_nala:
                                 nala_found_mention = nala_doc.overlaps_with_mention(start, end, annotated=False)
                                 if nala_found_mention:
-                                    print(nala_found_mention)
+                                    print_verbose(nala_found_mention)
                                     if nala_found_mention.subclass > 0 and nala_found_mention.confidence <= self.threshold:
-                                        print(nala_found_mention)
                                         yield pmid, doc
-                                else:
-                                    if reg.pattern in used_regexs:
-                                        used_regexs[reg.pattern] += 1
-                                    else:
-                                        used_regexs[reg.pattern] = 1
-                                    if not found_in_sentence:
-                                        print(color.PURPLE + new_text.replace(match.group(),
-                                                                              color.BOLD + color.DARKCYAN + color.UNDERLINE + match.group() + color.END + color.PURPLE) + color.END)
-                                        positive_sentences += 1
-                                        found_in_sentence = True
+
+                            if reg.pattern in used_regexs:
+                                used_regexs[reg.pattern] += 1
+                            else:
+                                used_regexs[reg.pattern] = 1
+                            if not found_in_sentence:
+                                print(color.PURPLE + new_text.replace(match.group(),
+                                                                      color.BOLD + color.DARKCYAN + color.UNDERLINE + match.group() + color.END + color.PURPLE) + color.END)
+                                positive_sentences += 1
+                                found_in_senteknce = True
                                             # if not anti_doc.overlaps_with_mention(start,
                                             #                                       end) \
                                             #         and not nala_doc.overlaps_with_mention(start, end, annotated=False):
@@ -303,7 +318,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                                 #         found_in_sentence = True
 
                         if _lasttime - time.time() > 1:
-                            print(i)
+                            print_verbose('time intensive regex', i)
                     sent_offset += 2 + sent_length
 
                     # for per sentence positives
@@ -316,16 +331,13 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             _time_progressed = time.time() - _timestart
             _time_per_doc = _time_progressed / _progress
             print_verbose("PROGRESS: {:.2f} secs ETA per one positive document: {:.2f} secs".format(_time_progressed, _time_per_doc))
-            print(used_regexs)
+            print_verbose(json.dumps(used_regexs, indent=4))
             if positive_sentences >= min_found:
                 last_found = 0
-                print_verbose('YEP')
-                print('Found')
+                print_verbose('YEP', pmid)
                 yield pmid, doc
             else:
-                print_verbose(pmid, "contains either no or only a few suitable annotations")
-                print_verbose('NOPE')
-                print('Not Found')
+                print_verbose('NOPE', pmid)
 
 
 class color:

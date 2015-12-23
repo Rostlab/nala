@@ -5,6 +5,7 @@ import json
 import os
 import re
 import shutil
+import time
 
 from nala.bootstrapping.document_filters import QuickNalaFilter
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
@@ -150,7 +151,8 @@ class Iteration:
         annjson_base_folder = base_folder + "annjson/"
         self.train = HTMLReader(html_base_folder).read()
         # TODO mergannotationreader --> change how to add annotations and read them from there...
-        AnnJsonAnnotationReader(annjson_base_folder).annotate(self.train)
+        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
+                                      entity_strategy='priority').annotate(self.train)
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
         # extend for each next iteration
@@ -210,7 +212,7 @@ class Iteration:
         else:
             print_verbose("Already existing binary model is used.")
 
-    def docselection(self, nr=2):
+    def docselection(self, nr=2, just_caching=False):
         """
         Does the same as generate_documents(n) but the bootstrapping folder is specified in here.
         :param nr: amount of new documents wanted
@@ -242,16 +244,49 @@ class Iteration:
         #         # if we have generated enough documents stop
         #         if next(c) == nr:
         #             break
-        with DocumentSelectorPipeline(
-                pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                                      document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
-                                          binary_model=os.path.join(self.current_folder, 'bin_model'),
-                                          expected_max_results=nr), ManualDocumentFilter()]) as dsp:
-            for pmid, document in dsp.execute():
-                dataset.documents[pmid] = document
-                # if we have generated enough documents stop
-                if next(c) == nr:
-                    break
+        if just_caching:
+            _counter = 0
+            _total = 0
+            with DocumentSelectorPipeline(
+                    pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
+                    # document_filters=[HighRecallRegexDocumentFilter(binary_model=self.bin_model,
+                    #                                                 crfsuite_path=self.crfsuite_path, use_nala=False,
+                    #                                                 min_found=0)]
+                    ) as dsp:
+                for pmid, document in dsp.execute():
+                    _starttime = time.perf_counter()
+
+                    dataset.documents[pmid] = document
+
+                    _counter += 1
+                    _one_it = time.perf_counter() - _starttime
+                    _total += _one_it
+                    # print_verbose('total', _total)
+                    _eta_one = _total / _counter
+                    _counter_left = nr - _counter
+                    _eta_left = _eta_one * _counter_left
+                    print_verbose(
+                        'NrOfDocs: {} | ETA Left for {}: {:3f} | ETA One for One: {:3f}'.format(_counter, _counter_left,
+                                                                                          _eta_left, _eta_one))
+
+                    # if we have generated enough documents stop
+                    if next(c) == nr:
+                        break
+        else:
+            with DocumentSelectorPipeline(
+                    pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
+                    document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
+                                                                    binary_model=os.path.join(self.current_folder,
+                                                                                              'bin_model'),
+                                                                    expected_max_results=nr),
+                                      QuickNalaFilter(binary_model=self.bin_model,
+                                                      crfsuite_path=self.crfsuite_path, threshold=1),
+                                      ManualDocumentFilter()]) as dsp:
+                for pmid, document in dsp.execute():
+                    dataset.documents[pmid] = document
+                    # if we have generated enough documents stop
+                    if next(c) == nr:
+                        break
         self.candidates = dataset
 
     def tagging(self, threshold_val=THRESHOLD_VALUE):
