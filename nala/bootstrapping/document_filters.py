@@ -16,6 +16,9 @@ from nalaf.utils.cache import Cacheable
 from nalaf.utils.tagger import TmVarTagger
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 
+from nala.utils import MUT_CLASS_ID
+from nala.utils import get_prepare_pipeline_for_best_model
+
 
 class DocumentFilter:
     """
@@ -86,6 +89,37 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
                 yield pmid, doc
 
 
+class QuickNalaFilter(DocumentFilter):
+    def __init__(self, binary_model="nala/data/default_model", crfsuite_path=None, threshold=1):
+        self.binary_model = binary_model
+        """ location where binary model for nala (crfsuite) is saved """
+        self.crfsuite_path=crfsuite_path
+        """ crfsuite path"""
+        self.threshold=threshold
+        """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
+        self.pipeline = get_prepare_pipeline_for_best_model()
+        """best features and hyperparameters"""
+
+    def filter(self, documents):
+        crfsuite = CRFSuite(self.crfsuite_path, minify=True)
+        crfsuitetagger = CRFSuiteTagger(MUT_CLASS_ID, crfsuite, self.binary_model)
+        for pmid, doc in documents:
+            print("document", pmid)
+            dataset = Dataset()
+            dataset.documents[pmid] = doc
+            self.pipeline.execute(dataset)
+            crfsuitetagger.tag(dataset)
+            PostProcessing().process(dataset)
+            ExclusiveNLDefiner().define(dataset)
+            for part in doc:
+                print(part.annotations)
+                print(part.predicted_annotations)
+                nl_mentions = [(ann.text, ann.subclass, ann.confidence) for ann in part.predicted_annotations if ann.subclass != 0 and ann.confidence < self.threshold]
+                if any(nl_mentions):
+                    print(nl_mentions)
+                    yield pmid, doc
+
+
 class HighRecallRegexDocumentFilter(DocumentFilter):
     """
     Filter that uses regular expression to first get possible natural language mentions in sentences.
@@ -98,7 +132,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
 
     tmVar will be used in early stages and discarded as soon as there are no more results, thus gets a parameter.
     """
-    def __init__(self, binary_model="nala/data/default_model", override_cache=False, expected_max_results=10, pattern_file_name=None, crfsuite_path=None):
+    def __init__(self, binary_model="nala/data/default_model", override_cache=False, expected_max_results=10, pattern_file_name=None, crfsuite_path=None, threshold=1):
         self.location_binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
         self.override_cache=override_cache
@@ -108,9 +142,14 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         """ :returns maximum of [x] documents (can be less if not found) """
         self.crfsuite_path=crfsuite_path
         """ crfsuite path"""
+        self.threshold=threshold
+        """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
+        self.pipeline=get_prepare_pipeline_for_best_model()
+        """ best setting (features, etc.) for tagging """
+
         # read in nl_patterns
         if not pattern_file_name:
-            pattern_file_name = pkg_resources.resource_filename('nala.data', 'dict_nl_words.json')
+            pattern_file_name = pkg_resources.resource_filename('nala.data', 'nl_patterns.json')
 
         with open(pattern_file_name, 'r') as f:
             regexs = json.load(f)
@@ -118,7 +157,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             """ compiled regex patterns from pattern_file param to specify custom json file,
              containing regexs for high recall finding of nl mentions. (or sth else) """
 
-    def filter(self, documents, min_found=10):
+    def filter(self, documents, min_found=1):
         """
         :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
@@ -139,9 +178,8 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         _i_array = [0, 0]
 
         last_found = 0
-        if self.crfsuite_path:
-            crfsuite = CRFSuite(self.crfsuite_path)
-            crfsuitetagger = CRFSuiteTagger(['e_2'], crf_suite=crfsuite, model_file=self.location_binary_model)
+        crfsuite = CRFSuite(self.crfsuite_path)
+        crfsuitetagger = CRFSuiteTagger([MUT_CLASS_ID], crf_suite=crfsuite, model_file=self.location_binary_model)
         for pmid, doc in documents:
             # if any part of the document contains any of the keywords
             # yield that document
@@ -150,11 +188,14 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             data_tmp.documents[pmid] = doc
             data_nala = deepcopy(data_tmp)
             NLTKSplitter().split(data_tmp)
-            data_tmvar = TmVarTagger().generate_abstracts([pmid])
-            if self.crfsuite_path:
-                PrepareDatasetPipeline().execute(data_nala)
-                crfsuitetagger.tag(data_nala)
-                PostProcessing().process(data_nala)
+            # data_tmvar = TmVarTagger().generate_abstracts([pmid])
+            self.pipeline.execute(data_nala)
+            crfsuitetagger.tag(data_nala)
+            PostProcessing().process(data_nala)
+            ExclusiveNLDefiner().define(data_nala)
+
+            used_regexs = {}
+
             positive_sentences = 0
             for i, x in enumerate(doc.parts):
                 # print("Part", i)
@@ -164,8 +205,8 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                 for sent in sentences:
                     sent_length = len(sent)
                     new_text = sent.lower()
-                    new_text = re.sub('[\./\\-(){}\[\],%]', '', new_text)
-                    new_text = re.sub('\W+', ' ', new_text)
+                    new_text = re.sub('[\./\\-(){}\[\],%]', ' ', new_text)
+                    # new_text = re.sub('\W+', ' ', new_text)
 
                     found_in_sentence = False
 
@@ -194,41 +235,57 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                         #         f.write(sent + "\n")
                         #         f.write(new_text + "\n")
                         if match:
-                            if pmid in data_tmvar.documents:
-                                anti_doc = data_tmvar.documents.get(pmid)
-                                if self.crfsuite_path:
-                                    nala_doc = data_nala.documents.get(pmid)
-                                start = part_offset + sent_offset + match.span()[0]
-                                end = part_offset + sent_offset + match.span()[1]
-                                # print("TmVar is not overlapping?:", not anti_doc.overlaps_with_mention(start, end))
-                                # print(not nala_doc.overlaps_with_mention(start, end, annotated=False))
-                                if self.crfsuite_path:
-                                    if not anti_doc.overlaps_with_mention(start,
-                                                                          end) \
-                                            and not nala_doc.overlaps_with_mention(start, end, annotated=False):
-                                        _e_result = exclusive_definer.define_string(
-                                            new_text[match.span()[0]:match.span()[1]])
-                                        _e_array[_e_result] += 1
-                                        _i_result = inclusive_definer.define_string(
-                                            new_text[match.span()[0]:match.span()[1]])
-                                        _i_array[_i_result] += 1
-                                        # todo write to file param + saving to manually annotate and find tp + fp for performance eval on each pattern
-                                        # print("e{}\ti{}\t{}\t{}\t{}\n".format(_e_result, _i_result, sent, match, reg.pattern))
+                            # if pmid in data_tmvar.documents:
+                            #     anti_doc = data_tmvar.documents.get(pmid)
+                            nala_doc = data_nala.documents.get(pmid)
 
-                                        last_found += 1
-                                        found_in_sentence = True
+                            start = part_offset + sent_offset + match.span()[0]
+                            end = part_offset + sent_offset + match.span()[1]
+                            # print("TmVar is not overlapping?:", not anti_doc.overlaps_with_mention(start, end))
+                            # print(not nala_doc.overlaps_with_mention(start, end, annotated=False))
+                            nala_found_mention = nala_doc.overlaps_with_mention(start, end, annotated=False)
+                            if nala_found_mention:
+                                print(nala_found_mention)
+                                if nala_found_mention.subclass > 0 and nala_found_mention.confidence <= self.threshold:
+                                    print(nala_found_mention)
+                                    yield pmid, doc
+                            else:
+                                if reg.pattern in used_regexs:
+                                        used_regexs[reg.pattern] += 1
                                 else:
-                                    if not anti_doc.overlaps_with_mention(start, end):
-                                        _e_result = exclusive_definer.define_string(
-                                            new_text[match.span()[0]:match.span()[1]])
-                                        _e_array[_e_result] += 1
-                                        _i_result = inclusive_definer.define_string(
-                                            new_text[match.span()[0]:match.span()[1]])
-                                        _i_array[_i_result] += 1
-                                        # todo write to file param + saving to manually annotate and find tp + fp for performance eval on each pattern
-                                        # print("e{}\ti{}\t{}\t{}\t{}\n".format(_e_result, _i_result, sent, match, reg.pattern))
-                                        last_found += 1
-                                        found_in_sentence = True
+                                    used_regexs[reg.pattern] = 1
+                                if not found_in_sentence:
+                                    print(color.PURPLE + new_text.replace(match.group(),
+                                                                          color.BOLD + color.DARKCYAN + color.UNDERLINE + match.group() + color.END + color.PURPLE) + color.END)
+                                    positive_sentences += 1
+                                    found_in_sentence = True
+                                            # if not anti_doc.overlaps_with_mention(start,
+                                            #                                       end) \
+                                            #         and not nala_doc.overlaps_with_mention(start, end, annotated=False):
+                                            #     _e_result = exclusive_definer.define_string(
+                                            #         new_text[match.span()[0]:match.span()[1]])
+                                            #     _e_array[_e_result] += 1
+                                            #     _i_result = inclusive_definer.define_string(
+                                            #         new_text[match.span()[0]:match.span()[1]])
+                                            #     _i_array[_i_result] += 1
+                                            # todo write to file param + saving to manually annotate and find tp + fp for performance eval on each pattern
+                                            # print("e{}\ti{}\t{}\t{}\t{}\n".format(_e_result, _i_result, sent, match, reg.pattern))
+
+                                            # last_found += 1
+                                            # found_in_sentence = True
+                                # else:
+                                #     # if nala not used only tmvar considered
+                                #     if not anti_doc.overlaps_with_mention(start, end):
+                                #         _e_result = exclusive_definer.define_string(
+                                #             new_text[match.span()[0]:match.span()[1]])
+                                #         _e_array[_e_result] += 1
+                                #         _i_result = inclusive_definer.define_string(
+                                #             new_text[match.span()[0]:match.span()[1]])
+                                #         _i_array[_i_result] += 1
+                                #         # todo write to file param + saving to manually annotate and find tp + fp for performance eval on each pattern
+                                #         # print("e{}\ti{}\t{}\t{}\t{}\n".format(_e_result, _i_result, sent, match, reg.pattern))
+                                #         last_found += 1
+                                #         found_in_sentence = True
 
                         if _lasttime - time.time() > 1:
                             print(i)
@@ -244,7 +301,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             _time_progressed = time.time() - _timestart
             _time_per_doc = _time_progressed / _progress
             print_verbose("PROGRESS: {:.2f} secs ETA per one positive document: {:.2f} secs".format(_time_progressed, _time_per_doc))
-            if positive_sentences > min_found:
+            if positive_sentences >= min_found:
                 last_found = 0
                 print_verbose('YEP')
                 print('Found')
@@ -252,4 +309,19 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             else:
                 print_verbose(pmid, "contains either no or only a few suitable annotations")
                 print_verbose('NOPE')
+                print(positive_sentences, pmid)
+                print(used_regexs)
                 print('Not Found')
+
+
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'

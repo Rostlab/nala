@@ -5,6 +5,8 @@ import json
 import os
 import re
 import shutil
+
+from nala.bootstrapping.document_filters import QuickNalaFilter
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
 from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
@@ -109,6 +111,9 @@ class Iteration:
 
         if not os.path.exists(os.path.join(self.current_folder)):
             os.mkdir(os.path.join(self.current_folder))
+
+        # binary model
+        self.bin_model = os.path.join(self.current_folder, 'bin_model')
 
         # stats file
         self.stats_file = os.path.join(self.bootstrapping_folder, 'stats.csv')
@@ -226,6 +231,17 @@ class Iteration:
         #         # if we have generated enough documents stop
         #         if next(c) == nr:
         #             break
+        # with DocumentSelectorPipeline(
+        #         pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
+        #         document_filters=[KeywordsDocumentFilter(),
+        #                           QuickNalaFilter(binary_model=self.bin_model, crfsuite_path=self.crfsuite_path,
+        #                                           threshold=1),
+        #                           ManualDocumentFilter()]) as dsp:
+        #     for pmid, document in dsp.execute():
+        #         dataset.documents[pmid] = document
+        #         # if we have generated enough documents stop
+        #         if next(c) == nr:
+        #             break
         with DocumentSelectorPipeline(
                 pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
                                       document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
@@ -242,7 +258,7 @@ class Iteration:
         # tagging
         print_verbose("\n\n\n======Tagging======\n\n\n")
         # prepare dataset
-        PrepareDatasetPipeline().execute(self.candidates)
+        self.pipeline.execute(self.candidates)
         # crfsuite tagger
         CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
         # postprocess
