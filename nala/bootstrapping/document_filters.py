@@ -112,7 +112,7 @@ class QuickNalaFilter(DocumentFilter):
         """best features and hyperparameters"""
 
     def filter(self, documents):
-        crfsuite = CRFSuite(self.crfsuite_path, minify=True)
+        crfsuite = CRFSuite(self.crfsuite_path)
         crfsuitetagger = CRFSuiteTagger(MUT_CLASS_ID, crfsuite, self.binary_model)
         for pmid, doc in documents:
             dataset = Dataset()
@@ -124,12 +124,13 @@ class QuickNalaFilter(DocumentFilter):
             total_nl_mentions = []
             for part in doc:
                 # print(part.annotations)
-                # print_verbose(part.predicted_annotations)
-                nl_mentions = [(ann.text, ann.subclass, ann.confidence) for ann in part.predicted_annotations if ann.subclass != 0 and ann.confidence < self.threshold]
+                print_verbose('predicted_annotations:', part.predicted_annotations)
+                nl_mentions = [(ann.text, ann.subclass, ann.confidence) for ann in part.predicted_annotations if ann.subclass != 0 and ann.confidence <= self.threshold]
                 total_nl_mentions += nl_mentions
             if any(total_nl_mentions):
-                print(json.dumps(total_nl_mentions, indent=4))
+                print('nl mentions', json.dumps(total_nl_mentions, indent=4))
                 yield pmid, doc
+            print_verbose('nothing found')
 
 
 class HighRecallRegexDocumentFilter(DocumentFilter):
@@ -331,7 +332,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             _time_progressed = time.time() - _timestart
             _time_per_doc = _time_progressed / _progress
             print_verbose("PROGRESS: {:.2f} secs ETA per one positive document: {:.2f} secs".format(_time_progressed, _time_per_doc))
-            print_verbose(json.dumps(used_regexs, indent=4))
+            print_verbose('used regular expressions:', json.dumps(used_regexs, indent=4))
             if positive_sentences >= min_found:
                 last_found = 0
                 print_verbose('YEP', pmid)
