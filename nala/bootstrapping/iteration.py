@@ -11,7 +11,7 @@ from nala.learning.postprocessing import PostProcessing
 from nalaf import print_verbose
 from nalaf.learning.crfsuite import CRFSuite
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
-from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
+from nalaf.utils.annotation_readers import AnnJsonAnnotationReader, AnnJsonMergerAnnotationReader
 from nalaf.utils.readers import HTMLReader
 from nalaf.preprocessing.labelers import BIEOLabeler
 from nalaf.learning.evaluators import MentionLevelEvaluator
@@ -175,13 +175,14 @@ class Iteration:
         just the crfsuitepart and copying the model to the iteration folder
         """
         print_verbose("\n\n\n======Learning======\n\n\n")
-
-        # crfsuite part
-        self.crf.create_input_file(self.train, 'train')
-        self.crf.learn()
-
-        shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
-                        os.path.join(self.current_folder, 'bin_model'))
+        if not os.path.exists(os.path.join(self.current_folder, 'bin_model')):
+            # crfsuite part
+            self.crf.create_input_file(self.train, 'train')
+            self.crf.learn()
+            shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
+                            os.path.join(self.current_folder, 'bin_model'))
+        else:
+            print_verbose("Already existing binary model is used.")
 
     def docselection(self, nr=2):
         """
@@ -219,12 +220,17 @@ class Iteration:
     def tagging(self, threshold_val=THRESHOLD_VALUE):
         # tagging
         print_verbose("\n\n\n======Tagging======\n\n\n")
+        # prepare dataset
         PrepareDatasetPipeline().execute(self.candidates)
+        # crfsuite tagger
         CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        # postprocess
         PostProcessing().process(self.candidates)
 
+        # gnorm tagger
         GNormPlusGeneTagger().tag(self.candidates)
 
+        # export to anndoc format
         ttf_candidates = TagTogFormat(self.candidates, self.candidates_folder)
         ttf_candidates.export_html()
         ttf_candidates.export_ann_json(threshold_val)
