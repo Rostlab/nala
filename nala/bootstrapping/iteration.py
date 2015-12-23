@@ -23,6 +23,8 @@ from nalaf.structures.data import Entity
 from nala.learning.taggers import GNormPlusGeneTagger
 import csv
 
+from nala.utils import get_prepare_pipeline_for_best_model
+
 
 class Iteration:
     """
@@ -72,6 +74,12 @@ class Iteration:
         self.predicted = None  # predicted docselected
         self.crf = CRFSuite(self.crfsuite_path, minify=True)
 
+        # preparedataset pipeline init
+        self.pipeline = get_prepare_pipeline_for_best_model()
+
+        # labeler init
+        self.labeler = BIEOLabeler()
+
         # discussion on config file in bootstrapping root or iteration_n check for n
         # note currently using parameter .. i think that s the most suitable
 
@@ -118,7 +126,7 @@ class Iteration:
     def before_annotation(self, nr_new_docs=10):
         self.read_learning_data()
         self.preprocessing()
-        self.learning()
+        self.crf_learning()
         self.docselection(nr=nr_new_docs)
         self.tagging(threshold_val=self.threshold_val)
 
@@ -158,29 +166,42 @@ class Iteration:
         # prune parts without annotations
         self.train.prune()
 
-        # generate features etc.
-        pipeline = PrepareDatasetPipeline()
-        # todo param in script to define featuregenerators
-        # --> one param for featuresgenerators
-        # --> one param for windowgenerators
-        pipeline.execute(self.train)
-        pipeline.serialize(self.train, to_file=self.debug_file)
-        # TODO QUESTION include Labeler into PrepareDatasetPipeline
-        BIEOLabeler().label(self.train)
+        # prepare features
+        self.pipeline.execute(self.train)
+        self.pipeline.serialize(self.train, to_file=self.debug_file)
+
+        # labeling
+        self.labeler.label(self.train)
+
         print_verbose(len(self.train.documents), "documents are prepared for training dataset.")
 
-    def learning(self):
+    def crf_learning(self):
         """
         Learning: base + iterations 1..n-1
         just the crfsuitepart and copying the model to the iteration folder
         """
         print_verbose("\n\n\n======Learning======\n\n\n")
+
+        # crfsuite part
+        self.crf.create_input_file(self.train, 'train')
+        self.crf.learn()
+
+        # copy bin model to folder
+        shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
+                        os.path.join(self.current_folder, 'bin_model'))
+
+
+    def learning(self):
+        """
+        import files
+        preprocess data
+        run crfsuite on data
+        """
+        self.read_learning_data()
+
         if not os.path.exists(os.path.join(self.current_folder, 'bin_model')):
-            # crfsuite part
-            self.crf.create_input_file(self.train, 'train')
-            self.crf.learn()
-            shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
-                            os.path.join(self.current_folder, 'bin_model'))
+            self.preprocessing()
+            self.crf_learning()
         else:
             print_verbose("Already existing binary model is used.")
 
