@@ -98,21 +98,21 @@ class TmVarFeatureGenerator(FeatureGenerator):
             # last token
             last_token_str = token.word
 
-    def num_lower_chars(self, str):
-        result = sum(1 for c in str if c.islower())
-        return "4+" if result > 4 else result
+    def num_lower_chars(self, string):
+        result = sum(1 for c in string if c.islower())
+        return "4+" if result > 4 else str(result)
 
-    def num_capital_chars(self, str):
-        result = sum(1 for c in str if c.isupper())
-        return "4+" if result > 4 else result
+    def num_capital_chars(self, string):
+        result = sum(1 for c in string if c.isupper())
+        return "4+" if result > 4 else str(result)
 
-    def num_digits(self, str):
-        result = sum(1 for c in str if c.isnumeric())
-        return "4+" if result > 4 else result
+    def num_digits(self, string):
+        result = sum(1 for c in string if c.isnumeric())
+        return "4+" if result > 4 else str(result)
 
-    def num_alpha(self, str):
-        result = sum(1 for c in str if c.isalpha())
-        return "4+" if result > 4 else result
+    def num_alpha(self, string):
+        result = sum(1 for c in string if c.isalpha())
+        return "4+" if result > 4 else str(result)
 
     def num_spec_chars(self, str):
         if self.reg_spec_chars.search(str):
@@ -136,7 +136,7 @@ class TmVarFeatureGenerator(FeatureGenerator):
         elif self.reg_mutat_type.search(lc_tmp):
             return "MutatType"
         else:
-            return None
+            return 'Unknown'
 
     def mutation_article_bp(self, str):
         mutat_article = ""  # NOTE is this programming ok?
@@ -191,14 +191,14 @@ class TmVarFeatureGenerator(FeatureGenerator):
             pattern = self.reg_shape_lc.sub('a', pattern)
             pattern = self.reg_shape_nr.sub('0', pattern)
             return pattern
-        return None
+        return 'None'
 
     def word_shape_2(self, str):
         if not self.reg_spec_chars.match(str):
             pattern = self.reg_shape_chars.sub('a', str)
             pattern = self.reg_shape_nr.sub('0', pattern)
             return pattern
-        return None
+        return 'None'
 
     def word_shape_3(self, str):
         if not self.reg_spec_chars.match(str):
@@ -206,14 +206,14 @@ class TmVarFeatureGenerator(FeatureGenerator):
             pattern = self.reg_shape_lc_plus.sub('a', pattern)
             pattern = self.reg_shape_nr_plus.sub('0', pattern)
             return pattern
-        return None
+        return 'None'
 
     def word_shape_4(self, str):
         if not self.reg_spec_chars.match(str):
             pattern = self.reg_shape_chars_plus.sub('a', str)
             pattern = self.reg_shape_nr_plus.sub('0', pattern)
             return pattern
-        return None
+        return 'None'
 
     def prefix_pattern(self, str):
         prefix_array = []
@@ -221,7 +221,7 @@ class TmVarFeatureGenerator(FeatureGenerator):
             if len(str) >= x:
                 prefix_array.append(str[:x])
             else:
-                prefix_array.append(None)
+                prefix_array.append('None')
         return prefix_array
 
 
@@ -231,7 +231,7 @@ class TmVarFeatureGenerator(FeatureGenerator):
             if len(str) >= x:
                 suffix_array.append(str[-x:])
             else:
-                suffix_array.append(None)
+                suffix_array.append('None')
         return suffix_array
 
     # NOTE as array

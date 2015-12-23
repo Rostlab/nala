@@ -36,10 +36,10 @@ class TmVarDefaultTest(unittest.TestCase):
             self.assertTrue(len(token.features) > 0)
 
     def test_generate(self):
-        expected_nr = iter([0, 4])
-        expected_nr_up = iter([1, 0])
-        expected_nr_lo = iter(["4+", 3])
-        expected_nr_alpha = iter(["4+", 3])
+        expected_nr = iter(['0', '4'])
+        expected_nr_up = iter(['1', '0'])
+        expected_nr_lo = iter(["4+", '3'])
+        expected_nr_alpha = iter(["4+", '3'])
         expected_nr_spec_chars = iter(["NoSpecC", "SpecC1"])
         # NOTE implemented as extra features
 
@@ -56,12 +56,12 @@ class TmVarDefaultTest(unittest.TestCase):
     def test_mutation_type(self):
         self.assertEqual(self.feature.mutation_type("fs"), "FrameShiftType")
         self.assertEqual(self.feature.mutation_type("del"), "MutatType")
-        self.assertEqual(self.feature.mutation_type("der"), None)
+        self.assertEqual(self.feature.mutation_type("der"), 'Unknown')
 
     def test_mutation_word(self):
         feature_dic = FeatureDictionary()
         eval_binary_feature(feature_dic, 'mutat_word', self.feature.reg_mutat_word.match, 'repeats')
-        self.assertEqual(feature_dic.get('mutat_word[0]'), 1)
+        self.assertEqual(feature_dic.get('mutat_word[0]'), True)
 
         feature_dic = FeatureDictionary()
         eval_binary_feature(feature_dic, 'mutat_word', self.feature.reg_mutat_word.match, 'repssts')
@@ -90,7 +90,7 @@ class TmVarDefaultTest(unittest.TestCase):
     def test_dna_symbols(self):
         feature_dic = FeatureDictionary()
         eval_binary_feature(feature_dic, 'dna_symbols', self.feature.reg_dna_symbols.match, 'A')
-        self.assertEqual(feature_dic.get('dna_symbols[0]'), 1)
+        self.assertEqual(feature_dic.get('dna_symbols[0]'), True)
 
         feature_dic = FeatureDictionary()
         eval_binary_feature(feature_dic, 'dna_symbols', self.feature.reg_dna_symbols.match, 'asd')
@@ -121,11 +121,11 @@ class TmVarDefaultTest(unittest.TestCase):
         self.assertEqual(self.feature.word_shape_4("Bs0ssaDB2"), "a0a0")
 
     def test_prefix_pattern(self):
-        self.assertEqual(self.feature.prefix_pattern("A"), ["A", None, None, None, None])
+        self.assertEqual(self.feature.prefix_pattern("A"), ["A", 'None', 'None', 'None', 'None'])
         self.assertEqual(self.feature.prefix_pattern("ASDASD"), ["A", "AS", "ASD", "ASDA", "ASDAS"])
 
     def test_suffix_pattern(self):
-        self.assertEqual(self.feature.suffix_pattern("ABC"), ["C", "BC", "ABC", None, None])
+        self.assertEqual(self.feature.suffix_pattern("ABC"), ["C", "BC", "ABC", 'None', 'None'])
 
 
 class TestTmVarDictionaryFeatureGenerator(unittest.TestCase):
