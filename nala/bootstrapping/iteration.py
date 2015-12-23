@@ -244,7 +244,7 @@ class Iteration:
         #             break
         with DocumentSelectorPipeline(
                 pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                                      document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
+                                      document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
                                           binary_model=os.path.join(self.current_folder, 'bin_model'),
                                           expected_max_results=nr), ManualDocumentFilter()]) as dsp:
             for pmid, document in dsp.execute():
