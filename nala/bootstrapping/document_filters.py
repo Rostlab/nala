@@ -57,9 +57,11 @@ class KeywordsDocumentFilter(DocumentFilter):
     """
     def __init__(self, keywords=None):
         if not keywords:
-            keywords = ('mutation', 'variation', 'substitution', 'insertion', 'deletion', 'snp')
+            keywords = ('mutat\w*', 'variat\w*', 'substit\w*', 'insert\w*', 'delet\w*', 'snp')
         self.keywords = keywords
         """the keywords which the document should contain"""
+
+        self.keywords = (re.compile(keyword, re.IGNORECASE) for keyword in keywords)
 
     def filter(self, documents):
         """
@@ -68,7 +70,7 @@ class KeywordsDocumentFilter(DocumentFilter):
         for pmid, doc in documents:
             # if any part of the document contains any of the keywords
             # yield that document
-            if any(any(keyword in part.text.lower() for keyword in self.keywords)
+            if any(any(keyword.search(part.text) for keyword in self.keywords)
                    for part in doc.parts.values()):
                 yield pmid, doc
 
