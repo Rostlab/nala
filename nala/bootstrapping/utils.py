@@ -52,14 +52,16 @@ class UniprotDocumentSelector(Cacheable):
         evidence_ids = []
         for elem in xml.findall('.//u:feature[@evidence]', ns):
             if elem.attrib['type'] in ('sequence variant', 'mutagenesis site'):
-                evidence_ids.append(elem.attrib['evidence'])
+                evidence_ids += elem.attrib['evidence'].split(' ')
 
-        for elem in xml.findall('.//u:evidence[@key="{}"]/u:source/u:dbReference[@type="PubMed"]'.format(18), ns):
-            pubmed_id = elem.attrib['id']
-            # check to see if we have seen this id before
-            if pubmed_id not in self.processed:
-                self.processed.add(pubmed_id)
-                yield pubmed_id
+        for evidence_id in evidence_ids:
+            for elem in xml.findall(
+                    './/u:evidence[@key="{}"]/u:source/u:dbReference[@type="PubMed"]'.format(evidence_id), ns):
+                pubmed_id = elem.attrib['id']
+                # check to see if we have seen this id before
+                if pubmed_id not in self.processed:
+                    self.processed.add(pubmed_id)
+                    yield pubmed_id
 
     def get_pubmed_ids(self):
         for uniprot_id in self._get_uniprot_ids():

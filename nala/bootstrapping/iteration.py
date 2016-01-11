@@ -1,19 +1,23 @@
 import glob
-from collections import defaultdict
-from itertools import product, chain
 import json
 import os
 import re
 import shutil
+import time
+import csv
+
+from collections import defaultdict
+from itertools import product, chain
 from nala.bootstrapping.utils import UniprotDocumentSelector
 from nala.bootstrapping.utils import PMIDDocumentSelector
+from nala.bootstrapping.document_filters import QuickNalaFilter
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
 from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
 from nalaf import print_verbose
 from nalaf.learning.crfsuite import CRFSuite
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
-from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
+from nalaf.utils.annotation_readers import AnnJsonAnnotationReader, AnnJsonMergerAnnotationReader
 from nalaf.utils.readers import HTMLReader
 from nalaf.preprocessing.labelers import BIEOLabeler
 from nalaf.learning.evaluators import MentionLevelEvaluator
@@ -23,7 +27,7 @@ from nalaf.learning.taggers import CRFSuiteTagger
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
 from nalaf.structures.data import Entity
 from nala.learning.taggers import GNormPlusGeneTagger
-import csv
+from nala.utils import get_prepare_pipeline_for_best_model
 
 
 class Iteration:
@@ -74,6 +78,12 @@ class Iteration:
         self.predicted = None  # predicted docselected
         self.crf = CRFSuite(self.crfsuite_path, minify=True)
 
+        # preparedataset pipeline init
+        self.pipeline = get_prepare_pipeline_for_best_model()
+
+        # labeler init
+        self.labeler = BIEOLabeler()
+
         # discussion on config file in bootstrapping root or iteration_n check for n
         # note currently using parameter .. i think that s the most suitable
 
@@ -104,6 +114,9 @@ class Iteration:
         if not os.path.exists(os.path.join(self.current_folder)):
             os.mkdir(os.path.join(self.current_folder))
 
+        # binary model
+        self.bin_model = os.path.join(self.current_folder, 'bin_model')
+
         # stats file
         self.stats_file = os.path.join(self.bootstrapping_folder, 'stats.csv')
         self.results_file = os.path.join(self.current_folder, 'batch_results.txt')
@@ -118,7 +131,9 @@ class Iteration:
                                  'tp', 'fp', 'fn', 'fp_overlap', 'fn_overlap', 'precision', 'recall', 'f1-score'])
 
     def before_annotation(self, nr_new_docs=10):
-        self.learning()
+        self.read_learning_data()
+        self.preprocessing()
+        self.crf_learning()
         self.docselection(nr=nr_new_docs)
         self.tagging(threshold_val=self.threshold_val)
 
@@ -126,19 +141,19 @@ class Iteration:
         self.manual_review_import()
         self.evaluation()
 
-    def learning(self):
+    def read_learning_data(self):
         """
-        Learning: base + iterations 1..n-1
-        :return:
+        Loads and parses the annotations from base + following iterations into self.train
         """
-        print_verbose("\n\n\n======Learning======\n\n\n")
-        # parse base + reviewed files
-        # base
+        print_verbose("\n\n\n======Data======\n\n\n")
+
         base_folder = os.path.join(self.bootstrapping_folder, "iteration_0/base/")
         html_base_folder = base_folder + "html/"
         annjson_base_folder = base_folder + "annjson/"
         self.train = HTMLReader(html_base_folder).read()
-        AnnJsonAnnotationReader(annjson_base_folder).annotate(self.train)
+        # TODO mergannotationreader --> change how to add annotations and read them from there...
+        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
+                                      entity_strategy='priority').annotate(self.train)
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
         # extend for each next iteration
@@ -152,25 +167,53 @@ class Iteration:
                 # extend learning_data
                 self.train.extend_dataset(tmp_data)
 
+    def preprocessing(self):
+        """
+        Pre-processing including pruning, generating features, generating labels.
+        """
         # prune parts without annotations
         self.train.prune()
 
-        # generate features etc.
-        pipeline = PrepareDatasetPipeline()
-        pipeline.execute(self.train)
-        pipeline.serialize(self.train, to_file=self.debug_file)
+        # prepare features
+        self.pipeline.execute(self.train)
+        self.pipeline.serialize(self.train, to_file=self.debug_file)
 
-        BIEOLabeler().label(self.train)
+        # labeling
+        self.labeler.label(self.train)
+
         print_verbose(len(self.train.documents), "documents are prepared for training dataset.")
+
+    def crf_learning(self):
+        """
+        Learning: base + iterations 1..n-1
+        just the crfsuitepart and copying the model to the iteration folder
+        """
+        print_verbose("\n\n\n======Learning======\n\n\n")
 
         # crfsuite part
         self.crf.create_input_file(self.train, 'train')
         self.crf.learn()
 
+        # copy bin model to folder
         shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
                         os.path.join(self.current_folder, 'bin_model'))
 
-    def docselection(self, nr=2):
+
+    def learning(self):
+        """
+        import files
+        preprocess data
+        run crfsuite on data
+        """
+        self.read_learning_data()
+
+        if not os.path.exists(os.path.join(self.current_folder, 'bin_model')):
+            self.preprocessing()
+            self.crf_learning()
+        else:
+            print_verbose("Already existing binary model is used.")
+
+    def docselection(self, nr=2, just_caching=False):
         """
         Does the same as generate_documents(n) but the bootstrapping folder is specified in here.
         :param nr: amount of new documents wanted
@@ -182,37 +225,69 @@ class Iteration:
         c = count(1)
 
         dataset = Dataset()
-        # with DocumentSelectorPipeline(
-        #         pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-        #                               document_filters=[KeywordsDocumentFilter(),
-        #                                   ManualDocumentFilter()]) as dsp:
-        #     for pmid, document in dsp.execute():
-        #         dataset.documents[pmid] = document
-        #         # if we have generated enough documents stop
-        #         if next(c) == nr:
-        #             break
-        with DocumentSelectorPipeline(
-                document_selector=UniprotDocumentSelector(),
-                pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                document_filters=[KeywordsDocumentFilter(), HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
-                    binary_model=os.path.join(self.current_folder, 'bin_model'),
-                    expected_max_results=nr), ManualDocumentFilter()]) as dsp:
-            for pmid, document in dsp.execute():
-                dataset.documents[pmid] = document
-                # if we have generated enough documents stop
-                if next(c) == nr:
-                    break
+
+        if just_caching:
+            _counter = 0
+            _total = 0
+            with DocumentSelectorPipeline(
+                    document_selector=UniprotDocumentSelector(),
+                    pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)]
+                    ) as dsp:
+                _starttime = time.perf_counter()
+                for pmid, document in dsp.execute():
+
+                    dataset.documents[pmid] = document
+
+                    _counter += 1
+                    _tmptime = time.perf_counter()
+                    _one_it = _tmptime - _starttime
+                    _starttime = _tmptime
+
+                    _total += _one_it
+                    # print_verbose('total', _total)
+                    _eta_one = _total / _counter
+                    _counter_left = nr - _counter
+                    _eta_left = _eta_one * _counter_left
+                    print_verbose(
+                        'NrOfDocs: {} | ETA Left for {}: {:.3f} | ETA One for One: {:.3f}'.format(_counter, _counter_left,
+                                                                                          _eta_left, _eta_one))
+
+                    # if we have generated enough documents stop
+                    if next(c) == nr:
+                        break
+        else:
+            with DocumentSelectorPipeline(
+                    document_selector=UniprotDocumentSelector(),
+                    pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
+                    document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
+                                                                    binary_model=os.path.join(self.current_folder,
+                                                                                              'bin_model'),
+                                                                    expected_max_results=nr),
+                                      QuickNalaFilter(binary_model=self.bin_model,
+                                                      crfsuite_path=self.crfsuite_path, threshold=1),
+                                      ManualDocumentFilter()]) as dsp:
+                for pmid, document in dsp.execute():
+                    dataset.documents[pmid] = document
+                    # if we have generated enough documents stop
+                    if next(c) == nr:
+                        break
+
         self.candidates = dataset
 
     def tagging(self, threshold_val=THRESHOLD_VALUE):
         # tagging
         print_verbose("\n\n\n======Tagging======\n\n\n")
-        PrepareDatasetPipeline().execute(self.candidates)
+        # prepare dataset
+        self.pipeline.execute(self.candidates)
+        # crfsuite tagger
         CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        # postprocess
         PostProcessing().process(self.candidates)
 
+        # gnorm tagger
         GNormPlusGeneTagger().tag(self.candidates)
 
+        # export to anndoc format
         ttf_candidates = TagTogFormat(self.candidates, self.candidates_folder)
         ttf_candidates.export_html()
         ttf_candidates.export_ann_json(threshold_val)
