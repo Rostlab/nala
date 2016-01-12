@@ -23,7 +23,7 @@ from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.learning.taggers import CRFSuiteTagger
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
 from nalaf.structures.data import Entity
-from nala.learning.taggers import GNormPlusGeneTagger
+from nalaf.learning.taggers import GNormPlusGeneTagger
 import csv
 
 from nala.utils import get_prepare_pipeline_for_best_model

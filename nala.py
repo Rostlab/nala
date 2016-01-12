@@ -10,8 +10,8 @@ from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.learning.crfsuite import CRFSuite
 from nalaf.learning.taggers import CRFSuiteTagger
 from nala.utils import MUT_CLASS_ID
-from nala.learning.taggers import GNormPlusGeneTagger
-from nala.learning.taggers import StubSameSentenceRelationExtractor
+from nalaf.learning.taggers import GNormPlusGeneTagger
+from nalaf.learning.taggers import StubSameSentenceRelationExtractor
 from nala.learning.postprocessing import PostProcessing
 
 

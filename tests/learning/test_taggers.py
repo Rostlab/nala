@@ -1,8 +1,8 @@
 import unittest
 from nose.plugins.attrib import attr
-from nala.learning.taggers import StubSameSentenceRelationExtractor
+from nalaf.learning.taggers import StubSameSentenceRelationExtractor
 from nalaf.structures.data import *
-from nala.learning.taggers import GNormPlusGeneTagger
+from nalaf.learning.taggers import GNormPlusGeneTagger
 from nalaf.preprocessing.spliters import NLTKSplitter
 from nalaf.preprocessing.tokenizers import TmVarTokenizer
 from nala.utils import PRO_CLASS_ID, MUT_CLASS_ID, PRO_REL_MUT_CLASS_ID
