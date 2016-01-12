@@ -4,8 +4,6 @@ import requests
 from nalaf.structures.data import Document, Part
 from nalaf.utils.cache import Cacheable
 
-__author__ = 'Aleksandar'
-
 
 class UniprotDocumentSelector(Cacheable):
     """
@@ -69,3 +67,18 @@ class UniprotDocumentSelector(Cacheable):
         for uniprot_id in self._get_uniprot_ids():
             for pubmed_id in self._get_pubmed_ids_for_protein(uniprot_id):
                 yield pubmed_id
+
+
+class PMIDDocumentSelector():
+    """
+    Stub selector: selects the list of PMIDs as directly given by the user.
+    """
+
+    def __init__(self, pmids):
+        self.pmids = pmids
+
+    def get_pubmed_ids(self):
+        """
+        Return List of PMIDs.
+        """
+        return self.pmids

@@ -1,12 +1,15 @@
 import glob
-from collections import defaultdict
-from itertools import product, chain
 import json
 import os
 import re
 import shutil
 import time
+import csv
 
+from collections import defaultdict
+from itertools import product, chain
+from nala.bootstrapping.utils import UniprotDocumentSelector
+from nala.bootstrapping.utils import PMIDDocumentSelector
 from nala.bootstrapping.document_filters import QuickNalaFilter
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
 from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
@@ -224,34 +227,13 @@ class Iteration:
         c = count(1)
 
         dataset = Dataset()
-        # with DocumentSelectorPipeline(
-        #         pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-        #                               document_filters=[KeywordsDocumentFilter(),
-        #                                   ManualDocumentFilter()]) as dsp:
-        #     for pmid, document in dsp.execute():
-        #         dataset.documents[pmid] = document
-        #         # if we have generated enough documents stop
-        #         if next(c) == nr:
-        #             break
-        # with DocumentSelectorPipeline(
-        #         pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-        #         document_filters=[KeywordsDocumentFilter(),
-        #                           QuickNalaFilter(binary_model=self.bin_model, crfsuite_path=self.crfsuite_path,
-        #                                           threshold=1),
-        #                           ManualDocumentFilter()]) as dsp:
-        #     for pmid, document in dsp.execute():
-        #         dataset.documents[pmid] = document
-        #         # if we have generated enough documents stop
-        #         if next(c) == nr:
-        #             break
+
         if just_caching:
             _counter = 0
             _total = 0
             with DocumentSelectorPipeline(
-                    pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                    # document_filters=[HighRecallRegexDocumentFilter(binary_model=self.bin_model,
-                    #                                                 crfsuite_path=self.crfsuite_path, use_nala=False,
-                    #                                                 min_found=0)]
+                    document_selector=UniprotDocumentSelector(),
+                    pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)]
                     ) as dsp:
                 _starttime = time.perf_counter()
                 for pmid, document in dsp.execute():
@@ -277,6 +259,7 @@ class Iteration:
                         break
         else:
             with DocumentSelectorPipeline(
+                    document_selector=UniprotDocumentSelector(),
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
                     document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
                                                                     binary_model=os.path.join(self.current_folder,
@@ -290,6 +273,7 @@ class Iteration:
                     # if we have generated enough documents stop
                     if next(c) == nr:
                         break
+
         self.candidates = dataset
 
     def tagging(self, threshold_val=THRESHOLD_VALUE):

@@ -23,7 +23,7 @@ The goals of this project can be found on the [wiki.](https://github.com/carsten
     git clone https://github.com/carstenuhlig/thesis-alex-carsten.git
     cd thesis-alex-carsten
     python3 setup.py install
-    python3 -m nala.download_corpora
+    python3 -m nalaf.download_corpora
 
  If you want to run the unit tests (excluding the slow ones) do:
 
