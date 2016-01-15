@@ -409,6 +409,7 @@ class Iteration:
             self.crf.read_predictions(test)
 
             ExclusiveNLDefiner().define(test)
+            PostProcessing().process(test)
 
             with open(cv_file, 'a', newline='') as file:
                 writer = csv.writer(file)
