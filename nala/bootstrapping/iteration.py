@@ -15,7 +15,7 @@ from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighReca
 from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
 from nalaf import print_verbose
-from nalaf.learning.crfsuite import CRFSuite
+from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader, AnnJsonMergerAnnotationReader
 from nalaf.utils.readers import HTMLReader
@@ -366,6 +366,8 @@ class Iteration:
         does k fold cross validation with split being k
         :param split: int
         """
+        py_crf = PyCRFSuite()
+
         base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
         data = HTMLReader(os.path.join(base_folder, 'html')).read()
         AnnJsonAnnotationReader(os.path.join(base_folder, 'annjson')).annotate(data)
@@ -399,14 +401,11 @@ class Iteration:
             train.prune()
             PrepareDatasetPipeline().execute(train)
             BIEOLabeler().label(train)
-            self.crf.create_input_file(train, 'train')
-            self.crf.learn()
+            py_crf.train(train, 'cross_validation_model')
 
             PrepareDatasetPipeline().execute(test)
             BIEOLabeler().label(test)
-            self.crf.create_input_file(test, 'test')
-            self.crf.tag('-m default_model -i test > output.txt')
-            self.crf.read_predictions(test)
+            py_crf.tag(test, 'cross_validation_model')
 
             ExclusiveNLDefiner().define(test)
             PostProcessing().process(test)
