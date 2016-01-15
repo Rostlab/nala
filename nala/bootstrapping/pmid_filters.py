@@ -49,13 +49,10 @@ class AlreadyConsideredPMIDFilter(PMIDFilter):
             if which_iteration < self.iteration_n and files:
                 for file in files:
                     # try to find the pmid based on file name convention
-                    file_match = re.search('-((PMC)?([0-9]+))\.(ann|plain)?\.(json|html)', file)
+                    file_match = re.search('-?((PMC)?([0-9_]+))(.ann|.plain|)?\.(json|html)', file)
                     # extract the pmid if you found it
                     if file_match:
                         considered_pmids.add(file_match.group(1))
-                    else:
-                        considered_pmids.add(os.path.basename(file))
-
         # yield only pmids that have not been considered in a previous iteration
         for pmid in pmids:
             if pmid not in considered_pmids:
