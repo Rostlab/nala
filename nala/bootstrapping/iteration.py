@@ -370,7 +370,9 @@ class Iteration:
 
         base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
         data = HTMLReader(os.path.join(base_folder, 'html')).read()
-        AnnJsonAnnotationReader(os.path.join(base_folder, 'annjson')).annotate(data)
+        AnnJsonMergerAnnotationReader(os.path.join(os.path.join(base_folder, 'annjson'), 'members'),
+                                      strategy='intersection', entity_strategy='priority').annotate(data)
+        print_verbose(len(data), 'documents in base')
 
         for fold in range(1, self.number):
             iteration_base = os.path.join(self.bootstrapping_folder, "iteration_{}".format(fold))
@@ -378,6 +380,7 @@ class Iteration:
             tmp_data = HTMLReader(os.path.join(os.path.join(iteration_base, 'candidates'), 'html')).read()
             AnnJsonAnnotationReader(os.path.join(iteration_base, 'reviewed')).annotate(tmp_data)
             data.extend_dataset(tmp_data)
+        print_verbose(len(data), 'documents in total')
 
         last_iteration = os.path.join(self.bootstrapping_folder, "iteration_{}".format(self.number-1))
         cv_file = os.path.join(last_iteration, 'cross_validation.csv')
@@ -395,6 +398,7 @@ class Iteration:
         subclass_averages_overlapping = defaultdict(list)
 
         for fold in range(split):
+            print_verbose('starting with fold:', fold)
             train = train_splits[fold]
             test = test_splits[fold]
 
@@ -451,20 +455,20 @@ class Iteration:
             for subclass, averages in subclass_averages_exact.items():
                 writer.writerow(list(chain(['sum_of_folds', 'exact', subclass],
                                            MentionLevelEvaluator(strictness='exact').calc_measures(
-                                               *[sum(col) for col in zip(*averages)][:5]))))
+                                                   *[sum(col) for col in zip(*averages)][:5]))))
             writer.writerow(list(chain(['sum_of_folds', 'exact', 'total'],
                                        MentionLevelEvaluator(strictness='exact').calc_measures(
-                                           *[sum(col) for col in zip(*folds_results_exact)][:5]))))
+                                               *[sum(col) for col in zip(*folds_results_exact)][:5]))))
 
             with open(self.stats_file, 'a',  newline='') as stats_write_file:
                 stats_writer = csv.writer(stats_write_file)
                 for subclass, averages in subclass_averages_exact.items():
                     stats = MentionLevelEvaluator(strictness='overlapping').calc_measures(
-                        *[sum(col) for col in zip(*averages)][:5])
+                            *[sum(col) for col in zip(*averages)][:5])
                     writer.writerow(list(chain(['sum_of_folds', 'overlapping', subclass], stats)))
                     stats_writer.writerow([self.number-1, subclass, self.threshold_val] + list(stats))
 
                 stats = MentionLevelEvaluator(strictness='overlapping').calc_measures(
-                    *[sum(col) for col in zip(*folds_results_exact)][:5])
+                        *[sum(col) for col in zip(*folds_results_exact)][:5])
                 writer.writerow(list(chain(['sum_of_folds', 'overlapping', 'total'], stats)))
                 stats_writer.writerow([self.number-1, 'total', self.threshold_val] + list(stats))
