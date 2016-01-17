@@ -397,17 +397,18 @@ class Iteration:
         subclass_averages_exact = defaultdict(list)
         subclass_averages_overlapping = defaultdict(list)
 
+        pipeline = get_prepare_pipeline_for_best_model()
         for fold in range(split):
             print_verbose('starting with fold:', fold)
             train = train_splits[fold]
             test = test_splits[fold]
 
             train.prune()
-            PrepareDatasetPipeline().execute(train)
+            pipeline.execute(train)
             BIEOLabeler().label(train)
             py_crf.train(train, 'cross_validation_model')
 
-            PrepareDatasetPipeline().execute(test)
+            pipeline.execute(test)
             BIEOLabeler().label(test)
             py_crf.tag(test, 'cross_validation_model')
 
