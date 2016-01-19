@@ -78,7 +78,8 @@ class Iteration:
         self.train = None  # first
         self.candidates = None  # non predicted docselected
         self.predicted = None  # predicted docselected
-        self.crf = CRFSuite(self.crfsuite_path, minify=True)
+        # self.crf = CRFSuite(self.crfsuite_path, minify=True)
+        self.crf = PyCRFSuite()
 
         # preparedataset pipeline init
         self.pipeline = get_prepare_pipeline_for_best_model()
@@ -158,7 +159,6 @@ class Iteration:
         # TODO mergannotationreader --> change how to add annotations and read them from there...
         AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
                                       entity_strategy='priority').annotate(self.train)
-        print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
         # extend for each next iteration
         if self.number > 1:
@@ -170,6 +170,8 @@ class Iteration:
 
                 # extend learning_data
                 self.train.extend_dataset(tmp_data)
+
+        print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
     def preprocessing(self):
         """
@@ -195,8 +197,9 @@ class Iteration:
         print_verbose("\n\n\n======Learning======\n\n\n")
 
         # crfsuite part
-        self.crf.create_input_file(self.train, 'train')
-        self.crf.learn()
+        # self.crf.create_input_file(self.train, 'train')
+        # self.crf.learn()
+        self.crf.train(self.train, os.path.join(self.current_folder, 'bin_model'))
 
         # copy bin model to folder
         shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
@@ -284,7 +287,9 @@ class Iteration:
         # prepare dataset
         self.pipeline.execute(self.candidates)
         # crfsuite tagger
-        CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        # CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        self.crf.tag(self.candidates, os.path.join(self.current_folder, 'bin_model'))
+
         # postprocess
         PostProcessing().process(self.candidates)
 

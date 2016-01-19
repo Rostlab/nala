@@ -4,7 +4,7 @@ import json
 import re
 import time
 import pkg_resources
-from nalaf.learning.crfsuite import CRFSuite
+from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
 from nala.learning.postprocessing import PostProcessing
 from nalaf.learning.taggers import CRFSuiteTagger
 from nalaf import print_verbose
@@ -200,9 +200,9 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         _i_array = [0, 0]
 
         last_found = 0
-        crfsuite = CRFSuite(self.crfsuite_path)
-        crfsuitetagger = CRFSuiteTagger([MUT_CLASS_ID], crf_suite=crfsuite, model_file=self.location_binary_model)
-
+        # crfsuite = CRFSuite(self.crfsuite_path)
+        # crfsuitetagger = CRFSuiteTagger([MUT_CLASS_ID], crf_suite=crfsuite, model_file=self.location_binary_model)
+        crf = PyCRFSuite()
 
         # counter_to_stop_for_caching = 0
 
@@ -223,7 +223,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             # data_tmvar = TmVarTagger().generate_abstracts([pmid])
             if use_nala:
                 self.pipeline.execute(data_nala)
-                crfsuitetagger.tag(data_nala)
+                crf.tag(data_nala, self.location_binary_model)
                 PostProcessing().process(data_nala)
                 ExclusiveNLDefiner().define(data_nala)
 
