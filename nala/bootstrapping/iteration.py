@@ -144,6 +144,7 @@ class Iteration:
         self.tagging(threshold_val=self.threshold_val)
 
     def after_annotation(self):
+        self.clean_reviewed_files()
         self.manual_review_import()
         self.evaluation()
 
@@ -491,3 +492,12 @@ class Iteration:
                         *[sum(col) for col in zip(*folds_results_exact)][:5])
                 writer.writerow(list(chain(['sum_of_folds', 'overlapping', 'total'], stats)))
                 stats_writer.writerow([self.number-1, 'total', self.threshold_val] + list(stats))
+
+    def clean_reviewed_files(self):
+        import re
+        candidates = HTMLReader(os.path.join(self.candidates_folder, 'html')).read()
+        for (dirpath, dirnames, filenames) in os.walk(self.reviewed_folder):
+            for filename in filenames:
+                docid = re.sub(r'.*-(\d+)\..*', r'\1', filename)
+                if docid not in candidates.documents.keys():
+                    os.remove(os.path.join(dirpath, filename))
