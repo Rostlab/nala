@@ -6,7 +6,6 @@ The import and export classes are contained there as well. Other classes are:
 – Tagger which implements an easy interface to be able to use external taggers for example TmVarTagger, that can use PubTator as well, to download mutation mentions through the tmVar method.
 – Uniprot helps with normalising EntrezGene IDs [22] to Uniprot IDs [23]. This is part of the normalisation process in class GNormPlusGeneTagger.
 """
-
 PRO_CLASS_ID = 'e_1'
 MUT_CLASS_ID = 'e_2'
 ORG_CLASS_ID = 'e_3'
@@ -37,3 +36,42 @@ def get_prepare_pipeline_for_best_model():
                                                       TmVarFeatureGenerator(), TmVarDictionaryFeatureGenerator(),
                                                       WindowFeatureGenerator(template=(-3, -2, -1, 1, 2, 3),
                                                                              include_list=include)])
+
+
+def get_word_embeddings_feature_generator():
+    """
+    :returns: nalaf.features.embeddings.WordEmbeddingsFeatureGenerator
+    """
+    import os
+    import tarfile
+
+    import pkg_resources
+    import requests
+    from nalaf.features.embeddings import WordEmbeddingsFeatureGenerator
+
+    we_model = pkg_resources.resource_filename('nala.data', os.path.join('model', 'model'))
+    print(os.path.exists(we_model))
+    if not os.path.exists(we_model):
+        answer = input('Word Embeddings model is missing. Do you want us to download it? [y/n]')
+
+        # Download the model
+        if answer.lower() == 'y':
+            print('Downloading')
+            model_url = 'https://rostlab.org/~cejuela/model.tar.gz'
+            we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'we_model.tar.gz')
+
+            response = requests.get(url=model_url, stream=True)
+            with open(we_model_tar_gz, 'wb') as file:
+                for chunk in response.iter_content(8048):
+                    if chunk:
+                        file.write(chunk)
+            # Unpack the model
+            print('Extracting')
+
+            tar = tarfile.open(we_model_tar_gz)
+            tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
+            tar.close()
+        else:
+            return None
+
+    return WordEmbeddingsFeatureGenerator(we_model)
