@@ -83,6 +83,7 @@ class Iteration:
 
         # preparedataset pipeline init
         self.pipeline = get_prepare_pipeline_for_best_model()
+        """ :type PrepareDatasetPipeline: """
 
         # labeler init
         self.labeler = BIEOLabeler()
@@ -150,7 +151,7 @@ class Iteration:
         """
         Loads and parses the annotations from base + following iterations into self.train
         """
-        print_verbose("\n\n\n======Data======\n\n\n")
+        print_verbose("\n\n####ParseData####\n")
 
         base_folder = os.path.join(self.bootstrapping_folder, "iteration_0/base/")
         html_base_folder = base_folder + "html/"
@@ -177,14 +178,17 @@ class Iteration:
         """
         Pre-processing including pruning, generating features, generating labels.
         """
+        print_verbose("\n\n####PreProcess####\n")
         # prune parts without annotations
         self.train.prune()
 
         # prepare features
+        print_verbose("##PreparePipeline##")
         self.pipeline.execute(self.train)
         self.pipeline.serialize(self.train, to_file=self.debug_file)
 
         # labeling
+        print_verbose("##Labeling##")
         self.labeler.label(self.train)
 
         print_verbose(len(self.train.documents), "documents are prepared for training dataset.")
@@ -194,16 +198,16 @@ class Iteration:
         Learning: base + iterations 1..n-1
         just the crfsuitepart and copying the model to the iteration folder
         """
-        print_verbose("\n\n\n======Learning======\n\n\n")
+        print_verbose("\n\n####Learning####\n")
 
         # crfsuite part
         # self.crf.create_input_file(self.train, 'train')
         # self.crf.learn()
-        self.crf.train(self.train, os.path.join(self.current_folder, 'bin_model'))
+        self.crf.train(self.train, self.bin_model)
 
         # copy bin model to folder
-        shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
-                        os.path.join(self.current_folder, 'bin_model'))
+        # shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
+        #                 os.path.join(self.current_folder, 'bin_model'))
 
 
     def learning(self):
@@ -212,9 +216,10 @@ class Iteration:
         preprocess data
         run crfsuite on data
         """
+        print_verbose("####learning####")
         self.read_learning_data()
 
-        if not os.path.exists(os.path.join(self.current_folder, 'bin_model')):
+        if not os.path.exists(self.bin_model):
             self.preprocessing()
             self.crf_learning()
         else:
@@ -241,6 +246,7 @@ class Iteration:
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)]
                     ) as dsp:
                 _starttime = time.perf_counter()
+                _already_downloaded = 0
                 for pmid, document in dsp.execute():
 
                     dataset.documents[pmid] = document
@@ -250,13 +256,19 @@ class Iteration:
                     _one_it = _tmptime - _starttime
                     _starttime = _tmptime
 
+                    if _one_it < 0.25:  # check if not already downloaded (for eta calculation)
+                        _already_downloaded += 1
+                        _counter -= 1
+                        _total -= _one_it
+
                     _total += _one_it
                     # print_verbose('total', _total)
-                    _eta_one = _total / _counter
-                    _counter_left = nr - _counter
-                    _eta_left = _eta_one * _counter_left
-                    print_verbose(
-                        'NrOfDocs: {} | ETA Left for {}: {:.3f} | ETA One for One: {:.3f}'.format(_counter, _counter_left,
+                    if _counter > 0:
+                        _eta_one = _total / _counter
+                        _counter_left = nr - _counter - _already_downloaded
+                        _eta_left = _eta_one * _counter_left
+                        print_verbose(
+                            'NrOfDocs: {} | ETA Left for {}: {:.3f} | ETA One for One: {:.3f}'.format(_counter, _counter_left,
                                                                                           _eta_left, _eta_one))
 
                     # if we have generated enough documents stop
@@ -267,8 +279,7 @@ class Iteration:
                     document_selector=UniprotDocumentSelector(),
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
                     document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
-                                                                    binary_model=os.path.join(self.current_folder,
-                                                                                              'bin_model'),
+                                                                    binary_model=self.bin_model,
                                                                     expected_max_results=nr, use_nala=True),
                                       # QuickNalaFilter(binary_model=self.bin_model,
                                       #                 crfsuite_path=self.crfsuite_path, threshold=1),
@@ -288,7 +299,7 @@ class Iteration:
         self.pipeline.execute(self.candidates)
         # crfsuite tagger
         # CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
-        self.crf.tag(self.candidates, os.path.join(self.current_folder, 'bin_model'))
+        self.crf.tag(self.candidates, self.bin_model)
 
         # postprocess
         PostProcessing().process(self.candidates)

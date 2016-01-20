@@ -7,7 +7,7 @@ import pkg_resources
 from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
 from nala.learning.postprocessing import PostProcessing
 from nalaf.learning.taggers import CRFSuiteTagger
-from nalaf import print_verbose
+from nalaf import print_verbose, print_debug
 from nala.preprocessing.definers import InclusiveNLDefiner
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.preprocessing.spliters import NLTKSplitter
@@ -276,12 +276,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                             end = part_offset + sent_offset + match.span()[1]
                             # print("TmVar is not overlapping?:", not anti_doc.overlaps_with_mention(start, end))
                             # print(not nala_doc.overlaps_with_mention(start, end, annotated=False))
-                            if use_nala:
-                                nala_found_mention = nala_doc.overlaps_with_mention(start, end, annotated=False)
-                                if nala_found_mention:
-                                    print_verbose(nala_found_mention)
-                                    if nala_found_mention.subclass > 0 and nala_found_mention.confidence <= self.threshold:
-                                        yield pmid, doc
+
 
                             if reg.pattern in used_regexs:
                                 used_regexs[reg.pattern] += 1
@@ -320,6 +315,13 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                                 #         last_found += 1
                                 #         found_in_sentence = True
 
+                            if use_nala:
+                                nala_found_mention = nala_doc.overlaps_with_mention(start, end, annotated=False)
+                                if nala_found_mention:
+                                    print_verbose(nala_found_mention)
+                                    if nala_found_mention.subclass > 0 and nala_found_mention.confidence <= self.threshold:
+                                        yield pmid, doc
+
                         if _lasttime - time.time() > 1:
                             print_verbose('time intensive regex', i)
                     sent_offset += 2 + sent_length
@@ -331,10 +333,18 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                 part_offset += sent_offset
             if positive_sentences > min_found:
                 _progress += 1
+            if use_nala:
+                for part in nala_doc:
+                    for ann in part.predicted_annotations:
+                        if ann.subclass > 0:
+                            print_verbose(part.text[:ann.offset] + color.BOLD + ann.text + color.END + part.text[
+                                                                                                       ann.offset + len(
+                                                                                                           ann.text):])
+                            positive_sentences += min_found
             _time_progressed = time.time() - _timestart
             _time_per_doc = _time_progressed / _progress
             print_verbose("PROGRESS: {:.2f} secs ETA per one positive document: {:.2f} secs".format(_time_progressed, _time_per_doc))
-            print_verbose('used regular expressions:', json.dumps(used_regexs, indent=4))
+            print_debug('used regular expressions:', json.dumps(used_regexs, indent=4))
             if positive_sentences >= min_found:
                 last_found = 0
                 print_verbose('YEP', pmid)
