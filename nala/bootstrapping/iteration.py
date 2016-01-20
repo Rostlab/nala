@@ -93,6 +93,8 @@ class Iteration:
 
         print_verbose('Check for Iteration Number....')
 
+        # TODO make state checks (e.g. has bin model, reviewed files, candidates, results)
+
         if iteration_nr is None:
             # find iteration number
             _iteration_name = self.bootstrapping_folder + "/iteration_*/"
@@ -174,6 +176,56 @@ class Iteration:
                 self.train.extend_dataset(tmp_data)
 
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
+
+    def read_iteration_data(self, it_nr):
+        """
+        Method to return a dataset for a specificed iteration nr.
+        Is useful to calculate the statistics for each iteration (amount of nl mentions and such).
+        :param it_nr: int
+        :rtype: nalaf.structures.data.Dataset()
+        """
+        print_verbose('####ReadIterationData####')
+        path = os.path.join(self.bootstrapping_folder, 'iteration_' + str(it_nr))
+        html = os.path.join(path, 'candidates', 'html')
+        annjson = os.path.join(path, 'reviewed')
+
+        data = HTMLReader(html).read()
+        AnnJsonAnnotationReader(annjson).annotate(data)
+
+        return data
+
+    def check_iterations_stats(self):
+        """
+        At the moment just prints the stats for each iteration.
+        Stats:
+        * total mentions
+        * st mentions
+        * nl mentions
+        * subclass 1 mentions and subclass 2 mentions
+        * nl mentions per document ratio
+        """
+        row_format = "{:>10} | {:>5.2f}"
+        mentions = []   # todo calc average stats
+        for i in range(1, self.number):
+            tmp_data = self.read_iteration_data(i)
+            current_mentions = [0,0,0]
+            ExclusiveNLDefiner().define(tmp_data)
+            for ann in tmp_data.annotations():
+                if ann.subclass == 0:
+                    current_mentions[0] += 1
+                elif ann.subclass == 1:
+                    current_mentions[1] += 1
+                elif ann.subclass == 2:
+                    current_mentions[2] += 1
+
+            print(row_format.format('iter', i))
+            print(row_format.format('total', sum(current_mentions)))
+            print(row_format.format('st', current_mentions[0]))
+            print(row_format.format('nl + ss', current_mentions[1] + current_mentions[2]))
+            print(row_format.format('nl', current_mentions[1]))
+            print(row_format.format('ss', current_mentions[2]))
+            print(row_format.format('nl+ss/doc', (current_mentions[1] + current_mentions[2])/10))
+            mentions += current_mentions
 
     def preprocessing(self):
         """
