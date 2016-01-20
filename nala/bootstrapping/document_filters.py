@@ -5,6 +5,7 @@ import re
 import time
 import pkg_resources
 from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
+from nalaf.preprocessing.labelers import BIEOLabeler
 from nala.learning.postprocessing import PostProcessing
 from nalaf.learning.taggers import CRFSuiteTagger
 from nalaf import print_verbose, print_debug
@@ -103,24 +104,24 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
 
 
 class QuickNalaFilter(DocumentFilter):
-    def __init__(self, binary_model="nala/data/default_model", crfsuite_path=None, threshold=1):
+    def __init__(self, binary_model="nala/data/default_model", threshold=1, labeler=BIEOLabeler()):
         self.binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
-        self.crfsuite_path=crfsuite_path
-        """ crfsuite path"""
         self.threshold=threshold
         """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline = get_prepare_pipeline_for_best_model()
         """best features and hyperparameters"""
+        self.labeler = labeler
+        """used labeler"""
 
     def filter(self, documents):
-        crfsuite = CRFSuite(self.crfsuite_path)
-        crfsuitetagger = CRFSuiteTagger(MUT_CLASS_ID, crfsuite, self.binary_model)
+        pycrf = PyCRFSuite()
         for pmid, doc in documents:
             dataset = Dataset()
             dataset.documents[pmid] = doc
             self.pipeline.execute(dataset)
-            crfsuitetagger.tag(dataset)
+            self.labeler.label(dataset)
+            pycrf.tag(dataset, self.binary_model)
             PostProcessing().process(dataset)
             ExclusiveNLDefiner().define(dataset)
             total_nl_mentions = []
@@ -149,7 +150,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
     """
 
     def __init__(self, binary_model="nala/data/default_model", override_cache=False, expected_max_results=10,
-                 pattern_file_name=None, crfsuite_path=None, threshold=1, min_found=1, use_nala=False):
+                 pattern_file_name=None, threshold=1, min_found=1, use_nala=False, labeler=BIEOLabeler()):
         self.location_binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
         self.override_cache=override_cache
@@ -157,8 +158,6 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         this option allows to force requesting results from tmVar online """
         self.expected_maximum_results=expected_max_results
         """ :returns maximum of [x] documents (can be less if not found) """
-        self.crfsuite_path=crfsuite_path
-        """ crfsuite path"""
         self.threshold=threshold
         """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline=get_prepare_pipeline_for_best_model()
@@ -167,6 +166,8 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         """ minimum found """
         self.use_nala = use_nala
         """ if use nala predictions """
+        self.labeler = labeler
+        """ the used labeler """
 
         # read in nl_patterns
         if not pattern_file_name:
@@ -223,6 +224,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             # data_tmvar = TmVarTagger().generate_abstracts([pmid])
             if use_nala:
                 self.pipeline.execute(data_nala)
+                self.labeler.label(data_nala)
                 crf.tag(data_nala, self.location_binary_model)
                 PostProcessing().process(data_nala)
                 ExclusiveNLDefiner().define(data_nala)

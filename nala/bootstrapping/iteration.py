@@ -331,8 +331,7 @@ class Iteration:
             with DocumentSelectorPipeline(
                     document_selector=UniprotDocumentSelector(),
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                    document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
-                                                                    binary_model=self.bin_model,
+                    document_filters=[HighRecallRegexDocumentFilter(binary_model=self.bin_model,
                                                                     expected_max_results=nr, use_nala=True),
                                       # QuickNalaFilter(binary_model=self.bin_model,
                                       #                 crfsuite_path=self.crfsuite_path, threshold=1),
