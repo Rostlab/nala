@@ -1,0 +1,90 @@
+=====Annotated=====                                                                     	|	=====Predicted=====
+Asp2----Ala mutation                                                                    	|	Asp2----Ala  
+Val213) alpha 1AT allele by a single nucleotide substitution of cytosine for adenosine  	|	             
+amino acid change Asp2 GAT----Ala GCT                                                   	|	             
+Gly115----Ser                                                                           	|	Gly115----Ser
+Ser-19----Leu                                                                           	|	Ser-19----Leu
+Gly115----Ser                                                                           	|	Gly115----Ser
+Ser-19----Leu                                                                           	|	Ser-19----Leu
+Val83Met                                                                                	|	Val83Met     
+Met/Met genotype at codon 83                                                            	|	             
+Val/Met genotype                                                                        	|	             
+Val/Met genotype                                                                        	|	             
+substitution of residues at position Trp-117                                            	|	             
+Asp-119                                                                                 	|	             
+Trp-117                                                                                 	|	             
+Asp-119                                                                                 	|	             
+A-->G transitions at the codons for amino acid positions 20 in exon 1                   	|	             
+156 in exon 5                                                                           	|	             
+ORM1*F1 was characterized by CAG (Gln) and GTG (Val)                                    	|	             
+ORM1*F2, by CAG (Gln) and ATG (Met)                                                     	|	             
+ORM1*S, by CGG (Arg) and GTG (Val)                                                      	|	             
+23-residue sequence of MTH1 was replaced with that of MutT                              	|	             
+Arg(50) can be replaced with hydrophobic residues (Val, Leu, or Ile)                    	|	             
+G241R                                                                                   	|	G241R        
+L142P                                                                                   	|	L142P        
+L142P                                                                                   	|	L142P        
+L142P                                                                                   	|	L142P        
+two missense mutations (425C, 721C),                                                    	|	             
+one splice mutation (339C)                                                              	|	             
+one 1-bp insertion (251-insA-252)                                                       	|	             
+9-bp deletion (del 192-200)                                                             	|	             
+missense mutation AAT-AGT at codon 190 (Asn-Ser),                                       	|	             
+one splicing mutation (IVS9-1 g-c)                                                      	|	             
+two frameshift mutations, DelG576 and InsGG743                                          	|	             
+InsGG743                                                                                	|	             
+DelG576                                                                                 	|	             
+Asp256----Val                                                                           	|	Asp256----Val
+Arg39----Cys                                                                            	|	Arg39----Cys 
+Phe51----deletion                                                                       	|	             
+codon for aspartate at position 256 has mutated to encode valine                        	|	             
+deletion of the codon for a phenylalanine residue at position 51 or 52                  	|	             
+single base substitution resulting in arginine being replaced by cysteine at position 39	|	             
+rs2241880                                                                               	|	rs2241880    
+Thr300Ala                                                                               	|	Thr300Ala    
+Thr300Ala                                                                               	|	Thr300Ala    
+T300A                                                                                   	|	T300A        
+T300A                                                                                   	|	T300A        
+T316A                                                                                   	|	T316A        
+T300A                                                                                   	|	T300A        
+T316A                                                                                   	|	T316A        
+T316A                                                                                   	|	T316A        
+--------------------------------------------------------------------------------
+
+=====Detailed Results=====
+Exact:            TP=20	FP=1	FN=30	FP_OVERLAP=1	FN_OVERLAP=1	PREC=95.238%	RECALL=40.000%	F-MEAS=56.338%
+Overlapping:      TP=20	FP=0	FN=29	FP_OVERLAP=1	FN_OVERLAP=1	PREC=100.000%	RECALL=43.137%	F-MEAS=60.274%
+Half-Overlapping: TP=20	FP=0	FN=29	FP_OVERLAP=1	FN_OVERLAP=1	PREC=95.455%	RECALL=41.176%	F-MEAS=57.534%
+Raw-Data:
+{
+    "0": [
+        20,
+        1,
+        10,
+        0,
+        0,
+        0.9523809523809523,
+        0.6666666666666666,
+        0.7843137254901961
+    ],
+    "1": [
+        0,
+        0,
+        17,
+        0,
+        0,
+        NaN,
+        0.0,
+        NaN
+    ],
+    "2": [
+        0,
+        0,
+        3,
+        0,
+        0,
+        NaN,
+        0.0,
+        NaN
+    ]
+}

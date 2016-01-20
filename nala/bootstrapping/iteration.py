@@ -133,9 +133,11 @@ class Iteration:
                                  'tp', 'fp', 'fn', 'fp_overlap', 'fn_overlap', 'precision', 'recall', 'f1-score'])
 
     def before_annotation(self, nr_new_docs=10):
-        self.read_learning_data()
-        self.preprocessing()
-        self.crf_learning()
+        # self.read_learning_data()
+        # self.preprocessing()
+        # self.crf_learning()
+
+        self.learning()
         self.docselection(nr=nr_new_docs)
         self.tagging(threshold_val=self.threshold_val)
 
@@ -264,9 +266,9 @@ class Iteration:
                     document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
                                                                     binary_model=os.path.join(self.current_folder,
                                                                                               'bin_model'),
-                                                                    expected_max_results=nr),
-                                      QuickNalaFilter(binary_model=self.bin_model,
-                                                      crfsuite_path=self.crfsuite_path, threshold=1),
+                                                                    expected_max_results=nr, use_nala=True),
+                                      # QuickNalaFilter(binary_model=self.bin_model,
+                                      #                 crfsuite_path=self.crfsuite_path, threshold=1),
                                       ManualDocumentFilter()]) as dsp:
                 for pmid, document in dsp.execute():
                     dataset.documents[pmid] = document
