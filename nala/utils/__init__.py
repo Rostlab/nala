@@ -74,4 +74,4 @@ def get_word_embeddings_feature_generator():
         else:
             return None
 
-    return WordEmbeddingsFeatureGenerator(we_model)
+    return WordEmbeddingsFeatureGenerator(we_model, additive=1, multiplicative=2)
