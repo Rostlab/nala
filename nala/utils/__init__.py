@@ -48,15 +48,15 @@ def get_word_embeddings_feature_generator():
     import pkg_resources
     import requests
     from nalaf.features.embeddings import WordEmbeddingsFeatureGenerator
+    from nalaf import print_verbose
 
     we_model = pkg_resources.resource_filename('nala.data', os.path.join('model', 'model'))
-    print(os.path.exists(we_model))
     if not os.path.exists(we_model):
         answer = input('Word Embeddings model is missing. Do you want us to download it? [y/n]')
 
         # Download the model
         if answer.lower() == 'y':
-            print('Downloading')
+            print_verbose('Downloading')
             model_url = 'https://rostlab.org/~cejuela/model.tar.gz'
             we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'we_model.tar.gz')
 
@@ -66,7 +66,7 @@ def get_word_embeddings_feature_generator():
                     if chunk:
                         file.write(chunk)
             # Unpack the model
-            print('Extracting')
+            print_verbose('Extracting')
 
             tar = tarfile.open(we_model_tar_gz)
             tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
