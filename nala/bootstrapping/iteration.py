@@ -78,10 +78,12 @@ class Iteration:
         self.train = None  # first
         self.candidates = None  # non predicted docselected
         self.predicted = None  # predicted docselected
-        self.crf = CRFSuite(self.crfsuite_path, minify=True)
+        # self.crf = CRFSuite(self.crfsuite_path, minify=True)
+        self.crf = PyCRFSuite()
 
         # preparedataset pipeline init
         self.pipeline = get_prepare_pipeline_for_best_model()
+        """ :type PrepareDatasetPipeline: """
 
         # labeler init
         self.labeler = BIEOLabeler()
@@ -90,6 +92,8 @@ class Iteration:
         # note currently using parameter .. i think that s the most suitable
 
         print_verbose('Check for Iteration Number....')
+
+        # TODO make state checks (e.g. has bin model, reviewed files, candidates, results)
 
         if iteration_nr is None:
             # find iteration number
@@ -142,6 +146,7 @@ class Iteration:
         self.tagging(threshold_val=self.threshold_val)
 
     def after_annotation(self):
+        self.clean_reviewed_files()
         self.manual_review_import()
         self.evaluation()
 
@@ -149,7 +154,7 @@ class Iteration:
         """
         Loads and parses the annotations from base + following iterations into self.train
         """
-        print_verbose("\n\n\n======Data======\n\n\n")
+        print_verbose("\n\n####ParseData####\n")
 
         base_folder = os.path.join(self.bootstrapping_folder, "iteration_0/base/")
         html_base_folder = base_folder + "html/"
@@ -158,7 +163,6 @@ class Iteration:
         # TODO mergannotationreader --> change how to add annotations and read them from there...
         AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
                                       entity_strategy='priority').annotate(self.train)
-        print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
         # extend for each next iteration
         if self.number > 1:
@@ -171,18 +175,73 @@ class Iteration:
                 # extend learning_data
                 self.train.extend_dataset(tmp_data)
 
+        print_verbose(len(self.train.documents), "documents are used in the training dataset.")
+
+    def read_iteration_data(self, it_nr):
+        """
+        Method to return a dataset for a specificed iteration nr.
+        Is useful to calculate the statistics for each iteration (amount of nl mentions and such).
+        :param it_nr: int
+        :rtype: nalaf.structures.data.Dataset()
+        """
+        print_verbose('####ReadIterationData####')
+        path = os.path.join(self.bootstrapping_folder, 'iteration_' + str(it_nr))
+        html = os.path.join(path, 'candidates', 'html')
+        annjson = os.path.join(path, 'reviewed')
+
+        data = HTMLReader(html).read()
+        AnnJsonAnnotationReader(annjson).annotate(data)
+
+        return data
+
+    def check_iterations_stats(self):
+        """
+        At the moment just prints the stats for each iteration.
+        Stats:
+        * total mentions
+        * st mentions
+        * nl mentions
+        * subclass 1 mentions and subclass 2 mentions
+        * nl mentions per document ratio
+        """
+        row_format = "{:>10} | {:>5.2f}"
+        mentions = []   # todo calc average stats
+        for i in range(1, self.number):
+            tmp_data = self.read_iteration_data(i)
+            current_mentions = [0,0,0]
+            ExclusiveNLDefiner().define(tmp_data)
+            for ann in tmp_data.annotations():
+                if ann.subclass == 0:
+                    current_mentions[0] += 1
+                elif ann.subclass == 1:
+                    current_mentions[1] += 1
+                elif ann.subclass == 2:
+                    current_mentions[2] += 1
+
+            print(row_format.format('iter', i))
+            print(row_format.format('total', sum(current_mentions)))
+            print(row_format.format('st', current_mentions[0]))
+            print(row_format.format('nl + ss', current_mentions[1] + current_mentions[2]))
+            print(row_format.format('nl', current_mentions[1]))
+            print(row_format.format('ss', current_mentions[2]))
+            print(row_format.format('nl+ss/doc', (current_mentions[1] + current_mentions[2])/10))
+            mentions += current_mentions
+
     def preprocessing(self):
         """
         Pre-processing including pruning, generating features, generating labels.
         """
+        print_verbose("\n\n####PreProcess####\n")
         # prune parts without annotations
         self.train.prune()
 
         # prepare features
+        print_verbose("##PreparePipeline##")
         self.pipeline.execute(self.train)
         self.pipeline.serialize(self.train, to_file=self.debug_file)
 
         # labeling
+        print_verbose("##Labeling##")
         self.labeler.label(self.train)
 
         print_verbose(len(self.train.documents), "documents are prepared for training dataset.")
@@ -192,15 +251,16 @@ class Iteration:
         Learning: base + iterations 1..n-1
         just the crfsuitepart and copying the model to the iteration folder
         """
-        print_verbose("\n\n\n======Learning======\n\n\n")
+        print_verbose("\n\n####Learning####\n")
 
         # crfsuite part
-        self.crf.create_input_file(self.train, 'train')
-        self.crf.learn()
+        # self.crf.create_input_file(self.train, 'train')
+        # self.crf.learn()
+        self.crf.train(self.train, self.bin_model)
 
         # copy bin model to folder
-        shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
-                        os.path.join(self.current_folder, 'bin_model'))
+        # shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
+        #                 os.path.join(self.current_folder, 'bin_model'))
 
 
     def learning(self):
@@ -209,9 +269,10 @@ class Iteration:
         preprocess data
         run crfsuite on data
         """
+        print_verbose("####learning####")
         self.read_learning_data()
 
-        if not os.path.exists(os.path.join(self.current_folder, 'bin_model')):
+        if not os.path.exists(self.bin_model):
             self.preprocessing()
             self.crf_learning()
         else:
@@ -238,6 +299,7 @@ class Iteration:
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)]
                     ) as dsp:
                 _starttime = time.perf_counter()
+                _already_downloaded = 0
                 for pmid, document in dsp.execute():
 
                     dataset.documents[pmid] = document
@@ -247,13 +309,19 @@ class Iteration:
                     _one_it = _tmptime - _starttime
                     _starttime = _tmptime
 
+                    if _one_it < 0.25:  # check if not already downloaded (for eta calculation)
+                        _already_downloaded += 1
+                        _counter -= 1
+                        _total -= _one_it
+
                     _total += _one_it
                     # print_verbose('total', _total)
-                    _eta_one = _total / _counter
-                    _counter_left = nr - _counter
-                    _eta_left = _eta_one * _counter_left
-                    print_verbose(
-                        'NrOfDocs: {} | ETA Left for {}: {:.3f} | ETA One for One: {:.3f}'.format(_counter, _counter_left,
+                    if _counter > 0:
+                        _eta_one = _total / _counter
+                        _counter_left = nr - _counter - _already_downloaded
+                        _eta_left = _eta_one * _counter_left
+                        print_verbose(
+                            'NrOfDocs: {} | ETA Left for {}: {:.3f} | ETA One for One: {:.3f}'.format(_counter, _counter_left,
                                                                                           _eta_left, _eta_one))
 
                     # if we have generated enough documents stop
@@ -263,9 +331,7 @@ class Iteration:
             with DocumentSelectorPipeline(
                     document_selector=UniprotDocumentSelector(),
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
-                    document_filters=[HighRecallRegexDocumentFilter(crfsuite_path=self.crfsuite_path,
-                                                                    binary_model=os.path.join(self.current_folder,
-                                                                                              'bin_model'),
+                    document_filters=[HighRecallRegexDocumentFilter(binary_model=self.bin_model,
                                                                     expected_max_results=nr, use_nala=True),
                                       # QuickNalaFilter(binary_model=self.bin_model,
                                       #                 crfsuite_path=self.crfsuite_path, threshold=1),
@@ -284,7 +350,9 @@ class Iteration:
         # prepare dataset
         self.pipeline.execute(self.candidates)
         # crfsuite tagger
-        CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        # CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
+        self.crf.tag(self.candidates, self.bin_model)
+
         # postprocess
         PostProcessing().process(self.candidates)
 
@@ -475,3 +543,12 @@ class Iteration:
                         *[sum(col) for col in zip(*folds_results_exact)][:5])
                 writer.writerow(list(chain(['sum_of_folds', 'overlapping', 'total'], stats)))
                 stats_writer.writerow([self.number-1, 'total', self.threshold_val] + list(stats))
+
+    def clean_reviewed_files(self):
+        import re
+        candidates = HTMLReader(os.path.join(self.candidates_folder, 'html')).read()
+        for (dirpath, dirnames, filenames) in os.walk(self.reviewed_folder):
+            for filename in filenames:
+                docid = re.sub(r'.*-(\d+)\..*', r'\1', filename)
+                if docid not in candidates.documents.keys():
+                    os.remove(os.path.join(dirpath, filename))
