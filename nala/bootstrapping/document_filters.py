@@ -4,10 +4,11 @@ import json
 import re
 import time
 import pkg_resources
-from nalaf.learning.crfsuite import CRFSuite
+from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
+from nalaf.preprocessing.labelers import BIEOLabeler
 from nala.learning.postprocessing import PostProcessing
 from nalaf.learning.taggers import CRFSuiteTagger
-from nalaf import print_verbose
+from nalaf import print_verbose, print_debug
 from nala.preprocessing.definers import InclusiveNLDefiner
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.preprocessing.spliters import NLTKSplitter
@@ -103,24 +104,24 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
 
 
 class QuickNalaFilter(DocumentFilter):
-    def __init__(self, binary_model="nala/data/default_model", crfsuite_path=None, threshold=1):
+    def __init__(self, binary_model="nala/data/default_model", threshold=1, labeler=BIEOLabeler()):
         self.binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
-        self.crfsuite_path=crfsuite_path
-        """ crfsuite path"""
         self.threshold=threshold
         """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline = get_prepare_pipeline_for_best_model()
         """best features and hyperparameters"""
+        self.labeler = labeler
+        """used labeler"""
 
     def filter(self, documents):
-        crfsuite = CRFSuite(self.crfsuite_path)
-        crfsuitetagger = CRFSuiteTagger(MUT_CLASS_ID, crfsuite, self.binary_model)
+        pycrf = PyCRFSuite()
         for pmid, doc in documents:
             dataset = Dataset()
             dataset.documents[pmid] = doc
             self.pipeline.execute(dataset)
-            crfsuitetagger.tag(dataset)
+            self.labeler.label(dataset)
+            pycrf.tag(dataset, self.binary_model)
             PostProcessing().process(dataset)
             ExclusiveNLDefiner().define(dataset)
             total_nl_mentions = []
@@ -149,7 +150,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
     """
 
     def __init__(self, binary_model="nala/data/default_model", override_cache=False, expected_max_results=10,
-                 pattern_file_name=None, crfsuite_path=None, threshold=1, min_found=1, use_nala=False):
+                 pattern_file_name=None, threshold=1, min_found=1, use_nala=False, labeler=BIEOLabeler()):
         self.location_binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
         self.override_cache=override_cache
@@ -157,8 +158,6 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         this option allows to force requesting results from tmVar online """
         self.expected_maximum_results=expected_max_results
         """ :returns maximum of [x] documents (can be less if not found) """
-        self.crfsuite_path=crfsuite_path
-        """ crfsuite path"""
         self.threshold=threshold
         """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline=get_prepare_pipeline_for_best_model()
@@ -167,6 +166,8 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         """ minimum found """
         self.use_nala = use_nala
         """ if use nala predictions """
+        self.labeler = labeler
+        """ the used labeler """
 
         # read in nl_patterns
         if not pattern_file_name:
@@ -200,9 +201,9 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         _i_array = [0, 0]
 
         last_found = 0
-        crfsuite = CRFSuite(self.crfsuite_path)
-        crfsuitetagger = CRFSuiteTagger([MUT_CLASS_ID], crf_suite=crfsuite, model_file=self.location_binary_model)
-
+        # crfsuite = CRFSuite(self.crfsuite_path)
+        # crfsuitetagger = CRFSuiteTagger([MUT_CLASS_ID], crf_suite=crfsuite, model_file=self.location_binary_model)
+        crf = PyCRFSuite()
 
         # counter_to_stop_for_caching = 0
 
@@ -223,7 +224,8 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             # data_tmvar = TmVarTagger().generate_abstracts([pmid])
             if use_nala:
                 self.pipeline.execute(data_nala)
-                crfsuitetagger.tag(data_nala)
+                self.labeler.label(data_nala)
+                crf.tag(data_nala, self.location_binary_model)
                 PostProcessing().process(data_nala)
                 ExclusiveNLDefiner().define(data_nala)
 
@@ -276,12 +278,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                             end = part_offset + sent_offset + match.span()[1]
                             # print("TmVar is not overlapping?:", not anti_doc.overlaps_with_mention(start, end))
                             # print(not nala_doc.overlaps_with_mention(start, end, annotated=False))
-                            if use_nala:
-                                nala_found_mention = nala_doc.overlaps_with_mention(start, end, annotated=False)
-                                if nala_found_mention:
-                                    print_verbose(nala_found_mention)
-                                    if nala_found_mention.subclass > 0 and nala_found_mention.confidence <= self.threshold:
-                                        yield pmid, doc
+
 
                             if reg.pattern in used_regexs:
                                 used_regexs[reg.pattern] += 1
@@ -320,6 +317,13 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                                 #         last_found += 1
                                 #         found_in_sentence = True
 
+                            if use_nala:
+                                nala_found_mention = nala_doc.overlaps_with_mention(start, end, annotated=False)
+                                if nala_found_mention:
+                                    print_verbose(nala_found_mention)
+                                    if nala_found_mention.subclass > 0 and nala_found_mention.confidence <= self.threshold:
+                                        yield pmid, doc
+
                         if _lasttime - time.time() > 1:
                             print_verbose('time intensive regex', i)
                     sent_offset += 2 + sent_length
@@ -331,10 +335,18 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                 part_offset += sent_offset
             if positive_sentences > min_found:
                 _progress += 1
+            if use_nala:
+                for part in nala_doc:
+                    for ann in part.predicted_annotations:
+                        if ann.subclass > 0:
+                            print_verbose(part.text[:ann.offset] + color.BOLD + ann.text + color.END + part.text[
+                                                                                                       ann.offset + len(
+                                                                                                           ann.text):])
+                            positive_sentences += min_found
             _time_progressed = time.time() - _timestart
             _time_per_doc = _time_progressed / _progress
             print_verbose("PROGRESS: {:.2f} secs ETA per one positive document: {:.2f} secs".format(_time_progressed, _time_per_doc))
-            print_verbose('used regular expressions:', json.dumps(used_regexs, indent=4))
+            print_debug('used regular expressions:', json.dumps(used_regexs, indent=4))
             if positive_sentences >= min_found:
                 last_found = 0
                 print_verbose('YEP', pmid)
