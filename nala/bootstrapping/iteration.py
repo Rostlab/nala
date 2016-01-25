@@ -436,8 +436,6 @@ class Iteration:
         does k fold cross validation with split being k
         :param split: int
         """
-        py_crf = PyCRFSuite()
-
         base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
         data = HTMLReader(os.path.join(base_folder, 'html')).read()
         AnnJsonMergerAnnotationReader(os.path.join(os.path.join(base_folder, 'annjson'), 'members'),
@@ -475,11 +473,11 @@ class Iteration:
             train.prune()
             self.pipeline.execute(train)
             BIEOLabeler().label(train)
-            py_crf.train(train, 'cross_validation_model')
+            self.crf.train(train, 'cross_validation_model')
 
             self.pipeline.execute(test)
             BIEOLabeler().label(test)
-            py_crf.tag(test, 'cross_validation_model')
+            self.crf.tag(test, 'cross_validation_model')
 
             ExclusiveNLDefiner().define(test)
             PostProcessing().process(test)
