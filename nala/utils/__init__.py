@@ -35,7 +35,8 @@ def get_prepare_pipeline_for_best_model():
                                                       SentenceMarkerFeatureGenerator(),
                                                       TmVarFeatureGenerator(), TmVarDictionaryFeatureGenerator(),
                                                       WindowFeatureGenerator(template=(-3, -2, -1, 1, 2, 3),
-                                                                             include_list=include)])
+                                                                             include_list=include),
+                                                      get_word_embeddings_feature_generator()])
 
 
 def get_word_embeddings_feature_generator():
@@ -50,15 +51,15 @@ def get_word_embeddings_feature_generator():
     from nalaf.features.embeddings import WordEmbeddingsFeatureGenerator
     from nalaf import print_verbose
 
-    we_model = pkg_resources.resource_filename('nala.data', os.path.join('model', 'model'))
+    we_model = pkg_resources.resource_filename('nala.data', os.path.join('word_embeddings', 'word_embeddings.model'))
     if not os.path.exists(we_model):
         answer = input('Word Embeddings model is missing. Do you want us to download it? [y/n]')
 
         # Download the model
         if answer.lower() == 'y':
             print_verbose('Downloading')
-            model_url = 'https://rostlab.org/~cejuela/model.tar.gz'
-            we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'we_model.tar.gz')
+            model_url = 'https://rostlab.org/~abojchevski/word_embeddings.tar.gz'
+            we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'word_embeddings.tar.gz')
 
             response = requests.get(url=model_url, stream=True)
             with open(we_model_tar_gz, 'wb') as file:
