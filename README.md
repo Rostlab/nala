@@ -33,6 +33,10 @@ The goals of this project can be found on the [wiki.](https://github.com/carsten
 
     pip3 install nala
 
+### Troubleshooting on Windows
+
+The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the [original module](https://github.com/tpeng/python-crfsuite).
+
 # Examples
 Run:
 * `nala.py` for a simple example how to use NALA just for prediction with a pre-trained model
