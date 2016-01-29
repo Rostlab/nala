@@ -29,6 +29,9 @@ bin_model
 *.tar.gz
 *.tar
 
+# Word embeddings model
+nala/data/word_embeddings/
+
 # crfsuite specific
 /predict
 /output.txt
