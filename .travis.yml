@@ -9,12 +9,11 @@ before_script:
   - "pip install git+https://github.com/Rostlab/nalaf.git"
   - "python -m nalaf.download_corpora"
   - pip install codecov
-  - pip install python-crfsuite
 after_success:
   - codecov
 script:
   - "nosetests -a \"!slow\""
-  - "python nala.py 2581245"
+  - "python nala.py -p 2581245"
 branches:
   only:
     - master
