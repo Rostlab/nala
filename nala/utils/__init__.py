@@ -58,8 +58,8 @@ def get_word_embeddings_feature_generator():
         # Download the model
         if answer.lower() == 'y':
             print_verbose('Downloading')
-            model_url = 'https://rostlab.org/~abojchevski/word_embeddings.tar.gz'
-            we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'word_embeddings.tar.gz')
+            model_url = 'ftp://rostlab.org/jmcejuela/model_we_2016-01-25.tar.gz'
+            we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'model_we_2016-01-25.tar.gz')
 
             response = requests.get(url=model_url, stream=True)
             with open(we_model_tar_gz, 'wb') as file:
