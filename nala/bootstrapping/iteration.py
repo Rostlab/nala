@@ -249,21 +249,14 @@ class Iteration:
         """
         use read_learning_data to print stats
         """
-        st_mentions = 0
-        nl_mentions = 0
-        ss_mentions = 0
+        counts=[0,0,0]
 
         self.read_learning_data()
         ExclusiveNLDefiner().define(self.train)
         for ann in self.train.annotations():
-            if ann.subclass == 1:
-                nl_mentions += 1
-            elif ann.subclass == 2:
-                ss_mentions += 1
-            else:
-                st_mentions += 1
+            counts[ann.subclass] += 1
 
-        print('ST:', st_mentions, 'NL:', nl_mentions, 'SS:', ss_mentions)
+        print('ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2])
 
     def preprocessing(self):
         """
