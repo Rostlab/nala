@@ -214,36 +214,26 @@ class Iteration:
         * nl mentions per document ratio
         """
         row_format = "{:>10} | {:>5.2f}"
-        mentions = []   # todo calc average stats
-        nl_mentions = 0
-        ss_mentions = 0
-        st_mentions = 0
+        counts = [0,0,0]
+
         for i in range(0, self.number):
             tmp_data = self.read_iteration_data(i)
-            current_mentions = [0,0,0]
+            sub_counts = [0,0,0]
             ExclusiveNLDefiner().define(tmp_data)
             for ann in tmp_data.annotations():
-                if ann.subclass == 0:
-                    current_mentions[0] += 1
-                elif ann.subclass == 1:
-                    current_mentions[1] += 1
-                elif ann.subclass == 2:
-                    current_mentions[2] += 1
+                sub_counts[ann.subclass] += 1
+
+            counts = [x + y for x, y in zip(counts, sub_counts)]
 
             print(row_format.format('iter', i))
-            print(row_format.format('total', sum(current_mentions)))
-            print(row_format.format('st', current_mentions[0]))
-            print(row_format.format('nl + ss', current_mentions[1] + current_mentions[2]))
-            print(row_format.format('nl', current_mentions[1]))
-            print(row_format.format('ss', current_mentions[2]))
-            print(row_format.format('nl+ss/doc', (current_mentions[1] + current_mentions[2])/10))
-            mentions.append(current_mentions)
+            print(row_format.format('total', sum(sub_counts)))
+            print(row_format.format('st', sub_counts[0]))
+            print(row_format.format('nl + ss', sub_counts[1] + sub_counts[2]))
+            print(row_format.format('nl', sub_counts[1]))
+            print(row_format.format('ss', sub_counts[2]))
+            print(row_format.format('nl+ss/doc', (sub_counts[1] + sub_counts[2])/10)) #TODO wrong some iterations like 0 don't have 10 docs
 
-        st_mentions = sum(i[0] for i in mentions)
-        nl_mentions = sum(i[1] for i in mentions)
-        ss_mentions = sum(i[2] for i in mentions)
-
-        print('ST:', st_mentions, 'NL:', nl_mentions, 'SS:', ss_mentions)
+        print('ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2])
 
     def print_mentions_stats(self):
         """
