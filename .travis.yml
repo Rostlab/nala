@@ -9,6 +9,7 @@ before_script:
   - "pip install git+https://github.com/Rostlab/nalaf.git"
   - "python -m nalaf.download_corpora"
   - pip install codecov
+  - pip install gensim
 after_success:
   - codecov
 script:
