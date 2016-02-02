@@ -53,26 +53,21 @@ def get_word_embeddings_feature_generator():
 
     we_model = pkg_resources.resource_filename('nala.data', os.path.join('word_embeddings', 'word_embeddings.model'))
     if not os.path.exists(we_model):
-        answer = input('Word Embeddings model is missing. Do you want us to download it? [y/n]')
+        print_verbose('Downloading')
+        model_url = 'https://rostlab.org/~abojchevski/word_embeddings.tar.gz'
+        we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'word_embeddings.tar.gz')
 
-        # Download the model
-        if answer.lower() == 'y':
-            print_verbose('Downloading')
-            model_url = 'ftp://rostlab.org/jmcejuela/model_we_2016-01-25.tar.gz'
-            we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'model_we_2016-01-25.tar.gz')
+        response = requests.get(url=model_url, stream=True)
+        with open(we_model_tar_gz, 'wb') as file:
+            for chunk in response.iter_content(8048):
+                if chunk:
+                    file.write(chunk)
+        # Unpack the model
+        print_verbose('Extracting')
 
-            response = requests.get(url=model_url, stream=True)
-            with open(we_model_tar_gz, 'wb') as file:
-                for chunk in response.iter_content(8048):
-                    if chunk:
-                        file.write(chunk)
-            # Unpack the model
-            print_verbose('Extracting')
+        tar = tarfile.open(we_model_tar_gz)
+        tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
+        tar.close()
 
-            tar = tarfile.open(we_model_tar_gz)
-            tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
-            tar.close()
-        else:
-            return None
 
     return WordEmbeddingsFeatureGenerator(we_model, additive=1, multiplicative=2)

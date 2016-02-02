@@ -7,9 +7,9 @@ from nalaf.utils.readers import TextFilesReader, PMIDReader
 from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter, TagTogFormat, PubTatorFormat
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
-from nalaf.learning.crfsuite import CRFSuite
+from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
 from nalaf.learning.taggers import CRFSuiteTagger
-from nala.utils import MUT_CLASS_ID
+from nala.utils import MUT_CLASS_ID, get_prepare_pipeline_for_best_model
 from nalaf.learning.taggers import GNormPlusGeneTagger
 from nalaf.learning.taggers import StubSameSentenceRelationExtractor
 from nala.learning.postprocessing import PostProcessing
@@ -17,9 +17,6 @@ from nala.learning.postprocessing import PostProcessing
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A simple demo for using the nala pipeline for prediction')
-
-    parser.add_argument('-c', '--crf_suite_dir', help='path to the directory containing the crfsuite executable',
-                        required=True)
 
     parser.add_argument('--color', help='uses color for highlighting predictions if supported '
                                         'otherwise prints them in new line',
@@ -52,12 +49,11 @@ if __name__ == "__main__":
     else:
         raise FileNotFoundError('directory or file "{}" does not exist'.format(args.dir_or_file))
 
-    PrepareDatasetPipeline().execute(dataset)
+    get_prepare_pipeline_for_best_model().execute(dataset)
 
     # get the predictions
-    crf = CRFSuite(args.crf_suite_dir)
-    tagger = CRFSuiteTagger([MUT_CLASS_ID], crf, pkg_resources.resource_filename('nala.data', 'default_model'))
-    tagger.tag(dataset)
+    crf = PyCRFSuite()
+    crf.tag(dataset, pkg_resources.resource_filename('nala.data', 'default_model'), MUT_CLASS_ID)
 
     GNormPlusGeneTagger().tag(dataset, uniprot=True)
     StubSameSentenceRelationExtractor().tag(dataset)

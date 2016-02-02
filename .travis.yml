@@ -8,14 +8,13 @@ install:
 before_script:
   - "pip install git+https://github.com/Rostlab/nalaf.git"
   - "python -m nalaf.download_corpora"
-  - "curl -L https://github.com/downloads/chokkan/crfsuite/crfsuite-0.12-x86_64.tar.gz -o crfsuite.tar.gz"
-  - "tar -xvf crfsuite.tar.gz"
   - pip install codecov
+  - pip install python-crfsuite
 after_success:
   - codecov
 script:
   - "nosetests -a \"!slow\""
-  - "python nala.py -c ./crfsuite-0.12/bin/ -d ./resources/example.txt"
+  - "python nala.py 2581245"
 branches:
   only:
     - master
