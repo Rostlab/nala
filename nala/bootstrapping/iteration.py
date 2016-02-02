@@ -63,10 +63,10 @@ class Iteration:
         else:
             self.crfsuite_path = os.path.abspath(crfsuite_path)
 
-        if not os.path.isdir(self.crfsuite_path):
-            raise FileNotFoundError('''
-            The CRFsuite folder does not exist.
-            ''', self.crfsuite_path)
+        # if not os.path.isdir(self.crfsuite_path):
+        #     raise FileNotFoundError('''
+        #     The CRFsuite folder does not exist.
+        #     ''', self.crfsuite_path)
 
         # represents the iteration
         self.number = -1
@@ -185,12 +185,21 @@ class Iteration:
         :rtype: nalaf.structures.data.Dataset()
         """
         print_verbose('####ReadIterationData####')
-        path = os.path.join(self.bootstrapping_folder, 'iteration_' + str(it_nr))
-        html = os.path.join(path, 'candidates', 'html')
-        annjson = os.path.join(path, 'reviewed')
 
-        data = HTMLReader(html).read()
-        AnnJsonAnnotationReader(annjson).annotate(data)
+        if it_nr == 0:
+            path = os.path.join(self.bootstrapping_folder, "iteration_0/base/")
+            html = path + "html/"
+            annjson = path + "annjson/"
+            data = HTMLReader(html).read()
+            AnnJsonMergerAnnotationReader(os.path.join(annjson, 'members'), strategy='intersection',
+                                          entity_strategy='priority').annotate(data)
+        else:
+            path = os.path.join(self.bootstrapping_folder, 'iteration_' + str(it_nr))
+            html = os.path.join(path, 'candidates', 'html')
+            annjson = os.path.join(path, 'reviewed')
+
+            data = HTMLReader(html).read()
+            AnnJsonAnnotationReader(annjson).annotate(data)
 
         return data
 
@@ -206,7 +215,10 @@ class Iteration:
         """
         row_format = "{:>10} | {:>5.2f}"
         mentions = []   # todo calc average stats
-        for i in range(1, self.number):
+        nl_mentions = 0
+        ss_mentions = 0
+        st_mentions = 0
+        for i in range(0, self.number):
             tmp_data = self.read_iteration_data(i)
             current_mentions = [0,0,0]
             ExclusiveNLDefiner().define(tmp_data)
@@ -225,7 +237,33 @@ class Iteration:
             print(row_format.format('nl', current_mentions[1]))
             print(row_format.format('ss', current_mentions[2]))
             print(row_format.format('nl+ss/doc', (current_mentions[1] + current_mentions[2])/10))
-            mentions += current_mentions
+            mentions.append(current_mentions)
+
+        st_mentions = sum(i[0] for i in mentions)
+        nl_mentions = sum(i[1] for i in mentions)
+        ss_mentions = sum(i[2] for i in mentions)
+
+        print('ST:', st_mentions, 'NL:', nl_mentions, 'SS:', ss_mentions)
+
+    def print_mentions_stats(self):
+        """
+        use read_learning_data to print stats
+        """
+        st_mentions = 0
+        nl_mentions = 0
+        ss_mentions = 0
+
+        self.read_learning_data()
+        ExclusiveNLDefiner().define(self.train)
+        for ann in self.train.annotations():
+            if ann.subclass == 1:
+                nl_mentions += 1
+            elif ann.subclass == 2:
+                ss_mentions += 1
+            else:
+                st_mentions += 1
+
+        print('ST:', st_mentions, 'NL:', nl_mentions, 'SS:', ss_mentions)
 
     def preprocessing(self):
         """
