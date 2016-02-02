@@ -344,6 +344,7 @@ class Iteration:
 
         self.candidates = dataset
 
+    # TODO rename to annotate
     def tagging(self, threshold_val=THRESHOLD_VALUE):
         # tagging
         print_verbose("\n\n\n======Tagging======\n\n\n")
