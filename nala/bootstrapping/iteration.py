@@ -234,7 +234,7 @@ class Iteration:
         for ann in self.train.annotations():
             counts[ann.subclass] += 1
 
-        print('ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2], 'NL+SS:', counts[1] + counts[2])
+        print('#docs:', len(self.train.documents), 'ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2], 'NL+SS:', counts[1] + counts[2])
 
     def preprocessing(self):
         """
