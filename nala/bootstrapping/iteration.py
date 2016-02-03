@@ -37,16 +37,15 @@ class Iteration:
     This is the class to perform one iteration of bootstrapping. There are various options.
     """
     # todo finish docset of Iteration Class
-    def __init__(self, folder=None, iteration_nr=None, crfsuite_path=None, threshold_val=THRESHOLD_VALUE):
+    def __init__(self, folder=None, iteration_nr=None, threshold_val=THRESHOLD_VALUE):
         """
         Init function of iteration. Has to be called with proper folder and crfsuite path if not default.
         :param folder: Bootstrapping folder (has to be created before including base folder with html + annjson folder and corpus)
         :param iteration_nr: In which iteration the bootstrapping process is currently. Effects self.current_folder
-        :param crfsuite_path: Folder of CRFSuite installation as full path or relative path to working dir. (gets converted to abspath)
         :param threshold_val: The threshold value to select annotations to pre-added or selected to semi-supervise.
         """
         super().__init__()
-        # todo major sophisticated automatic execution (check what is missing e.g. bin_model)
+        # TODO major sophisticated automatic execution (check what is missing e.g. bin_model)
         if folder is not None:
             self.bootstrapping_folder = os.path.abspath(folder)
         else:
@@ -58,16 +57,6 @@ class Iteration:
             And needs to be created including with the annotated starting corpus.
             ''', self.bootstrapping_folder)
 
-        if crfsuite_path is None:
-            self.crfsuite_path = os.path.abspath(r'crfsuite')
-        else:
-            self.crfsuite_path = os.path.abspath(crfsuite_path)
-
-        # if not os.path.isdir(self.crfsuite_path):
-        #     raise FileNotFoundError('''
-        #     The CRFsuite folder does not exist.
-        #     ''', self.crfsuite_path)
-
         # represents the iteration
         self.number = -1
 
@@ -78,7 +67,6 @@ class Iteration:
         self.train = None  # first
         self.candidates = None  # non predicted docselected
         self.predicted = None  # predicted docselected
-        # self.crf = CRFSuite(self.crfsuite_path, minify=True)
         self.crf = PyCRFSuite()
 
         # preparedataset pipeline init
@@ -279,10 +267,6 @@ class Iteration:
         # self.crf.learn()
         self.crf.train(self.train, self.bin_model)
 
-        # copy bin model to folder
-        # shutil.copyfile(os.path.join(self.crfsuite_path, 'default_model'),
-        #                 os.path.join(self.current_folder, 'bin_model'))
-
 
     def learning(self):
         """
@@ -354,8 +338,7 @@ class Iteration:
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
                     document_filters=[HighRecallRegexDocumentFilter(binary_model=self.bin_model,
                                                                     expected_max_results=nr, use_nala=True),
-                                      # QuickNalaFilter(binary_model=self.bin_model,
-                                      #                 crfsuite_path=self.crfsuite_path, threshold=1),
+                                      # QuickNalaFilter(binary_model=self.bin_model, threshold=1),
                                       ManualDocumentFilter()]) as dsp:
                 for pmid, document in dsp.execute():
                     dataset.documents[pmid] = document

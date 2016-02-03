@@ -202,8 +202,6 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         _i_array = [0, 0]
 
         last_found = 0
-        # crfsuite = CRFSuite(self.crfsuite_path)
-        # crfsuitetagger = CRFSuiteTagger([MUT_CLASS_ID], crf_suite=crfsuite, model_file=self.location_binary_model)
         crf = PyCRFSuite()
 
         # counter_to_stop_for_caching = 0
