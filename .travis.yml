@@ -14,7 +14,7 @@ after_success:
   - codecov
 script:
   - "nosetests -a \"!slow\""
-  - "python nala.py -p 2581245"
+#  - "python nala.py -p 2581245"
 branches:
   only:
     - master
