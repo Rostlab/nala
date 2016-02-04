@@ -149,8 +149,11 @@ class Iteration:
         annjson_base_folder = base_folder + "annjson/"
         self.train = HTMLReader(html_base_folder).read()
         # TODO mergannotationreader --> change how to add annotations and read them from there...
-        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
-                                      entity_strategy='priority').annotate(self.train)
+        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'),
+                                      strategy='intersection',
+                                      entity_strategy='priority',
+                                      priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+                                      delete_incomplete_docs=True).annotate(self.train)
 
         # extend for each next iteration
         if self.number > 1:
@@ -158,7 +161,7 @@ class Iteration:
                 # get new dataset
                 path_to_read = os.path.join(self.bootstrapping_folder, "iteration_{}".format(i))
                 tmp_data = HTMLReader(path_to_read + "/candidates/html/").read()
-                AnnJsonAnnotationReader(path_to_read + "/reviewed/").annotate(tmp_data)
+                AnnJsonAnnotationReader(path_to_read + "/reviewed/", delete_incomplete_docs=False).annotate(tmp_data)
 
                 # extend learning_data
                 self.train.extend_dataset(tmp_data)
@@ -180,14 +183,16 @@ class Iteration:
             annjson = path + "annjson/"
             data = HTMLReader(html).read()
             AnnJsonMergerAnnotationReader(os.path.join(annjson, 'members'), strategy='intersection',
-                                          entity_strategy='priority').annotate(data)
+                                          entity_strategy='priority',
+                                          priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+                                          delete_incomplete_docs=True).annotate(data)
         else:
             path = os.path.join(self.bootstrapping_folder, 'iteration_' + str(it_nr))
             html = os.path.join(path, 'candidates', 'html')
             annjson = os.path.join(path, 'reviewed')
 
             data = HTMLReader(html).read()
-            AnnJsonAnnotationReader(annjson).annotate(data)
+            AnnJsonAnnotationReader(annjson, delete_incomplete_docs=False).annotate(data)
 
         return data
 
@@ -378,7 +383,7 @@ class Iteration:
         AnnJsonAnnotationReader(os.path.join(self.candidates_folder, 'annjson'), is_predicted=True,
                                 delete_incomplete_docs=False).annotate(
             self.reviewed)
-        AnnJsonAnnotationReader(os.path.join(self.reviewed_folder)).annotate(self.reviewed)
+        AnnJsonAnnotationReader(os.path.join(self.reviewed_folder), delete_incomplete_docs=False).annotate(self.reviewed)
         # automatic evaluation
 
     def evaluation(self):
@@ -444,14 +449,16 @@ class Iteration:
         base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
         data = HTMLReader(os.path.join(base_folder, 'html')).read()
         AnnJsonMergerAnnotationReader(os.path.join(os.path.join(base_folder, 'annjson'), 'members'),
-                                      strategy='intersection', entity_strategy='priority').annotate(data)
+                                      strategy='intersection', entity_strategy='priority',
+                                      priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+                                      delete_incomplete_docs=True).annotate(data)
         print_verbose(len(data), 'documents in base')
 
         for fold in range(1, self.number):
             iteration_base = os.path.join(self.bootstrapping_folder, "iteration_{}".format(fold))
 
             tmp_data = HTMLReader(os.path.join(os.path.join(iteration_base, 'candidates'), 'html')).read()
-            AnnJsonAnnotationReader(os.path.join(iteration_base, 'reviewed')).annotate(tmp_data)
+            AnnJsonAnnotationReader(os.path.join(iteration_base, 'reviewed'), delete_incomplete_docs=False).annotate(tmp_data)
             data.extend_dataset(tmp_data)
         print_verbose(len(data), 'documents in total')
 
