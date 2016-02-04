@@ -5,10 +5,16 @@ from nalaf.utils.readers import HTMLReader
 from nala.bootstrapping.iteration import Iteration
 import shutil
 import os
+import sys
 
-username = 'abojchevski'
-password = 'noetic273490pi_eq'
 url = 'https://www.tagtog.net/api/0.1/documents'
+
+try:
+    username = sys.argv[1]
+    password = sys.argv[2]
+except:
+    print("You must pass in tagtog username and password")
+    raise
 
 
 def run():
