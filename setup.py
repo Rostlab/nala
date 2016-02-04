@@ -24,8 +24,7 @@ setup(
     license='MIT',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'nalaf',
-        'gensim' #Note: it may not install on different environments
+        'nalaf'
     ],
     dependency_links=[
         'https://github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
