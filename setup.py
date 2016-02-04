@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='nala',
-    version='0.1',
+    version='0.1.1',
     description='Pipeline for NER of natural language mutation mentions',
     long_description=readme(),
     classifiers=[
@@ -24,10 +24,11 @@ setup(
     license='MIT',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'nltk',
-        'beautifulsoup4',
-        'requests',
-        'python-crfsuite'
+        'nalaf',
+        'gensim' #Note: it may not install on different environments
+    ],
+    dependency_links=[
+        'https://github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
     ],
     include_package_data=True,
     zip_safe=False,
