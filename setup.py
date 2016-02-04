@@ -24,14 +24,11 @@ setup(
     license='MIT',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'nltk',
-        'beautifulsoup4',
-        'requests',
-        'gensim', #Note: it may not install on different environments
-        'python-crfsuite' #Note: it may not install on Windows machines
+        'nalaf',
+        'gensim' #Note: it may not install on different environments
     ],
     dependency_links=[
-        'https://github.com/Rostlab/nalaf.git'
+        'https://github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
     ],
     include_package_data=True,
     zip_safe=False,
