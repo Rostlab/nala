@@ -51,11 +51,16 @@ def upload(n):
         raise Exception(response.status_code, response.text)
 
 
-def download(n, ids):
-    auth = requests.auth.HTTPBasicAuth(username=username, password=password)
+def download(n, ids=None):
+    cnd_dir = 'resources/bootstrapping/iteration_{}/candidates/html'.format(n)
+    if not ids:
+        ids = [file.replace('.html', '') for file in os.listdir(cnd_dir)]
+        
     rev_dir = 'resources/bootstrapping/iteration_{}/reviewed'.format(n)
     if not os.path.exists(rev_dir):
         os.makedirs(rev_dir)
+
+    auth = requests.auth.HTTPBasicAuth(username=username, password=password)
 
     for tagtog_id in ids:
         params = {'project': 'nala', 'output': 'ann.json', 'owner': 'jmcejuela',
