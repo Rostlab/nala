@@ -35,6 +35,8 @@ from nala.utils import get_prepare_pipeline_for_best_model
 class Iteration:
     """
     This is the class to perform one iteration of bootstrapping. There are various options.
+
+    :type candidates: nalaf.structures.data.Dataset
     """
     # todo finish docset of Iteration Class
     def __init__(self, folder=None, iteration_nr=None, threshold_val=THRESHOLD_VALUE):
@@ -368,6 +370,8 @@ class Iteration:
 
         # gnorm tagger
         GNormPlusGeneTagger().tag(self.candidates)
+
+        self.candidates.validate_annotation_offsets()
 
         # export to anndoc format
         ttf_candidates = TagTogFormat(self.candidates, self.candidates_folder)
