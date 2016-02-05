@@ -27,7 +27,7 @@ setup(
         'nalaf'
     ],
     dependency_links=[
-        'https://github.com/Rostlab/nalaf/tarball/develop#egg=nalaf'
+        'https://github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
     ],
     include_package_data=True,
     zip_safe=False,
