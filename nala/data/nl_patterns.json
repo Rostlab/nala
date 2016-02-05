@@ -95,7 +95,6 @@
 	"\\bmutations?\\s+(\\b\\w+\\b\\s?){1,4}\\s+highly conserved cysteines",
 	"\\bmutations?\\s+(\\b\\w+\\b\\s?){1,4}\\s+(\\b\\w*\\d+\\w*\\b\\s?){1,2}\\s+amino acids? upstream\\s+(\\b\\w+\\b\\s?){1,4}\\s+catalytic\\s+(\\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr|glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan|proline|phenylalanine|cysteine|serine|glutamate|tyrosine)\\b\\s?){1,3}\\s+residues?",
 	"\\bmutations?\\s+(\\b\\w+\\b\\s?){1,4}\\s+residues?\\s+(\\b\\w*\\d+\\w*\\b\\s?){1,2}\\s+(\\b\\w+\\b\\s?){1,4}\\s+(\\b\\w*\\d+\\w*\\b\\s?){1,2}",
-	"\\bmutations?\\s+(\\b\\w+\\b\\s?){1,4}\\s+conserved phosphorylation sites?",
 	"\\bpoint mutations?\\s+(\\b\\w+\\b\\s?){1,4}\\s+(\\b\\w*\\d+\\w*\\b\\s?){1,2}\\s+residues?",
 	"\\bprolines engineered\\s+(\\b\\w+\\b\\s?){1,4}\\s+positions? flanking residues?\\s+(\\b\\w*\\d+\\w*\\b\\s?){1,2}",
 	"\\bremoval\\s+(\\b\\w+\\b\\s?){1,4}\\s+(\\b\\w*\\d+\\w*\\b\\s?){1,2}",
