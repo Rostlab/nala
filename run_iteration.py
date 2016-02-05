@@ -55,7 +55,7 @@ def download(n, ids=None):
     cnd_dir = 'resources/bootstrapping/iteration_{}/candidates/html'.format(n)
     if not ids:
         ids = [file.replace('.html', '') for file in os.listdir(cnd_dir)]
-        
+
     rev_dir = 'resources/bootstrapping/iteration_{}/reviewed'.format(n)
     if not os.path.exists(rev_dir):
         os.makedirs(rev_dir)
@@ -82,7 +82,7 @@ def validate(n, ids):
 
     data = HTMLReader(cnd_dir).read()
     print(len(data))
-    AnnJsonAnnotationReader(rev_dir, delete_incomplete_docs=False).annotate(data)
+    AnnJsonAnnotationReader(rev_dir, delete_incomplete_docs=True).annotate(data)
     print(len(data))
 
 itr_number = run()
