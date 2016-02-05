@@ -12,15 +12,22 @@ url = 'https://www.tagtog.net/api/0.1/documents'
 try:
     username = sys.argv[1]
     password = sys.argv[2]
+    if len(sys.argv) > 3:
+        itr_number = sys.argv[3]
+    else:
+        itr_number = None
 except:
     print("You must pass in tagtog username and password")
     raise
 
 
+
 def run():
-    itr = Iteration()
+    itr = Iteration(iteration_nr=itr_number)
+    print("Running iteration #: ", itr.number)
     itr.docselection(just_caching=True, nr=100)
     itr.before_annotation(10)
+    return itr.number
 
 
 def upload(n):
@@ -38,13 +45,17 @@ def upload(n):
             os.rename(os.path.join(os.path.join(iter_dir, 'html'), '{}.html'.format(id.split('-')[-1])),
                       os.path.join(os.path.join(iter_dir, 'html'), '{}.html'.format(id)))
 
+        print("Warnings:", response.json()['warnings'])
+        return response.json()['ids']
+    else:
+        raise Exception(response.status_code, response.text)
 
-def download(n):
+
+def download(n, ids):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
-    cnd_dir = 'resources/bootstrapping/iteration_{}/candidates/html'.format(n)
     rev_dir = 'resources/bootstrapping/iteration_{}/reviewed'.format(n)
-
-    ids = [file.replace('.html', '') for file in os.listdir(cnd_dir)]
+    if not os.path.exists(rev_dir):
+        os.makedirs(rev_dir)
 
     for tagtog_id in ids:
         params = {'project': 'nala', 'output': 'ann.json', 'owner': 'jmcejuela',
@@ -55,19 +66,30 @@ def download(n):
                 json.dump(response.json(), open(os.path.join(rev_dir, '{}.ann.json'.format(tagtog_id)), 'w'))
                 print('downloaded', tagtog_id)
             except json.JSONDecodeError:
-                print('error', tagtog_id, response.text)
+                print('error', tagtog_id, response.status_code, response.text)
+        else:
+            print('error', tagtog_id, response.status_code, response.text)
 
 
-def validate(n):
+def validate(n, ids):
     cnd_dir = 'resources/bootstrapping/iteration_{}/candidates/html'.format(n)
     rev_dir = 'resources/bootstrapping/iteration_{}/reviewed'.format(n)
 
     data = HTMLReader(cnd_dir).read()
     print(len(data))
-    AnnJsonAnnotationReader(rev_dir).annotate(data)
+    AnnJsonAnnotationReader(rev_dir, delete_incomplete_docs=False).annotate(data)
     print(len(data))
 
-run()
-# upload(22)
-# download(22)
-# validate(22)
+itr_number = run()
+
+ids = upload(itr_number)
+print('The following documents are now uploaded to tagtog', ids)
+print('Now review them on tagtog')
+while True:
+    answer = input('Are you done reviewing the documents? ')
+    if answer.lower() in ['yes', 'y']:
+        break
+
+download(itr_number, ids)
+validate(itr_number, ids)
+print(":-) Congrats for finishing Iteration #", itr_number)
