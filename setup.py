@@ -23,9 +23,9 @@ setup(
     author_email='email@somedomain.com',
     license='MIT',
     packages=find_packages(exclude=['tests']),
-    install_requires=[
-        'nalaf'
-    ],
+    #install_requires=[
+    #    'nalaf'
+    #],
     #dependency_links=[
     #    'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
     #],
