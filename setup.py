@@ -26,9 +26,9 @@ setup(
     install_requires=[
         'nalaf'
     ],
-    dependency_links=[
-        'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
-    ],
+    #dependency_links=[
+    #    'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
+    #],
     include_package_data=True,
     zip_safe=False,
     test_suite='nose.collector',
