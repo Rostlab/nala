@@ -38,7 +38,7 @@ class Iteration:
 
     :type candidates: nalaf.structures.data.Dataset
     """
-    # todo finish docset of Iteration Class
+    # TODO finish docset of Iteration Class
     def __init__(self, folder=None, iteration_nr=None, threshold_val=THRESHOLD_VALUE):
         """
         Init function of iteration. Has to be called with proper folder and crfsuite path if not default.
