@@ -27,7 +27,7 @@ setup(
         'nalaf'
     ],
     dependency_links=[
-        'git+ssh://github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
+        'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
     ],
     include_package_data=True,
     zip_safe=False,
