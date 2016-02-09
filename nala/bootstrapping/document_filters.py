@@ -89,12 +89,11 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
         """
         :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
         """
-        import webbrowser
         for pmid, doc in documents:
             # if we can't find it in the cache
             # ask the user and save it to the cache
             if pmid not in self.cache:
-                webbrowser.open('www.ncbi.nlm.nih.gov/pubmed/{}'.format(pmid))
+                print('http://www.ncbi.nlm.nih.gov/pubmed/{}'.format(pmid))
                 answer = input('do? ')
                 self.cache[pmid] = answer.lower() in ['yes', 'y']
                 if answer.lower() == 's':
