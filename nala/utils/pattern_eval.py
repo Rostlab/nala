@@ -193,17 +193,19 @@ def highlighted_text(text):
     simple_regex = re.compile(r'(mutat\w+|replace.{1,4}|residues?'
                               r'|deletion|insertion|substitution|convert\w+|transition'
                               r'|duplication|frameshift\w+|\btermina\w+|truncat\w+'
-                              r'|changed|changes|modifi\w+|snp)', re.IGNORECASE)
+                              r'|changed|changes|modifi\w+|snp|transversion|loss'
+                              r'|single nucleotide polymorphism)', re.IGNORECASE)
     code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)\b',
                             re.IGNORECASE)
     aa_regex = re.compile(r'\b(glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate'
                           r'|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan'
                           r'|proline|phenylalanine|cysteine|serine|glutamate|tyrosine)\b', re.IGNORECASE)
     adv_regex = re.compile(r'(\d+-bp|\d+\s?bp|heterozygous|missense|homozygous)', re.IGNORECASE)
-    neg_regex = re.compile(r'(\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
+    neg_regex = re.compile(r'((\d+\.)?\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
                            r'|phosphorylat\w+)', re.IGNORECASE)
-    pos_regex = re.compile(r'(\bpositions?|entire|subunits?|domains?|exons?|regions?'
-                           r'exons?|introns?|codons?|amino acids?)', re.IGNORECASE)
+    pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
+                           r'|introns?( \d+)?|codons?( \d+)?|amino acids?|single|double|one|two|three|four'
+                           r'|five|six|seven|eight|nine|ten|eleven|twelve)', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
