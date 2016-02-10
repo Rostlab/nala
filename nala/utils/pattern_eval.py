@@ -182,3 +182,49 @@ def pattern_stats(dataset):
 
     # todo save performances to file
     # print(json.dumps(_perf_patterns, indent=3, sort_keys=True))
+
+def highlighted_text(text):
+    """
+    Does print a highlighted version of text to stdout to quickyl recognise important parts in manualdocfilter.
+    :return string of highlighted text (having color coded text)
+    """
+    # todo improve simple, adv, neg and pos regexs
+
+    simple_regex = re.compile(r'(amino acids?|mutat.{2,5}|point mutations?|replace.{1,4})', re.IGNORECASE)
+    code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)\b',
+                            re.IGNORECASE)
+    aa_regex = re.compile(r'\b(glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate'
+                          r'|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan'
+                          r'|proline|phenylalanine|cysteine|serine|glutamate|tyrosine)\b', re.IGNORECASE)
+    adv_regex = re.compile(r'empty_currently_stub_blablablabla', re.IGNORECASE)
+    neg_regex = re.compile(r'(\d+\s?%|of patients|populations?)', re.IGNORECASE)
+    pos_regex = re.compile(r'(\bpos\w+|positions?|entire|subunits?|domains?)', re.IGNORECASE)
+
+    regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
+               'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
+
+    from nala.bootstrapping.document_filters import color
+    defined_colors = { 'simple': color.GREEN + color.BOLD,
+                       'code': color.YELLOW + color.BLUE,
+                       'aa': color.YELLOW + color.BOLD,
+                       'neg': color.RED,
+                       'pos': color.CYAN,
+                       'adv': color.BLUE}
+
+    sorted_spans = []
+
+    for key, reg in regexs.items():
+        for m in reg.finditer(text):
+            sorted_spans.append((m.start(), m.end(), defined_colors[key]))
+
+    sorted_spans.sort(key=lambda x: x[0])
+
+    final_string = ""
+    last_stop = 0
+    for start, stop, clr in sorted_spans:
+        final_string += text[last_stop:start]
+        last_stop = stop
+        final_string += clr + text[start:stop] + color.END
+
+    return final_string + color.END # note not sure whether color.end is needed
+    # (bug with ending colored text not being ended in highrecallfilter)
