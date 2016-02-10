@@ -190,16 +190,20 @@ def highlighted_text(text):
     """
     # todo improve simple, adv, neg and pos regexs
 
-    simple_regex = re.compile(r'(amino acids?|mutated|(point\s)?mutation|mutation|replace.{1,4}|residues?'
-                              r'deletion|insertion|substitution|convert\w+|transition)', re.IGNORECASE)
+    simple_regex = re.compile(r'(mutat\w+|replace.{1,4}|residues?'
+                              r'|deletion|insertion|substitution|convert\w+|transition'
+                              r'|duplication|frameshift\w+|\btermina\w+|truncat\w+'
+                              r'|changed|changes|modifi\w+|snp)', re.IGNORECASE)
     code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)\b',
                             re.IGNORECASE)
     aa_regex = re.compile(r'\b(glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate'
                           r'|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan'
                           r'|proline|phenylalanine|cysteine|serine|glutamate|tyrosine)\b', re.IGNORECASE)
-    adv_regex = re.compile(r'empty_currently_stub_blablablabla', re.IGNORECASE)
-    neg_regex = re.compile(r'(\d+\s?%|of patients|populations?|famil\w+)', re.IGNORECASE)
-    pos_regex = re.compile(r'(\bpos\w+|entire|subunits?|domains?|exons?|regions?)', re.IGNORECASE)
+    adv_regex = re.compile(r'(\d+-bp|\d+\s?bp|heterozygous|missense|homozygous)', re.IGNORECASE)
+    neg_regex = re.compile(r'(\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
+                           r'|phosphorylat\w+)', re.IGNORECASE)
+    pos_regex = re.compile(r'(\bpositions?|entire|subunits?|domains?|exons?|regions?'
+                           r'exons?|introns?|codons?|amino acids?)', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
@@ -210,15 +214,16 @@ def highlighted_text(text):
                        'aa': color.YELLOW + color.BOLD,
                        'neg': color.RED,
                        'pos': color.CYAN,
-                       'adv': color.BLUE}
+                       'adv': color.GREEN + color.UNDERLINE + color.BOLD}
 
+    # sorted_spans contains (start, stop, color) of found regular expressions
     sorted_spans = []
 
     for key, reg in regexs.items():
         for m in reg.finditer(text):
             sorted_spans.append((m.start(), m.end(), defined_colors[key]))
 
-    sorted_spans.sort(key=lambda x: x[0])
+    sorted_spans.sort(key=lambda x: x[0]) # sorted by start position
 
     final_string = ""
     last_stop = 0
@@ -226,6 +231,8 @@ def highlighted_text(text):
         final_string += text[last_stop:start]
         last_stop = stop
         final_string += clr + text[start:stop] + color.END
+
+    # note in case of 2 matches overlap ... won't be able to pick up properly ... maybe ... have to check
 
     return final_string + color.END # note not sure whether color.end is needed
     # (bug with ending colored text not being ended in highrecallfilter)
