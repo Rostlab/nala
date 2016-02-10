@@ -43,3 +43,6 @@ config.ini
 
 # Cache files
 *cache.json
+
+# Mac OS X specific
+.DS_Store
