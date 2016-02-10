@@ -191,7 +191,7 @@ def highlighted_text(text):
     # todo improve simple, adv, neg and pos regexs
 
     simple_regex = re.compile(r'(amino acids?|mutated|(point\s)?mutation|mutation|replace.{1,4}|residues?'
-                              r'deletion|insertion|substitution|convert\w+)', re.IGNORECASE)
+                              r'deletion|insertion|substitution|convert\w+|transition)', re.IGNORECASE)
     code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)\b',
                             re.IGNORECASE)
     aa_regex = re.compile(r'\b(glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate'

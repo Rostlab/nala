@@ -150,7 +150,6 @@ class Iteration:
         html_base_folder = base_folder + "html/"
         annjson_base_folder = base_folder + "annjson/"
         self.train = HTMLReader(html_base_folder).read()
-        # TODO mergannotationreader --> change how to add annotations and read them from there...
         AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'),
                                       strategy='intersection',
                                       entity_strategy='priority',
@@ -162,9 +161,11 @@ class Iteration:
             for i in range(1, self.number):
                 # get new dataset
                 path_to_read = os.path.join(self.bootstrapping_folder, "iteration_{}".format(i))
-                tmp_data = HTMLReader(path_to_read + "/candidates/html/").read()
-                AnnJsonAnnotationReader(path_to_read + "/reviewed/", delete_incomplete_docs=False).annotate(tmp_data)
-
+                try:
+                    tmp_data = HTMLReader(path_to_read + "/candidates/html/").read()
+                    AnnJsonAnnotationReader(path_to_read + "/reviewed/", delete_incomplete_docs=False).annotate(tmp_data)
+                except FileNotFoundError:
+                    continue
                 # extend learning_data
                 self.train.extend_dataset(tmp_data)
 
