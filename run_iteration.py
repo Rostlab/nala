@@ -10,12 +10,14 @@ import sys
 url = 'https://www.tagtog.net/api/0.1/documents'
 
 try:
-    username = sys.argv[1]
-    password = sys.argv[2]
-    if len(sys.argv) > 3:
-        itr_number = sys.argv[3]
-    else:
-        itr_number = None
+    # username = sys.argv[1]
+    # password = sys.argv[2]
+    # if len(sys.argv) > 3:
+    #     itr_number = sys.argv[3]
+    # else:
+    #     itr_number = None
+    username = 'abojchevski'
+    password = 'nt?tagtog'
 except:
     print("You must pass in tagtog username and password")
     raise
@@ -23,9 +25,10 @@ except:
 
 
 def run():
-    itr = Iteration(iteration_nr=itr_number)
+    itr = Iteration(iteration_nr=30)
     print("Running iteration #: ", itr.number)
-    itr.docselection(just_caching=True, nr=100)
+    # itr.docselection(10)
+    # itr.docselection(just_caching=True, nr=100)
     itr.before_annotation(10)
     return itr.number
 
@@ -87,14 +90,14 @@ def validate(n, ids):
 
 itr_number = run()
 
-ids = upload(itr_number)
-print('The following documents are now uploaded to tagtog', ids)
-print('Now review them on tagtog')
-while True:
-    answer = input('Are you done reviewing the documents? ')
-    if answer.lower() in ['yes', 'y']:
-        break
-
-download(itr_number, ids)
-validate(itr_number, ids)
-print(":-) Congrats for finishing Iteration #", itr_number)
+# ids = upload(itr_number)
+# print('The following documents are now uploaded to tagtog', ids)
+# print('Now review them on tagtog')
+# while True:
+#     answer = input('Are you done reviewing the documents? ')
+#     if answer.lower() in ['yes', 'y']:
+#         break
+#
+# download(itr_number, ids)
+# validate(itr_number, ids)
+# print(":-) Congrats for finishing Iteration #", itr_number)
