@@ -190,15 +190,16 @@ def highlighted_text(text):
     """
     # todo improve simple, adv, neg and pos regexs
 
-    simple_regex = re.compile(r'(amino acids?|mutat.{2,5}|point mutations?|replace.{1,4})', re.IGNORECASE)
+    simple_regex = re.compile(r'(amino acids?|mutated|(point\s)?mutation|mutation|replace.{1,4}|residues?'
+                              r'deletion|insertion|substitution|convert\w+)', re.IGNORECASE)
     code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)\b',
                             re.IGNORECASE)
     aa_regex = re.compile(r'\b(glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate'
                           r'|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan'
                           r'|proline|phenylalanine|cysteine|serine|glutamate|tyrosine)\b', re.IGNORECASE)
     adv_regex = re.compile(r'empty_currently_stub_blablablabla', re.IGNORECASE)
-    neg_regex = re.compile(r'(\d+\s?%|of patients|populations?)', re.IGNORECASE)
-    pos_regex = re.compile(r'(\bpos\w+|positions?|entire|subunits?|domains?)', re.IGNORECASE)
+    neg_regex = re.compile(r'(\d+\s?%|of patients|populations?|famil\w+)', re.IGNORECASE)
+    pos_regex = re.compile(r'(\bpos\w+|entire|subunits?|domains?|exons?|regions?)', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}

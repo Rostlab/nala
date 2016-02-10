@@ -20,6 +20,8 @@ from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nala.utils import MUT_CLASS_ID
 from nala.utils import get_prepare_pipeline_for_best_model
 
+from nala.utils.pattern_eval import highlighted_text
+
 
 class DocumentFilter:
     """
@@ -93,7 +95,8 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
             # if we can't find it in the cache
             # ask the user and save it to the cache
             if pmid not in self.cache:
-                print('http://www.ncbi.nlm.nih.gov/pubmed/{}'.format(pmid))
+                # print('http://www.ncbi.nlm.nih.gov/pubmed/{}'.format(pmid))
+                print(highlighted_text(doc.get_text()))
                 answer = input('do? ')
                 self.cache[pmid] = answer.lower() in ['yes', 'y']
                 if answer.lower() == 's':
