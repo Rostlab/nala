@@ -32,8 +32,9 @@ def read_data(n, read_base=True):
     return data
 
 
-def train():
+def train(evaluate_on_test=True):
     data = read_data(39)
+
     train, test = data.stratified_split()
     print('train: {}, test: {}'.format(len(train), len(test)))
     del data
@@ -41,17 +42,19 @@ def train():
 
     pipeline = get_prepare_pipeline_for_best_model()
     pipeline.execute(train)
-    pipeline.execute(test)
     BIEOLabeler().label(train)
-    BIEOLabeler().label(test)
 
     py_crf = PyCRFSuite()
     py_crf.train(train, 'idp4_model')
-    py_crf.tag(test, 'idp4_model')
 
-    PostProcessing().process(test)
-    ExclusiveNLDefiner().define(test)
-    MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
+    if evaluate_on_test:
+        pipeline.execute(test)
+        BIEOLabeler().label(test)
+        py_crf.tag(test, 'idp4_model')
+
+        PostProcessing().process(test)
+        ExclusiveNLDefiner().define(test)
+        MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
 
 if __name__ == '__main__':
     train()
