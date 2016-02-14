@@ -37,7 +37,6 @@ def train():
     train, test = data.stratified_split()
     print('train: {}, test: {}'.format(len(train), len(test)))
     del data
-    exit()
     train.prune()
 
     pipeline = get_prepare_pipeline_for_best_model()
