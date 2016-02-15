@@ -1,3 +1,4 @@
+from itertools import chain
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nalaf.preprocessing.labelers import BIEOLabeler
@@ -35,22 +36,22 @@ def find_number_of_documents():
 
 def calc_std(mean, array):
     cleaned = [n for n in array if not math.isnan(n)]
-    return math.sqrt(sum((n-mean)**2 for n in cleaned)/(len(cleaned)-1))
+    n = len(cleaned)
+    return math.sqrt(sum((n - mean) ** 2 for n in cleaned) / (n - 1)) / math.sqrt(n)
 
 
 def calculate_standard_error(data):
     evaluator = MentionLevelEvaluator('overlapping', subclass_analysis=True)
     keys = data.documents.keys()
+    subclasses = set(ann.subclass for ann in chain(data.annotations(), data.predicted_annotations()))
 
-    subclass_measures, measures = evaluator.evaluate(data)
-
-    sample_precision = {subclass: [] for subclass in subclass_measures.keys()}
-    sample_recall = {subclass: [] for subclass in subclass_measures.keys()}
-    sample_f_score = {subclass: [] for subclass in subclass_measures.keys()}
+    sample_precision = {subclass: [] for subclass in subclasses}
+    sample_recall = {subclass: [] for subclass in subclasses}
+    sample_f_score = {subclass: [] for subclass in subclasses}
 
     for i in range(1000):
         sample = Dataset()
-        random_keys = random.sample(keys, round(len(keys)*0.15))
+        random_keys = random.sample(keys, round(len(keys) * 0.15))
         sample.documents = {key: data.documents[key] for key in random_keys}
 
         subclass_measures, measures = evaluator.evaluate(sample)
@@ -61,6 +62,7 @@ def calculate_standard_error(data):
             sample_recall[subclass].append(subclass_results[-2])
             sample_f_score[subclass].append(subclass_results[-1])
 
+    subclass_measures, measures = evaluator.evaluate(data)
     for subclass in subclass_measures.keys():
         subclass_results = subclass_measures[subclass]
         mean_precision = subclass_results[-3]
