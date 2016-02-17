@@ -53,7 +53,8 @@ def get_word_embeddings_feature_generator():
 
     we_model = pkg_resources.resource_filename('nala.data', os.path.join('word_embeddings', 'word_embeddings.model'))
     if not os.path.exists(we_model):
-        print_verbose('Downloading')
+        print_verbose('Downloading Word Embeddings Model')
+        # TODO requests doesn't support ftp, but better use: ftp://rostlab.org/jmcejuela//model_we_2016-01-25.tar.gz
         model_url = 'https://rostlab.org/~abojchevski/word_embeddings.tar.gz'
         we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'word_embeddings.tar.gz')
 
