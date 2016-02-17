@@ -289,7 +289,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                                 print(color.PURPLE + new_text.replace(match.group(),
                                                                       color.BOLD + color.DARKCYAN + color.UNDERLINE + match.group() + color.END + color.PURPLE) + color.END)
                                 positive_sentences += 1
-                                found_in_senteknce = True
+                                found_in_sentence = True
                                             # if not anti_doc.overlaps_with_mention(start,
                                             #                                       end) \
                                             #         and not nala_doc.overlaps_with_mention(start, end, annotated=False):

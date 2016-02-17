@@ -204,8 +204,9 @@ def highlighted_text(text):
     neg_regex = re.compile(r'((\d+\.)?\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
                            r'|phosphorylat\w+)', re.IGNORECASE)
     pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
-                           r'|introns?( \d+)?|codons?( \d+)?|amino acids?|single|double|one|two|three|four'
-                           r'|five|six|seven|eight|nine|ten|eleven|twelve)', re.IGNORECASE)
+                           r'|introns?( \d+)?|codons?( \d+)?|amino acids?'
+                           r'|\bsingle|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
+                           r'|\bfive\b|\bsix\b|\bseven\b|\beight\b|\bnine\b|\bten\b|\beleven\b|\btwelve\b)', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
