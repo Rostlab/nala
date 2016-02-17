@@ -40,6 +40,6 @@ The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the 
 # Examples
 Run:
 * `nala.py` for a simple example how to use NALA just for prediction with a pre-trained model
-    * `python3 nala.py -c [PATH CRFSUITE BIN DIR] -p 15878741 12625412`
-    * `python3 nala.py -c [PATH CRFSUITE BIN DIR] -s "This is c.A1003G an example"`
-    * `python3 nala.py -c [PATH CRFSUITE BIN DIR] -d example.txt`
+    * `python3 nala.py -p 15878741 12625412`
+    * `python3 nala.py -s "This is c.A1003G an example"`
+    * `python3 nala.py -d example.txt`
