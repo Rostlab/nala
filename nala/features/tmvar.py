@@ -273,6 +273,7 @@ class TmVarDictionaryFeatureGenerator(FeatureGenerator):
         """
         :type dataset: nalaf.structures.data.Dataset
         """
+        feature_names = ['pattern{}'.format(i) for i in range(len(self.patterns))]
         for part in dataset.parts():
             matches = {}
 
@@ -284,7 +285,6 @@ class TmVarDictionaryFeatureGenerator(FeatureGenerator):
             for sentence in part.sentences:
                 for token in sentence:
                     for match_index, match in matches.items():
-                        name = 'pattern{}'.format(match_index)
                         value = 'O'
                         for start, end in match:
                             if start == token.start:
@@ -297,4 +297,4 @@ class TmVarDictionaryFeatureGenerator(FeatureGenerator):
                                 value = 'E'
                                 break
 
-                        token.features[name] = value
+                        token.features[feature_names[match_index]] = value
