@@ -15,7 +15,7 @@ try:
     if len(sys.argv) > 3:
         itr_number = sys.argv[3]
     else:
-        itr_number = 35
+        itr_number = None
 except:
     print("You must pass in tagtog username and password")
     raise
