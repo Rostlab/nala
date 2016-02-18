@@ -25,7 +25,7 @@ except:
 def run():
     itr = Iteration(iteration_nr=itr_number)
     print("Running iteration #: ", itr.number)
-    itr.docselection(just_caching=True, nr=100)
+    itr.docselection(just_caching=True, nr=1000)
     itr.before_annotation(10)
     return itr.number
 
