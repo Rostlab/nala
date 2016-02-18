@@ -61,7 +61,7 @@ class PostProcessing:
         self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
         self.keep_silent = keep_silent
 
-    def process(self, dataset):
+    def process(self, dataset, class_id = MUT_CLASS_ID):
         for doc_id, doc in dataset.documents.items():
             for part_id, part in doc.parts.items():
                 self.__fix_issues(part)
@@ -70,11 +70,11 @@ class PostProcessing:
                         start = match.start()
                         end = match.end()
                         matched_text = part.text[start:end]
-                        ann = Entity(MUT_CLASS_ID, start, matched_text)
+                        ann = Entity(class_id, start, matched_text)
 
                         Entity.equality_operator = 'exact_or_overlapping'
                         if ann not in part.predicted_annotations:
-                            part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, matched_text))
+                            part.predicted_annotations.append(Entity(class_id, start, matched_text))
                         Entity.equality_operator = 'overlapping'
                         if ann in part.predicted_annotations:
                             for index, ann_b in enumerate(part.predicted_annotations):

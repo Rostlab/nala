@@ -358,18 +358,11 @@ class Iteration:
 
     # TODO rename to annotate
     def tagging(self, threshold_val=THRESHOLD_VALUE):
-        # tagging
         print_verbose("\n\n\n======Tagging======\n\n\n")
-        # prepare dataset
+
         self.pipeline.execute(self.candidates)
-        # crfsuite tagger
-        # CRFSuiteTagger([MUT_CLASS_ID], self.crf).tag(self.candidates)
-        self.crf.tag(self.candidates, self.bin_model)
-
-        # postprocess
+        self.crf.tag(self.candidates, self.bin_model, MUT_CLASS_ID)
         PostProcessing().process(self.candidates)
-
-        # gnorm tagger
         GNormPlusGeneTagger().tag(self.candidates)
 
         self.candidates.validate_annotation_offsets()

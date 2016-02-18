@@ -49,16 +49,19 @@ if __name__ == "__main__":
     else:
         raise FileNotFoundError('directory or file "{}" does not exist'.format(args.dir_or_file))
 
-    get_prepare_pipeline_for_best_model().execute(dataset)
 
-    # get the predictions
+    pipeline = get_prepare_pipeline_for_best_model()
     crf = PyCRFSuite()
-    crf.tag(dataset, pkg_resources.resource_filename('nala.data', 'default_model'), MUT_CLASS_ID)
+    bin_model = pkg_resources.resource_filename('nala.data', 'default_model')
+
+    pipeline.execute(dataset)
+    
+    crf.tag(dataset, bin_model, MUT_CLASS_ID)
+    PostProcessing().process(dataset)
 
     GNormPlusGeneTagger().tag(dataset, uniprot=True)
-    StubSameSentenceRelationExtractor().tag(dataset)
 
-    PostProcessing().process(dataset)
+    StubSameSentenceRelationExtractor().tag(dataset)
 
     if args.output_dir:
         if not os.path.isdir(args.output_dir):
