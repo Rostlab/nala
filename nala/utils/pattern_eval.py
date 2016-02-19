@@ -200,9 +200,10 @@ def highlighted_text(text):
     aa_regex = re.compile(r'\b(glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate'
                           r'|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan'
                           r'|proline|phenylalanine|cysteine|serine|glutamate|tyrosine)\b', re.IGNORECASE)
-    adv_regex = re.compile(r'(\d+-bp|\d+\s?bp|heterozygous|missense|homozygous)', re.IGNORECASE)
+    adv_regex = re.compile(r'(\d+-bp|\d+\s?bp|heterozygous|missense|homozygous|'
+                           r'\b(A|C|T|G)( |-)to( |-)(A|C|T|G)\b)', re.IGNORECASE)
     neg_regex = re.compile(r'((\d+\.)?\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
-                           r'|phosphorylat\w+)', re.IGNORECASE)
+                           r'|phosphorylat\w+|alternative splicing)', re.IGNORECASE)
     pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
                            r'|introns?( \d+)?|codons?( \d+)?|amino acids?'
                            r'|\bsingle|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
@@ -237,5 +238,5 @@ def highlighted_text(text):
 
     # note in case of 2 matches overlap ... won't be able to pick up properly ... maybe ... have to check
 
-    return final_string + color.END # note not sure whether color.end is needed
+    return final_string + color.END + text[last_stop:] # note not sure whether color.end is needed
     # (bug with ending colored text not being ended in highrecallfilter)

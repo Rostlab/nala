@@ -39,7 +39,7 @@ class Iteration:
     :type candidates: nalaf.structures.data.Dataset
     """
     # TODO finish docset of Iteration Class
-    def __init__(self, folder=None, iteration_nr=None, threshold_val=THRESHOLD_VALUE):
+    def __init__(self, folder=None, iteration_nr=None, threshold_val=THRESHOLD_VALUE, pipeline=None, stats=False):
         """
         Init function of iteration. Has to be called with proper folder and crfsuite path if not default.
         :param folder: Bootstrapping folder (has to be created before including base folder with html + annjson folder and corpus)
@@ -72,8 +72,15 @@ class Iteration:
         self.crf = PyCRFSuite()
 
         # preparedataset pipeline init
-        self.pipeline = get_prepare_pipeline_for_best_model()
-        """ :type PrepareDatasetPipeline: """
+        if not stats:
+            if pipeline is None or not isinstance(pipeline, PrepareDatasetPipeline):
+                self.pipeline = get_prepare_pipeline_for_best_model()
+                """ :type PrepareDatasetPipeline: """
+            else:
+                self.pipeline = pipeline
+                """ :type PrepareDatasetPipeline: """
+        else:
+            self.pipeline = None
 
         # labeler init
         self.labeler = BIEOLabeler()
@@ -355,6 +362,9 @@ class Iteration:
                         break
 
         self.candidates = dataset
+        len_cand = len(self.candidates)
+        if len_cand < nr:
+            exit('Not {} documents as expected. only {}'.format(nr, len_cand))
 
     # TODO rename to annotate
     def tagging(self, threshold_val=THRESHOLD_VALUE):
