@@ -201,14 +201,15 @@ def highlighted_text(text):
                           r'|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan'
                           r'|proline|phenylalanine|cysteine|serine|glutamate|tyrosine)\b', re.IGNORECASE)
     adv_regex = re.compile(r'(\d+-bp|\d+\s?bp|heterozygous|missense|homozygous|'
-                           r'\b(A|C|T|G)( |-)to( |-)(A|C|T|G)\b)', re.IGNORECASE)
+                           r'\b(A|C|T|G)( |-)to( |-)(A|C|T|G)\b'
+                           r'|mutagenesis|mutant)', re.IGNORECASE)
     neg_regex = re.compile(r'((\d+\.)?\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
                            r'|phosphorylat\w+|alternative splicing)', re.IGNORECASE)
     pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
                            r'|introns?( \d+)?|codons?( \d+)?|amino acids?'
                            r'|\bsingle|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
                            r'|\bfive\b|\bsix\b|\bseven\b|\beight\b|\bnine\b|\bten\b|\beleven\b|\btwelve\b'
-                           r'|\b\d+\b)', re.IGNORECASE)
+                           r'| \d+ )', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
