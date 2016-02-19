@@ -190,9 +190,9 @@ def highlighted_text(text):
     """
     # todo improve simple, adv, neg and pos regexs
 
-    simple_regex = re.compile(r'(mutat\w+|replace.{1,4}|residues?'
-                              r'|deletion|insertion|substitution|convert\w+|transition'
-                              r'|duplication|frameshift\w+|\btermina\w+|truncat\w+'
+    simple_regex = re.compile(r'(mutat\w+|replace.{1,5}|residues?'
+                              r'|deletion|insertion|substitut\w+|convert\w+|transition'
+                              r'|duplication|frameshift\w+|(\w+-|3\'-|5\'-)termina\w+|truncat\w+'
                               r'|changed|changes|modifi\w+|snp|transversion|loss'
                               r'|single nucleotide polymorphism)', re.IGNORECASE)
     code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)\b',
@@ -207,9 +207,9 @@ def highlighted_text(text):
                            r'|phosphorylat\w+|alternative splicing|\d+(A|C|T|G)-->(A|C|T|G))', re.IGNORECASE)
     pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
                            r'|introns?( \d+)?|codons?( \d+)?|amino acids?'
-                           r'|\bsingle|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
+                           r'|\bsingle(?! nucleotide)|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
                            r'|\bfive\b|\bsix\b|\bseven\b|\beight\b|\bnine\b|\bten\b|\beleven\b|\btwelve\b'
-                           r'| \d+ (?!of))', re.IGNORECASE)
+                           r'| \d+ (?!of)|(3|5)\'(?!-)|genes?)', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
