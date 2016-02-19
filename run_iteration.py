@@ -15,7 +15,7 @@ try:
     if len(sys.argv) > 3:
         itr_number = sys.argv[3]
     else:
-        itr_number = 35
+        itr_number = None
 except:
     print("You must pass in tagtog username and password")
     raise
@@ -25,7 +25,7 @@ except:
 def run():
     itr = Iteration(iteration_nr=itr_number)
     print("Running iteration #: ", itr.number)
-    itr.docselection(just_caching=True, nr=100)
+    itr.docselection(just_caching=True, nr=1000)
     itr.before_annotation(10)
     return itr.number
 
