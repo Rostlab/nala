@@ -285,9 +285,9 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                                 used_regexs[reg.pattern] += 1
                             else:
                                 used_regexs[reg.pattern] = 1
+                            print(color.PURPLE + new_text.replace(match.group(),
+                                                                  color.BOLD + color.DARKCYAN + color.UNDERLINE + match.group() + color.END + color.PURPLE) + color.END)
                             if not found_in_sentence:
-                                print(color.PURPLE + new_text.replace(match.group(),
-                                                                      color.BOLD + color.DARKCYAN + color.UNDERLINE + match.group() + color.END + color.PURPLE) + color.END)
                                 positive_sentences += 1
                                 found_in_sentence = True
                                             # if not anti_doc.overlaps_with_mention(start,
