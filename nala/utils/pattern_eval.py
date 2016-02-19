@@ -237,5 +237,5 @@ def highlighted_text(text):
 
     # note in case of 2 matches overlap ... won't be able to pick up properly ... maybe ... have to check
 
-    return final_string + color.END # note not sure whether color.end is needed
+    return final_string + color.END + text[last_stop:] # note not sure whether color.end is needed
     # (bug with ending colored text not being ended in highrecallfilter)

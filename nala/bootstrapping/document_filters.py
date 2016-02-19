@@ -95,7 +95,7 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
             # if we can't find it in the cache
             # ask the user and save it to the cache
             if pmid not in self.cache:
-                # print('http://www.ncbi.nlm.nih.gov/pubmed/{}'.format(pmid))
+                print('http://www.ncbi.nlm.nih.gov/pubmed/{}'.format(pmid))
                 print(highlighted_text(doc.get_text()))
                 answer = input('do? ')
                 self.cache[pmid] = answer.lower() in ['yes', 'y']
@@ -364,6 +364,9 @@ class color:
    GREEN = '\033[92m'
    YELLOW = '\033[93m'
    RED = '\033[91m'
+   BRIGHT = '\033[1m'
+   DIM = '\033[2m'
+   NBRIGHT = '\033[22m'
    BOLD = '\033[1m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
