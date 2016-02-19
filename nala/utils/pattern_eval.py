@@ -207,7 +207,8 @@ def highlighted_text(text):
     pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
                            r'|introns?( \d+)?|codons?( \d+)?|amino acids?'
                            r'|\bsingle|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
-                           r'|\bfive\b|\bsix\b|\bseven\b|\beight\b|\bnine\b|\bten\b|\beleven\b|\btwelve\b)', re.IGNORECASE)
+                           r'|\bfive\b|\bsix\b|\bseven\b|\beight\b|\bnine\b|\bten\b|\beleven\b|\btwelve\b'
+                           r'|\b\d+\b)', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
