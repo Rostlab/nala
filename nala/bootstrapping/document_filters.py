@@ -189,7 +189,8 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         """
 
         _progress = 1
-        _timestart = time.time()
+        _start_time = time.time()
+        _total_time = 0
 
         _time_avg_per_pattern = 0
         _pattern_calls = 0
@@ -334,8 +335,6 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                         positive_sentences += 1
 
                 part_offset += sent_offset
-            if positive_sentences > min_found:
-                _progress += 1
             if use_nala:
                 for part in nala_doc:
                     for ann in part.predicted_annotations:
@@ -344,9 +343,17 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                                                                                                        ann.offset + len(
                                                                                                            ann.text):])
                             positive_sentences += min_found
-            _time_progressed = time.time() - _timestart
-            _time_per_doc = _time_progressed / _progress
-            print_verbose("PROGRESS: {:.2f} secs ETA per one positive document: {:.2f} secs".format(_time_progressed, _time_per_doc))
+            _old_time = _start_time
+            _start_time = time.time()
+            _one_time = _start_time - _old_time
+
+            if _one_time > 0.3 and positive_sentences > min_found:
+                _progress += 1
+                _total_time += _one_time
+
+            _time_per_doc = _total_time / _progress
+            print_verbose("PROGRESS: {:.2f} secs ETA per one positive document:"
+                          " {:.2f} secs".format(_total_time, _time_per_doc))
             print_debug('used regular expressions:', json.dumps(used_regexs, indent=4))
             if positive_sentences >= min_found:
                 last_found = 0
