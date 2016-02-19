@@ -204,12 +204,12 @@ def highlighted_text(text):
                            r'\b(A|C|T|G)( |-)to( |-)(A|C|T|G)\b'
                            r'|mutagenesis|mutant)', re.IGNORECASE)
     neg_regex = re.compile(r'((\d+\.)?\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
-                           r'|phosphorylat\w+|alternative splicing)', re.IGNORECASE)
+                           r'|phosphorylat\w+|alternative splicing|\d+(A|C|T|G)-->(A|C|T|G))', re.IGNORECASE)
     pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
                            r'|introns?( \d+)?|codons?( \d+)?|amino acids?'
                            r'|\bsingle|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
                            r'|\bfive\b|\bsix\b|\bseven\b|\beight\b|\bnine\b|\bten\b|\beleven\b|\btwelve\b'
-                           r'| \d+ )', re.IGNORECASE)
+                           r'| \d+ (?!of))', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
