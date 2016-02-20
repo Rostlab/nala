@@ -195,7 +195,8 @@ def highlighted_text(text):
                               r'|duplication|frameshift\w+|(\w+-|3\'-|5\'-)termina\w+|truncat\w+'
                               r'|changed|changes|modifi\w+|snp|transversion|loss'
                               r'|single nucleotide polymorphism)', re.IGNORECASE)
-    code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)\b',
+    code_regex = re.compile(r'\b(cys|ile|ser|gln|met|asn|pro|lys|asp|thr|phe|ala|gly|his|leu|arg|trp|val|glu|tyr)'
+                            r'\b(?!-)',
                             re.IGNORECASE)
     aa_regex = re.compile(r'\b(glutamine|glutamic acid|leucine|valine|isoleucine|lysine|alanine|glycine|aspartate'
                           r'|methionine|threonine|histidine|aspartic acid|arginine|asparagine|tryptophan'
@@ -203,13 +204,13 @@ def highlighted_text(text):
     adv_regex = re.compile(r'(\d+-bp|\d+\s?bp|heterozygous|missense|homozygous|'
                            r'\b(A|C|T|G)( |-)to( |-)(A|C|T|G)\b'
                            r'|mutagenesis|mutant)', re.IGNORECASE)
-    neg_regex = re.compile(r'((\d+\.)?\d+\s?%|of patients|populations?|famil\w+|[a-z]+\d+[a-z]*|\d+ of \d+'
+    neg_regex = re.compile(r'((\d+\.)?\d+\s?%|of patients|populations?|famil\w+|[a-z]+-?\d+-?[a-z]*|\d+ of \d+'
                            r'|phosphorylat\w+|alternative splicing|\d+(A|C|T|G)-->(A|C|T|G))', re.IGNORECASE)
     pos_regex = re.compile(r'(\bpositions?( \d+)?|entire|subunits?|domains?|exons?( \d+)?|regions?'
                            r'|introns?( \d+)?|codons?( \d+)?|amino acids?'
                            r'|\bsingle(?! nucleotide)|\bdouble|\bone\b|\btwo\b|\bthree\b|\bfour\b'
                            r'|\bfive\b|\bsix\b|\bseven\b|\beight\b|\bnine\b|\bten\b|\beleven\b|\btwelve\b'
-                           r'| \d+ (?!of)|(3|5)\'(?!-)|genes?)', re.IGNORECASE)
+                           r'| \d+ (?!of)|(3|5)\'(?!-)|\bgenes?\b)', re.IGNORECASE)
 
     regexs = {'simple': simple_regex, 'code': code_regex, 'aa': aa_regex,
                'adv': adv_regex, 'neg': neg_regex, 'pos': pos_regex}
