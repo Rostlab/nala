@@ -357,6 +357,9 @@ class Iteration:
                                       ManualDocumentFilter()]) as dsp:
                 for pmid, document in dsp.execute():
                     dataset.documents[pmid] = document
+                    lendata = len(dataset.documents)
+                    print_verbose('Already {} documents found. {} more to go.'.format(lendata, nr - lendata))
+
                     # if we have generated enough documents stop
                     if next(c) == nr:
                         break
