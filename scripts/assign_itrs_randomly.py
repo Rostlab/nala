@@ -47,7 +47,7 @@ def get_itr_docs(itr_number):
         filename = os.path.basename(filename)
         filename = filename.replace('.plan.html', '')
         filename = filename.replace('.html', '')
-        print("\t", itr_number, filename)
+        print("\t", filename)
 
 # Finally, print
 
