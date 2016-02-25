@@ -297,6 +297,7 @@ class Iteration:
             self.crf_learning()
         else:
             print_verbose("Already existing binary model is used.")
+        print_verbose('Model at "{}".'.format(self.bin_model))
 
     def docselection(self, nr=2, just_caching=False):
         """
