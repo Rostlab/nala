@@ -21,10 +21,13 @@ def read_data(n, read_base=True):
         data = Dataset()
 
     for i in range(1, n+1):
-        tmp_data = HTMLReader('../resources/bootstrapping/iteration_{}/candidates/html'.format(i)).read()
-        AnnJsonAnnotationReader('../resources/bootstrapping/iteration_{}/reviewed'.format(i),
+        try:
+            tmp_data = HTMLReader('../resources/bootstrapping/iteration_{}/candidates/html'.format(i)).read()
+            AnnJsonAnnotationReader('../resources/bootstrapping/iteration_{}/reviewed'.format(i),
                                 delete_incomplete_docs=False).annotate(tmp_data)
-        data.extend_dataset(tmp_data)
+            data.extend_dataset(tmp_data)
+        except FileNotFoundError:
+            pass
 
     ExclusiveNLDefiner().define(data)
     print('read {} documents'.format(len(data)))
