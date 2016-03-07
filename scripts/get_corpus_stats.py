@@ -44,13 +44,13 @@ def print_stats(name, corpus):
     fs = "{0:.3f}"
     percents = list(map(lambda x: (fs.format(x / total)), counts))
 
-    values = [name, len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS])]
+    values = [name, len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST]))]
 
     print(*values, sep = '\t')
 
 #------------------------------------------------------------------------------
 
-header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS"]
+header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS"]
 print('\t'.join(header))
 
 if args.corpus == "*" or args.corpus == "all":
