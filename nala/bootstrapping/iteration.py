@@ -161,7 +161,7 @@ class Iteration:
         return self.read_iteration(0)
 
     def read_nala(self):
-        dataset = self.read_iteration(1)        
+        dataset = self.read_iteration(1)
         for itr in range(2, self.number + 1):
             try:
                 tmp_dataset = self.read_iteration(itr)
@@ -241,19 +241,6 @@ class Iteration:
             print(row_format.format('nl+ss/doc', (sub_counts[1] + sub_counts[2])/10)) #TODO wrong some iterations like 0 don't have 10 docs
 
         print('ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2])
-
-    def print_mentions_stats(self):
-        """
-        use read_learning_data to print stats
-        """
-        counts=[0,0,0]
-
-        self.read_learning_data()
-        ExclusiveNLDefiner().define(self.train)
-        for ann in self.train.annotations():
-            counts[ann.subclass] += 1
-
-        print('#docs:', len(self.train.documents), 'ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2], 'NL+SS:', counts[1] + counts[2])
 
     def preprocessing(self):
         """
