@@ -153,28 +153,7 @@ class Iteration:
         """
         print_verbose("\n\n####ParseData####\n")
 
-        base_folder = os.path.join(self.bootstrapping_folder, "iteration_0/base/")
-        html_base_folder = base_folder + "html/"
-        annjson_base_folder = base_folder + "annjson/"
-        self.train = HTMLReader(html_base_folder).read()
-        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'),
-                                      strategy='intersection',
-                                      entity_strategy='priority',
-                                      priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
-                                      delete_incomplete_docs=True).annotate(self.train)
-
-        # extend for each next iteration
-        if self.number > 1:
-            for i in range(1, self.number):
-                # get new dataset
-                path_to_read = os.path.join(self.bootstrapping_folder, "iteration_{}".format(i))
-                try:
-                    tmp_data = HTMLReader(path_to_read + "/candidates/html/").read()
-                    AnnJsonAnnotationReader(path_to_read + "/reviewed/", delete_incomplete_docs=False).annotate(tmp_data)
-                except FileNotFoundError:
-                    continue
-                # extend learning_data
-                self.train.extend_dataset(tmp_data)
+        self.train = self.read_IDP4Plus()
 
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
@@ -182,9 +161,8 @@ class Iteration:
         return self.read_iteration(0)
 
     def read_nala(self):
-        dataset = self.read_iteration(1)
-        #TODO range?
-        for itr in range(2, self.number):
+        dataset = self.read_iteration(1)        
+        for itr in range(2, self.number + 1):
             try:
                 tmp_dataset = self.read_iteration(itr)
                 dataset.extend_dataset(tmp_dataset)
@@ -204,7 +182,8 @@ class Iteration:
         annjson_base_folder = os.path.join(base_folder, 'annjson')
 
         dataset = HTMLReader(html_base_folder).read()
-        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
+        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'),
+            strategy='intersection',
             entity_strategy='priority',
             priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
             delete_incomplete_docs=True).annotate(dataset)
@@ -217,10 +196,10 @@ class Iteration:
         :param itr: int, iteration number
         :rtype: nalaf.structures.data.Dataset()
         """
-        print_verbose('####ReadIterationData####')
+        print_verbose('####ReadIterationData#### ' + str(itr))
 
         if itr == 0:
-            return self.read_iteration_0(itr)
+            return self.read_iteration_0()
         else:
             base_folder = os.path.join(self.bootstrapping_folder, 'iteration_' + str(itr))
             html_base_folder = os.path.join(base_folder, 'candidates', 'html')
