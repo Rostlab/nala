@@ -2,32 +2,25 @@ import glob
 import json
 import os
 import re
-import shutil
 import time
 import csv
 
 from collections import defaultdict
 from itertools import product, chain
 from nala.bootstrapping.utils import UniprotDocumentSelector
-from nala.bootstrapping.utils import PMIDDocumentSelector
-from nala.bootstrapping.document_filters import QuickNalaFilter
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
-from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
 from nalaf import print_verbose
-from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
-from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader, AnnJsonMergerAnnotationReader
 from nalaf.utils.readers import HTMLReader
 from nalaf.preprocessing.labelers import BIEOLabeler
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nalaf.utils.writers import TagTogFormat
 from nala.preprocessing.definers import ExclusiveNLDefiner
-from nalaf.learning.taggers import CRFSuiteTagger
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
 from nalaf.structures.data import Entity
 from nalaf.learning.taggers import GNormPlusGeneTagger
-import csv
 
 from nala.utils import get_prepare_pipeline_for_best_model
 
