@@ -178,28 +178,51 @@ class Iteration:
 
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
-    @staticmethod
-    def read_iteration(itr, root_folder=os.path.abspath("resources/bootstrapping")):
+    def read_IDP4(self):
+        return self.read_iteration(0)
+
+    def read_nala(self):
+        dataset = self.read_iteration(1)
+        #TODO range?
+        for itr in range(2, self.number):
+            try:
+                tmp_dataset = self.read_iteration(itr)
+                dataset.extend_dataset(tmp_dataset)
+            except FileNotFoundError:
+                continue
+
+        return dataset
+
+    def read_IDP4Plus(self):
+        dataset = self.read_IDP4()
+        dataset.extend_dataset(self.read_nala())
+        return dataset
+
+    def read_iteration_0(self):
+        base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
+        html_base_folder = os.path.join(base_folder, 'html')
+        annjson_base_folder = os.path.join(base_folder, 'annjson')
+
+        dataset = HTMLReader(html_base_folder).read()
+        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
+            entity_strategy='priority',
+            priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+            delete_incomplete_docs=True).annotate(dataset)
+
+        return dataset
+
+    def read_iteration(self, itr):
         """
         Method to return a dataset for a specificed iteration nr.
-        Is useful to calculate the statistics for each iteration (amount of nl mentions and such).
         :param itr: int, iteration number
         :rtype: nalaf.structures.data.Dataset()
         """
         print_verbose('####ReadIterationData####')
 
         if itr == 0:
-            base_folder = os.path.join(os.path.join(root_folder, 'iteration_0'), 'base')
-            html_base_folder = os.path.join(base_folder, 'html')
-            annjson_base_folder = os.path.join(base_folder, 'annjson')
-
-            dataset = HTMLReader(html_base_folder).read()
-            AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
-                                          entity_strategy='priority',
-                                          priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
-                                          delete_incomplete_docs=True).annotate(dataset)
+            return self.read_iteration_0(itr)
         else:
-            base_folder = os.path.join(root_folder, 'iteration_' + str(itr))
+            base_folder = os.path.join(self.bootstrapping_folder, 'iteration_' + str(itr))
             html_base_folder = os.path.join(base_folder, 'candidates', 'html')
             annjson_base_folder = os.path.join(base_folder, 'reviewed')
 
