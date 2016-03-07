@@ -3,6 +3,7 @@ import os
 from nala.bootstrapping.iteration import Iteration
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.utils.readers import VerspoorReader
+from nalaf.utils.readers import TmVarReader
 from nalaf.utils import MUT_CLASS_ID
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 
@@ -13,7 +14,7 @@ parser = argparse.ArgumentParser(description='Print corpora stats')
 #Var120 = Variome_120
 #?A = Abstracts only
 #?F = Full Text only
-all_corpora = ['IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+', 'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
+all_corpora = ['tmVar', 'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+', 'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
 parser.add_argument('--corpus', help='Name of the corpus to read and print stats for', required = True)
 parser.add_argument('--listall', help='Print mutations', action='store_true')
@@ -70,7 +71,10 @@ def get_num_tokens(dataset, typ):
         return -1
 
 def get_corpus(name):
-    if name == "IDP4":
+    if name == "tmVar":
+        entirecorpusfile = os.path.join(corpora_folder, 'tmvar', 'corpus.txt')
+        return TmVarReader(entirecorpusfile).read()
+    elif name == "IDP4":
         return Iteration.read_IDP4()
     elif name == "nala":
         return Iteration.read_nala()
