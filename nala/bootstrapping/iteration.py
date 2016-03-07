@@ -52,9 +52,6 @@ class Iteration:
             And needs to be created including with the annotated starting corpus.
             ''', self.bootstrapping_folder)
 
-        # represents the iteration
-        self.number = -1
-
         # threshold class-wide variable to save in stats.csv file
         self.threshold_val = threshold_val
 
@@ -86,22 +83,10 @@ class Iteration:
         # TODO make state checks (e.g. has bin model, reviewed files, candidates, results)
 
         if iteration_nr is None:
-            # find iteration number
-            _iteration_name = self.bootstrapping_folder + "/iteration_*/"
-            for fn in glob.glob(_iteration_name):
-                match = re.search('iteration_([0-9]+)', fn)
-                found_iteration = int(match.group(1))
-                if found_iteration > self.number:
-                    self.number = found_iteration
-
-            # check for candidates and reviewed
-            if os.path.isdir(os.path.join(self.bootstrapping_folder, "iteration_{}".format(self.number), 'candidates')):
-                if os.path.isdir(os.path.join(self.bootstrapping_folder, "iteration_{}".format(self.number), 'reviewed')):
-                    self.number += 1
-            if self.number == 0:
-                self.number += 1
+            self.number = Iteration.find_iteration_number()
         else:
             self.number = iteration_nr
+
         # current folders
         self.current_folder = os.path.join(self.bootstrapping_folder, "iteration_{}".format(self.number))
         self.candidates_folder = os.path.join(self.current_folder, 'candidates')
@@ -126,6 +111,29 @@ class Iteration:
                 writer.writerow(['iteration_number', 'subclass', 'threshold',
                                  'tp', 'fp', 'fn', 'fp_overlap', 'fn_overlap', 'precision', 'recall', 'f1-score'])
 
+    @staticmethod
+    def find_iteration_number():
+        ret = -1
+
+        bootstrapping_folder = os.path.abspath("resources/bootstrapping")
+
+        _iteration_name = bootstrapping_folder + "/iteration_*/"
+        for fn in glob.glob(_iteration_name):
+            match = re.search('iteration_([0-9]+)', fn)
+            found_iteration = int(match.group(1))
+            if found_iteration > ret:
+                ret = found_iteration
+
+        # check for candidates and reviewed
+        if (os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(ret), 'candidates')) and
+            os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(ret), 'reviewed'))):
+            ret += 1
+
+        if ret == 0:
+            ret += 1
+
+        return ret
+
     def before_annotation(self, nr_new_docs=10):
         # self.read_learning_data()
         # self.preprocessing()
@@ -146,44 +154,35 @@ class Iteration:
         """
         print_verbose("\n\n####ParseData####\n")
 
-        self.train = self.read_IDP4Plus()
+        self.train = Iteration.read_IDP4Plus()
 
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
-    def read_IDP4(self):
-        return self.read_iteration(0)
+    @staticmethod
+    def read_IDP4():
+        return Iteration.read_iteration(0)
 
-    def read_nala(self):
-        dataset = self.read_iteration(1)
-        for itr in range(2, self.number + 1):
+    @staticmethod
+    def read_nala():
+        dataset = Iteration.read_iteration(1)
+        iterations = Iteration.find_iteration_number()
+        for itr in range(2, iterations + 1):
             try:
-                tmp_dataset = self.read_iteration(itr)
+                tmp_dataset = Iteration.read_iteration(itr)
                 dataset.extend_dataset(tmp_dataset)
             except FileNotFoundError:
                 continue
 
         return dataset
 
-    def read_IDP4Plus(self):
-        dataset = self.read_IDP4()
-        dataset.extend_dataset(self.read_nala())
+    @staticmethod
+    def read_IDP4Plus():
+        dataset = Iteration.read_IDP4()
+        dataset.extend_dataset(Iteration.read_nala())
         return dataset
 
-    def read_iteration_0(self):
-        base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
-        html_base_folder = os.path.join(base_folder, 'html')
-        annjson_base_folder = os.path.join(base_folder, 'annjson')
-
-        dataset = HTMLReader(html_base_folder).read()
-        AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'),
-            strategy='intersection',
-            entity_strategy='priority',
-            priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
-            delete_incomplete_docs=True).annotate(dataset)
-
-        return dataset
-
-    def read_iteration(self, itr):
+    @staticmethod
+    def read_iteration(itr):
         """
         Method to return a dataset for a specificed iteration nr.
         :param itr: int, iteration number
@@ -191,10 +190,22 @@ class Iteration:
         """
         print_verbose('####ReadIterationData#### ' + str(itr))
 
+        bootstrapping_folder = os.path.abspath("resources/bootstrapping")
+
         if itr == 0:
-            return self.read_iteration_0()
+            base_folder = os.path.join(os.path.join(bootstrapping_folder, 'iteration_0'), 'base')
+            html_base_folder = os.path.join(base_folder, 'html')
+            annjson_base_folder = os.path.join(base_folder, 'annjson')
+
+            dataset = HTMLReader(html_base_folder).read()
+            AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'),
+                strategy='intersection',
+                entity_strategy='priority',
+                priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+                delete_incomplete_docs=True).annotate(dataset)
+
         else:
-            base_folder = os.path.join(self.bootstrapping_folder, 'iteration_' + str(itr))
+            base_folder = os.path.join(bootstrapping_folder, 'iteration_' + str(itr))
             html_base_folder = os.path.join(base_folder, 'candidates', 'html')
             annjson_base_folder = os.path.join(base_folder, 'reviewed')
 
