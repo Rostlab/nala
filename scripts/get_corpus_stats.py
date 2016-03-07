@@ -4,6 +4,7 @@ from nala.bootstrapping.iteration import Iteration
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.utils.readers import VerspoorReader
 from nalaf.utils import MUT_CLASS_ID
+from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 
 
 parser = argparse.ArgumentParser(description='Print corpora stats')
@@ -23,11 +24,17 @@ args = parser.parse_args()
 
 corpora_folder = os.path.abspath("resources/corpora")
 
-#------------------------------------------------------------------------------
+nldefiner = ExclusiveNLDefiner()
+
+pipeline = PrepareDatasetPipeline()
 
 ST = 0 #Standard
 NL = 1 #Natural Language
 SS = 2 #Semi-Standard
+
+#------------------------------------------------------------------------------
+
+
 
 def get_corpus_type(name):
     if name.endswith("A"):
@@ -37,11 +44,30 @@ def get_corpus_type(name):
     else:
         return (name, None)
 
+def is_part_type(part, typ):
+    return not typ or (typ == "A" and part.is_abstract) or (typ == "F" and not part.is_abstract)
+
 def annotations(dataset, typ):
+    nldefiner.define(corpus) # classify subclasses
+
     for part in dataset.parts():
-        if not typ or (typ == "A" and part.is_abstract) or (typ == "F" and not part.is_abstract):
+        if is_part_type(part, typ):
             for annotation in part.annotations:
                 yield annotation
+
+def get_num_tokens(dataset, typ):
+    if (typ):
+        pipeline.execute(dataset) # obtain tokens
+
+        ret = 0
+        for part in dataset.parts():
+            if is_part_type(part, typ):
+                for sentence in part.sentences:
+                    ret += len(sentence)
+
+        return ret
+    else:
+        return -1
 
 def get_corpus(name):
     if name == "IDP4":
@@ -59,13 +85,12 @@ def get_corpus(name):
     else:
         raise Exception("Do not recognize given corpus name: " + name)
 
-header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS"]
+header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS", "#tokens"]
 
 def print_stats(name, corpus, typ):
     total = 0
     counts = [0,0,0]
 
-    ExclusiveNLDefiner().define(corpus)
     for ann in annotations(corpus, typ):
         if ann.class_id == MUT_CLASS_ID:
             if (args.listall):
@@ -73,13 +98,15 @@ def print_stats(name, corpus, typ):
             total += 1
             counts[ann.subclass] += 1
 
+    num_tokens = get_num_tokens(corpus, typ)
+
     fs = "{0:.3f}"
     percents = list(map(lambda x: (fs.format(x / total)), counts))
 
     if (args.listall):
         print('\t'.join(header))
 
-    values = [name, len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST]))]
+    values = [name, len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST])), num_tokens]
     print(*values, sep = '\t')
 
 #------------------------------------------------------------------------------
