@@ -178,33 +178,35 @@ class Iteration:
 
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
-    def read_iteration_data(self, it_nr):
+    @staticmethod
+    def read_iteration(itr, root_folder=os.path.abspath("resources/bootstrapping")):
         """
         Method to return a dataset for a specificed iteration nr.
         Is useful to calculate the statistics for each iteration (amount of nl mentions and such).
-        :param it_nr: int
+        :param itr: int, iteration number
         :rtype: nalaf.structures.data.Dataset()
         """
         print_verbose('####ReadIterationData####')
 
-        if it_nr == 0:
-            path = os.path.join(self.bootstrapping_folder, "iteration_0/base/")
-            html = path + "html/"
-            annjson = path + "annjson/"
-            data = HTMLReader(html).read()
-            AnnJsonMergerAnnotationReader(os.path.join(annjson, 'members'), strategy='intersection',
+        if itr == 0:
+            base_folder = os.path.join(os.path.join(root_folder, 'iteration_0'), 'base')
+            html_base_folder = os.path.join(base_folder, 'html')
+            annjson_base_folder = os.path.join(base_folder, 'annjson')
+
+            dataset = HTMLReader(html_base_folder).read()
+            AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'), strategy='intersection',
                                           entity_strategy='priority',
                                           priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
-                                          delete_incomplete_docs=True).annotate(data)
+                                          delete_incomplete_docs=True).annotate(dataset)
         else:
-            path = os.path.join(self.bootstrapping_folder, 'iteration_' + str(it_nr))
-            html = os.path.join(path, 'candidates', 'html')
-            annjson = os.path.join(path, 'reviewed')
+            base_folder = os.path.join(root_folder, 'iteration_' + str(itr))
+            html_base_folder = os.path.join(base_folder, 'candidates', 'html')
+            annjson_base_folder = os.path.join(base_folder, 'reviewed')
 
-            data = HTMLReader(html).read()
-            AnnJsonAnnotationReader(annjson, delete_incomplete_docs=False).annotate(data)
+            dataset = HTMLReader(html_base_folder).read()
+            AnnJsonAnnotationReader(annjson_base_folder, delete_incomplete_docs=False).annotate(dataset)
 
-        return data
+        return dataset
 
     def check_iterations_stats(self):
         """
@@ -220,7 +222,7 @@ class Iteration:
         counts = [0,0,0]
 
         for i in range(0, self.number):
-            tmp_data = self.read_iteration_data(i)
+            tmp_data = Iteration.read_iteration(i)
             sub_counts = [0,0,0]
             ExclusiveNLDefiner().define(tmp_data)
             for ann in tmp_data.annotations():
