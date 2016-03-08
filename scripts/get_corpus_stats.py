@@ -6,6 +6,7 @@ from nalaf.utils.readers import VerspoorReader
 from nalaf.utils.readers import TmVarReader
 from nalaf.utils import MUT_CLASS_ID
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.structures.data import Dataset
 
 
 parser = argparse.ArgumentParser(description='Print corpora stats')
@@ -14,10 +15,14 @@ parser = argparse.ArgumentParser(description='Print corpora stats')
 #Var120 = Variome_120
 #?A = Abstracts only
 #?F = Full Text only
-all_corpora = ['tmVar', 'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+', 'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
+all_corpora = [
+'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNPC',
+'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+',
+'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
 parser.add_argument('--corpus', help='Name of the corpus to read and print stats for', required = True)
 parser.add_argument('--listall', help='Print mutations', action='store_true')
+parser.add_argument('--counttokens', help='Count the tokens. Note that this is considerably slower', action='store_true')
 
 args = parser.parse_args()
 
@@ -38,9 +43,11 @@ SS = 2 #Semi-Standard
 
 
 def get_corpus_type(name):
-    if name.endswith("A"):
+    if name == "MF":
+        return (name, None)
+    elif name.endswith("A"):
         return (name[:-1], "A")
-    if name.endswith("F"):
+    elif name.endswith("F"):
         return (name[:-1], "F")
     else:
         return (name, None)
@@ -57,7 +64,7 @@ def annotations(dataset, typ):
                 yield annotation
 
 def get_num_tokens(dataset, typ):
-    if (typ):
+    if (args.counttokens):
         pipeline.execute(dataset) # obtain tokens
 
         ret = 0
@@ -86,6 +93,9 @@ def get_corpus(name):
     elif name == "Var120":
         folder = os.path.join(corpora_folder, 'variome_120', 'annotations_mutations_explicit')
         return VerspoorReader(folder).read()
+    elif name in all_corpora:
+        return Dataset()
+        #raise NotImplementedError("My bad, not implemented: " + name)
     else:
         raise Exception("Do not recognize given corpus name: " + name)
 
@@ -105,7 +115,7 @@ def print_stats(name, corpus, typ):
     num_tokens = get_num_tokens(corpus, typ)
 
     fs = "{0:.3f}"
-    percents = list(map(lambda x: (fs.format(x / total)), counts))
+    percents = list(map(lambda x: (fs.format(x / total) if x > 0 else "0"), counts))
 
     if (args.listall):
         print('\t'.join(header))
