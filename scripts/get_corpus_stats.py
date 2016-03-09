@@ -55,20 +55,21 @@ def get_corpus_type(name):
 def is_part_type(part, typ):
     return not typ or (typ == "A" and part.is_abstract) or (typ == "F" and not part.is_abstract)
 
-def annotations(dataset, typ):
+def annotations(corpus, typ):
     nldefiner.define(corpus) # classify subclasses
 
-    for part in dataset.parts():
-        if is_part_type(part, typ):
-            for annotation in part.annotations:
-                yield annotation
+    for document in corpus.documents:
+        for part in document.parts:
+            if is_part_type(part, typ):
+                for annotation in part.annotations:
+                    yield annotation
 
-def get_num_tokens(dataset, typ):
+def get_num_tokens(corpus, typ):
     if (args.counttokens):
-        pipeline.execute(dataset) # obtain tokens
+        pipeline.execute(corpus) # obtain tokens
 
         ret = 0
-        for part in dataset.parts():
+        for part in corpus.parts():
             if is_part_type(part, typ):
                 for sentence in part.sentences:
                     ret += len(sentence)
