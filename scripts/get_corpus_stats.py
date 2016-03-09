@@ -58,8 +58,8 @@ def is_part_type(part, typ):
 def annotations(corpus, typ):
     nldefiner.define(corpus) # classify subclasses
 
-    for document in corpus.documents:
-        for part in document.parts:
+    for document in corpus:        
+        for part in document:
             if is_part_type(part, typ):
                 for annotation in part.annotations:
                     yield annotation
