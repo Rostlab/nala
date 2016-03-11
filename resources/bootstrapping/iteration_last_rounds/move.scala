@@ -52,3 +52,12 @@ Source.fromFile(new File("README.md")).getLines.foreach { line =>
     }
   }
 }
+
+println()
+
+groupItrs("test").foreach { itr =>
+  val origFolder = new File(s"""../iteration_${itr}/""")
+  val destFolder = if (groupItrs("IAA").contains(itr)) new File(s"""../iteration_${itr}_test_IAA/""") else new File(s"""../iteration_${itr}_test/""")
+  println(s"""${origFolder.getAbsolutePath} --> ${destFolder.getAbsolutePath}""")
+  //origFolder.renameTo(destFolder)
+}
