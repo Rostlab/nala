@@ -4,18 +4,15 @@ import json
 import re
 import time
 import pkg_resources
-from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
+from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.preprocessing.labelers import BIEOLabeler
 from nala.learning.postprocessing import PostProcessing
-from nalaf.learning.taggers import CRFSuiteTagger
 from nalaf import print_verbose, print_debug
 from nala.preprocessing.definers import InclusiveNLDefiner
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.preprocessing.spliters import NLTKSplitter
 from nalaf.structures.data import Dataset
 from nalaf.utils.cache import Cacheable
-from nalaf.utils.tagger import TmVarTagger
-from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 
 from nala.utils import MUT_CLASS_ID
 from nala.utils import get_prepare_pipeline_for_best_model
@@ -162,7 +159,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         self.expected_maximum_results=expected_max_results
         """ :returns maximum of [x] documents (can be less if not found) """
         self.threshold=threshold
-        """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
+        """threshold for nala to include documents that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline=get_prepare_pipeline_for_best_model()
         """ best setting (features, etc.) for tagging """
         self.min_found = min_found
