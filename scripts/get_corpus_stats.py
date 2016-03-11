@@ -55,10 +55,16 @@ def get_corpus_type(name):
 def is_part_type(part, typ):
     return not typ or (typ == "A" and part.is_abstract) or (typ == "F" and not part.is_abstract)
 
+def is_abstract_only(document):
+    return all(part.is_abstract for part in document)
+
+def is_full_text(document):
+    return any(not part.is_abstract for part in document)
+
 def annotations(corpus, typ):
     nldefiner.define(corpus) # classify subclasses
 
-    for docid, document in corpus.documents.items():        
+    for docid, document in corpus.documents.items():
         for part in document:
             if is_part_type(part, typ):
                 for annotation in part.annotations:
@@ -77,6 +83,14 @@ def get_num_tokens(corpus, typ):
         return ret
     else:
         return -1
+
+def filter_only_full_text(corpus):
+    newcorpus = Dataset()
+    for docid, document in corpus.documents.items():
+        if is_full_text(document):
+            newcorpus.documents[docid] = document
+
+    return newcorpus
 
 def get_corpus(name):
     if name == "tmVar":
@@ -103,6 +117,7 @@ def get_corpus(name):
 header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS", "#tokens"]
 
 def print_stats(name, corpus, typ):
+    corpus = filter_only_full_text(corpus) if typ == "F" else corpus
     total = 0
     counts = [0,0,0]
 
