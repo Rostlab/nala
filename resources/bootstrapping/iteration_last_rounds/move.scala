@@ -41,11 +41,11 @@ Source.fromFile(new File("README.md")).getLines.foreach { line =>
               new File(s"""../iteration_${itr}/reviewed/""")
             }
           }
-          //File.mkdirs(destFolder)
+          File.mkdirs(destFolder)
           val destFile = new File(destFolder, s"""${docid}.ann.json""")
 
           println(s"""${origFile.getAbsolutePath} --> ${destFile.getAbsolutePath}""")
-          //origFile.renameTo(destFile)
+          origFile.renameTo(destFile)
         }
         case _ =>
       }
@@ -59,5 +59,5 @@ groupItrs("test").foreach { itr =>
   val origFolder = new File(s"""../iteration_${itr}/""")
   val destFolder = if (groupItrs("IAA").contains(itr)) new File(s"""../iteration_${itr}_test_IAA/""") else new File(s"""../iteration_${itr}_test/""")
   println(s"""${origFolder.getAbsolutePath} --> ${destFolder.getAbsolutePath}""")
-  //origFolder.renameTo(destFolder)
+  origFolder.renameTo(destFolder)
 }
