@@ -45,7 +45,7 @@ def get_itr_docs(itr_number):
     folder = '../resources/bootstrapping/iteration_{}/candidates/html'.format(itr_number)
     for filename in glob.glob(str(folder + "/*.html")):
         filename = os.path.basename(filename)
-        filename = filename.replace('.plan.html', '')
+        filename = filename.replace('.plain.html', '')
         filename = filename.replace('.html', '')
         print("\t", filename)
 
