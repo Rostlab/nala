@@ -41,7 +41,7 @@ Source.fromFile(new File("README.md")).getLines.foreach { line =>
               new File(s"""../iteration_${itr}/reviewed/""")
             }
           }
-          File.mkdirs(destFolder)
+          destFolder.mkdirs()
           val destFile = new File(destFolder, s"""${docid}.ann.json""")
 
           println(s"""${origFile.getAbsolutePath} --> ${destFile.getAbsolutePath}""")
