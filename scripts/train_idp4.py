@@ -20,11 +20,11 @@ def read_data(n, read_base=True):
     else:
         data = Dataset()
 
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         try:
             tmp_data = HTMLReader('../resources/bootstrapping/iteration_{}/candidates/html'.format(i)).read()
             AnnJsonAnnotationReader('../resources/bootstrapping/iteration_{}/reviewed'.format(i),
-                                delete_incomplete_docs=False).annotate(tmp_data)
+                                    delete_incomplete_docs=False).annotate(tmp_data)
             data.extend_dataset(tmp_data)
         except FileNotFoundError:
             pass
@@ -36,7 +36,7 @@ def read_data(n, read_base=True):
 
 
 def train(evaluate_on_test=True):
-    data = read_data(39)
+    data = read_data(51, True)
 
     train, test = data.stratified_split()
     print('train: {}, test: {}'.format(len(train), len(test)))
@@ -57,8 +57,32 @@ def train(evaluate_on_test=True):
 
         PostProcessing().process(test)
         ExclusiveNLDefiner().define(test)
+
+        MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
         MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
+
+
+def test(model='idp4_model'):
+    data = read_data(51, True)
+
+    train, test = data.stratified_split()
+    print('train: {}, test: {}'.format(len(train), len(test)))
+    del data
+    del train
+
+    pipeline = get_prepare_pipeline_for_best_model()
+    pipeline.execute(test)
+    BIEOLabeler().label(test)
+
+    py_crf = PyCRFSuite()
+    py_crf.tag(test, model)
+
+    PostProcessing().process(test)
+    ExclusiveNLDefiner().define(test)
+
+    MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
+    MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
+
 
 if __name__ == '__main__':
     train()
-
