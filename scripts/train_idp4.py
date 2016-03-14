@@ -1,5 +1,6 @@
 from collections import Counter
 
+import pycrfsuite
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nalaf.preprocessing.labelers import BIEOLabeler
@@ -84,5 +85,24 @@ def test(model='idp4_model'):
     MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
 
 
+def evaluate(model='idp4_model'):
+    tagger = pycrfsuite.Tagger()
+    tagger.open(model)
+    info = tagger.info()
+
+    print('Transitions:')
+    for (label_from, label_to), weight in Counter(info.transitions).most_common():
+        print("%-6s -> %-7s %0.6f" % (label_from, label_to, weight))
+
+    print('\nTop positive:')
+    for (attr, label), weight in Counter(info.state_features).most_common(50):
+        print("%0.6f %-6s %s" % (weight, label, attr))
+
+    print("\nTop negative:")
+    for (attr, label), weight in Counter(info.state_features).most_common()[-50:]:
+        print("%0.6f %-6s %s" % (weight, label, attr))
+
 if __name__ == '__main__':
-    train()
+    # train()
+    # test()
+    evaluate()
