@@ -2,8 +2,8 @@ import argparse
 import os
 from nala.bootstrapping.iteration import Iteration
 from nala.preprocessing.definers import ExclusiveNLDefiner
-from nalaf.utils.readers import VerspoorReader
-from nalaf.utils.readers import TmVarReader
+from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader
+from nalaf.utils.annotation_readers import SETHAnnotationReader
 from nalaf.utils import MUT_CLASS_ID
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.structures.data import Dataset
@@ -96,6 +96,11 @@ def get_corpus(name):
     if name == "tmVar":
         entirecorpusfile = os.path.join(corpora_folder, 'tmvar', 'corpus.txt')
         return TmVarReader(entirecorpusfile).read()
+    if name == "SETH":
+        ret = SETHReader(os.path.join(corpora_folder, 'seth', 'corpus.txt')).read()
+        annreader = SETHAnnotationReader(os.path.join(corpora_folder, 'seth', 'annotations'))
+        annreader.annotate(ret)
+        return ret
     elif name == "IDP4":
         return Iteration.read_IDP4()
     elif name == "nala":
