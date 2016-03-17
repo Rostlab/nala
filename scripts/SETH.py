@@ -13,7 +13,7 @@ def run_seth_on_corpus(corpus, folder, useMutationFinderOnly):
             run_seth_on_string(part.text, docid, partid, folder, useMutationFinderOnly)
 
 def run_seth_on_string(text, docid, partid, folder, useMutationFinderOnly):
-    filename = "{}/{}-{}.seth".format(folder, docid, partid)
+    filename = "{}/{}-{}.ann".format(folder, docid, partid)
     run_seth_on_string_with_filename(text, filename, useMutationFinderOnly)
 
 def run_seth_on_string_with_filename(text, filename, useMutationFinderOnly):
