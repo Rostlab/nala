@@ -1,7 +1,7 @@
 import os
 from nala.bootstrapping.iteration import Iteration
 from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader
-from nalaf.utils.annotation_readers import SETHAnnotationReader
+from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader
 from nalaf.structures.data import Dataset
 
 #Var = Variome
@@ -14,6 +14,8 @@ ALL_CORPORA = [
 'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
 __corpora_folder = os.path.abspath("resources/corpora")
+
+__predictions_folder = os.path.abspath("resources/predictions")
 
 def get_corpus(name):
     if name == "tmVar":
