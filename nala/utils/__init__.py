@@ -33,7 +33,8 @@ def get_prepare_pipeline_for_best_model():
                'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'word[0]', 'stem[0]']
     return PrepareDatasetPipeline(feature_generators=[PorterStemFeatureGenerator(),
                                                       SentenceMarkerFeatureGenerator(),
-                                                      TmVarFeatureGenerator(), TmVarDictionaryFeatureGenerator(),
+                                                      TmVarFeatureGenerator(),
+                                                      TmVarDictionaryFeatureGenerator(),
                                                       WindowFeatureGenerator(template=(-3, -2, -1, 1, 2, 3),
                                                                              include_list=include),
                                                       get_word_embeddings_feature_generator()])
