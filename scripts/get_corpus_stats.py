@@ -1,24 +1,11 @@
 import argparse
-import os
-from nala.bootstrapping.iteration import Iteration
+
 from nala.preprocessing.definers import ExclusiveNLDefiner
-from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader
-from nalaf.utils.annotation_readers import SETHAnnotationReader
+from nala.utils.corpora import get_corpus, ALL_CORPORA
 from nalaf.utils import MUT_CLASS_ID
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
-from nalaf.structures.data import Dataset
-
 
 parser = argparse.ArgumentParser(description='Print corpora stats')
-
-#Var = Variome
-#Var120 = Variome_120
-#?A = Abstracts only
-#?F = Full Text only
-all_corpora = [
-'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNPC',
-'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+',
-'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
 parser.add_argument('--corpus', help='Name of the corpus to read and print stats for', required = True)
 parser.add_argument('--listall', help='Print mutations', action='store_true')
@@ -27,8 +14,6 @@ parser.add_argument('--counttokens', help='Count the tokens. Note that this is c
 args = parser.parse_args()
 
 #------------------------------------------------------------------------------
-
-corpora_folder = os.path.abspath("resources/corpora")
 
 nldefiner = ExclusiveNLDefiner()
 
@@ -39,8 +24,6 @@ NL = 1 #Natural Language
 SS = 2 #Semi-Standard
 
 #------------------------------------------------------------------------------
-
-
 
 def get_corpus_type(name):
     if name == "MF":
@@ -92,33 +75,6 @@ def filter_only_full_text(corpus):
 
     return newcorpus
 
-def get_corpus(name):
-    if name == "tmVar":
-        entirecorpusfile = os.path.join(corpora_folder, 'tmvar', 'corpus.txt')
-        return TmVarReader(entirecorpusfile).read()
-    if name == "SETH":
-        ret = SETHReader(os.path.join(corpora_folder, 'seth', 'corpus.txt')).read()
-        annreader = SETHAnnotationReader(os.path.join(corpora_folder, 'seth', 'annotations'))
-        annreader.annotate(ret)
-        return ret
-    elif name == "IDP4":
-        return Iteration.read_IDP4()
-    elif name == "nala":
-        return Iteration.read_nala()
-    elif name == "IDP4+":
-        return Iteration.read_IDP4Plus()
-    elif name == "Var":
-        folder = os.path.join(corpora_folder, 'variome', 'data')
-        return VerspoorReader(folder).read()
-    elif name == "Var120":
-        folder = os.path.join(corpora_folder, 'variome_120', 'annotations_mutations_explicit')
-        return VerspoorReader(folder).read()
-    elif name in all_corpora:
-        return Dataset()
-        #raise NotImplementedError("My bad, not implemented: " + name)
-    else:
-        raise Exception("Do not recognize given corpus name: " + name)
-
 header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS", "#tokens"]
 
 def print_stats(name, corpus, typ):
@@ -149,7 +105,7 @@ def print_stats(name, corpus, typ):
 print('\t'.join(header))
 
 if args.corpus == "*" or args.corpus == "all":
-    for corpus_name in all_corpora:
+    for corpus_name in ALL_CORPORA:
         realname, typ = get_corpus_type(corpus_name)
         corpus = get_corpus(realname)
         print_stats(corpus_name, corpus, typ)
