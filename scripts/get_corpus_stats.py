@@ -17,7 +17,7 @@ args = parser.parse_args()
 
 nldefiner = ExclusiveNLDefiner()
 
-pipeline = PrepareDatasetPipeline()
+pipeline = PrepareDatasetPipeline(feature_generators=[])
 
 ST = 0 #Standard
 NL = 1 #Natural Language
