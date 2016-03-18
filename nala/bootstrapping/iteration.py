@@ -46,7 +46,7 @@ class IterationRound:
     def is_test(self):
         return "test" in self.name
 
-    def is_iaa(self):
+    def is_IAA(self):
         return "IAA" in self.name
 
     def is_reviewed(self):
@@ -75,7 +75,17 @@ class IterationRound:
                 priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
                 delete_incomplete_docs=True).annotate(dataset)
 
-            dataset
+        if self.is_IAA():
+            base_folder = self.path
+            html_folder = os.path.join(base_folder, 'candidates', 'html')
+            annjson_folder = os.path.join(base_folder, 'reviewed')
+
+            dataset = HTMLReader(html_folder).read()
+            AnnJsonMergerAnnotationReader(annjson_folder,
+                strategy='intersection',
+                entity_strategy='priority',
+                priority = ['cuhlig', 'abojchevski', 'jmcejuela'],
+                delete_incomplete_docs=True).annotate(dataset)
 
         else:
             base_folder = self.path
@@ -84,8 +94,6 @@ class IterationRound:
 
             dataset = HTMLReader(html_folder).read()
             AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False).annotate(dataset)
-
-            dataset
 
         print_debug("\t", dataset.__repr__())
         return dataset
