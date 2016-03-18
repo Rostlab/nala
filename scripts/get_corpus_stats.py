@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser(description='Print corpora stats')
 parser.add_argument('--corpus', help='Name of the corpus to read and print stats for', required = True)
 parser.add_argument('--listall', help='Print mutations', action='store_true')
 parser.add_argument('--counttokens', help='Count the tokens. Note that this is considerably slower', action='store_true')
+parser.add_argument('--test', help='Get the test (sub)set if any, otherwise the entire corpus', action='store_true')
 
 args = parser.parse_args()
 
@@ -108,10 +109,10 @@ print('\t'.join(header))
 if args.corpus == "*" or args.corpus == "all":
     for corpus_name in ALL_CORPORA:
         realname, typ = get_corpus_type(corpus_name)
-        corpus = get_corpus(realname)
+        corpus = get_corpus(realname, args.test)
         print_stats(corpus_name, corpus, typ)
 
 else:
     realname, typ = get_corpus_type(args.corpus)
-    corpus = get_corpus(realname)
+    corpus = get_corpus(realname, args.test)
     print_stats(args.corpus, corpus, typ)
