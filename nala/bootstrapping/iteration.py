@@ -59,7 +59,7 @@ class IterationRound:
     def __repr__(self):
         return self.__str__()
 
-    def read(self):
+    def read(self, read_annotations = True):
         print_debug(self)
         dataset = None
 
@@ -69,11 +69,12 @@ class IterationRound:
             annjson_folder = os.path.join(base_folder, 'annjson')
 
             dataset = HTMLReader(html_folder).read()
-            AnnJsonMergerAnnotationReader(os.path.join(annjson_folder, 'members'),
-                strategy='intersection',
-                entity_strategy='priority',
-                priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
-                delete_incomplete_docs=True).annotate(dataset)
+            if read_annotations:
+                AnnJsonMergerAnnotationReader(os.path.join(annjson_folder, 'members'),
+                    strategy='intersection',
+                    entity_strategy='priority',
+                    priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+                    delete_incomplete_docs=True).annotate(dataset)
 
         elif self.is_IAA():
             base_folder = self.path
@@ -81,11 +82,12 @@ class IterationRound:
             annjson_folder = os.path.join(base_folder, 'reviewed')
 
             dataset = HTMLReader(html_folder).read()
-            AnnJsonMergerAnnotationReader(annjson_folder,
-                strategy='intersection',
-                entity_strategy='priority',
-                priority = ['cuhlig', 'abojchevski', 'jmcejuela'],
-                delete_incomplete_docs=False).annotate(dataset)
+            if read_annotations:
+                AnnJsonMergerAnnotationReader(annjson_folder,
+                    strategy='intersection',
+                    entity_strategy='priority',
+                    priority = ['cuhlig', 'abojchevski', 'jmcejuela'],
+                    delete_incomplete_docs=False).annotate(dataset)
 
         else:
             base_folder = self.path
@@ -93,7 +95,8 @@ class IterationRound:
             annjson_folder = os.path.join(base_folder, 'reviewed')
 
             dataset = HTMLReader(html_folder).read()
-            AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False).annotate(dataset)
+            if read_annotations:
+                AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False).annotate(dataset)
 
         print_debug("\t", dataset.__repr__())
         return dataset
