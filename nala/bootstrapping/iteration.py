@@ -75,7 +75,7 @@ class IterationRound:
                 priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
                 delete_incomplete_docs=True).annotate(dataset)
 
-        if self.is_IAA():
+        elif self.is_IAA():
             base_folder = self.path
             html_folder = os.path.join(base_folder, 'candidates', 'html')
             annjson_folder = os.path.join(base_folder, 'reviewed')
@@ -85,7 +85,7 @@ class IterationRound:
                 strategy='intersection',
                 entity_strategy='priority',
                 priority = ['cuhlig', 'abojchevski', 'jmcejuela'],
-                delete_incomplete_docs=True).annotate(dataset)
+                delete_incomplete_docs=False).annotate(dataset)
 
         else:
             base_folder = self.path
