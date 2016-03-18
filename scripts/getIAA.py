@@ -4,6 +4,7 @@ from itertools import combinations
 import os
 from nalaf.structures.data import Dataset
 from nala.bootstrapping.iteration import IterationRound
+from nala.preprocessing.definers import ExclusiveNLDefiner
 
 members=['abojchevski', 'jmcejuela', 'cuhlig']
 
@@ -15,15 +16,19 @@ def benchmark(member1, member2):
             AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member1), delete_incomplete_docs = False).annotate(dataset)
             AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member2), delete_incomplete_docs = False, is_predicted=True).annotate(dataset)
 
-    exact = MentionLevelEvaluator(strictness = 'exact').evaluate(dataset)
-    overlapping = MentionLevelEvaluator(strictness = 'overlapping').evaluate(dataset)
+    ExclusiveNLDefiner().define(dataset)
+
+    exact = MentionLevelEvaluator(strictness = 'exact', subclass_analysis=True).evaluate(dataset)
+    overlapping = MentionLevelEvaluator(strictness = 'overlapping', subclass_analysis=True).evaluate(dataset)
     return exact, overlapping
 
 for member1, member2 in combinations(members, 2):
     print(member1, member2)
     exact, overlapping = benchmark(member1, member2)
-    #print(exact)
-    #print(overlapping)
-    print('p:{:.4f} r:{:.4f} f:{:.4f} exact'.format(*exact[5:]))
-    print('p:{:.4f} r:{:.4f} f:{:.4f} overlapping'.format(*overlapping[5:]))
+
+    for e in exact:
+        print(e)
+    for e in overlapping:
+        print(e)
+
     print("")
