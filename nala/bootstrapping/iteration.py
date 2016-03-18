@@ -114,19 +114,22 @@ class Iteration:
     @staticmethod
     def find_iteration_number():
         ret = -1
+        actual_name = None
 
         bootstrapping_folder = os.path.abspath("resources/bootstrapping")
 
-        _iteration_name = bootstrapping_folder + "/iteration_*/"
-        for fn in glob.glob(_iteration_name):
-            match = re.search('iteration_([0-9]+)', fn)
-            found_iteration = int(match.group(1))
-            if found_iteration > ret:
-                ret = found_iteration
+        for fn in glob.glob(bootstrapping_folder + "/iteration_*/"):
+            match = re.search('iteration_(([0-9]+).*)/$', fn)
+            if match:
+                name = match.group(1)
+                number = int(match.group(2))
+                if number > ret:
+                    ret = number
+                    actual_name = name
 
         # check for candidates and reviewed
-        if (os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(ret), 'candidates')) and
-            os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(ret), 'reviewed'))):
+        if (os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(actual_name), 'candidates')) and
+            os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(actual_name), 'reviewed'))):
             ret += 1
 
         if ret == 0:
