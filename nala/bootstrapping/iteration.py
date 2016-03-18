@@ -10,7 +10,7 @@ from itertools import product, chain
 from nala.bootstrapping.utils import UniprotDocumentSelector
 from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighRecallRegexDocumentFilter, ManualDocumentFilter
 from nala.learning.postprocessing import PostProcessing
-from nalaf import print_verbose
+from nalaf import print_verbose, print_debug
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader, AnnJsonMergerAnnotationReader
 from nalaf.utils.readers import HTMLReader
@@ -21,9 +21,100 @@ from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
 from nalaf.structures.data import Entity
 from nalaf.learning.taggers import GNormPlusGeneTagger
+from nalaf.structures.data import Dataset
 
 from nala.utils import get_prepare_pipeline_for_best_model
 
+class IterationRound:
+    """
+    Class to represent a single iteration round
+
+    For the future, likely this class should be renamed to Iteration and Iteration to sth like IterationPipeline
+    """
+
+    bootstrapping_folder = os.path.abspath("resources/bootstrapping")
+
+    def __init__(self, name, number = None, path = None):
+        self.name = str(name)
+        match = re.search('([0-9]+).*$', self.name)
+        self.number = int(number) if number else int(match.group(1))
+        self.path = path if path else os.path.join(IterationRound.bootstrapping_folder, "iteration_" + self.name)
+
+    def is_seed(self):
+        return self.number == 0
+
+    def is_test(self):
+        return "test" in self.name
+
+    def is_iaa(self):
+        return "IAA" in self.name
+
+    def is_reviewed(self):
+        return (os.path.isdir(os.path.join(self.path, 'candidates')) and
+            os.path.isdir(os.path.join(self.path, 'reviewed')))
+
+    def __str__(self):
+        return "Iteration: {} : {}".format(self.name, self.path)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def read(self):
+        print_debug(self)
+        dataset = None
+
+        if self.is_seed():
+            base_folder = os.path.join(self.path, 'base')
+            html_folder = os.path.join(base_folder, 'html')
+            annjson_folder = os.path.join(base_folder, 'annjson')
+
+            dataset = HTMLReader(html_folder).read()
+            AnnJsonMergerAnnotationReader(os.path.join(annjson_folder, 'members'),
+                strategy='intersection',
+                entity_strategy='priority',
+                priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+                delete_incomplete_docs=True).annotate(dataset)
+
+            dataset
+
+        else:
+            base_folder = self.path
+            html_folder = os.path.join(base_folder, 'candidates', 'html')
+            annjson_folder = os.path.join(base_folder, 'reviewed')
+
+            dataset = HTMLReader(html_folder).read()
+            AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False).annotate(dataset)
+
+            dataset
+
+        print_debug("\t", dataset.__repr__())
+        return dataset
+
+    @staticmethod
+    def all():
+        ret = []
+        for fn in glob.glob(IterationRound.bootstrapping_folder + "/iteration_*/"):
+            match = re.search('iteration_(([0-9]+).*)/$', fn)
+            if match:
+                ret.append(IterationRound(
+                    name = match.group(1),
+                    number = int(match.group(2)),
+                    path = fn))
+
+        ret.sort(key=lambda x: x.number)
+        return ret
+
+    @staticmethod
+    def find_last_iteration_number():
+        last = IterationRound.all()[-1]
+
+        # check for candidates and reviewed
+        if last.number == 0:
+            return 1
+        elif last.is_reviewed:
+            return last.number + 1
+        else:
+            return last.number
 
 class Iteration:
     """
@@ -44,7 +135,7 @@ class Iteration:
         if folder is not None:
             self.bootstrapping_folder = os.path.abspath(folder)
         else:
-            self.bootstrapping_folder = os.path.abspath("resources/bootstrapping")
+            self.bootstrapping_folder = IterationRound.bootstrapping_folder
 
         if not os.path.isdir(self.bootstrapping_folder):
             raise FileNotFoundError('''
@@ -83,7 +174,7 @@ class Iteration:
         # TODO make state checks (e.g. has bin model, reviewed files, candidates, results)
 
         if iteration_nr is None:
-            self.number = Iteration.find_iteration_number()
+            self.number = IterationRound.find_last_iteration_number()
         else:
             self.number = iteration_nr
 
@@ -111,31 +202,6 @@ class Iteration:
                 writer.writerow(['iteration_number', 'subclass', 'threshold',
                                  'tp', 'fp', 'fn', 'fp_overlap', 'fn_overlap', 'precision', 'recall', 'f1-score'])
 
-    @staticmethod
-    def find_iteration_number():
-        ret = -1
-        actual_name = None
-
-        bootstrapping_folder = os.path.abspath("resources/bootstrapping")
-
-        for fn in glob.glob(bootstrapping_folder + "/iteration_*/"):
-            match = re.search('iteration_(([0-9]+).*)/$', fn)
-            if match:
-                name = match.group(1)
-                number = int(match.group(2))
-                if number > ret:
-                    ret = number
-                    actual_name = name
-
-        # check for candidates and reviewed
-        if (os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(actual_name), 'candidates')) and
-            os.path.isdir(os.path.join(bootstrapping_folder, "iteration_{}".format(actual_name), 'reviewed'))):
-            ret += 1
-
-        if ret == 0:
-            ret += 1
-
-        return ret
 
     def before_annotation(self, nr_new_docs=10):
         # self.read_learning_data()
@@ -157,24 +223,44 @@ class Iteration:
         """
         print_verbose("\n\n####ParseData####\n")
 
-        self.train = Iteration.read_IDP4Plus()
+        self.train = Iteration.read_IDP4Plus_training()
 
         print_verbose(len(self.train.documents), "documents are used in the training dataset.")
 
     @staticmethod
     def read_IDP4():
-        return Iteration.read_iteration(0)
+        return IterationRound(0).read()
 
     @staticmethod
     def read_nala():
-        dataset = Iteration.read_iteration(1)
-        iterations = Iteration.find_iteration_number()
-        for itr in range(2, iterations + 1):
-            try:
-                tmp_dataset = Iteration.read_iteration(itr)
-                dataset.extend_dataset(tmp_dataset)
-            except FileNotFoundError:
-                continue
+        dataset = Iteration.read_nala_training()
+        dataset.extend_dataset(Iteration.read_nala_test())
+        return dataset
+
+    @staticmethod
+    def read_nala_training():
+        dataset = Dataset()
+        for itr in IterationRound.all():
+            if not itr.is_seed() and not itr.is_test():
+                try:
+                    dataset.extend_dataset(itr.read())
+                except FileNotFoundError as e:
+                    print_debug(e)
+                    continue
+
+        return dataset
+
+
+    @staticmethod
+    def read_nala_test():
+        dataset = Dataset()
+        for itr in IterationRound.all():
+            if not itr.is_seed() and itr.is_test():
+                try:
+                    dataset.extend_dataset(itr.read())
+                except FileNotFoundError as e:
+                    print_debug(e)
+                    continue
 
         return dataset
 
@@ -185,37 +271,14 @@ class Iteration:
         return dataset
 
     @staticmethod
-    def read_iteration(itr):
-        """
-        Method to return a dataset for a specificed iteration nr.
-        :param itr: int, iteration number
-        :rtype: nalaf.structures.data.Dataset()
-        """
-        print_verbose('####ReadIterationData#### ' + str(itr))
-
-        bootstrapping_folder = os.path.abspath("resources/bootstrapping")
-
-        if itr == 0:
-            base_folder = os.path.join(os.path.join(bootstrapping_folder, 'iteration_0'), 'base')
-            html_base_folder = os.path.join(base_folder, 'html')
-            annjson_base_folder = os.path.join(base_folder, 'annjson')
-
-            dataset = HTMLReader(html_base_folder).read()
-            AnnJsonMergerAnnotationReader(os.path.join(annjson_base_folder, 'members'),
-                strategy='intersection',
-                entity_strategy='priority',
-                priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
-                delete_incomplete_docs=True).annotate(dataset)
-
-        else:
-            base_folder = os.path.join(bootstrapping_folder, 'iteration_' + str(itr))
-            html_base_folder = os.path.join(base_folder, 'candidates', 'html')
-            annjson_base_folder = os.path.join(base_folder, 'reviewed')
-
-            dataset = HTMLReader(html_base_folder).read()
-            AnnJsonAnnotationReader(annjson_base_folder, delete_incomplete_docs=False).annotate(dataset)
-
+    def read_IDP4Plus_training():
+        dataset = Iteration.read_IDP4()
+        dataset.extend_dataset(Iteration.read_nala_training())
         return dataset
+
+    @staticmethod
+    def read_IDP4Plus_test():
+        return Iteration.read_nala_test()
 
     def check_iterations_stats(self):
         """
@@ -230,8 +293,8 @@ class Iteration:
         row_format = "{:>10} | {:>5.2f}"
         counts = [0,0,0]
 
-        for i in range(0, self.number):
-            tmp_data = Iteration.read_iteration(i)
+        for itr in IterationRound.all():
+            tmp_data = itr.read()
             sub_counts = [0,0,0]
             ExclusiveNLDefiner().define(tmp_data)
             for ann in tmp_data.annotations():
@@ -239,7 +302,7 @@ class Iteration:
 
             counts = [x + y for x, y in zip(counts, sub_counts)]
 
-            print(row_format.format('iter', i))
+            print(row_format.format('iter', itr.number))
             print(row_format.format('total', sum(sub_counts)))
             print(row_format.format('st', sub_counts[0]))
             print(row_format.format('nl + ss', sub_counts[1] + sub_counts[2]))
