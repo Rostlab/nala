@@ -4,6 +4,7 @@ from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus, ALL_CORPORA
 from nalaf.utils import MUT_CLASS_ID
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.structures.data import Dataset
 
 parser = argparse.ArgumentParser(description='Print corpora stats')
 
