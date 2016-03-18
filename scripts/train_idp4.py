@@ -35,7 +35,7 @@ def read_data(n, read_base=True):
     print('subclass distribution:', Counter(ann.subclass for ann in data.annotations()))
     return data
 
-
+# train() does the training, post-processing and printing of perfomance
 def train(evaluate_on_test=True):
     data = read_data(51, True)
 
@@ -62,7 +62,7 @@ def train(evaluate_on_test=True):
         MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
         MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
 
-
+# test() is if you just wanna test with a pre-trained model
 def test(model='idp4_model'):
     data = read_data(51, True)
 
@@ -84,7 +84,7 @@ def test(model='idp4_model'):
     MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
     MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
 
-
+# evaluate() is to print out the most_common features learned
 def evaluate(model='idp4_model'):
     tagger = pycrfsuite.Tagger()
     tagger.open(model)
