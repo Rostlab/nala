@@ -17,9 +17,10 @@ __corpora_folder = os.path.abspath("resources/corpora")
 
 __predictions_folder = os.path.abspath("resources/predictions")
 
-def get_corpus(name):
+def get_corpus(name, test = False):
     if name == "tmVar":
-        entirecorpusfile = os.path.join(__corpora_folder, 'tmvar', 'corpus.txt')
+        fn = 'test.PubTator.txt' if test else 'corpus.txt'
+        entirecorpusfile = os.path.join(__corpora_folder, 'tmvar', fn)
         return TmVarReader(entirecorpusfile).read()
     if name == "SETH":
         ret = SETHReader(os.path.join(__corpora_folder, 'seth', 'corpus.txt')).read()
