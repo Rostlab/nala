@@ -30,9 +30,9 @@ def get_corpus(name, test = False):
     elif name == "IDP4":
         return Iteration.read_IDP4()
     elif name == "nala":
-        return Iteration.read_nala()
+        return Iteration.read_nala_test() if test else Iteration.read_nala()
     elif name == "IDP4+":
-        return Iteration.read_IDP4Plus()
+        return Iteration.read_IDP4Plus_test() if test else Iteration.read_IDP4Plus()
     elif name == "Var":
         folder = os.path.join(__corpora_folder, 'variome', 'data')
         return VerspoorReader(folder).read()
