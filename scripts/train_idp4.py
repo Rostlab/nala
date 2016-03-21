@@ -59,8 +59,13 @@ def train(evaluate_on_test=True):
         PostProcessing().process(test)
         ExclusiveNLDefiner().define(test)
 
-        MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
-        MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
+        exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
+        overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
+
+        for e in exact:
+            print(e)
+        for e in overlapping:
+            print(e)
 
 # test() is if you just wanna test with a pre-trained model
 def test(model='idp4_model'):
@@ -81,8 +86,13 @@ def test(model='idp4_model'):
     PostProcessing().process(test)
     ExclusiveNLDefiner().define(test)
 
-    MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
-    MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
+    exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test)
+    overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test)
+
+    for e in exact:
+        print(e)
+    for e in overlapping:
+        print(e)
 
 # evaluate() is to print out the most_common features learned
 def evaluate(model='idp4_model'):
@@ -103,6 +113,6 @@ def evaluate(model='idp4_model'):
         print("%0.6f %-6s %s" % (weight, label, attr))
 
 if __name__ == '__main__':
-    # train()
+    train()
     # test()
-    evaluate()
+    # evaluate()
