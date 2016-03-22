@@ -103,7 +103,7 @@ def test(model='idp4_model'):
 
 def train_and_test_2_models():
     train(False, 'idp4_model_ST', delete_subclasses=[1, 2])
-    train(False, 'idp4_model_ALL3', delete_subclasses=[0])
+    train(False, 'idp4_model_ALL3', delete_subclasses=[])
 
     test_2_models('idp4_model_ST', 'idp4_model_ALL3')
 
