@@ -5,6 +5,9 @@ import os
 import multiprocessing
 from nltk import sent_tokenize
 from spacy.en import English
+import sys
+import logging
+
 
 """
 Script for training word embeddings using abstracts from the whole PubMed/Medline database
@@ -50,7 +53,8 @@ class MedlineSentenceGenerator:
 
 
 def train():
-    medline = MedlineSentenceGenerator('/mnt/project/rost_db/medline/')
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    medline = MedlineSentenceGenerator(sys.argv[1])
 
     model = Word2Vec(medline, window=10, workers=multiprocessing.cpu_count(), sg=0)
     model.save('/mnt/project/pubseq/nala/backup_we/spacy_we.model')
