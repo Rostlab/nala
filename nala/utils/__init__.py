@@ -24,8 +24,7 @@ def get_prepare_pipeline_for_best_model():
     :returns nalaf.structures.dataset_pipelines.PrepareDatasetPipeline
     """
     from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
-    from nalaf.features.simple import SimpleFeatureGenerator, SentenceMarkerFeatureGenerator
-    from nalaf.features.parsing import SpacyPosTagger
+    from nalaf.features.simple import SentenceMarkerFeatureGenerator
     from nalaf.features.stemming import SpacyLemmatizer
     from nalaf.features.window import WindowFeatureGenerator
     from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
@@ -71,6 +70,5 @@ def get_word_embeddings_feature_generator():
         tar = tarfile.open(we_model_tar_gz)
         tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
         tar.close()
-
 
     return WordEmbeddingsFeatureGenerator(we_model, additive=1, multiplicative=2)
