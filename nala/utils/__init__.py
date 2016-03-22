@@ -36,7 +36,7 @@ def get_prepare_pipeline_for_best_model():
                                                       SentenceMarkerFeatureGenerator(),
                                                       TmVarFeatureGenerator(),
                                                       TmVarDictionaryFeatureGenerator(),
-                                                      WindowFeatureGenerator(template=(-3, -2, -1, 1, 2, 3),
+                                                      WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4),
                                                                              include_list=include),
                                                       get_word_embeddings_feature_generator()])
 
