@@ -62,3 +62,5 @@ def train():
 
 
 train()
+# run with
+# echo "python nala/scripts/train_embeddings.py /mnt/project/rost_db/medline/"|at -m NOW
