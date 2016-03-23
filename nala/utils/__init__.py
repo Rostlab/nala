@@ -16,7 +16,7 @@ ENTREZ_GENE_ID = 'n_4'
 UNIPROT_ID = 'n_5'
 
 
-def get_prepare_pipeline_for_best_model():
+def get_prepare_pipeline_for_best_model(use_word_embeddings = True):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating mutation mentions.
@@ -31,13 +31,19 @@ def get_prepare_pipeline_for_best_model():
 
     include = ['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
                'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]']
-    return PrepareDatasetPipeline(feature_generators=[SpacyLemmatizer(),
-                                                      SentenceMarkerFeatureGenerator(),
-                                                      TmVarFeatureGenerator(),
-                                                      TmVarDictionaryFeatureGenerator(),
-                                                      WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4),
-                                                                             include_list=include),
-                                                      get_word_embeddings_feature_generator()])
+
+    generators = [
+        SpacyLemmatizer(),
+        SentenceMarkerFeatureGenerator(),
+        TmVarFeatureGenerator(),
+        TmVarDictionaryFeatureGenerator(),
+        WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
+    ]
+
+    if use_word_embeddings:
+        generators.append(get_word_embeddings_feature_generator())
+
+    return PrepareDatasetPipeline(feature_generators=generators)
 
 
 def get_word_embeddings_feature_generator():
