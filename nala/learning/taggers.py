@@ -11,7 +11,7 @@ class NalaSingleModelTagger(Tagger):
     def __init__(
     self,
     class_id = MUT_CLASS_ID,
-    bin_model = pkg_resources.resource_filename('nala.data', 'default_model'),
+    bin_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
     features_pipeline = get_prepare_pipeline_for_best_model(),
     execute_pipeline = True):
 
@@ -29,6 +29,27 @@ class NalaSingleModelTagger(Tagger):
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
         self.crf.tag(dataset, self.bin_model, self.class_id)
+        self.post.process(dataset)
+
+class NalaTagger(Tagger):
+
+    def __init__(
+    self,
+    class_id = MUT_CLASS_ID,
+    st_model = pkg_resources.resource_filename('nala.data', 'st_model'),
+    all3_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
+    features_pipeline = get_prepare_pipeline_for_best_model()):
+
+        super().__init__([class_id])
+
+        tagger1 = NalaSingleModelTagger(class_id, st_model, features_pipeline)
+        tagger2 = NalaSingleModelTagger(class_id, all3_model, features_pipeline, execute_pipeline = False)
+        self.tagger = MultipleModelTagger(tagger1, tagger2, [class_id])
+        #---
+        self.post = PostProcessing()
+
+    def tag(self, dataset):
+        self.tagger.tag(dataset)
         self.post.process(dataset)
 
 
@@ -77,25 +98,3 @@ class MultipleModelTagger(Tagger):
         delete_incomplete_docs=False, is_predicted=True).annotate(dataset)
 
         return dataset
-
-
-class NalaTagger(Tagger):
-
-    def __init__(
-    self,
-    class_id = MUT_CLASS_ID,
-    st_model = pkg_resources.resource_filename('nala.data', 'st_model'),
-    all3_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
-    features_pipeline = get_prepare_pipeline_for_best_model()):
-
-        super().__init__([class_id])
-
-        tagger1 = NalaSingleModelTagger(class_id, st_model, features_pipeline)
-        tagger2 = NalaSingleModelTagger(class_id, all3_model, features_pipeline, execute_pipeline = False)
-        self.tagger = MultipleModelTagger(tagger1, tagger2, [class_id])
-        #---
-        self.post = PostProcessing()
-
-    def tag(self, dataset):
-        self.tagger.tag(dataset)
-        self.post.process(dataset)
