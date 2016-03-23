@@ -17,7 +17,13 @@ __corpora_folder = os.path.abspath("resources/corpora")
 
 __predictions_folder = os.path.abspath("resources/predictions")
 
-def get_corpus(name, test = False):
+def get_corpus(name, training = False, test = False):
+    parts = name.split("_")
+    if len(parts) > 1:
+        name = parts[0]
+        training = True if parts[1] == "training" else False
+        test = True if parts[1] == "test" else False
+
     if name == "tmVar":
         fn = 'test.PubTator.txt' if test else 'corpus.txt'
         entirecorpusfile = os.path.join(__corpora_folder, 'tmvar', fn)
@@ -29,10 +35,23 @@ def get_corpus(name, test = False):
         return ret
     elif name == "IDP4":
         return Iteration.read_IDP4()
+
     elif name == "nala":
-        return Iteration.read_nala_test() if test else Iteration.read_nala()
+        if training:
+            return Iteration.read_nala_training()
+        elif test:
+            return Iteration.read_nala_test()
+        else:
+            Iteration.read_nala()
+
     elif name == "IDP4+":
-        return Iteration.read_IDP4Plus_test() if test else Iteration.read_IDP4Plus()
+        if training:
+            return Iteration.read_IDP4Plus_training()
+        elif test:
+            return Iteration.read_IDP4Plus_test()
+        else:
+            Iteration.read_IDP4Plus()
+
     elif name == "Var":
         folder = os.path.join(__corpora_folder, 'variome', 'data')
         return VerspoorReader(folder).read()
