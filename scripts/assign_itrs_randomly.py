@@ -2,6 +2,13 @@ import random
 import glob
 import os
 
+"""
+The purpose of this script was to randomly assign to members the last iterations
+of annotations (until iteration_60). The purpose was to mix in both training
+and test iterations (and IAA iterations) without members being aware which
+were which and so not to bias their annotations.
+"""
+
 itrs = list(range(42,60+1))
 itrs_size = len(itrs) #19
 annotators = { 'abojchevski' : [], 'jmcejuela' : [], 'cuhlig' : [] }
