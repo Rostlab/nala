@@ -6,9 +6,7 @@ import pkg_resources
 from nalaf.utils.readers import TextFilesReader, PMIDReader
 from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter, TagTogFormat, PubTatorFormat
-from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
-from nalaf.learning.crfsuite import CRFSuite, PyCRFSuite
-from nalaf.learning.taggers import CRFSuiteTagger
+from nalaf.learning.crfsuite import PyCRFSuite
 from nala.utils import MUT_CLASS_ID, get_prepare_pipeline_for_best_model
 from nalaf.learning.taggers import GNormPlusGeneTagger
 from nalaf.learning.taggers import StubSameSentenceRelationExtractor
@@ -55,7 +53,7 @@ if __name__ == "__main__":
     bin_model = pkg_resources.resource_filename('nala.data', 'default_model')
 
     pipeline.execute(dataset)
-    
+
     crf.tag(dataset, bin_model, MUT_CLASS_ID)
     PostProcessing().process(dataset)
 
