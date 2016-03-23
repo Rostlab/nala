@@ -92,7 +92,6 @@ class MultipleModelTagger(Tagger):
         os.rename(tmpdir + '/annjson', tmpdir + '/tagger2_annjson')
         self._clean_predictions(dataset, "tagger2")
 
-
         AnnJsonMergerAnnotationReader(tmpdir, strategy='union', entity_strategy='priority',
         priority=['tagger1_annjson', 'tagger2_annjson'],
         delete_incomplete_docs=False, is_predicted=True).annotate(dataset)
