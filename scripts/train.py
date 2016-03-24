@@ -121,6 +121,8 @@ if __name__ == "__main__":
         overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test_set)
 
         print("\n{}".format(args.model_name))
+        if train_set:
+            stats(train_set, "training")
         stats(test_set, "test")
 
         for e in exact:
