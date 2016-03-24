@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(description='Print corpora stats')
 parser.add_argument('--model_name', required = True,
     help='Name of the model to create')
 parser.add_argument('--training_corpus', required = True,
-    help='Name of the corpus to train on. Examples: IDP4+, nala_training, IDP4+_training')
+    help='Name of the corpus to train on. Examples: IDP4+, nala_training, IDP4+_training, nala_training_5')
 parser.add_argument('--test_corpus', required = True,
     help='Name of the corpus test test on; special values `stratified` or `cross validation` to test on the train corpus')
 parser.add_argument('--delete_classes', required = False, default = "",

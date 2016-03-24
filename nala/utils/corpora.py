@@ -23,22 +23,25 @@ def get_corpus(name, training = False, test = False):
         name = parts[0]
         training = True if parts[1] == "training" else False
         test = True if parts[1] == "test" else False
+        until_iteration = int(parts[2]) if len(parts) > 2 else None
 
     if name == "tmVar":
         fn = 'test.PubTator.txt' if test else 'corpus.txt'
         entirecorpusfile = os.path.join(__corpora_folder, 'tmvar', fn)
         return TmVarReader(entirecorpusfile).read()
+
     if name == "SETH":
         ret = SETHReader(os.path.join(__corpora_folder, 'seth', 'corpus.txt')).read()
         annreader = SETHAnnotationReader(os.path.join(__corpora_folder, 'seth', 'annotations'))
         annreader.annotate(ret)
         return ret
+
     elif name == "IDP4":
         return Iteration.read_IDP4()
 
     elif name == "nala":
         if training:
-            return Iteration.read_nala_training()
+            return Iteration.read_nala_training(until_iteration = None)
         elif test:
             return Iteration.read_nala_test()
         else:
@@ -46,7 +49,7 @@ def get_corpus(name, training = False, test = False):
 
     elif name == "IDP4+":
         if training:
-            return Iteration.read_IDP4Plus_training()
+            return Iteration.read_IDP4Plus_training(until_iteration = None)
         elif test:
             return Iteration.read_IDP4Plus_test()
         else:
@@ -55,11 +58,14 @@ def get_corpus(name, training = False, test = False):
     elif name == "Var":
         folder = os.path.join(__corpora_folder, 'variome', 'data')
         return VerspoorReader(folder).read()
+
     elif name == "Var120":
         folder = os.path.join(__corpora_folder, 'variome_120', 'annotations_mutations_explicit')
         return VerspoorReader(folder).read()
+
     elif name in ALL_CORPORA:
         return Dataset()
         #raise NotImplementedError("My bad, not implemented: " + name)
+
     else:
         raise Exception("Do not recognize given corpus name: " + name)

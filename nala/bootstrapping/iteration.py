@@ -249,9 +249,15 @@ class Iteration:
         return dataset
 
     @staticmethod
-    def read_nala_training():
+    def read_nala_training(until_iteration = None):
+        """
+        optional until_iteration: only read from 1 to this iteration, otherwise read all iterations
+        """
         dataset = Dataset()
-        for itr in IterationRound.all():
+        itrs = IterationRound.all()
+        if until_iteration:
+            itrs = itrs[:until_iteration]
+        for itr in itrs:
             if not itr.is_seed() and not itr.is_test():
                 try:
                     dataset.extend_dataset(itr.read())
@@ -282,9 +288,9 @@ class Iteration:
         return dataset
 
     @staticmethod
-    def read_IDP4Plus_training():
+    def read_IDP4Plus_training(until_iteration = None):
         dataset = Iteration.read_IDP4()
-        dataset.extend_dataset(Iteration.read_nala_training())
+        dataset.extend_dataset(Iteration.read_nala_training(until_iteration))
         return dataset
 
     @staticmethod
