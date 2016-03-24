@@ -38,7 +38,10 @@ args.delete_classes = delete_classes
 args.tmpdir = tempfile.mkdtemp()
 args.model_path = os.path.join(args.tmpdir, args.model_name + ".bin")
 
-print(args)
+print("Running arguments: ")
+for arg in args:
+    print(arg)
+print()
 
 #------------------------------------------------------------------------------
 
@@ -57,7 +60,7 @@ train_set.delete_subclass_annotations(args.delete_subclasses)
 ExclusiveNLDefiner().define(test_set)
 test_set.delete_subclass_annotations(args.delete_subclasses)
 
-print('train: {}, test: {}'.format(len(train_set), len(test_set)))
+print('trainining size: {}, test size: {}'.format(len(train_set), len(test_set)))
 
 # TRAIN
 
@@ -89,5 +92,11 @@ overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=
 
 for e in exact:
     print(e)
+
+print()
+
 for e in overlapping:
     print(e)
+
+print()
+print("The model is saved to: {}".format(args.model_path))
