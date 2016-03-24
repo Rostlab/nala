@@ -12,14 +12,14 @@ class NalaSingleModelTagger(Tagger):
     self,
     class_id = MUT_CLASS_ID,
     bin_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
-    features_pipeline = get_prepare_pipeline_for_best_model(),
+    features_pipeline = None,
     execute_pipeline = True):
 
         super().__init__([class_id])
 
         self.class_id = class_id
         self.bin_model = bin_model
-        self.features_pipeline = features_pipeline
+        self.features_pipeline = features_pipeline if features_pipeline else get_prepare_pipeline_for_best_model()
         self.execute_pipeline = execute_pipeline
         #---
         self.crf = PyCRFSuite()
@@ -38,12 +38,12 @@ class NalaTagger(Tagger):
     class_id = MUT_CLASS_ID,
     st_model = pkg_resources.resource_filename('nala.data', 'st_model'),
     all3_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
-    features_pipeline = get_prepare_pipeline_for_best_model()):
+    features_pipeline = None):
 
         super().__init__([class_id])
 
         tagger1 = NalaSingleModelTagger(class_id, st_model, features_pipeline)
-        tagger2 = NalaSingleModelTagger(class_id, all3_model, features_pipeline, execute_pipeline = False)
+        tagger2 = NalaSingleModelTagger(class_id, all3_model, tagger1.features_pipeline, execute_pipeline = False)
         self.tagger = MultipleModelTagger(tagger1, tagger2, [class_id])
         #---
         self.post = PostProcessing()
