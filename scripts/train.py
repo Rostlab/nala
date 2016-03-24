@@ -1,7 +1,7 @@
 import argparse
 import os
 import tempfile
-import collections
+from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus
 from nalaf.preprocessing.labelers import BIEOLabeler
@@ -60,11 +60,15 @@ features_pipeline = get_prepare_pipeline_for_best_model(use_word_embeddings = ar
 
 #------------------------------------------------------------------------------
 
-def train(train_set):
-    print('\ntrainining size: {}\n'.format(len(train_set)))
+def stats(dataset, name):
+    print('\n{} size: {}'.format(name, len(dataset)))
+    print('\tsubclass distribution: {}\n\n'.format(Counter(ann.subclass for ann in dataset.annotations())))
 
+def train(train_set):
     train_set.prune()
     ExclusiveNLDefiner().define(train_set)
+    stats(train_set, "training")
+
     train_set.delete_subclass_annotations(args.delete_subclasses)
     features_pipeline.execute(train_set)
     BIEOLabeler().label(train_set)
@@ -96,13 +100,10 @@ if args.do_train:
 #------------------------------------------------------------------------------
 
 def test(tagger, test_set):
-    print('\ntest size: {}\n'.format(len(test_set)))
-
-    ExclusiveNLDefiner().define(test_set)
-    test_set.delete_subclass_annotations(args.delete_subclasses)
-
     tagger.tag(test_set)
 
+    ExclusiveNLDefiner().define(test_set)
+    stats(test_set, "test")
     exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test_set)
     overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test_set)
 
