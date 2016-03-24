@@ -38,7 +38,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     delete_subclasses = []
-    for c in args.delete_subclasses:
+    for c in args.delete_subclasses.split(","):
         c.strip()
         if c:
             delete_subclasses.append(int(c))
