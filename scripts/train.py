@@ -21,8 +21,8 @@ if __name__ == "__main__":
     group1.add_argument('--test_corpus',
         help='Name of the corpus to test on')
 
-    parser.add_argument('--model_name', required = False,
-        help='Name of the model to create if training is performed')
+    parser.add_argument('--output_folder', required = False,
+        help='Folder where the training model is written to. Otherwise a tmp folder is used')
     parser.add_argument('--model_path_1', required = False,
         help='Path of the first model binary file if evaluation is performed')
     parser.add_argument('--model_path_2', required = False,
@@ -47,9 +47,10 @@ if __name__ == "__main__":
 
     args.delete_subclasses = delete_subclasses
 
-    args.tmpdir = tempfile.mkdtemp()
-    if not args.model_name:
-        args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str(args.delete_subclasses).strip('[]').replace(' ',''))
+    if not args.output_folder:
+        args.output_folder = tempfile.mkdtemp()
+
+    args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str(args.delete_subclasses).strip('[]').replace(' ',''))
 
     args.do_train = False if args.model_path_1 else True
 
@@ -95,7 +96,7 @@ if __name__ == "__main__":
 
         crf = PyCRFSuite()
 
-        model_path = os.path.join(args.tmpdir, args.model_name + ".bin")
+        model_path = os.path.join(args.output_folder, args.model_name + ".bin")
         crf.train(train_set, model_path, params)
 
         return model_path
