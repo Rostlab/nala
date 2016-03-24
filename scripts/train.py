@@ -6,7 +6,6 @@ from nala.utils.corpora import get_corpus
 from nalaf.preprocessing.labelers import BIEOLabeler
 from nala.utils import get_prepare_pipeline_for_best_model
 from nalaf.learning.crfsuite import PyCRFSuite
-
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.learning.taggers import NalaSingleModelTagger
 
