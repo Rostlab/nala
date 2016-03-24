@@ -15,6 +15,15 @@ THRESHOLD_VALUE = 1
 ENTREZ_GENE_ID = 'n_4'
 UNIPROT_ID = 'n_5'
 
+import os
+
+__nala_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
+def nala_repo_path(listOrString):
+    if type(listOrString) is str:
+        return os.path.join(__nala_repo_root, listOrString)
+    else:
+        return os.path.join(__nala_repo_root, *listOrString)
 
 def get_prepare_pipeline_for_best_model(use_word_embeddings = True):
     """
