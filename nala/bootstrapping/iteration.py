@@ -12,6 +12,7 @@ from nala.bootstrapping.document_filters import KeywordsDocumentFilter, HighReca
 from nala.learning.postprocessing import PostProcessing
 from nalaf import print_verbose, print_debug
 from nalaf.learning.crfsuite import PyCRFSuite
+from nala.utils import nala_repo_path
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader, AnnJsonMergerAnnotationReader
 from nalaf.utils.readers import HTMLReader
 from nalaf.preprocessing.labelers import BIEOLabeler
@@ -32,7 +33,7 @@ class IterationRound:
     For the future, likely this class should be renamed to Iteration and Iteration to sth like IterationPipeline
     """
 
-    bootstrapping_folder = os.path.abspath("resources/bootstrapping")
+    bootstrapping_folder = nala_repo_path(["resources", "bootstrapping"])
 
     def __init__(self, name, number = None, path = None):
         self.name = str(name)

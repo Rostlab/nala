@@ -1,4 +1,5 @@
 import os
+from nala.utils import nala_repo_path
 from nala.bootstrapping.iteration import Iteration
 from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader
 from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader
@@ -13,11 +14,7 @@ ALL_CORPORA = [
 'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+',
 'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
-__root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-
-__corpora_folder = os.path.join(__root, "resources", "corpora")
-
-#__predictions_folder = os.path.join(__root, "resources", "predictions")
+__corpora_folder = nala_repo_path(["resources", "corpora"])
 
 def get_corpus(name, training = False, test = False):
     parts = name.split("_")
