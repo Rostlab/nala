@@ -102,7 +102,7 @@ class IterationRound:
         return dataset
 
     @staticmethod
-    def all():
+    def all(including_seed = True):
         ret = []
         for fn in glob.glob(IterationRound.bootstrapping_folder + "/iteration_*/"):
             match = re.search('iteration_(([0-9]+).*)/$', fn)
@@ -113,6 +113,10 @@ class IterationRound:
                     path = fn))
 
         ret.sort(key=lambda x: x.number)
+
+        if not including_seed:
+            ret = ret[1:]
+
         return ret
 
     @staticmethod
@@ -254,11 +258,12 @@ class Iteration:
         optional until_iteration: only read from 1 to this iteration, otherwise read all iterations
         """
         dataset = Dataset()
-        itrs = IterationRound.all()
+        itrs = IterationRound.all(including_seed = False)
         if until_iteration:
             itrs = itrs[:until_iteration]
+
         for itr in itrs:
-            if not itr.is_seed() and not itr.is_test():
+            if not itr.is_test():
                 try:
                     dataset.extend_dataset(itr.read())
                 except FileNotFoundError as e:
@@ -271,8 +276,8 @@ class Iteration:
     @staticmethod
     def read_nala_test():
         dataset = Dataset()
-        for itr in IterationRound.all():
-            if not itr.is_seed() and itr.is_test():
+        for itr in IterationRound.all(including_seed = False):
+            if itr.is_test():
                 try:
                     dataset.extend_dataset(itr.read())
                 except FileNotFoundError as e:

@@ -41,7 +41,7 @@ def get_corpus(name, training = False, test = False):
 
     elif name == "nala":
         if training:
-            return Iteration.read_nala_training(until_iteration = None)
+            return Iteration.read_nala_training(until_iteration)
         elif test:
             return Iteration.read_nala_test()
         else:
@@ -49,7 +49,7 @@ def get_corpus(name, training = False, test = False):
 
     elif name == "IDP4+":
         if training:
-            return Iteration.read_IDP4Plus_training(until_iteration = None)
+            return Iteration.read_IDP4Plus_training(until_iteration)
         elif test:
             return Iteration.read_IDP4Plus_test()
         else:

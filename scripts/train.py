@@ -17,29 +17,29 @@ parser.add_argument('--training_corpus', required = True,
     help='Name of the corpus to train on. Examples: IDP4+, nala_training, IDP4+_training, nala_training_5')
 parser.add_argument('--test_corpus', required = True,
     help='Name of the corpus test test on; special values `stratified` or `cross validation` to test on the train corpus')
-parser.add_argument('--delete_classes', required = False, default = "",
+parser.add_argument('--delete_subclasses', required = False, default = "",
     help='Comma-separated subclasses to delete. Example: "2,3"')
 parser.add_argument('--elastic_net', action='store_true',
     help='Use elastic net regularization')
 parser.add_argument('--word_embeddings', action='store_false',
-    help='Use word embeddings')
+    help='Do not use word embeddings. On by default')
 
 args = parser.parse_args()
 
-delete_classes = []
-for c in args.delete_classes:
+delete_subclasses = []
+for c in args.delete_subclasses:
     c.strip()
     if c:
-        delete_classes.append(int(c))
+        delete_subclasses.append(int(c))
 
-args.delete_classes = delete_classes
+args.delete_subclasses = delete_subclasses
 
 args.tmpdir = tempfile.mkdtemp()
 args.model_path = os.path.join(args.tmpdir, args.model_name + ".bin")
 
 print("Running arguments: ")
-for arg in args:
-    print(arg)
+for key, value in (vars(args)).items():
+    print("\t{} = {}".format(key, value))
 print()
 
 #------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ train_set.delete_subclass_annotations(args.delete_subclasses)
 ExclusiveNLDefiner().define(test_set)
 test_set.delete_subclass_annotations(args.delete_subclasses)
 
-print('trainining size: {}, test size: {}'.format(len(train_set), len(test_set)))
+print('\ntrainining size: {}, test size: {}'.format(len(train_set), len(test_set)))
 
 # TRAIN
 
