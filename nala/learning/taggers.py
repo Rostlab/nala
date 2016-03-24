@@ -10,8 +10,8 @@ class NalaSingleModelTagger(Tagger):
 
     def __init__(
     self,
-    bin_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
     class_id = MUT_CLASS_ID,
+    bin_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
     features_pipeline = None,
     execute_pipeline = True):
 
@@ -35,9 +35,9 @@ class NalaTagger(Tagger):
 
     def __init__(
     self,
+    class_id = MUT_CLASS_ID,
     st_model = pkg_resources.resource_filename('nala.data', 'st_model'),
     all3_model = pkg_resources.resource_filename('nala.data', 'all3_model'),
-    class_id = MUT_CLASS_ID,
     features_pipeline = None):
 
         super().__init__([class_id])
