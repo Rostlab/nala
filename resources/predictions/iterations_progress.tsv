@@ -1,0 +1,50 @@
+nala_iteration_5
+
+P:0.8136	R:0.7869	F:0.8000	0	exact
+P:0.0000	R:0.0000	F:   nan	1	exact
+P:   nan	R:0.0000	F:   nan	2	exact
+P:0.7059	R:0.5783	F:0.6358	TOTAL	exact
+
+P:0.9385	R:0.8971	F:0.9173	0	overlapping
+P:1.0000	R:0.6429	F:0.7826	1	overlapping
+P:   nan	R:0.0000	F:   nan	2	overlapping
+P:0.9518	R:0.7980	F:0.8681	TOTAL	overlapping
+
+
+nala_iteration_10
+
+P:0.7920	R:0.7444	F:0.7674	0	exact
+P:0.0000	R:0.0000	F:   nan	1	exact
+P:0.0000	R:0.0000	F:   nan	2	exact
+P:0.6923	R:0.5964	F:0.6408	TOTAL	exact
+
+P:0.9437	R:0.8874	F:0.9147	0	overlapping
+P:1.0000	R:0.7250	F:0.8406	1	overlapping
+P:1.0000	R:0.5455	F:0.7059	2	overlapping
+P:0.9548	R:0.8366	F:0.8918	TOTAL	overlapping
+
+
+nala_iteration_15
+
+P:0.7651	R:0.7095	F:0.7362	0	exact
+P:0.0000	R:0.0000	F:   nan	1	exact
+P:0.0000	R:0.0000	F:   nan	2	exact
+P:0.6791	R:0.5619	F:0.6150	TOTAL	exact
+
+P:0.9653	R:0.9242	F:0.9443	0	overlapping
+P:1.0000	R:0.7018	F:0.8247	1	overlapping
+P:1.0000	R:0.5455	F:0.7059	2	overlapping
+P:0.9718	R:0.8638	F:0.9146	TOTAL	overlapping
+
+
+nala_iteration_51
+
+P:0.7594	R:0.7841	F:0.7715	0	exact
+P:0.0000	R:0.0000	F:   nan	1	exact
+P:0.0000	R:0.0000	F:   nan	2	exact
+P:0.6220	R:0.6025	F:0.6121	TOTAL	exact
+
+P:0.8641	R:0.8866	F:0.8752	0	overlapping
+P:1.0000	R:0.8169	F:0.8992	1	overlapping
+P:1.0000	R:0.7660	F:0.8675	2	overlapping
+P:0.9016	R:0.8609	F:0.8808	TOTAL	overlapping
