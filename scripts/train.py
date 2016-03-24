@@ -90,6 +90,7 @@ def train(train_set):
 
 if args.training_corpus:
     train_set = get_corpus(args.training_corpus)
+    ExclusiveNLDefiner().define(train_set)
     train_set, test_set = train_set.stratified_split()
 else:
     train_set = test_set = None
