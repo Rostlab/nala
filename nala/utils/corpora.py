@@ -13,9 +13,11 @@ ALL_CORPORA = [
 'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+',
 'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
-__corpora_folder = os.path.abspath("resources/corpora")
+__root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-__predictions_folder = os.path.abspath("resources/predictions")
+__corpora_folder = os.path.join(__root, "resources", "corpora")
+
+#__predictions_folder = os.path.join(__root, "resources", "predictions")
 
 def get_corpus(name, training = False, test = False):
     parts = name.split("_")
