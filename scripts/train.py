@@ -4,7 +4,7 @@ import tempfile
 from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus
-from nalaf.preprocessing.labelers import BIEOLabeler
+from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, TmVarLabeler
 from nala.utils import get_prepare_pipeline_for_best_model
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
@@ -28,6 +28,8 @@ if __name__ == "__main__":
     parser.add_argument('--model_path_2', required = False,
         help='Path of the second model binary file if evaluation is performed with two models')
 
+    parser.add_argument('--labeler', required = False, default = "BIEO", choices=["BIEO", "BIO", "11labels"],
+        help='Labeler to use for training')
     parser.add_argument('--delete_subclasses', required = False, default = "",
         help='Comma-separated subclasses to delete. Example: "2,3"')
     parser.add_argument('--elastic_net', action='store_true',
@@ -47,7 +49,7 @@ if __name__ == "__main__":
 
     args.tmpdir = tempfile.mkdtemp()
     if not args.model_name:
-        args.model_name = args.training_corpus
+        args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str(args.delete_subclasses).strip('[]').replace(' ',''))
 
     args.do_train = False if args.model_path_1 else True
 
@@ -63,8 +65,8 @@ if __name__ == "__main__":
     #------------------------------------------------------------------------------
 
     def stats(dataset, name):
-        print('\n{} size: {}'.format(name, len(dataset)))
-        print('\tsubclass distribution: {}\n\n'.format(Counter(ann.subclass for ann in dataset.annotations())))
+        print('\n\t{} size: {}'.format(name, len(dataset)))
+        print('\tsubclass distribution: {}\n'.format(Counter(ann.subclass for ann in dataset.annotations())))
 
     def train(train_set):
         train_set.prune()
@@ -73,7 +75,15 @@ if __name__ == "__main__":
 
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
-        BIEOLabeler().label(train_set)
+
+        if args.labeler == "BIEO":
+            labeler = BIEOLabeler()
+        elif args.labeler == "BIO":
+            labeler = BIOLabeler()
+        elif args.labeler == "11labels":
+            labeler = TmVarLabeler()
+
+        labeler.label(train_set)
 
         if args.elastic_net:
             params = {
@@ -106,11 +116,11 @@ if __name__ == "__main__":
         tagger.tag(test_set)
 
         ExclusiveNLDefiner().define(test_set)
-        stats(test_set, "test")
         exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test_set)
         overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test_set)
 
-        print("\n{}\n".format(args.training_corpus))
+        print("\n{}".format(args.model_name))
+        stats(test_set, "test")
 
         for e in exact:
             print(e)
