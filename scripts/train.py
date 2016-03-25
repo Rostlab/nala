@@ -115,10 +115,8 @@ if __name__ == "__main__":
     if args.training_corpus:
         train_set = get_corpus(args.training_corpus)
         if args.validation == "cross-validation":
-            print("yes CV")
             train_set, test_set = train_set.fold_nr_split(int(args.cv_n), int(args.cv_fold))
         else:
-            print("stratified")
             ExclusiveNLDefiner().define(train_set)
             train_set, test_set = train_set.stratified_split()
     else:
