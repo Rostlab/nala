@@ -50,7 +50,9 @@ if __name__ == "__main__":
     if not args.output_folder:
         args.output_folder = tempfile.mkdtemp()
 
-    args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str(args.delete_subclasses).strip('[]').replace(' ',''))
+    str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ','')
+
+    args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
 
     args.do_train = False if args.model_path_1 else True
 
@@ -67,15 +69,15 @@ if __name__ == "__main__":
 
     def stats(dataset, name):
         print('\n\t{} size: {}'.format(name, len(dataset)))
-        print('\tsubclass distribution: {}\n'.format(Counter(ann.subclass for ann in dataset.annotations())))
+        print('\tsubclass distribution: {}'.format(Counter(ann.subclass for ann in dataset.annotations())))
+        print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
 
     def train(train_set):
         train_set.prune()
         ExclusiveNLDefiner().define(train_set)
-        stats(train_set, "training")
-
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
+        stats(train_set, "training")
 
         if args.labeler == "BIEO":
             labeler = BIEOLabeler()
