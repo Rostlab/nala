@@ -68,10 +68,13 @@ if __name__ == "__main__":
     if args.cv_n:
         assert args.cv_fold is not None, "You must set both cv_n AND cv_n"
 
+    def print_run_args():
+        for key, value in sorted((vars(args)).items()):
+            print("\t{} = {}".format(key, value))
+        print()
+
     print("Running arguments: ")
-    for key, value in sorted((vars(args)).items()):
-        print("\t{} = {}".format(key, value))
-    print()
+    print_run_args()
 
     #------------------------------------------------------------------------------
 
@@ -144,6 +147,7 @@ if __name__ == "__main__":
         if train_set:
             stats(train_set, "training")
         stats(test_set, "test")
+        print_run_args()
 
         for e in exact:
             print(e)
