@@ -21,6 +21,12 @@ if __name__ == "__main__":
     group1.add_argument('--test_corpus',
         help='Name of the corpus to test on')
 
+    parser.add_argument('--cv_n', required = False,
+        help='if given, cross validation (instead of stratification) is used for validating the training. \
+             In this case you must also set `cv_fold` and only that fold number will be run')
+    parser.add_argument('--cv_fold', required = False,
+        help='fold number to train and validate if cross validation is activated')
+
     parser.add_argument('--output_folder', required = False,
         help='Folder where the training model is written to. Otherwise a tmp folder is used')
     parser.add_argument('--model_path_1', required = False,
@@ -55,6 +61,9 @@ if __name__ == "__main__":
     args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
 
     args.do_train = False if args.model_path_1 else True
+    args.validation = "cross-validation" if args.cv_n else "stratified"
+    if args.cv_n:
+        assert args.cv_fold is not None, "You must set both cv_n AND cv_n"
 
     print("Running arguments: ")
     for key, value in sorted((vars(args)).items()):
@@ -105,8 +114,13 @@ if __name__ == "__main__":
 
     if args.training_corpus:
         train_set = get_corpus(args.training_corpus)
-        ExclusiveNLDefiner().define(train_set)
-        train_set, test_set = train_set.stratified_split()
+        if args.validation == "cross-validation":
+            print("yes CV")
+            train_set, test_set = train_set.fold_nr_split(int(args.cv_n), int(args.cv_fold))
+        else:
+            print("stratified")
+            ExclusiveNLDefiner().define(train_set)
+            train_set, test_set = train_set.stratified_split()
     else:
         train_set = test_set = None
 
