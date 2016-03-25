@@ -566,17 +566,13 @@ class Iteration:
                              'tp', 'fp', 'fn', 'fp_overlap', 'fn_overlap',
                              'precision', 'recall', 'f1-score'])
 
-        train_splits, test_splits = data.n_fold_split(split)
-
         folds_results_exact = []
         folds_results_overlapping = []
         subclass_averages_exact = defaultdict(list)
         subclass_averages_overlapping = defaultdict(list)
 
-        for fold in range(split):
+        for fold, (train, test) in enumerate(data.cv_split(5)):
             print_verbose('starting with fold:', fold)
-            train = train_splits[fold]
-            test = test_splits[fold]
 
             train.prune()
             self.pipeline.execute(train)
