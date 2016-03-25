@@ -40,8 +40,11 @@ if __name__ == "__main__":
         help='Comma-separated subclasses to delete. Example: "2,3"')
     parser.add_argument('--elastic_net', action='store_true',
         help='Use elastic net regularization')
+
     parser.add_argument('--word_embeddings', action='store_false',
         help='Do not use word embeddings. On by default')
+    parser.add_argument('--we_additive', type=int, default = 1)
+    parser.add_argument('--we_multiplicative', type=int, default = 2)
 
     args = parser.parse_args()
 
@@ -72,7 +75,10 @@ if __name__ == "__main__":
 
     #------------------------------------------------------------------------------
 
-    features_pipeline = get_prepare_pipeline_for_best_model(use_word_embeddings = args.word_embeddings)
+    features_pipeline = get_prepare_pipeline_for_best_model(
+        use_word_embeddings = args.word_embeddings,
+        we_additive = args.we_additive,
+        we_multiplicative = args.we_multiplicative)
 
     #------------------------------------------------------------------------------
 
