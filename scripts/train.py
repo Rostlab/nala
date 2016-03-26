@@ -129,8 +129,11 @@ if __name__ == "__main__":
         if args.pruner == "parts":
             train_set.prune_empty_parts()
         else:
-            f = HighRecallRegexClassifier(ST=args.pruner_sentences_ST, NL=args.pruner_sentences_NL)
-            train_set.prune_filtered_sentences(f, percent_to_keep=args.pruner_sentences_random)
+            try:
+                f = HighRecallRegexClassifier(ST=args.pruner_sentences_ST, NL=args.pruner_sentences_NL)
+            except AssertionError:
+                f = (lambda _: False)
+            train_set.prune_filtered_sentences(filterin=f, percent_to_keep=args.pruner_sentences_random)
 
         stats(train_set, "training")
 
