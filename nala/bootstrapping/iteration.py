@@ -341,7 +341,7 @@ class Iteration:
         """
         print_verbose("\n\n####PreProcess####\n")
         # prune parts without annotations
-        self.train.prune()
+        self.train.prune_empty_parts()
 
         # prepare features
         print_verbose("##PreparePipeline##")
@@ -574,7 +574,7 @@ class Iteration:
         for fold, (train, test) in enumerate(data.cv_split(5)):
             print_verbose('starting with fold:', fold)
 
-            train.prune()
+            train.prune_empty_parts()
             self.pipeline.execute(train)
             BIEOLabeler().label(train)
             self.crf.train(train, 'cross_validation_model')
