@@ -42,6 +42,12 @@ if __name__ == "__main__":
         help='Labeler to use for training')
     parser.add_argument('--delete_subclasses', required = False, default = "",
         help='Comma-separated subclasses to delete. Example: "2,3"')
+
+    parser.add_argument('--pruner', required=False, default="sentences", choices=["parts", "sentences"])
+    parser.add_argument('--pruner_sentences_ST', required=False, default=False, action='store_true')
+    parser.add_argument('--pruner_sentences_NL', required=False, default=False, action='store_true')
+    parser.add_argument('--pruner_sentences_random', required=False, default=0.0, type=float)
+
     parser.add_argument('--elastic_net', action='store_true',
         help='Use elastic net regularization')
 
@@ -115,13 +121,17 @@ if __name__ == "__main__":
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
 
     def train(train_set):
-        #train_set.prune_empty_parts()
+
         ExclusiveNLDefiner().define(train_set)
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
         labeler.label(train_set)
-        train_set.prune_filtered_sentences(HighRecallRegexClassifier(NL = False))
-        #train_set.prune_filtered_sentences()
+        if args.pruner == "parts":
+            train_set.prune_empty_parts()
+        else:
+            f = HighRecallRegexClassifier(ST=args.pruner_sentences_ST, NL=args.pruner_sentences_NL)
+            train_set.prune_filtered_sentences(f, percent_to_keep=args.pruner_sentences_random)
+
         stats(train_set, "training")
 
         crf = PyCRFSuite()
