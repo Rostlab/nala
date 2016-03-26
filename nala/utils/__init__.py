@@ -25,7 +25,7 @@ def nala_repo_path(listOrString):
     else:
         return os.path.join(__nala_repo_root, *listOrString)
 
-def get_prepare_pipeline_for_best_model(use_word_embeddings = True, we_additive=1, we_multiplicative=2):
+def get_prepare_pipeline_for_best_model(we_params = None):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating mutation mentions.
@@ -49,16 +49,19 @@ def get_prepare_pipeline_for_best_model(use_word_embeddings = True, we_additive=
         WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
     ]
 
-    if use_word_embeddings:
-        generators.append(get_word_embeddings_feature_generator(we_additive, we_multiplicative))
+    if we_params:
+        generators.append(get_word_embeddings_feature_generator(we_params['additive'], we_params['multiplicative']))
 
     return PrepareDatasetPipeline(feature_generators=generators)
 
 
-def get_word_embeddings_feature_generator(additive=1, multiplicative=2):
+def get_word_embeddings_feature_generator(additive=None, multiplicative=None):
     """
     :returns: nalaf.features.embeddings.WordEmbeddingsFeatureGenerator
     """
+    additive = 1 if not additive else additive
+    multiplicative = 2 if not multiplicative else multiplicative
+
     import os
     import tarfile
 
