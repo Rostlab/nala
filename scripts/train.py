@@ -9,6 +9,8 @@ from nala.utils import get_prepare_pipeline_for_best_model
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.learning.taggers import NalaSingleModelTagger, NalaTagger
+from nalaf.utils.writers import TagTogFormat
+from nala.bootstrapping.document_filters import HighRecallRegexClassifier
 
 if __name__ == "__main__":
 
@@ -29,6 +31,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--output_folder', required = False,
         help='Folder where the training model is written to. Otherwise a tmp folder is used')
+    parser.add_argument('--write_anndoc', required = False, action='store_true',
+        help='Write anndoc of predicted test_corpus'),
     parser.add_argument('--model_path_1', required = False,
         help='Path of the first model binary file if evaluation is performed')
     parser.add_argument('--model_path_2', required = False,
@@ -41,8 +45,8 @@ if __name__ == "__main__":
     parser.add_argument('--elastic_net', action='store_true',
         help='Use elastic net regularization')
 
-    parser.add_argument('--word_embeddings', action='store_false',
-        help='Do not use word embeddings. On by default')
+    parser.add_argument('--word_embeddings', action='store_true',
+        help='Use word embeddings features')
     parser.add_argument('--we_additive', type=int, default = 1)
     parser.add_argument('--we_multiplicative', type=int, default = 2)
 
@@ -61,12 +65,35 @@ if __name__ == "__main__":
 
     str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ','')
 
+    if args.labeler == "BIEO":
+        labeler = BIEOLabeler()
+    elif args.labeler == "BIO":
+        labeler = BIOLabeler()
+    elif args.labeler == "11labels":
+        labeler = TmVarLabeler()
+
+    if args.word_embeddings:
+        args.we_params = {
+            'additive': args.we_additive,
+            'multiplicative': args.we_multiplicative
+        }
+    else:
+        args.we_params = None
+
+    if args.elastic_net:
+        args.elastic_net_params = {
+        'c1': 1.0, # coefficient for L1 penalty
+        'c2': 1e-3, # coefficient for L2 penalty
+        }
+    else:
+        args.elastic_net_params = None
+
     args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
 
     args.do_train = False if args.model_path_1 else True
-    args.validation = "cross-validation" if args.cv_n else "stratified"
     if args.cv_n:
         assert args.cv_fold is not None, "You must set both cv_n AND cv_n"
+    args.validation = "cross-validation" if args.cv_n else "stratified"
 
     def print_run_args():
         for key, value in sorted((vars(args)).items()):
@@ -78,10 +105,7 @@ if __name__ == "__main__":
 
     #------------------------------------------------------------------------------
 
-    features_pipeline = get_prepare_pipeline_for_best_model(
-        use_word_embeddings = args.word_embeddings,
-        we_additive = args.we_additive,
-        we_multiplicative = args.we_multiplicative)
+    features_pipeline = get_prepare_pipeline_for_best_model(args.we_params)
 
     #------------------------------------------------------------------------------
 
@@ -91,33 +115,19 @@ if __name__ == "__main__":
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
 
     def train(train_set):
-        train_set.prune()
+        #train_set.prune_empty_parts()
         ExclusiveNLDefiner().define(train_set)
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
-        stats(train_set, "training")
-
-        if args.labeler == "BIEO":
-            labeler = BIEOLabeler()
-        elif args.labeler == "BIO":
-            labeler = BIOLabeler()
-        elif args.labeler == "11labels":
-            labeler = TmVarLabeler()
-
         labeler.label(train_set)
-
-        if args.elastic_net:
-            params = {
-                'c1': 1.0, # coefficient for L1 penalty
-                'c2': 1e-3, # coefficient for L2 penalty
-            }
-        else:
-            params = None
+        train_set.prune_filtered_sentences(HighRecallRegexClassifier(NL = False))
+        #train_set.prune_filtered_sentences()
+        stats(train_set, "training")
 
         crf = PyCRFSuite()
 
         model_path = os.path.join(args.output_folder, args.model_name + ".bin")
-        crf.train(train_set, model_path, params)
+        crf.train(train_set, model_path, args.elastic_net_params)
 
         return model_path
 
@@ -170,3 +180,9 @@ if __name__ == "__main__":
 
     if args.do_train:
         print("\nThe model is saved to: {}\n".format(args.model_path_1))
+
+    if args.write_anndoc:
+        outdir = os.path.join(args.output_folder, args.model_name)
+        os.mkdir(outdir)
+        print("\nThe predicted test data is saved to: {}\n".format(outdir))
+        TagTogFormat(test_set, use_predicted=True, to_save_to=outdir).export(0)
