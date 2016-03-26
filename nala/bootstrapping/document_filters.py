@@ -1,6 +1,7 @@
 import abc
 from copy import deepcopy
 import json
+import csv
 import re
 import time
 import pkg_resources
@@ -134,6 +135,39 @@ class QuickNalaFilter(DocumentFilter):
                 print('nl mentions', json.dumps(total_nl_mentions, indent=4))
                 yield pmid, doc
             print_verbose('nothing found')
+
+
+class HighRecallRegexClassifier():
+
+    def __init__(self, ST = True, NL = True):
+        assert(ST or NL)
+
+        self.patterns = []
+
+        if ST:
+            regex_st_file = pkg_resources.resource_filename('nala.data', 'regex_st.json')
+            with open(regex_st_file, 'r') as f:
+                conventions = json.loads(f.read())
+                self.patterns += [re.compile(x) for x in conventions]
+
+            tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
+
+
+            with open(tmvarregex_file) as file:
+                raw_regexps = list(csv.reader(file, delimiter='\t'))
+                regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
+                self.patterns = [re.compile(x) for x in regexps]
+
+        if NL:
+            pattern_file_name = pkg_resources.resource_filename('nala.data', 'nl_patterns.json')
+
+            with open(pattern_file_name, 'r') as f:
+                regexs = json.load(f)
+                self.patterns += [re.compile(x) for x in regexs]
+
+
+    def __call__(self, text):
+        return any(p.search(text) for p in self.patterns)
 
 
 class HighRecallRegexDocumentFilter(DocumentFilter):
