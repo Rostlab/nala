@@ -44,7 +44,7 @@ def get_corpus(name, training = False, test = False):
         elif test:
             return Iteration.read_nala_test()
         else:
-            Iteration.read_nala()
+            return Iteration.read_nala()
 
     elif name == "IDP4+":
         if training:
@@ -52,7 +52,7 @@ def get_corpus(name, training = False, test = False):
         elif test:
             return Iteration.read_IDP4Plus_test()
         else:
-            Iteration.read_IDP4Plus()
+            return Iteration.read_IDP4Plus()
 
     elif name == "Var":
         folder = os.path.join(__corpora_folder, 'variome', 'data')
