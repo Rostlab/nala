@@ -46,3 +46,6 @@ config.ini
 
 # Mac OS X specific
 .DS_Store
+
+# Atom related files
+.remote-sync.json
