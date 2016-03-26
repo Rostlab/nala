@@ -44,9 +44,9 @@ if __name__ == "__main__":
         help='Comma-separated subclasses to delete. Example: "2,3"')
 
     parser.add_argument('--pruner', required=False, default="sentences", choices=["parts", "sentences"])
-    parser.add_argument('--pruner_sentences_ST', required=False, default=False, action='store_true')
-    parser.add_argument('--pruner_sentences_NL', required=False, default=False, action='store_true')
-    parser.add_argument('--pruner_sentences_random', required=False, default=0.0, type=float)
+    parser.add_argument('--ps_ST', required=False, default=False, action='store_true')
+    parser.add_argument('--ps_NL', required=False, default=False, action='store_true')
+    parser.add_argument('--ps_random', required=False, default=0.0, type=float)
 
     parser.add_argument('--elastic_net', action='store_true',
         help='Use elastic net regularization')
@@ -130,10 +130,10 @@ if __name__ == "__main__":
             train_set.prune_empty_parts()
         else:
             try:
-                f = HighRecallRegexClassifier(ST=args.pruner_sentences_ST, NL=args.pruner_sentences_NL)
+                f = HighRecallRegexClassifier(ST=args.ps_ST, NL=args.ps_NL)
             except AssertionError:
                 f = (lambda _: False)
-            train_set.prune_filtered_sentences(filterin=f, percent_to_keep=args.pruner_sentences_random)
+            train_set.prune_filtered_sentences(filterin=f, percent_to_keep=args.ps_random)
 
         stats(train_set, "training")
 
@@ -163,14 +163,15 @@ if __name__ == "__main__":
         tagger.tag(test_set)
 
         ExclusiveNLDefiner().define(test_set)
-        exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test_set)
-        overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test_set)
 
         print("\n{}".format(args.model_name))
         if train_set:
             stats(train_set, "training")
         stats(test_set, "test")
         print_run_args()
+
+        exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test_set)
+        overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test_set)
 
         for e in exact:
             print(e)
