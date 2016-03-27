@@ -87,12 +87,12 @@ if __name__ == "__main__":
         args.we_params = None
 
     if args.elastic_net:
-        args.elastic_net_params = {
+        args.crf_train_params = {
         'c1': 1.0, # coefficient for L1 penalty
         'c2': 1e-3, # coefficient for L2 penalty
         }
     else:
-        args.elastic_net_params = None
+        args.crf_train_params = None
 
     args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
 
@@ -140,7 +140,7 @@ if __name__ == "__main__":
         crf = PyCRFSuite()
 
         model_path = os.path.join(args.output_folder, args.model_name + ".bin")
-        crf.train(train_set, model_path, args.elastic_net_params)
+        crf.train(train_set, model_path, args.crf_train_params)
 
         return model_path
 
