@@ -13,7 +13,7 @@ counts = [0] * 4
 for i in range(0,4):
     counts[i] = ([0] * 5)
 
-for fn in glob.glob(folder + "/zqsub_job.sh.o{}.*".format(jobid)):
+for fn in glob.glob(folder + "/*o{}.*".format(jobid)):
     print(fn)
     with open(fn) as f:
         for line in f.readlines():
