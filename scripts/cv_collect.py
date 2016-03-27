@@ -1,11 +1,9 @@
 import glob
 import sys
-from nalaf.learning.evaluators import MentionLevelEvaluator, Evaluations, Evaluation
+from nalaf.learning.evaluators import Evaluations, Evaluation
 
 folder = sys.argv[1]
 jobid = sys.argv[2]
-
-print(folder, jobid)
 
 def n(col):
     return int(col.split(":")[1])
