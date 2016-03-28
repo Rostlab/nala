@@ -59,8 +59,8 @@ def get_word_embeddings_feature_generator(additive=None, multiplicative=None):
     """
     :returns: nalaf.features.embeddings.WordEmbeddingsFeatureGenerator
     """
-    additive = 1 if not additive else additive
-    multiplicative = 2 if not multiplicative else multiplicative
+    additive = 2 if not additive else additive
+    multiplicative = 3 if not multiplicative else multiplicative
 
     import os
     import tarfile
