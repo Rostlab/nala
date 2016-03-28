@@ -70,18 +70,23 @@ def get_word_embeddings_feature_generator(additive=None, multiplicative=None):
     from nalaf.features.embeddings import WordEmbeddingsFeatureGenerator
     from nalaf import print_verbose, print_warning
 
-    we_model = pkg_resources.resource_filename('nala.data', os.path.join('word_embeddings', 'word_embeddings.model'))
+    last_model = "word_embeddings_2016-03-28"
+
+    we_model = pkg_resources.resource_filename('nala.data', os.path.join(last_model, 'word_embeddings.model'))
     if not os.path.exists(we_model):
         print_warning('Downloading Word Embeddings Model (this may take a long time). Expected path: ' + we_model)
-        # TODO requests doesn't support ftp, but better use: ftp://rostlab.org/jmcejuela//model_we_2016-01-25.tar.gz
-        model_url = 'https://rostlab.org/~abojchevski/word_embeddings.tar.gz'
-        we_model_tar_gz = pkg_resources.resource_filename('nala.data', 'word_embeddings.tar.gz')
+        # TODO requests doesn't support ftp, but better use: ftp://rostlab.org/jmcejuela/...last_model...
+        tar = '{}.tar.gz'.format(last_model)
+        model_url = '{}/{}'.format('https://rostlab.org/~cejuela', tar)
+        we_model_tar_gz = pkg_resources.resource_filename('nala.data', tar)
 
         response = requests.get(url=model_url, stream=True)
         with open(we_model_tar_gz, 'wb') as file:
             for chunk in response.iter_content(8048):
                 if chunk:
+                    print('.', end="", flush=True)
                     file.write(chunk)
+            print()
         # Unpack the model
         print_verbose('Extracting')
 
