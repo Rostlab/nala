@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator,id,comment"/>
+ <annotators list="tagger,laura,fromIob,annotator"/>
+  <Annotation type="file" span="25..1194" confidence="0.0" filename="article97.txt.ann.txt" annotator="tagger" id="1">
+   <Annotation type="ge" span="25..29" confidence="0.0" annotator="fromIob" id="2"/>
+   <Annotation type="ty" span="123..154" confidence="0.0" annotator="laura" id="3"/>
+   <Annotation type="ty" span="156..160" confidence="0.0" annotator="laura" id="4"/>
+   <Annotation type="ty" span="386..390" confidence="0.0" annotator="laura" id="5"/>
+   <Annotation type="so" span="433..434" confidence="0.0" comment="1042522" annotator="laura" id="6"/>
+   <Annotation type="lo" span="434..436" confidence="0.0" comment="1042522" annotator="laura" id="7"/>
+   <Annotation type="sa" span="436..437" confidence="0.0" comment="1042522" annotator="laura" id="8"/>
+   <Annotation type="ge" span="440..444" confidence="0.0" annotator="fromIob" id="9"/>
+   <Annotation type="so" span="449..450" confidence="0.0" comment="1800566" annotator="laura" id="10"/>
+   <Annotation type="lo" span="450..453" confidence="0.0" comment="1800566" annotator="laura" id="11"/>
+   <Annotation type="sa" span="453..454" confidence="0.0" comment="1800566" annotator="laura" id="12"/>
+   <Annotation type="ge" span="458..462" confidence="0.0" annotator="fromIob" id="13"/>
+   <Annotation type="ty" span="468..472" confidence="0.0" annotator="laura" id="14"/>
+   <Annotation type="so" span="474..475" confidence="0.0" comment="1799950" annotator="fromIob" id="15"/>
+   <Annotation type="lo" span="475..478" confidence="0.0" comment="1799950" annotator="fromIob" id="16"/>
+   <Annotation type="sa" span="478..479" confidence="0.0" comment="1799950" annotator="fromIob" id="17"/>
+   <Annotation type="lo" span="484..485" confidence="0.0" comment="799917" annotator="laura" id="18"/>
+   <Annotation type="lo" span="485..488" confidence="0.0" comment="799917" annotator="laura" id="19"/>
+   <Annotation type="sa" span="488..489" confidence="0.0" comment="799917" annotator="laura" id="20"/>
+   <Annotation type="ge" span="493..498" confidence="0.0" annotator="fromIob" id="21"/>
+   <Annotation type="so" span="500..501" confidence="0.0" comment="144848" annotator="laura" id="22"/>
+   <Annotation type="lo" span="501..504" confidence="0.0" comment="144848" annotator="laura" id="23"/>
+   <Annotation type="sa" span="504..505" confidence="0.0" comment="144848" annotator="fromIob" id="24"/>
+   <Annotation type="ge" span="509..514" confidence="0.0" annotator="fromIob" id="25"/>
+   <Annotation type="so" span="516..517" confidence="0.0" annotator="fromIob" id="26"/>
+   <Annotation type="lo" span="517..520" confidence="0.0" annotator="fromIob" id="27"/>
+   <Annotation type="sa" span="520..521" confidence="0.0" annotator="fromIob" id="28"/>
+   <Annotation type="so" span="531..532" confidence="0.0" annotator="fromIob" id="29"/>
+   <Annotation type="lo" span="532..535" confidence="0.0" annotator="fromIob" id="30"/>
+   <Annotation type="sa" span="535..536" confidence="0.0" annotator="fromIob" id="31"/>
+   <Annotation type="ge" span="545..549" confidence="0.0" annotator="fromIob" id="32"/>
+   <Annotation type="so" span="554..555" confidence="0.0" comment="5443" annotator="fromIob" id="33"/>
+   <Annotation type="lo" span="555..558" confidence="0.0" comment="5443" annotator="fromIob" id="34"/>
+   <Annotation type="sa" span="558..559" confidence="0.0" comment="5443" annotator="fromIob" id="35"/>
+   <Annotation type="ge" span="563..567" confidence="0.0" annotator="fromIob" id="36"/>
+   <Annotation type="so" span="611..612" confidence="0.0" annotator="laura" id="37"/>
+   <Annotation type="lo" span="612..615" confidence="0.0" annotator="fromIob" id="38"/>
+   <Annotation type="sa" span="615..616" confidence="0.0" annotator="fromIob" id="39"/>
+   <Annotation type="ge" span="633..637" confidence="0.0" annotator="fromIob" id="40"/>
+   <Annotation type="lo" span="753..756" confidence="0.0" comment="1800566" annotator="laura" id="41"/>
+   <Annotation type="sa" span="756..757" confidence="0.0" comment="1800566" annotator="laura" id="42"/>
+   <Annotation type="ty" span="1070..1074" confidence="0.0" annotator="laura" id="43"/>
+   <Annotation type="so" span="1076..1077" confidence="0.0" comment="1800566" annotator="fromIob" id="44"/>
+   <Annotation type="lo" span="1077..1080" confidence="0.0" comment="1800566" annotator="fromIob" id="45"/>
+   <Annotation type="sa" span="1080..1081" confidence="0.0" comment="1800566" annotator="fromIob" id="46"/>
+   <Annotation type="so" span="1086..1087" confidence="0.0" comment="1042522" annotator="laura" id="47"/>
+   <Annotation type="lo" span="1087..1089" confidence="0.0" comment="1042522" annotator="laura" id="48"/>
+   <Annotation type="sa" span="1089..1090" confidence="0.0" comment="1042522" annotator="laura" id="49"/>
+   <Annotation type="so" span="1162..1163" confidence="0.0" comment="1800566" annotator="fromIob" id="50"/>
+   <Annotation type="lo" span="1163..1166" confidence="0.0" comment="1800566" annotator="fromIob" id="51"/>
+   <Annotation type="sa" span="1166..1167" confidence="0.0" comment="1800566" annotator="fromIob" id="52"/>
+   <Annotation type="so" span="1168..1169" confidence="0.0" comment="1042522" annotator="laura" id="53"/>
+   <Annotation type="lo" span="1169..1171" confidence="0.0" comment="1042522" annotator="laura" id="54"/>
+   <Annotation type="sa" span="1171..1172" confidence="0.0" comment="1042522" annotator="laura" id="55"/>
+   <Annotation type="ge" span="1181..1185" confidence="0.0" annotator="fromIob" id="56"/>
+   <Annotation type="ge" span="1190..1194" confidence="0.0" annotator="fromIob" id="57"/>
+  </Annotation>
+</AnnotationFile>

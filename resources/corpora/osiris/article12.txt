@@ -1,0 +1,5 @@
+14705223
+
+Interleukin 1alpha single-nucleotide polymorphism associated with systemic sclerosis.
+
+OBJECTIVE: In systemic sclerosis (SSc), constitutive expression of the proinflammatory and fibrogenic cytokine interleukin 1alpha (IL-1alpha) by dermal fibroblasts from the affected skin has been observed. We investigated the association of a single-nucleotide polymorphism at position -889 in the IL-1alpha gene in patients with SSc. METHODS: Genotyping of IL-1alpha-889 polymorphism was performed in 46 patients with SSc and in 150 healthy controls by polymerase chain reaction with sequence-specific primers. All subjects were unrelated Slovak Caucasians. RESULTS: In SSc patients, carriers of the IL-1alpha-889 T allele were significantly overrepresented in comparison with controls (63.0% vs 42.0%; p = 0.01, OR 2.3, 95% CI 1.2-4.6). The frequency of the IL-1alpha-889 T allele was increased in SSc patients (38.0%) in comparison with controls (25.7%; p = 0.02). CONCLUSION: The IL-1alpha-889 polymorphism, previously shown to predispose to increased IL-1 protein expression, may be involved in susceptibility to SSc.

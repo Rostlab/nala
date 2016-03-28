@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator,id,comment"/>
+ <annotators list="tagger,laura,annotator"/>
+  <Annotation type="file" span="10..1451" confidence="0.0" filename="article17.txt.ann.txt" annotator="tagger" id="1">
+   <Annotation type="ge" span="10..15" confidence="0.0" annotator="laura" id="2"/>
+   <Annotation type="ge" span="184..202" confidence="0.0" annotator="laura" id="3"/>
+   <Annotation type="ge" span="204..210" confidence="0.0" annotator="laura" id="4"/>
+   <Annotation type="ge" span="277..282" confidence="0.0" annotator="laura" id="5"/>
+   <Annotation type="lo" span="283..288" confidence="0.0" annotator="laura" id="6"/>
+   <Annotation type="so" span="288..289" confidence="0.0" annotator="laura" id="7"/>
+   <Annotation type="sa" span="290..291" confidence="0.0" annotator="laura" id="8"/>
+   <Annotation type="so" span="296..297" confidence="0.0" comment="3135506" annotator="laura" id="9"/>
+   <Annotation type="lo" span="297..299" confidence="0.0" comment="3135506" annotator="laura" id="10"/>
+   <Annotation type="sa" span="299..300" confidence="0.0" comment="3135506" annotator="laura" id="11"/>
+   <Annotation type="lo" span="415..420" confidence="0.0" annotator="laura" id="12"/>
+   <Annotation type="so" span="420..422" confidence="0.0" annotator="laura" id="13"/>
+   <Annotation type="lo" span="454..459" confidence="0.0" annotator="laura" id="14"/>
+   <Annotation type="sa" span="459..460" confidence="0.0" annotator="laura" id="15"/>
+   <Annotation type="ge" span="663..667" confidence="0.0" annotator="laura" id="16"/>
+   <Annotation type="lo" span="773..775" confidence="0.0" comment="3135506" annotator="laura" id="17"/>
+   <Annotation type="so" span="775..777" confidence="0.0" comment="3135506" annotator="laura" id="18"/>
+   <Annotation type="lo" span="793..795" confidence="0.0" comment="3135506" annotator="laura" id="19"/>
+   <Annotation type="sa" span="795..796" confidence="0.0" comment="3135506" annotator="laura" id="20"/>
+   <Annotation type="lo" span="1095..1097" confidence="0.0" comment="3135506" annotator="laura" id="21"/>
+   <Annotation type="sa" span="1097..1098" confidence="0.0" comment="3135506" annotator="laura" id="22"/>
+   <Annotation type="lo" span="1287..1289" confidence="0.0" comment="3135506" annotator="laura" id="23"/>
+   <Annotation type="so" span="1289..1291" confidence="0.0" comment="3135506" annotator="laura" id="24"/>
+   <Annotation type="ge" span="1446..1450" confidence="0.0" annotator="laura" id="25"/>
+   <Annotation type="ge" span="1450..1451" confidence="0.0" annotator="laura" id="26"/>
+  </Annotation>
+</AnnotationFile>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator"/>
+ <annotators list="tagger,laura,fromIob"/>
+ <Annotation type="file" span="58..1030" confidence="0.0" filename="article84.txt.ann.txt" annotator="tagger" id="1">
+  <Annotation type="ge" span="58..70" confidence="0.0" annotator="fromIob" id="2"/>
+  <Annotation type="ge" span="111..123" confidence="0.0" annotator="laura" id="3"/>
+  <Annotation type="ge" span="133..136" confidence="0.0" annotator="laura" id="4"/>
+  <Annotation type="lo" span="146..148" confidence="0.0" annotator="laura" id="5"/>
+  <Annotation type="so" span="148..151" confidence="0.0" annotator="fromIob" id="6"/>
+  <Annotation type="sa" span="154..157" confidence="0.0" annotator="fromIob" id="7"/>
+  <Annotation type="ge" span="232..235" confidence="0.0" annotator="fromIob" id="8"/>
+  <Annotation type="ge" span="465..468" confidence="0.0" annotator="fromIob" id="9"/>
+  <Annotation type="ty" span="490..507" confidence="0.0" annotator="laura" id="10"/>
+  <Annotation type="ge" span="524..527" confidence="0.0" annotator="fromIob" id="11"/>
+  <Annotation type="ge" span="582..585" confidence="0.0" annotator="fromIob" id="12"/>
+  <Annotation type="ty" span="605..622" confidence="0.0" annotator="laura" id="13"/>
+  <Annotation type="ge" span="638..641" confidence="0.0" annotator="fromIob" id="14"/>
+  <Annotation type="ge" span="706..709" confidence="0.0" annotator="fromIob" id="15"/>
+  <Annotation type="ty" span="754..763" confidence="0.0" annotator="laura" id="16"/>
+  <Annotation type="ge" span="804..807" confidence="0.0" annotator="fromIob" id="17"/>
+  <Annotation type="ge" span="931..934" confidence="0.0" annotator="fromIob" id="18"/>
+  <Annotation type="ge" span="1018..1021" confidence="0.0" annotator="fromIob" id="19"/>
+  <Annotation type="ev" span="1022..1030" confidence="0.0" annotator="fromIob" id="20"/>
+ </Annotation>
+</AnnotationFile>

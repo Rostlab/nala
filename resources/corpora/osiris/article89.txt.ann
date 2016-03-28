@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator"/>
+ <annotators list="tagger,laura,fromIob"/>
+ <Annotation type="file" span="79..1488" confidence="0.0" filename="article89.txt.ann.txt" annotator="tagger" id="1">
+  <Annotation type="ge" span="79..90" confidence="0.0" annotator="fromIob" id="2"/>
+  <Annotation type="so" span="296..297" confidence="0.0" annotator="fromIob" id="3"/>
+  <Annotation type="lo" span="297..300" confidence="0.0" annotator="fromIob" id="4"/>
+  <Annotation type="sa" span="300..301" confidence="0.0" annotator="fromIob" id="5"/>
+  <Annotation type="so" span="306..307" confidence="0.0" annotator="fromIob" id="6"/>
+  <Annotation type="lo" span="307..310" confidence="0.0" annotator="fromIob" id="7"/>
+  <Annotation type="sa" span="310..311" confidence="0.0" annotator="fromIob" id="8"/>
+  <Annotation type="ge" span="328..339" confidence="0.0" annotator="fromIob" id="9"/>
+  <Annotation type="ge" span="387..398" confidence="0.0" annotator="fromIob" id="10"/>
+  <Annotation type="ge" span="609..620" confidence="0.0" annotator="fromIob" id="11"/>
+  <Annotation type="ty" span="699..730" confidence="0.0" annotator="laura" id="12"/>
+  <Annotation type="ge" span="833..844" confidence="0.0" annotator="fromIob" id="13"/>
+  <Annotation type="ge" span="1131..1142" confidence="0.0" annotator="fromIob" id="14"/>
+  <Annotation type="ge" span="1188..1195" confidence="0.0" annotator="fromIob" id="15"/>
+  <Annotation type="so" span="1252..1253" confidence="0.0" annotator="fromIob" id="16"/>
+  <Annotation type="lo" span="1253..1256" confidence="0.0" annotator="fromIob" id="17"/>
+  <Annotation type="sa" span="1256..1257" confidence="0.0" annotator="fromIob" id="18"/>
+  <Annotation type="ge" span="1272..1283" confidence="0.0" annotator="fromIob" id="19"/>
+  <Annotation type="so" span="1434..1435" confidence="0.0" annotator="fromIob" id="20"/>
+  <Annotation type="lo" span="1435..1438" confidence="0.0" annotator="fromIob" id="21"/>
+  <Annotation type="sa" span="1438..1439" confidence="0.0" annotator="fromIob" id="22"/>
+  <Annotation type="ge" span="1477..1488" confidence="0.0" annotator="fromIob" id="23"/>
+ </Annotation>
+</AnnotationFile>

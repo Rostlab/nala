@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator"/>
+ <annotators list="tagger"/>
+ <Annotation type="file" span="0..0" confidence="0.0" filename="article74.txt.ann.txt" annotator="tagger" id="1"/>
+</AnnotationFile>
