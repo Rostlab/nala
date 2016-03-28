@@ -45,7 +45,7 @@ if __name__ == "__main__":
     parser.add_argument('--delete_subclasses', required = False, default = "",
         help='Comma-separated subclasses to delete. Example: "2,3"')
 
-    parser.add_argument('--pruner', required=False, default="sentences", choices=["parts", "sentences"])
+    parser.add_argument('--pruner', required=False, default="parts", choices=["parts", "sentences"])
     parser.add_argument('--ps_ST', required=False, default=False, action='store_true')
     parser.add_argument('--ps_NL', required=False, default=False, action='store_true')
     parser.add_argument('--ps_random', required=False, default=0.0, type=float)
