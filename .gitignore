@@ -14,7 +14,7 @@ bin_model
 *.tar
 
 # Word embeddings model
-nala/data/word_embeddings/
+nala/data/word_embeddings*
 
 # crfsuite specific
 /predict
