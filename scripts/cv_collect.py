@@ -13,15 +13,15 @@ counts = [0] * 4
 for i in range(0,4):
     counts[i] = ([0] * 5)
 
-for fn in glob.glob(folder + "/*o{}.*".format(jobid)):
+for fn in glob.glob(folder + "/*o{}.*".format(jobid)):    
     with open(fn) as f:
         valid = False
         for line in f.readlines():
-            if '\t' in line:
-                c = line.split("\t")
-                if (c[-1] == "exact\n"):
+            if line.startswith("tp:"):
+                c = line.split()
+                if c[-1].startswith("exact"):
                     valid = True
-                    
+
                     subclass = c[-2]
                     subclass = 3 if subclass == "TOTAL" else int(subclass)
 
