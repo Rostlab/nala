@@ -31,6 +31,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--output_folder', required = False,
         help='Folder where the training model is written to. Otherwise a tmp folder is used')
+    parser.add_argument('--model_name_suffix', required = False,
+        help='Optional suffix to add to the generated model name in training mode'),
     parser.add_argument('--write_anndoc', required = False, action='store_true',
         help='Write anndoc of predicted test_corpus'),
     parser.add_argument('--model_path_1', required = False,
@@ -94,12 +96,20 @@ if __name__ == "__main__":
     else:
         args.crf_train_params = None
 
-    args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
-
     args.do_train = False if args.model_path_1 else True
     if args.cv_n:
         assert args.cv_fold is not None, "You must set both cv_n AND cv_n"
     args.validation = "cross-validation" if args.cv_n else "stratified"
+
+    #------------------------------------------------------------------------------
+
+    args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
+    if args.validation == "cross-validation":
+        args.model_name += "_cvfold_" + str(args.cv_fold)
+    if args.model_name_suffix:
+        args.model_name += "_" + str(args.model_name_suffix)
+
+    #------------------------------------------------------------------------------
 
     def print_run_args():
         for key, value in sorted((vars(args)).items()):
