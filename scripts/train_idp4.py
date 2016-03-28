@@ -130,14 +130,14 @@ def test_2_models(model_1, model_2):
     os.mkdir('./2_models')
 
     py_crf.tag(test, model_1)
-    TagTogFormat(test, '.').export_ann_json()
+    TagTogFormat(test, use_predicted=True, to_save_to='.').export_ann_json()
     os.rename('annjson', './2_models/model_1_annjson')
     for part in test.parts():
         print('ST', [ann.text for ann in part.predicted_annotations])
         part.predicted_annotations = []
 
     py_crf.tag(test, model_2)
-    TagTogFormat(test, '.').export_ann_json()
+    TagTogFormat(test, use_predicted=True, to_save_to='.').export_ann_json()
     os.rename('annjson', './2_models/model_2_annjson')
     shutil.rmtree('html')
     for part in test.parts():
