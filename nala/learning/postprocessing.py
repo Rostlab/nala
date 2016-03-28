@@ -176,6 +176,27 @@ class PostProcessing:
                 ann.offset += 1
                 ann.text = ann.text[1:-1]
 
+            # Follow the rule of abbreviations + first gene mutation (then protein mutation)
+            if ((ann.text[-1] == ')' or part.text[ann.offset + len(ann.text)] == ")") and ann.text[:-1].count('(') == 1):
+                p = re.compile("\\s+\\(")
+                split = p.split(ann.text)
+
+                # Requirement 1: there must be space to the left of (, not to match things like in Arg407(AGG) or IVS3(+1)
+                # Requirement 2: both parths must contain a number (with the idea that both parts contain a position and so can stand alone)
+                #   Negative: Arg407(AGG) - single amino acid substitution (Phe for Val) - nonsense mutation (286T) - deletion (229bp)
+                #   Negative: one insertion mutation (698insC) - AChR epsilon (CHRNE E376K) - nonsense mutation (glycine 568 to stop)
+                #   Positive: serine to arginine at the codon 113 (p. S113R) - mutagenesis of the initial ATG codon to ACG (Met 1 to Thr) - H2A at position 105 (Q105)
+                #   Positive: Trp replacing Gln in position 156 (A*2406) - A-1144-to-C transversion (K382Q) - deletion of 123 bases (41 codons) - exon 12 (R432T)
+                if len(split) == 2 and any(c.isdigit() for c in split[1]): # any(c.isdigit() for c in split[0])
+                    ann1text = split[0]
+                    to_be_removed.append(index)
+                    part.predicted_annotations.append(Entity(ann.class_id, ann.offset, ann1text))
+                    ann2text = split[1] if ann.text[-1] != ')' else split[1][:-1]
+                    ann2offset = ann.offset + len(ann1text) + (len(ann.text) - sum(len(x) for x in split)) #last part is number of spaces + (
+                    part.predicted_annotations.append(Entity(ann.class_id, ann2offset, ann2text))
+                    #assert(not (ann1text.startswith(" ") or ann1text.endswith(" ")))
+                    #assert(not (ann2text.startswith(" ") or ann2text.endswith(" ")))
+
 
         part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
                                       if index not in to_be_removed]
