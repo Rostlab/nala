@@ -1,5 +1,18 @@
 Annotated by jmcejuela
 
+---
+
+These 2 documents were added on Monday 28 March 2016 after having created the test iterations.
+The purpose was to add 2 more documents to the IDP4+ corpus to make it 750 docs (from 748).
+The bug of believing before that 750 docs existed were due to wrongly counting the false candidates listed below.
+
+The 2 extra documents:
+
+* aVl4o3lJVyaX519wQ6eiRKkVdTJC-8872466
+* aJ8vVNuHTqaUNaPZ_H9mHaLeC1Tq-1946412
+
+---
+
 False candidates:
 
 * aXyhQxJDPrOWVNyKzNKoxnjY7XxG-24275569
