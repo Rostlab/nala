@@ -269,7 +269,8 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                 # print("Part", i)
                 sent_offset = 0
                 cur_part = doc.parts.get(x)
-                sentences = cur_part.sentences
+                sentences = cur_part.sentences_
+                
                 for sent in sentences:
                     sent_length = len(sent)
                     new_text = sent.lower()
