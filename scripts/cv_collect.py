@@ -14,12 +14,14 @@ for i in range(0,4):
     counts[i] = ([0] * 5)
 
 for fn in glob.glob(folder + "/*o{}.*".format(jobid)):
-    print(fn)
     with open(fn) as f:
+        valid = False
         for line in f.readlines():
             if '\t' in line:
                 c = line.split("\t")
                 if (c[-1] == "exact\n"):
+                    valid = True
+                    
                     subclass = c[-2]
                     subclass = 3 if subclass == "TOTAL" else int(subclass)
 
@@ -30,6 +32,8 @@ for fn in glob.glob(folder + "/*o{}.*".format(jobid)):
                     # fno = n(c[4])
                     for i in range(0,5):
                         counts[subclass][i] += n(c[i])
+
+        print(fn, valid)
 
 evaluations = Evaluations()
 for subclass, c in enumerate(counts):
