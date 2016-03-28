@@ -45,6 +45,7 @@ class AlreadyConsideredPMIDFilter(PMIDFilter):
             # find the iteration number if it exists
             which_iteration = re.search('iteration_([0-9]+)', root)
             # if it doesen't set it to a value we won't use
+            which_iteration = int(which_iteration.group(1)) if which_iteration else self.iteration_n
             if which_iteration < self.iteration_n and files:
                 for file in files:
                     # try to find the pmid based on file name convention
