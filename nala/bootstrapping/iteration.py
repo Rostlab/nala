@@ -9,6 +9,7 @@ from collections import defaultdict
 from itertools import product, chain
 from nala.bootstrapping.utils import UniprotDocumentSelector
 from nala.bootstrapping.document_filters import HighRecallRegexDocumentFilter, ManualDocumentFilter
+from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
 from nalaf import print_verbose, print_debug
 from nalaf.learning.crfsuite import PyCRFSuite

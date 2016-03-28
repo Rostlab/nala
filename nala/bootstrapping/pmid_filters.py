@@ -35,7 +35,7 @@ class AlreadyConsideredPMIDFilter(PMIDFilter):
     def __init__(self, bootstrapping_root, iteration_n):
         self.bootstrapping_root = bootstrapping_root
         """the root directory containing all iterations of the bootstrapping"""
-        self.iteration_n = iteration_n
+        self.iteration_n = int(iteration_n)
         """the number of the current iteration"""
 
     def filter(self, pmids):
@@ -45,7 +45,6 @@ class AlreadyConsideredPMIDFilter(PMIDFilter):
             # find the iteration number if it exists
             which_iteration = re.search('iteration_([0-9]+)', root)
             # if it doesen't set it to a value we won't use
-            which_iteration = int(which_iteration.group(1)) if which_iteration else self.iteration_n
             if which_iteration < self.iteration_n and files:
                 for file in files:
                     # try to find the pmid based on file name convention
@@ -57,5 +56,3 @@ class AlreadyConsideredPMIDFilter(PMIDFilter):
         for pmid in pmids:
             if pmid not in considered_pmids:
                 yield pmid
-
-
