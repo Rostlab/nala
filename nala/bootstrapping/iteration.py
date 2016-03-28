@@ -467,7 +467,7 @@ class Iteration:
         self.candidates.validate_annotation_offsets()
 
         # export to anndoc format
-        ttf_candidates = TagTogFormat(self.candidates, self.candidates_folder)
+        ttf_candidates = TagTogFormat(self.candidates, use_predicted=True, to_save_to=self.candidates_folder, use_original_partids=False)
         ttf_candidates.export_html()
         ttf_candidates.export_ann_json(threshold_val)
 

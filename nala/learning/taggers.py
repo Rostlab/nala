@@ -83,12 +83,12 @@ class MultipleModelTagger(Tagger):
         tmpdir = tempfile.mkdtemp()
 
         self.tagger1.tag(dataset)
-        TagTogFormat(dataset, tmpdir).export_ann_json()
+        TagTogFormat(dataset, use_predicted=True, to_save_to=tmpdir).export_ann_json()
         os.rename(tmpdir + '/annjson', tmpdir + '/tagger1_annjson')
         self._clean_predictions(dataset, "tagger1")
 
         self.tagger2.tag(dataset)
-        TagTogFormat(dataset, tmpdir).export_ann_json()
+        TagTogFormat(dataset, use_predicted=True, to_save_to=tmpdir).export_ann_json()
         os.rename(tmpdir + '/annjson', tmpdir + '/tagger2_annjson')
         self._clean_predictions(dataset, "tagger2")
 
