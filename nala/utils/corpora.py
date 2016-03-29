@@ -5,18 +5,20 @@ from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader
 from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader
 from nalaf.structures.data import Dataset
 
-#Var = Variome
-#Var120 = Variome_120
-#?A = Abstracts only
-#?F = Full Text only
+# Var = Variome
+# Var120 = Variome_120
+# ?A = Abstracts only
+# ?F = Full Text only
 ALL_CORPORA = [
-'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNP',
-'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+',
-'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
+    'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNP',
+    'IDP4', 'IDP4A', 'IDP4F',
+    'nala', 'nala_training',  # 'nala_test', activate once we are done
+    'IDP4+',
+    'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
-def get_corpus(name, training = False, test = False):
+def get_corpus(name, training=False, test=False):
     parts = name.split("_")
     if len(parts) > 1:
         name = parts[0]
