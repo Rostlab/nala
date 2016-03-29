@@ -10,7 +10,7 @@ from nalaf.structures.data import Dataset
 #?A = Abstracts only
 #?F = Full Text only
 ALL_CORPORA = [
-'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNPC',
+'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNP',
 'IDP4', 'IDP4A', 'IDP4F', 'nala', 'IDP4+',
 'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
