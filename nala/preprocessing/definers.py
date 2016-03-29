@@ -67,9 +67,6 @@ class ExclusiveNLDefiner(NLDefiner):
     min words and a dictionary of probable nl words."""
 
     def __init__(self):
-        self.any_modified = 0
-        self.st_modified = 0
-
         self.max_words = 4
 
         # Before the splitter was just based on space (' ')
@@ -80,7 +77,6 @@ class ExclusiveNLDefiner(NLDefiner):
         conventions_file = pkg_resources.resource_filename('nala.data', 'regex_st.json')
         tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
         dict_nl_words_file = pkg_resources.resource_filename('nala.data', 'dict_nl_words_v2.json')
-        dict_nl_words_file_old = pkg_resources.resource_filename('nala.data', 'dict_nl_words.json')
 
         # read in file regex_st.json into conventions array
         with open(conventions_file, 'r') as f:
@@ -98,16 +94,11 @@ class ExclusiveNLDefiner(NLDefiner):
             dict_nl_words = json.load(f)
             self.compiled_dict_nl_words = list(set([re.compile(x, re.IGNORECASE) for x in dict_nl_words]))
 
-        with open(dict_nl_words_file_old) as f:
-            dict_nl_words = json.load(f)
-            self.compiled_dict_nl_words_old = list(set([re.compile(x, re.IGNORECASE) for x in dict_nl_words]))
-
 
     def define(self, dataset):
         for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
             if ann.class_id == MUT_CLASS_ID:
                 ann.subclass = self.define_string(ann.text)
-        print("***", self.any_modified, self.st_modified)
 
 
     def define_string(self, query):
@@ -118,8 +109,6 @@ class ExclusiveNLDefiner(NLDefiner):
         """
         matches_tmvar = (regex.match(query) for regex in self.compiled_regexps)
         matches_custom = (regex.match(query) for regex in self.compiled_regexps_custom)
-
-        matches_dict = (regex.search(query) for regex in self.compiled_dict_nl_words_old)
 
         num_nl_words_lazy = None
 
@@ -132,25 +121,12 @@ class ExclusiveNLDefiner(NLDefiner):
                 return num_nl_words_lazy
 
         words = self.word_tokenizer.split(query)
-        words_old = query.split(" ")
 
         if any(matches_custom) or any(matches_tmvar):
             return 0
         elif len(words) > self.max_words or num_nl_words() >= 2:
-            if len(words_old) <= self.max_words:
-                self.any_modified += 1
-                if not (len(words_old) > 1 and any(matches_dict)):
-                    self.st_modified += 1
-                    print(len(words), num_nl_words(), query, " @@@@@@@@@@@@@@@@@@@@@@@@@@@  ST -> NL")
-                else:
-                    print(len(words), num_nl_words(), query, " +++++++++++++++++++++++++++  SS -> NL")
-
             return 1
         elif len(words) > 1 and num_nl_words() >= 1:
-            if len(words_old) <= 1 or not any(matches_dict):
-                self.st_modified += 1
-                self.any_modified += 1
-                print(len(words), num_nl_words(), query, " ***************************  ST -> SS")
             return 2
         else:
             return 0
