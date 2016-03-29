@@ -50,7 +50,7 @@ class UniprotDocumentSelector(Cacheable):
         # The entities should be defined in the xml but we can be fix the error by introducing the elements in the parser ourselves
         parser = ET.XMLParser()
         parser.entity['copy'] = chr(0x24B8)
-        parser.entity['ndash'] = u"\u2013"
+        parser.entity['ndash'] = '\u2013'
 
         xml = ET.fromstring(text, parser)
         ns = {'u': 'http://uniprot.org/uniprot'}  # namespace
