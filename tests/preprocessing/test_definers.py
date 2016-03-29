@@ -49,7 +49,6 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(2, f("T320 to C"))
         testEqual(2, f("Leu107 to Pro"))
         testEqual(2, f("C631 to T"))
-        testEqual(2, f("G643 to A"))
         testEqual(2, f("Arg211 to Cys"))
         testEqual(2, f("Ala215 to Thr"))
         testEqual(1, f("deletion of its cytoplasmic tail"))
@@ -85,6 +84,22 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(0, f("G20R"))
         testEqual(1, f("G to A transition at a CpG"))
         testEqual(1, f("glycine to arginine substitution at codon 20"))
+        testEqual(0, f("26delA"))
+
+        testEqual(0, f("Q115P"))
+        testEqual(0, f("g.3912G>C"))
+        testEqual(0, f("c.925delA"))
+        testEqual(0, f("c.388+3insT"))
+
+        testEqual(0, f("3992-9g-->a"))
+        testEqual(2, f("3992-9g-->a mutation"))
+        testEqual(2, f("G643 to A"))
+        testEqual(2, f("leucine for arginine 90"))
+        testEqual(2, f("deletion of aa 527-534"))
+
+        testEqual(1, f("deletion of 10 and 8 residues from the N- and C-terminals"))
+        testEqual(1, f("143 from alanine to glycine"))
+        testEqual(1, f("alterations of amino acid residue 143 from alanine to glycine"))
 
 
 class TestTmVarRegexNLDefiner(unittest.TestCase):
