@@ -86,6 +86,9 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(1, f("glycine to arginine substitution at codon 20"))
         testEqual(0, f("26delA"))
 
+        testEqual(0, f("delPhe1388"))
+        testEqual(2, f("deleted C1 domain"))
+
         testEqual(0, f("Q115P"))
         testEqual(0, f("g.3912G>C"))
         testEqual(0, f("c.925delA"))
@@ -100,6 +103,10 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(1, f("deletion of 10 and 8 residues from the N- and C-terminals"))
         testEqual(1, f("143 from alanine to glycine"))
         testEqual(1, f("alterations of amino acid residue 143 from alanine to glycine"))
+
+        # Possible errors
+
+        testEqual(0, f("trinucleotide deletion"))
 
 
 class TestTmVarRegexNLDefiner(unittest.TestCase):
