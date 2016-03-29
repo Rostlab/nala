@@ -67,10 +67,21 @@ class ExclusiveNLDefiner(NLDefiner):
     min words and a dictionary of probable nl words."""
 
     def __init__(self):
+        self.count = 0
+        self.counts = [0, 0, 0]
+        self.modified = 0
+        self.last = 0
         self.max_words = 4
+
         self.conventions_file = pkg_resources.resource_filename('nala.data', 'regex_st.json')
         self.tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
         self.dict_nl_words_file = pkg_resources.resource_filename('nala.data', 'dict_nl_words.json')
+        self.dict_nl_words_file_v2 = pkg_resources.resource_filename('nala.data', 'dict_nl_words_v2.json')
+
+        # Before the splitter was just based on space (' ')
+        # Now hyphens or slashes sourrounded by letters or space-separated brackets also produce a word
+        # note, the letters are actually captured so the words are not complete. But we only care about the length
+        self.word_tokenizer = re.compile(" +|(?:[a-zA-Z])[-/](?:[a-zA-Z])")
 
         # read in file regex_st.json into conventions array
         with open(self.conventions_file, 'r') as f:
@@ -80,18 +91,24 @@ class ExclusiveNLDefiner(NLDefiner):
         # read RegEx.NL (only codes)
         with open(self.tmvarregex_file) as file:
             raw_regexps = list(csv.reader(file, delimiter='\t'))
-        regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
-        self.compiled_regexps = [re.compile(x) for x in regexps]
+            regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
+            self.compiled_regexps = [re.compile(x) for x in regexps]
 
         # read dict_nl_words.json - dictionary for distinguishing between standard and partly with low word count
         with open(self.dict_nl_words_file) as f:
-            self.dict_nl_words = json.load(f)
-        self.compiled_dict_nl_words = [re.compile(x, re.IGNORECASE) for x in self.dict_nl_words]
+            dict_nl_words = json.load(f)
+            self.compiled_dict_nl_words = [re.compile(x, re.IGNORECASE) for x in dict_nl_words]
+
+        with open(self.dict_nl_words_file_v2) as f:
+            dict_nl_words = json.load(f)
+            self.compiled_dict_nl_words_v2 = [re.compile(x, re.IGNORECASE) for x in dict_nl_words]
 
     def define(self, dataset):
         for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
             if ann.class_id == MUT_CLASS_ID:
                 ann.subclass = self.define_string(ann.text)
+                self.counts[ann.subclass] += 1
+        print(self.count, self.counts, self.last, self.modified)
 
     def define_string(self, query):
         """
@@ -103,14 +120,34 @@ class ExclusiveNLDefiner(NLDefiner):
         matches_custom = (regex.match(query) for regex in self.compiled_regexps_custom)
         matches_dict = (regex.search(query) for regex in self.compiled_dict_nl_words)
 
+        self.count += 1
+
+        #words = self.word_tokenizer.split(query)
+        words = query.split(" ")
+
         if any(matches_custom) or any(matches_tmvar):
             return 0
-        elif len(query.split(" ")) > self.max_words:
-            # division into nl or partly nl
+        elif len(words) > self.max_words:
             return 1
-        elif len(query.split(" ")) > 1 and any(matches_dict):
+        elif len(words) > 1 and any(matches_dict):
             return 2
         else:
+            self.last += 1
+
+            words = self.word_tokenizer.split(query)
+            suma = sum((regex.search(query) is not None for regex in self.compiled_dict_nl_words_v2))
+
+            if len(words) > self.max_words or suma >= 2:
+                verify = "   @@@@@@@@@@@@@@@@@@@@@@@@@@  NL"
+            elif len(words) > 1 and suma >= 1:
+                verify = "   **************************  SS"
+            else:
+                verify = ""
+
+            if verify:
+                self.modified += 1
+
+            print(self.last, self.count, len(words), suma, query, verify)
             return 0
 
 
