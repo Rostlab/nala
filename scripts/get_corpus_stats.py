@@ -8,24 +8,28 @@ from nalaf.structures.data import Dataset
 
 parser = argparse.ArgumentParser(description='Print corpora stats')
 
-parser.add_argument('--corpus', help='Name of the corpus to read and print stats for', required = True)
+parser.add_argument('corpora', default='*', metavar='corpus', nargs='+',
+                    help='Name of the corpus to read and print stats for')
 parser.add_argument('--listall', help='Print mutations', action='store_true')
-parser.add_argument('--counttokens', help='Count the tokens. Note that this is considerably slower', action='store_true')
+parser.add_argument('--counttokens', help='Count the tokens. Note, this is considerably slower', action='store_true')
 parser.add_argument('--test', help='Get the test (sub)set if any, otherwise the entire corpus', action='store_true')
 
 args = parser.parse_args()
 
-#------------------------------------------------------------------------------
+if args.corpora[0] == "*" or args.corpora[0] == 'all':
+    args.corpora = ALL_CORPORA
+
+# ------------------------------------------------------------------------------
 
 nldefiner = ExclusiveNLDefiner()
 
 pipeline = PrepareDatasetPipeline(feature_generators=[])
 
-ST = 0 #Standard
-NL = 1 #Natural Language
-SS = 2 #Semi-Standard
+ST = 0  # Standard
+NL = 1  # Natural Language
+SS = 2  # Semi-Standard
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 def get_corpus_type(name):
     if name == "MF":
@@ -47,7 +51,7 @@ def is_full_text(document):
     return any(not part.is_abstract for part in document)
 
 def annotations(corpus, typ):
-    nldefiner.define(corpus) # classify subclasses
+    nldefiner.define(corpus)  # classify subclasses
 
     for docid, document in corpus.documents.items():
         for part in document:
@@ -99,20 +103,15 @@ def print_stats(name, corpus, typ):
     if (args.listall):
         print('\t'.join(header))
 
-    values = [name, len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST])), num_tokens]
-    print(*values, sep = '\t')
+    # The limit of 7 for the corpus name is the size that fits into a tab column, so that it looks good on print
+    values = [name[:7], len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST])), num_tokens]
+    print(*values, sep='\t')
 
 #------------------------------------------------------------------------------
 
 print('\t'.join(header))
 
-if args.corpus == "*" or args.corpus == "all":
-    for corpus_name in ALL_CORPORA:
-        realname, typ = get_corpus_type(corpus_name)
-        corpus = get_corpus(realname, args.test)
-        print_stats(corpus_name, corpus, typ)
-
-else:
-    realname, typ = get_corpus_type(args.corpus)
+for corpus_name in args.corpora:
+    realname, typ = get_corpus_type(corpus_name)
     corpus = get_corpus(realname, args.test)
-    print_stats(args.corpus, corpus, typ)
+    print_stats(corpus_name, corpus, typ)
