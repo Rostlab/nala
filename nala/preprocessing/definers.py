@@ -64,7 +64,7 @@ class AnkitNLDefiner(NLDefiner):
 
 class ExclusiveNLDefiner(NLDefiner):
     """NLDefiner that uses an mixed approach of max words, regexs',
-    min words and a dictionary of probable nl words."""    
+    min words and a dictionary of probable nl words."""
 
     def __init__(self):
         self.max_words = 4
@@ -89,33 +89,9 @@ class ExclusiveNLDefiner(NLDefiner):
         self.compiled_dict_nl_words = [re.compile(x, re.IGNORECASE) for x in self.dict_nl_words]
 
     def define(self, dataset):
-        counter = [0, 0, 0]
-
         for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
-            # if ann.class_id == MUT_CLASS_ID:
-            #     print(ann.class_id, ann.text)
             if ann.class_id == MUT_CLASS_ID:
-                matches_tmvar = [regex.match(ann.text) for regex in self.compiled_regexps]
-                matches_custom = [regex.match(ann.text) for regex in self.compiled_regexps_custom]
-                matches_dict = [regex.search(ann.text) for regex in self.compiled_dict_nl_words]
-
-                if any(matches_custom) or any(matches_tmvar):
-                    ann.subclass = 0
-                    counter[0] += 1
-                elif len(ann.text.split(" ")) > self.max_words:
-                    # division into nl or partly nl
-                    ann.subclass = 1
-                    counter[1] += 1
-                    # print(ann.text)
-                elif len(ann.text.split(" ")) > 1 and any(matches_dict):
-                    ann.subclass = 2
-                    counter[2] += 1
-                    # print(ann.text)
-                else:
-                    ann.subclass = 0
-                    counter[0] += 1
-        counter.append(counter[1] + counter[2])
-        # print(counter)
+                ann.subclass = self.define_string(ann.text)
 
     def define_string(self, query):
         """
