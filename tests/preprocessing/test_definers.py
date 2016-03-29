@@ -106,7 +106,7 @@ class TestExclusiveNLDefiner(unittest.TestCase):
 
         # Possible errors
 
-        testEqual(0, f("trinucleotide deletion"))
+        testEqual(0, f("trinucleotide deletion")) # This should be 2 (SS) at least
 
 
 class TestTmVarRegexNLDefiner(unittest.TestCase):
