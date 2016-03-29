@@ -126,9 +126,9 @@ class ExclusiveNLDefiner(NLDefiner):
         :return: subclass id, which in default is 0 (standard), 1(natural language) or 2 (semi standard)
         """
         # TODO test function
-        matches_tmvar = [regex.match(query) for regex in self.compiled_regexps]
-        matches_custom = [regex.match(query) for regex in self.compiled_regexps_custom]
-        matches_dict = [regex.search(query) for regex in self.compiled_dict_nl_words]
+        matches_tmvar = (regex.match(query) for regex in self.compiled_regexps)
+        matches_custom = (regex.match(query) for regex in self.compiled_regexps_custom)
+        matches_dict = (regex.search(query) for regex in self.compiled_dict_nl_words)
 
         if any(matches_custom) or any(matches_tmvar):
             return 0
