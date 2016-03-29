@@ -64,9 +64,7 @@ class AnkitNLDefiner(NLDefiner):
 
 class ExclusiveNLDefiner(NLDefiner):
     """NLDefiner that uses an mixed approach of max words, regexs',
-    min words and a dictionary of probable nl words."""
-
-    # TODO implement test class
+    min words and a dictionary of probable nl words."""    
 
     def __init__(self):
         self.max_words = 4
@@ -125,7 +123,6 @@ class ExclusiveNLDefiner(NLDefiner):
         :param query:
         :return: subclass id, which in default is 0 (standard), 1(natural language) or 2 (semi standard)
         """
-        # TODO test function
         matches_tmvar = (regex.match(query) for regex in self.compiled_regexps)
         matches_custom = (regex.match(query) for regex in self.compiled_regexps_custom)
         matches_dict = (regex.search(query) for regex in self.compiled_dict_nl_words)
