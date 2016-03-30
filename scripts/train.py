@@ -56,7 +56,9 @@ if __name__ == "__main__":
     parser.add_argument('--word_embeddings', action='store_true',
         help='Use word embeddings features')
     parser.add_argument('--we_additive', type=int, default = 2)
-    parser.add_argument('--we_multiplicative', type=int, default = 3)
+    parser.add_argument('--we_multiplicative', type=int, default=3)
+
+    parser.add_argument('--use_feat_windows', default='True')
 
     args = parser.parse_args()
 
@@ -98,6 +100,8 @@ if __name__ == "__main__":
     else:
         args.crf_train_params = None
 
+    args.use_feat_windows = False if args.use_feat_windows.lower() in ['false', '0', 'no'] else True
+
     args.do_train = False if args.model_path_1 else True
     if args.cv_n:
         assert args.cv_fold is not None, "You must set both cv_n AND cv_n"
@@ -123,7 +127,7 @@ if __name__ == "__main__":
 
     #------------------------------------------------------------------------------
 
-    features_pipeline = get_prepare_pipeline_for_best_model(args.we_params)
+    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params)
 
     #------------------------------------------------------------------------------
 
