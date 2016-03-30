@@ -186,20 +186,16 @@ if __name__ == "__main__":
         stats(test_set, "test")
         print_run_args()
 
-        exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test_set)
-        overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test_set)
+        evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(test_set)
 
-        for e in exact:
-            print(e)
-        print()
-        for e in overlapping:
-            print(e)
-        print()
+        print(evaluation)
+
+
 
     assert(args.model_path_1 is not None)
 
     if args.model_path_2:
-        tagger = NalaTagger(st_model = args.model_path_1, all3_model = args.model_path_2, features_pipeline = features_pipeline)
+        tagger = NalaTagger(st_model = args.model_path_1, all3_model=args.model_path_2, features_pipeline = features_pipeline)
     else:
         tagger = NalaSingleModelTagger(bin_model = args.model_path_1, features_pipeline = features_pipeline)
 
