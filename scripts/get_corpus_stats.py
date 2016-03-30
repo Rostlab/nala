@@ -10,7 +10,8 @@ parser = argparse.ArgumentParser(description='Print corpora stats')
 
 parser.add_argument('corpora', default='*', metavar='corpus', nargs='+',
                     help='Name of the corpus to read and print stats for')
-parser.add_argument('--listall', help='Print mutations', action='store_true')
+parser.add_argument('--listanns', default="",
+                    help='Print mutation comma-separated subclasses. Examples: 1 or 1,2 or * for all')
 parser.add_argument('--counttokens', help='Count the tokens. Note, this is considerably slower', action='store_true')
 parser.add_argument('--test', help='Get the test (sub)set if any, otherwise the entire corpus', action='store_true')
 
@@ -18,6 +19,10 @@ args = parser.parse_args()
 
 if args.corpora[0] == "*" or args.corpora[0] == 'all':
     args.corpora = ALL_CORPORA
+
+if args.listanns == '*' or args.listanns == 'all':
+    args.listanns = '0,1,2'
+args.listanns = set(int(c) for c in args.listanns.split(",") if c)
 
 # ------------------------------------------------------------------------------
 
@@ -86,12 +91,17 @@ header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "
 def print_stats(name, corpus, typ):
     corpus = filter_only_full_text(corpus) if typ == "F" else corpus
     total = 0
-    counts = [0,0,0]
+    counts = [0, 0, 0]
+    marker = [
+        '',
+        '@@@@@@@@@@@@@@@@@@@@@@',
+        '**********************'
+    ]
 
     for ann in annotations(corpus, typ):
         if ann.class_id == MUT_CLASS_ID:
-            if (args.listall):
-                print('\t', ann.subclass, ann.text, sep = '\t')
+            if ann.subclass in args.listanns:
+                print('\t', ann.subclass, ann.text, marker[ann.subclass], sep='\t')
             total += 1
             counts[ann.subclass] += 1
 
@@ -100,8 +110,8 @@ def print_stats(name, corpus, typ):
     fs = "{0:.3f}"
     percents = list(map(lambda x: (fs.format(x / total) if x > 0 else "0"), counts))
 
-    if (args.listall):
-        print('\t'.join(header))
+    # if (args.listall):
+    #     print('\t'.join(header))
 
     # The limit of 7 for the corpus name is the size that fits into a tab column, so that it looks good on print
     values = [name[:7], len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST])), num_tokens]
