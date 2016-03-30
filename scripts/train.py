@@ -4,7 +4,7 @@ import tempfile
 from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus
-from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, TmVarLabeler
+from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, IOLabeler, TmVarLabeler
 from nala.utils import get_prepare_pipeline_for_best_model
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
@@ -40,8 +40,8 @@ if __name__ == "__main__":
     parser.add_argument('--model_path_2', required = False,
         help='Path of the second model binary file if evaluation is performed with two models')
 
-    parser.add_argument('--labeler', required = False, default = "BIEO", choices=["BIEO", "BIO", "11labels"],
-        help='Labeler to use for training')
+    parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
+                        help='Labeler to use for training')
     parser.add_argument('--delete_subclasses', required = False, default = "",
         help='Comma-separated subclasses to delete. Example: "2,3"')
 
@@ -71,12 +71,14 @@ if __name__ == "__main__":
     if not args.output_folder:
         args.output_folder = tempfile.mkdtemp()
 
-    str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ','')
+    str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ', '')
 
     if args.labeler == "BIEO":
         labeler = BIEOLabeler()
     elif args.labeler == "BIO":
         labeler = BIOLabeler()
+    elif args.labeler == "IO":
+        labeler = IOLabeler()
     elif args.labeler == "11labels":
         labeler = TmVarLabeler()
 
