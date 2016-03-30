@@ -5,6 +5,7 @@ from nala.utils.corpora import get_corpus, ALL_CORPORA
 from nalaf.utils import MUT_CLASS_ID
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.structures.data import Dataset
+from collections import Counter
 
 parser = argparse.ArgumentParser(description='Print corpora stats')
 
@@ -88,22 +89,26 @@ def filter_only_full_text(corpus):
 
 header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS", "#tokens"]
 
+# WordsCounter = Counter()
+
 def print_stats(name, corpus, typ):
     corpus = filter_only_full_text(corpus) if typ == "F" else corpus
     total = 0
     counts = [0, 0, 0]
     marker = [
-        '',
-        '@@@@@@@@@@@@@@@@@@@@@@',
-        '**********************'
+        '        ',
+        '@@@@@@@@',
+        '********'
     ]
 
     for ann in annotations(corpus, typ):
         if ann.class_id == MUT_CLASS_ID:
             if ann.subclass in args.listanns:
-                print('\t', ann.subclass, ann.text, marker[ann.subclass], sep='\t')
+                print('', marker[ann.subclass] + ' ' + str(ann.subclass), ann.text, sep='\t')
             total += 1
             counts[ann.subclass] += 1
+            # for word in ann.text.split(' '):
+            #     WordsCounter[word.lower()] += 1
 
     num_tokens = get_num_tokens(corpus, typ)
 
@@ -117,7 +122,7 @@ def print_stats(name, corpus, typ):
     values = [name[:7], len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST])), num_tokens]
     print(*values, sep='\t')
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 print('\t'.join(header))
 
@@ -125,3 +130,6 @@ for corpus_name in args.corpora:
     realname, typ = get_corpus_type(corpus_name)
     corpus = get_corpus(realname, args.test)
     print_stats(corpus_name, corpus, typ)
+
+# for count in WordsCounter.most_common()[:-len(WordsCounter)-1:-1]:
+#     print(count)
