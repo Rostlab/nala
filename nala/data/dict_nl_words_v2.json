@@ -114,7 +114,7 @@
   "\\bcarboxy[a-z]*\\b",
   "\\b[a-z]+zygous\\b",
   "\\b[a-z]+zygotic\\b",
-  "\\bsomatic[a-z]+\\b",
+  "\\bsomatic[a-z]*\\b",
   "\\brepeat[a-z]*\\b",
   "\\bduplicat[a-z]+\\b",
   "[a-z]*nucleotides?\\b",
