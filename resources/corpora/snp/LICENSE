@@ -1,0 +1,8 @@
+1. Copyright of abstracts
+Due to license restriction of PubMed(R)® this corpus contains only annotations. To facilitate a reproduction of the original corpus, we include the exact position in the text, as well as the matching string. The articles are composed of <Title><Whitespace><Whitespace><Abstract> For detailed description of the corpus and its annotations see README.txt. 
+
+2. Copyright of regular expression
+License of the original regular expressions is subject to the license agreement at mutationfinder-license.txt. Also the additional rules are subject to these agreement.
+
+3. Copyright of annotations
+The annotations are published for academic use only and usage for development of commercial products is not permitted.
