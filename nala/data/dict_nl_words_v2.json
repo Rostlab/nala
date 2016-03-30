@@ -183,5 +183,6 @@
   "\\bdirects?\\b",
   "\\bdirected\\b",
   "\\bgermline\\b",
-  "\\bgerms?\\b"
+  "\\bgerms?\\b",
+  "\\bbases?\\b"
 ]
