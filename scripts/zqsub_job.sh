@@ -4,7 +4,13 @@
 
 let cv_fold=$SGE_TASK_ID-1
 
+python='/mnt/home/cejuela/anaconda3/latest/bin/python'
+trainscript='/mnt/home/cejuela/nala/nala/scripts/train.py'
+outputdir='/mnt/home/cejuela/tmp/models/'
+
 # FINAL EXPERIMENTS
+
+time $python $trainscript --training_corpus nala_training_2 --cv_n 5 --cv_fold 2 --pruner parts --labeler BIEO --model_name_suffix "TEST" --output_folder $outputdir
 
 # BASELINE 430489.1-5:1 time /mnt/home/cejuela/anaconda3/latest/bin/python /mnt/home/cejuela/nala/nala/scripts/train.py --training_corpus nala_training --cv_n 5 --cv_fold $cv_fold --pruner parts --labeler BIEO --model_name_suffix "BASELINE" --output_folder /mnt/home/cejuela/tmp/models/
 
