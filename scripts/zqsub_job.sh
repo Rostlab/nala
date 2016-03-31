@@ -2,16 +2,19 @@
 
 # qsub -m aes -M i@juanmi.rocks -t 1-5 -j y zqsub_job.sh
 
+SGE_TASK_ID=${SGE_TASK_ID-1}
 let cv_fold=$SGE_TASK_ID-1
-jobid=${JOB_ID- }
+jobid=${JOB_ID-last}
 
 python='/mnt/home/cejuela/anaconda3/latest/bin/python'
 trainscript='/mnt/home/cejuela/nala/nala/scripts/train.py'
 outputdir='/mnt/home/cejuela/tmp/models/'
+common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid --output_folder $outputdir"
+train="time $python $trainscript $common "
 
 # FINAL EXPERIMENTS
 
-time $python $trainscript --training_corpus nala_training_2 --cv_n 5 --cv_fold 2 --pruner parts --labeler BIEO --model_name_suffix ' ' --output_folder $outputdir
+$train --training_corpus nala_training_2 --pruner parts --labeler IO
 
 # BASELINE 430489.1-5:1 time /mnt/home/cejuela/anaconda3/latest/bin/python /mnt/home/cejuela/nala/nala/scripts/train.py --training_corpus nala_training --cv_n 5 --cv_fold $cv_fold --pruner parts --labeler BIEO --model_name_suffix "BASELINE" --output_folder /mnt/home/cejuela/tmp/models/
 
