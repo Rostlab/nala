@@ -8,7 +8,6 @@ from spacy.en import English
 import sys
 import logging
 
-
 """
 Script for training word embeddings using abstracts from the whole PubMed/Medline database
 """
@@ -21,6 +20,8 @@ class MedlineSentenceGenerator:
 
     @staticmethod
     def tokenize(sentence):
+        sentence = re.sub('\d', '0', sentence)
+
         sentence = re.sub('([0-9])([A-Za-z])', r'\1 \2', sentence)
         sentence = re.sub('([a-z])([A-Z])', r'\1 \2', sentence)
         sentence = re.sub('([A-Za-z])([0-9])', r'\1 \2', sentence)
@@ -44,23 +45,36 @@ class MedlineSentenceGenerator:
 
                         for child in etree.parse(xml).getroot():
                             for title in child.iter('ArticleTitle'):
-                                yield self.lemmatize(self.tokenize(title.text))
+                                yield self.tokenize(title.text)
                             for abstract in child.iter('AbstractText'):
                                 for sentence in sent_tokenize(abstract.text):
-                                    yield self.lemmatize(self.tokenize(sentence))
+                                    yield self.tokenize(sentence)
                     except:
                         pass
 
 
 def train():
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    medline = MedlineSentenceGenerator(sys.argv[1])
+    assert len(sys.argv) == 4
+    training_folder = sys.argv[1]
+    dimension = int(sys.argv[2])
+    window_size = int(sys.argv[3])
 
-    model = Word2Vec(medline, window=10, workers=multiprocessing.cpu_count(), sg=0)
-    model.save('/mnt/project/pubseq/nala/backup_we/spacy_we.model')
+    logging.basicConfig(filename='we_{}_{}.log'.format(dimension, window_size),
+                        format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+    logging.log(logging.INFO,
+                'start training a model with dimension {} and window size {}'.format(dimension, window_size))
+    
+    medline = MedlineSentenceGenerator(training_folder)
+
+    model = Word2Vec(medline, window=window_size, workers=multiprocessing.cpu_count(), sg=0, size=dimension)
+
+    model.save('/mnt/project/pubseq/nala/backup_we/number_replaced_{}_{}.model'.format(dimension, window_size))
+    model.init_sims(True)
+
     print(model.total_train_time, len(model.vocab))
 
 
 train()
 # run with
-# echo "python nala/scripts/train_embeddings.py /mnt/project/rost_db/medline/"|at -m NOW
+# echo "python nala/scripts/train_embeddings.py /mnt/project/rost_db/medline/ 100 15"|at -m NOW
