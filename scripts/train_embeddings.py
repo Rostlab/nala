@@ -64,13 +64,13 @@ def train():
 
     logging.log(logging.INFO,
                 'start training a model with dimension {} and window size {}'.format(dimension, window_size))
-    
+
     medline = MedlineSentenceGenerator(training_folder)
 
     model = Word2Vec(medline, window=window_size, workers=multiprocessing.cpu_count(), sg=0, size=dimension)
 
-    model.save('/mnt/project/pubseq/nala/backup_we/number_replaced_{}_{}.model'.format(dimension, window_size))
     model.init_sims(True)
+    model.save('/mnt/project/pubseq/nala/backup_we/number_replaced_{}_{}.model'.format(dimension, window_size))
 
     print(model.total_train_time, len(model.vocab))
 
