@@ -112,6 +112,7 @@ if __name__ == "__main__":
     args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
     if args.validation == "cross-validation":
         args.model_name += "_cvfold_" + str(args.cv_fold)
+    args.model_name_suffix = args.model_name_suffix.strip()
     if args.model_name_suffix:
         args.model_name += "_" + str(args.model_name_suffix)
 
