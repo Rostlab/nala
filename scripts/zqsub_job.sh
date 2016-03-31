@@ -13,8 +13,73 @@ common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid --output_folder 
 train="time $python $trainscript $common "
 
 # FINAL EXPERIMENTS
+# ------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
 
-$train --training_corpus nala_training_2 --pruner parts --labeler IO
+# Question IO labeler
+
+# 432102.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL --labeler IO
+# 432103.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --labeler IO
+# 432104.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner parts --labeler IO
+#
+# 432105.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler IO
+# 432106.1-5 $train --training_corpus nala_training --pruner sentences --labeler IO
+# 432107.1-5 $train --training_corpus nala_training --pruner parts --labeler IO
+#
+# # Question BIO labeler
+#
+# 432108.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL --labeler BIO
+# 432109.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --labeler BIO
+# 432110.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner parts --labeler BIO
+#
+# 432111.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler BIO
+# 432112.1-5 $train --training_corpus nala_training --pruner sentences --labeler BIO
+# 432113.1-5 $train --training_corpus nala_training --pruner parts --labeler BIO
+#
+# # ---
+#
+# # Question combination of training data, del classes, and pruning --> IDP4_training
+#
+# 432114.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences --ps_ST --ps_NL
+# 432115.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences --ps_NL
+# 432116.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences --ps_ST
+# 432117.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences
+# 432118.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner parts
+#
+# 432119.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL
+# 432120.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences --ps_NL
+# 432121.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences --ps_ST
+# 432122.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences
+# 432123.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner parts
+#
+# 432124.1-5 $train --training_corpus IDP4_training --pruner sentences --ps_ST --ps_NL
+# 432125.1-5 $train --training_corpus IDP4_training --pruner sentences --ps_NL
+# 432126.1-5 $train --training_corpus IDP4_training --pruner sentences --ps_ST
+# 432127.1-5 $train --training_corpus IDP4_training --pruner sentences
+# 432129.1-5 $train --training_corpus IDP4_training --pruner parts
+#
+# # ---
+#
+# # Question combination of training data, del classes, and pruning --> nala_training
+#
+# 432131.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences --ps_ST --ps_NL
+# 432132.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences --ps_NL
+# 432133.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences --ps_ST
+# 432134.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences
+# 432135.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner parts
+#
+# 432136.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL
+# 432137.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_NL
+# 432138.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST
+# 432139.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences
+# 432140.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner parts
+#
+# 432141.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL
+# 432142.1-5 $train --training_corpus nala_training --pruner sentences --ps_NL
+# 432143.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST
+# 432144.1-5 $train --training_corpus nala_training --pruner sentences
+# this is the baseline, so no run $train --training_corpus nala_training --pruner parts
+
 
 # BASELINE 430489.1-5:1 time /mnt/home/cejuela/anaconda3/latest/bin/python /mnt/home/cejuela/nala/nala/scripts/train.py --training_corpus nala_training --cv_n 5 --cv_fold $cv_fold --pruner parts --labeler BIEO --model_name_suffix "BASELINE" --output_folder /mnt/home/cejuela/tmp/models/
 
