@@ -139,7 +139,7 @@ class QuickNalaFilter(DocumentFilter):
 
 class HighRecallRegexClassifier():
 
-    def __init__(self, ST = True, NL = True):
+    def __init__(self, ST=True, NL=True):
         assert(ST or NL)
 
         self.patterns = []
@@ -151,8 +151,6 @@ class HighRecallRegexClassifier():
                 self.patterns += [re.compile(x) for x in conventions]
 
             tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
-
-
             with open(tmvarregex_file) as file:
                 raw_regexps = list(csv.reader(file, delimiter='\t'))
                 regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
@@ -270,7 +268,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                 sent_offset = 0
                 cur_part = doc.parts.get(x)
                 sentences = cur_part.sentences_
-                
+
                 for sent in sentences:
                     sent_length = len(sent)
                     new_text = sent.lower()
