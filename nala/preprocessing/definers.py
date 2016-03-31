@@ -126,7 +126,7 @@ class ExclusiveNLDefiner(NLDefiner):
             return 0
         elif len(words) > self.max_words or num_nl_words() >= 2:
             return 1
-        elif len(words) > 1 and num_nl_words() >= 1:
+        elif num_nl_words() >= 1:
             return 2
         else:
             return 0

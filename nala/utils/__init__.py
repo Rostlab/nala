@@ -25,7 +25,7 @@ def nala_repo_path(listOrString):
     else:
         return os.path.join(__nala_repo_root, *listOrString)
 
-def get_prepare_pipeline_for_best_model(we_params = None):
+def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating mutation mentions.
@@ -38,16 +38,20 @@ def get_prepare_pipeline_for_best_model(we_params = None):
     from nalaf.features.window import WindowFeatureGenerator
     from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
 
-    include = ['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
-               'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]']
 
     generators = [
         SpacyLemmatizer(),
         SentenceMarkerFeatureGenerator(),
         TmVarFeatureGenerator(),
         TmVarDictionaryFeatureGenerator(),
-        WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
+
     ]
+
+    if use_windows:
+        include = ['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
+                   'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]']
+        f = WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
+        generators.append(f)
 
     if we_params:
         generators.append(get_word_embeddings_feature_generator(we_params['additive'], we_params['multiplicative']))

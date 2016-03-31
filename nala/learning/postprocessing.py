@@ -160,6 +160,7 @@ class PostProcessing:
 
             isword = re.compile("\\w")
 
+            # Do not allow spaces to the left
             while ann.offset > 0 and isword.search(part.text[ann.offset - 1]):
                 ann.text = part.text[ann.offset - 1] + ann.text
                 ann.offset -= 1
@@ -167,17 +168,18 @@ class PostProcessing:
             veryend = len(ann.text)
             end = ann.offset + len(ann.text)
 
+            # Do not allow spaces to the right
             while end < veryend and isword.search(part.text[end]):
                 ann.text = ann.text + part.text[end]
                 end += 1
 
-            #within parenthesis but no parentesis either in between
+            # within parenthesis but no parentesis either in between
             if ann.text[0] in ['('] and ann.text[-1] in [')'] and (ann.text.count('(') < 2 and ann.text.count(')') < 2):
                 ann.offset += 1
                 ann.text = ann.text[1:-1]
 
             # Follow the rule of abbreviations + first gene mutation (then protein mutation)
-            if ((ann.text[-1] == ')' or part.text[ann.offset + len(ann.text)] == ")") and ann.text[:-1].count('(') == 1):
+            if ((ann.text[-1] == ')' or (end < veryend and part.text[end] == ")")) and ann.text[:-1].count('(') == 1):
                 p = re.compile("\\s+\\(")
                 split = p.split(ann.text)
 

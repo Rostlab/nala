@@ -4,7 +4,7 @@ import tempfile
 from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus
-from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, TmVarLabeler
+from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, IOLabeler, TmVarLabeler
 from nala.utils import get_prepare_pipeline_for_best_model
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
@@ -40,8 +40,8 @@ if __name__ == "__main__":
     parser.add_argument('--model_path_2', required = False,
         help='Path of the second model binary file if evaluation is performed with two models')
 
-    parser.add_argument('--labeler', required = False, default = "BIEO", choices=["BIEO", "BIO", "11labels"],
-        help='Labeler to use for training')
+    parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
+                        help='Labeler to use for training')
     parser.add_argument('--delete_subclasses', required = False, default = "",
         help='Comma-separated subclasses to delete. Example: "2,3"')
 
@@ -56,7 +56,9 @@ if __name__ == "__main__":
     parser.add_argument('--word_embeddings', action='store_true',
         help='Use word embeddings features')
     parser.add_argument('--we_additive', type=int, default = 2)
-    parser.add_argument('--we_multiplicative', type=int, default = 3)
+    parser.add_argument('--we_multiplicative', type=int, default=3)
+
+    parser.add_argument('--use_feat_windows', default='True')
 
     args = parser.parse_args()
 
@@ -71,12 +73,14 @@ if __name__ == "__main__":
     if not args.output_folder:
         args.output_folder = tempfile.mkdtemp()
 
-    str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ','')
+    str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ', '')
 
     if args.labeler == "BIEO":
         labeler = BIEOLabeler()
     elif args.labeler == "BIO":
         labeler = BIOLabeler()
+    elif args.labeler == "IO":
+        labeler = IOLabeler()
     elif args.labeler == "11labels":
         labeler = TmVarLabeler()
 
@@ -95,6 +99,8 @@ if __name__ == "__main__":
         }
     else:
         args.crf_train_params = None
+
+    args.use_feat_windows = False if args.use_feat_windows.lower() in ['false', '0', 'no'] else True
 
     args.do_train = False if args.model_path_1 else True
     if args.cv_n:
@@ -121,7 +127,7 @@ if __name__ == "__main__":
 
     #------------------------------------------------------------------------------
 
-    features_pipeline = get_prepare_pipeline_for_best_model(args.we_params)
+    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params)
 
     #------------------------------------------------------------------------------
 
@@ -180,20 +186,16 @@ if __name__ == "__main__":
         stats(test_set, "test")
         print_run_args()
 
-        exact = MentionLevelEvaluator(strictness='exact', subclass_analysis=True).evaluate(test_set)
-        overlapping = MentionLevelEvaluator(strictness='overlapping', subclass_analysis=True).evaluate(test_set)
+        evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(test_set)
 
-        for e in exact:
-            print(e)
-        print()
-        for e in overlapping:
-            print(e)
-        print()
+        print(evaluation)
+
+
 
     assert(args.model_path_1 is not None)
 
     if args.model_path_2:
-        tagger = NalaTagger(st_model = args.model_path_1, all3_model = args.model_path_2, features_pipeline = features_pipeline)
+        tagger = NalaTagger(st_model = args.model_path_1, all3_model=args.model_path_2, features_pipeline = features_pipeline)
     else:
         tagger = NalaSingleModelTagger(bin_model = args.model_path_1, features_pipeline = features_pipeline)
 

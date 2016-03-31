@@ -52,7 +52,7 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(2, f("Arg211 to Cys"))
         testEqual(2, f("Ala215 to Thr"))
         testEqual(1, f("deletion of its cytoplasmic tail"))
-        testEqual(2, f("nonsense mutation Q3X"))
+        testEqual(1, f("nonsense mutation Q3X"))
         testEqual(0, f("R142Q"))
         testEqual(1, f("G-->A transition of a CpG dinucleotide"))
         testEqual(1, f("A C-->T transition of the same CpG"))
@@ -62,7 +62,7 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(1, f("replacement of this CpG hotspot by CpA"))
         testEqual(0, f("R142X"))
         testEqual(1, f("caused skipping of the exon"))
-        testEqual(2, f("Absence of exon 5"))
+        testEqual(1, f("Absence of exon 5"))
         testEqual(0, f("Asp8Asn"))
         testEqual(1, f("G to A transition at nt22"))
         testEqual(1, f("asparagine for aspartic acid at codon 8"))
@@ -78,7 +78,7 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(0, f("H15D"))
         testEqual(0, f("A83D"))
         testEqual(0, f("A179D"))
-        testEqual(2, f("skipping of exon 5"))
+        testEqual(1, f("skipping of exon 5"))
         testEqual(0, f("H15D"))
         testEqual(1, f("Replacement of these small hydrophobic Ala residues with the charged, more bulky Asp side chain"))
         testEqual(0, f("G20R"))
@@ -87,7 +87,7 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(0, f("26delA"))
 
         testEqual(0, f("delPhe1388"))
-        testEqual(2, f("deleted C1 domain"))
+        testEqual(1, f("deleted C1 domain"))
 
         testEqual(0, f("Q115P"))
         testEqual(0, f("g.3912G>C"))
@@ -98,15 +98,30 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(2, f("3992-9g-->a mutation"))
         testEqual(2, f("G643 to A"))
         testEqual(2, f("leucine for arginine 90"))
-        testEqual(2, f("deletion of aa 527-534"))
 
+        testEqual(1, f("deletion of aa 527-534"))
         testEqual(1, f("deletion of 10 and 8 residues from the N- and C-terminals"))
         testEqual(1, f("143 from alanine to glycine"))
         testEqual(1, f("alterations of amino acid residue 143 from alanine to glycine"))
 
-        # Possible errors
+        testEqual(1, f("trinucleotide deletion"))
 
-        testEqual(0, f("trinucleotide deletion")) # This should be 2 (SS) at least
+        testEqual(1, f("arginine-141 to serine substitution"))
+        testEqual(1, f("mutations at Arg885"))
+        testEqual(1, f("point mutation at Cys93"))
+        testEqual(1, f("heterozygous missense 3035G>T"))
+        testEqual(2, f("synonymous 696T>C"))
+        testEqual(2, f("missense Glu285Ala"))
+        testEqual(1, f("somatic 16-bp deletion"))
+        testEqual(1, f("serine 749 is phosphorylated"))
+        testEqual(1, f("Ser58 to Glu substitution"))
+        testEqual(1, f("deletion of"))
+        testEqual(1, f("deletion of"))
+        testEqual(1, f("deletion of"))
+        testEqual(1, f("deletion of"))
+        testEqual(0, f("GAT-->GTT, Asp-->Val"))
+        testEqual(2, f("codon 98 GAT-->GTT, Asp-->Val"))
+        testEqual(2, f("codon 92, TAC-->TAT"))
 
 
 class TestTmVarRegexNLDefiner(unittest.TestCase):

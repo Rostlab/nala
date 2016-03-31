@@ -4,8 +4,14 @@
 
 let cv_fold=$SGE_TASK_ID-1
 
-# The next runs _do_ have the window features on
+# FINAL EXPERIMENTS
 
+# BASELINE 430489.1-5:1 time /mnt/home/cejuela/anaconda3/latest/bin/python /mnt/home/cejuela/nala/nala/scripts/train.py --training_corpus nala_training --cv_n 5 --cv_fold $cv_fold --pruner parts --labeler BIEO --model_name_suffix "BASELINE" --output_folder /mnt/home/cejuela/tmp/models/
+
+# ------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
+
+# The next runs _do_ have the window features on
 
 # 423093.1-5 time /mnt/home/cejuela/anaconda3/latest/bin/python /mnt/home/cejuela/nala/nala/scripts/train.py --training_corpus nala_training --cv_n 5 --cv_fold $cv_fold --pruner sentences --ps_NL --word_embeddings --we_additive 2 --we_multiplicative 3 --elastic_net --model_name_suffix "all3_baseline_new_we" --output_folder /mnt/home/cejuela/tmp/models/
 # 423094.1-5 time /mnt/home/cejuela/anaconda3/latest/bin/python /mnt/home/cejuela/nala/nala/scripts/train.py --training_corpus IDP4+_training --delete_subclasses "1,2" --cv_n 5 --cv_fold $cv_fold --pruner parts --model_name_suffix "st_baseline_new_we" --output_folder /mnt/home/cejuela/tmp/models/
