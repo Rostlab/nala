@@ -69,7 +69,7 @@ class CorpusGenerator:
 
     def __iter__(self):
         for sentence in self.data.sentences():
-            yield [re.sub('\d', '0', token.word) for token in sentence]
+            yield [re.sub('\d', '0', token.word.lower()) for token in sentence]
 
 
 def train():
@@ -100,7 +100,7 @@ def train():
                      iter=num_iterations)
 
     model.init_sims(True)
-    model.save('/mnt/project/pubseq/nala/backup_we/number_replaced_{}.model'.format(suffix))
+    model.save('/mnt/project/pubseq/nala/backup_we/{}.model'.format(suffix))
 
     print(model.total_train_time, len(model.vocab))
 
