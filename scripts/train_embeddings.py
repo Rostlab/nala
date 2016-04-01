@@ -73,13 +73,14 @@ class CorpusGenerator:
 
 
 def train():
-    assert len(sys.argv) == 7
+    assert len(sys.argv) == 6
     training_folder = sys.argv[1]
     dimension = int(sys.argv[2])
     window_size = int(sys.argv[3])
     is_sg = int(sys.argv[4])
     num_iterations = int(sys.argv[5])
-    use_corpus = bool(sys.argv[6])
+
+    use_corpus = training_folder == 'corpus'
 
     suffix = '{}_{}_{}_{}_{}'.format(dimension, window_size, is_sg, num_iterations, use_corpus)
 
