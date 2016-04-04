@@ -57,8 +57,12 @@ if __name__ == "__main__":
         help='Use word embeddings features')
     parser.add_argument('--we_additive', type=int, default = 2)
     parser.add_argument('--we_multiplicative', type=int, default=3)
+    parser.add_argument('--we_model_location', type=str, default=None)
 
     parser.add_argument('--use_feat_windows', default='True')
+
+    parser.add_argument('--nl', action='store_true', help='Use NLMentionFeatureGenerator')
+    parser.add_argument('--nl_threshold', type=int, default=4)
 
     args = parser.parse_args()
 
@@ -87,10 +91,18 @@ if __name__ == "__main__":
     if args.word_embeddings:
         args.we_params = {
             'additive': args.we_additive,
-            'multiplicative': args.we_multiplicative
+            'multiplicative': args.we_multiplicative,
+            'location': args.we_model_location
         }
     else:
         args.we_params = None
+
+    if args.nl:
+        args.nl_features = {
+            'threshold': args.nl_threshold  # threshold for neighbour space in dictionaries
+        }
+    else:
+        args.nl_features = None
 
     if args.elastic_net:
         args.crf_train_params = {
@@ -128,7 +140,7 @@ if __name__ == "__main__":
 
     #------------------------------------------------------------------------------
 
-    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params)
+    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
 
     #------------------------------------------------------------------------------
 

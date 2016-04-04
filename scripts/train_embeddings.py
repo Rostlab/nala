@@ -3,11 +3,15 @@ from lxml import etree
 import re
 import os
 import multiprocessing
+
+from nalaf.preprocessing.spliters import NLTKSplitter
+from nalaf.preprocessing.tokenizers import TmVarTokenizer
 from nltk import sent_tokenize
 from spacy.en import English
 import sys
 import logging
 
+from scripts.train_idp4 import read_data
 
 """
 Script for training word embeddings using abstracts from the whole PubMed/Medline database
@@ -21,6 +25,8 @@ class MedlineSentenceGenerator:
 
     @staticmethod
     def tokenize(sentence):
+        sentence = re.sub('\d', '0', sentence)
+
         sentence = re.sub('([0-9])([A-Za-z])', r'\1 \2', sentence)
         sentence = re.sub('([a-z])([A-Z])', r'\1 \2', sentence)
         sentence = re.sub('([A-Za-z])([0-9])', r'\1 \2', sentence)
@@ -44,23 +50,61 @@ class MedlineSentenceGenerator:
 
                         for child in etree.parse(xml).getroot():
                             for title in child.iter('ArticleTitle'):
-                                yield self.lemmatize(self.tokenize(title.text))
+                                yield self.tokenize(title.text)
                             for abstract in child.iter('AbstractText'):
                                 for sentence in sent_tokenize(abstract.text):
-                                    yield self.lemmatize(self.tokenize(sentence))
+                                    yield self.tokenize(sentence)
                     except:
                         pass
 
 
-def train():
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    medline = MedlineSentenceGenerator(sys.argv[1])
+class CorpusGenerator:
+    """
+    :type data: nalaf.structures.data.Dataset
+    """
+    def __init__(self):
+        self.data = read_data(51, True)
+        NLTKSplitter().split(self.data)
+        TmVarTokenizer().tokenize(self.data)
 
-    model = Word2Vec(medline, window=10, workers=multiprocessing.cpu_count(), sg=0)
-    model.save('/mnt/project/pubseq/nala/backup_we/spacy_we.model')
+    def __iter__(self):
+        for sentence in self.data.sentences():
+            yield [re.sub('\d', '0', token.word.lower()) for token in sentence]
+
+
+def train():
+    assert len(sys.argv) == 6
+    training_folder = sys.argv[1]
+    dimension = int(sys.argv[2])
+    window_size = int(sys.argv[3])
+    is_sg = int(sys.argv[4])
+    num_iterations = int(sys.argv[5])
+
+    use_corpus = training_folder == 'corpus'
+
+    suffix = '{}_{}_{}_{}_{}'.format(dimension, window_size, is_sg, num_iterations, use_corpus)
+
+    # logging.basicConfig(filename='we_{}.log'.format(suffix),
+    #                     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+    logging.log(logging.INFO,
+                'start training a model {}'.format(suffix))
+
+    if use_corpus:
+        dataset = CorpusGenerator()
+    else:
+        dataset = MedlineSentenceGenerator(training_folder)
+
+    model = Word2Vec(dataset, window=window_size, workers=multiprocessing.cpu_count(), sg=is_sg, size=dimension,
+                     iter=num_iterations)
+
+    model.init_sims(True)
+    model.save('/mnt/project/pubseq/nala/backup_we/{}.model'.format(suffix))
+
     print(model.total_train_time, len(model.vocab))
 
 
 train()
 # run with
-# echo "python nala/scripts/train_embeddings.py /mnt/project/rost_db/medline/"|at -m NOW
+# echo "python nala/scripts/train_embeddings.py /mnt/project/rost_db/medline/ 100 15"|at -m NOW

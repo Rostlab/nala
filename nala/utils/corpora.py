@@ -1,7 +1,7 @@
 import os
 from nala.utils import nala_repo_path
 from nala.bootstrapping.iteration import Iteration
-from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader
+from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader
 from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader
 from nalaf.structures.data import Dataset
 
@@ -63,6 +63,10 @@ def get_corpus(name, training=False, test=False):
     elif name == "Var120":
         folder = os.path.join(__corpora_folder, 'variome_120', 'annotations_mutations_explicit')
         return VerspoorReader(folder).read()
+
+    elif name == "OSIRIS":
+        file = os.path.join(__corpora_folder, 'osiris', 'OSIRIScorpusv01.xml')
+        return OSIRISReader(file).read()
 
     elif name in ALL_CORPORA:
         return Dataset()

@@ -114,7 +114,10 @@ class NLMentionFeatureGenerator(FeatureGenerator):
                 'transition(s)|miss(es|ing)|intron(s)'
         )
 
-        self.connecting_words = ['of', 'at', 'by', 'in', 'into', 'on', 'an', 'to', 'between', 'with', 'a', 'each']
+        self.connecting_words = ['of', 'at', 'by', 'in', 'into', 'on', 'an', 'to', 'between', 'with', 'a', 'each',
+                                 'from', 'which', 'the', 'without',
+                                 'is', 'was', 'were', 'been', 'have', 'having', 'for', 'that', 'than', 'this', 'these',
+                                 'its', 'rather', 'not', 'non', 'through', 'but']
 
         self.threshold = thr
         # self.amino_acids = re.compile(
