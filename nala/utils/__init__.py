@@ -54,12 +54,12 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None):
         generators.append(f)
 
     if we_params:
-        generators.append(get_word_embeddings_feature_generator(we_params['additive'], we_params['multiplicative']))
+        generators.append(get_word_embeddings_feature_generator(we_params['location'], we_params['additive'], we_params['multiplicative']))
 
     return PrepareDatasetPipeline(feature_generators=generators)
 
 
-def get_word_embeddings_feature_generator(additive=None, multiplicative=None):
+def get_word_embeddings_feature_generator(model_location=None, additive=None, multiplicative=None):
     """
     :returns: nalaf.features.embeddings.WordEmbeddingsFeatureGenerator
     """
@@ -74,28 +74,29 @@ def get_word_embeddings_feature_generator(additive=None, multiplicative=None):
     from nalaf.features.embeddings import WordEmbeddingsFeatureGenerator
     from nalaf import print_verbose, print_warning
 
-    last_model = "word_embeddings_2016-03-28"
+    if model_location is None:
+        last_model = "word_embeddings_2016-03-28"
+        we_model = pkg_resources.resource_filename('nala.data', os.path.join(last_model, 'word_embeddings.model'))
+        if not os.path.exists(we_model):
+            print_warning('Downloading Word Embeddings Model (this may take a long time). Expected path: ' + we_model)
+            # TODO requests doesn't support ftp, but better use: ftp://rostlab.org/jmcejuela/...last_model...
+            tar = '{}.tar.gz'.format(last_model)
+            model_url = '{}/{}'.format('https://rostlab.org/~cejuela', tar)
+            we_model_tar_gz = pkg_resources.resource_filename('nala.data', tar)
 
-    we_model = pkg_resources.resource_filename('nala.data', os.path.join(last_model, 'word_embeddings.model'))
-    if not os.path.exists(we_model):
-        print_warning('Downloading Word Embeddings Model (this may take a long time). Expected path: ' + we_model)
-        # TODO requests doesn't support ftp, but better use: ftp://rostlab.org/jmcejuela/...last_model...
-        tar = '{}.tar.gz'.format(last_model)
-        model_url = '{}/{}'.format('https://rostlab.org/~cejuela', tar)
-        we_model_tar_gz = pkg_resources.resource_filename('nala.data', tar)
+            response = requests.get(url=model_url, stream=True)
+            with open(we_model_tar_gz, 'wb') as file:
+                for chunk in response.iter_content(8048):
+                    if chunk:
+                        print('.', end="", flush=True)
+                        file.write(chunk)
+                print()
+            # Unpack the model
+            print_verbose('Extracting')
 
-        response = requests.get(url=model_url, stream=True)
-        with open(we_model_tar_gz, 'wb') as file:
-            for chunk in response.iter_content(8048):
-                if chunk:
-                    print('.', end="", flush=True)
-                    file.write(chunk)
-            print()
-        # Unpack the model
-        print_verbose('Extracting')
-
-        tar = tarfile.open(we_model_tar_gz)
-        tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
-        tar.close()
-
-    return WordEmbeddingsFeatureGenerator(we_model, additive, multiplicative)
+            tar = tarfile.open(we_model_tar_gz)
+            tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
+            tar.close()
+        return WordEmbeddingsFeatureGenerator(we_model, additive, multiplicative)
+    else:
+        return WordEmbeddingsFeatureGenerator(model_location, additive, multiplicative)
