@@ -6,6 +6,7 @@ The import and export classes are contained there as well. Other classes are:
 – Tagger which implements an easy interface to be able to use external taggers for example TmVarTagger, that can use PubTator as well, to download mutation mentions through the tmVar method.
 – Uniprot helps with normalising EntrezGene IDs [22] to Uniprot IDs [23]. This is part of the normalisation process in class GNormPlusGeneTagger.
 """
+
 PRO_CLASS_ID = 'e_1'
 MUT_CLASS_ID = 'e_2'
 ORG_CLASS_ID = 'e_3'
@@ -25,7 +26,7 @@ def nala_repo_path(listOrString):
     else:
         return os.path.join(__nala_repo_root, *listOrString)
 
-def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None):
+def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_features=None):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating mutation mentions.
@@ -37,6 +38,7 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None):
     from nalaf.features.stemming import SpacyLemmatizer
     from nalaf.features.window import WindowFeatureGenerator
     from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
+    from nala.features.nl_mutations import NLMentionFeatureGenerator
 
 
     generators = [
@@ -55,6 +57,10 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None):
 
     if we_params:
         generators.append(get_word_embeddings_feature_generator(we_params['location'], we_params['additive'], we_params['multiplicative']))
+
+    if nl_features:
+        f = NLMentionFeatureGenerator(nl_features['threshold'])
+        generators.append(f)
 
     return PrepareDatasetPipeline(feature_generators=generators)
 
