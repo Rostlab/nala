@@ -16,6 +16,19 @@ train="time $python $trainscript $common "
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+# ---
+
+# ST
+# (BASELINE) $train --training_corpus nala_training --pruner parts --labeler BIEO --output_folder $outputdir
+# 446478.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --output_folder $outputdir
+
+# all3
+# 446477.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler BIO --output_folder $outputdir
+
+# ---
+
+# Question elastic net
+
 # 446460.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler BIO --elastic_net --output_folder $outputdir
 
 # ---
