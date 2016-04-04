@@ -9,15 +9,20 @@ jobid=${JOB_ID-last}
 python='/mnt/home/cejuela/anaconda3/latest/bin/python'
 trainscript='/mnt/home/cejuela/nala/nala/scripts/train.py'
 outputdir='/mnt/home/cejuela/tmp/models/'
-common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid --output_folder $outputdir"
+common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
 train="time $python $trainscript $common "
 
 # FINAL EXPERIMENTS
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+# 446460.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler BIO --elastic_net --output_folder $outputdir
+
+# ---
+
 # Question IO labeler
 
+# Deleting class 0, all suck
 # 432102.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL --labeler IO
 # 432103.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --labeler IO
 # 432104.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner parts --labeler IO
@@ -38,25 +43,14 @@ train="time $python $trainscript $common "
 #
 # # ---
 #
-# # Question combination of training data, del classes, and pruning --> IDP4_training
+# # Question combination of training data, del classes, and pruning --> IDP4+_training
 #
-# 432114.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences --ps_ST --ps_NL
-# 432115.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences --ps_NL
-# 432116.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences --ps_ST
-# 432117.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner sentences
-# 432118.1-5 $train --training_corpus IDP4_training --delete_subclasses "1,2" --pruner parts
-#
-# 432119.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL
-# 432120.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences --ps_NL
-# 432121.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences --ps_ST
-# 432122.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner sentences
-# 432123.1-5 $train --training_corpus IDP4_training --delete_subclasses "0" --pruner parts
-#
-# 432124.1-5 $train --training_corpus IDP4_training --pruner sentences --ps_ST --ps_NL
-# 432125.1-5 $train --training_corpus IDP4_training --pruner sentences --ps_NL
-# 432126.1-5 $train --training_corpus IDP4_training --pruner sentences --ps_ST
-# 432127.1-5 $train --training_corpus IDP4_training --pruner sentences
-# 432129.1-5 $train --training_corpus IDP4_training --pruner parts
+# 446459.1-5 $train --training_corpus IDP4+_training --delete_subclasses "1,2" --pruner sentences --ps_ST --ps_NL
+# 446458.1-5 $train --training_corpus IDP4+_training --delete_subclasses "1,2" --pruner parts
+# 446456.1-5 $train --training_corpus IDP4+_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL
+# 446455.1-5 $train --training_corpus IDP4+_training --delete_subclasses "0" --pruner parts
+# 446454.1-5 $train --training_corpus IDP4+_training --pruner sentences --ps_ST --ps_NL
+# 446453.1-5 $train --training_corpus IDP4+_training --pruner parts
 #
 # # ---
 #
