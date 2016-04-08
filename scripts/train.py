@@ -23,10 +23,10 @@ if __name__ == "__main__":
     group1.add_argument('--test_corpus',
         help='Name of the corpus to test on')
 
-    parser.add_argument('--cv_n', required = False,
+    parser.add_argument('--cv_n', required=False,
         help='if given, cross validation (instead of stratification) is used for validating the training. \
              In this case you must also set `cv_fold` and only that fold number will be run')
-    parser.add_argument('--cv_fold', required = False,
+    parser.add_argument('--cv_fold', required=False,
         help='fold number to train and validate if cross validation is activated')
 
     parser.add_argument('--output_folder', required=False,
@@ -42,8 +42,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
-    parser.add_argument('--delete_subclasses', required = False, default = "",
-        help='Comma-separated subclasses to delete. Example: "2,3"')
+    parser.add_argument('--delete_subclasses', required=False, default="",
+                        help='Comma-separated subclasses to delete. Example: "2,3"')
 
     parser.add_argument('--pruner', required=False, default="parts", choices=["parts", "sentences"])
     parser.add_argument('--ps_ST', required=False, default=False, action='store_true')
@@ -51,10 +51,10 @@ if __name__ == "__main__":
     parser.add_argument('--ps_random', required=False, default=0.0, type=float)
 
     parser.add_argument('--elastic_net', action='store_true',
-        help='Use elastic net regularization')
+                        help='Use elastic net regularization')
 
     parser.add_argument('--word_embeddings', action='store_true',
-        help='Use word embeddings features')
+                        help='Use word embeddings features')
     parser.add_argument('--we_additive', type=int, default = 2)
     parser.add_argument('--we_multiplicative', type=int, default=3)
     parser.add_argument('--we_model_location', type=str, default=None)
