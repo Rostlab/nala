@@ -9,12 +9,34 @@ jobid=${JOB_ID-last}
 python='/mnt/home/cejuela/anaconda3/latest/bin/python'
 trainscript='/mnt/home/cejuela/nala/nala/scripts/train.py'
 outputdir='/mnt/home/cejuela/tmp/models/'
+outputdir2='/mnt/home/cejuela/tmp/zqsub/'
 common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
 train="time $python $trainscript $common "
 
 # FINAL EXPERIMENTS
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
+
+as=('0' '0.1' '0.5' '1' '2' '3')
+#ms=('1' '1.1' '1.5' '2' '3' '4')
+ms=('2' '3' '4')
+cv_folds=('0' '1' '2' '3' '4')
+
+for a in "${as[@]}"
+do
+  for m in "${ms[@]}"
+  do
+    jobid="we_${a}_${m}"
+    for cv_fold in "${cv_folds[@]}"
+    do
+      echo "$jobid"
+      $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive $a --we_multiplicative $m &> "$outputdir2/wesearch_o${jobid}.${cv_fold}"
+    done
+  done
+done
+
+# 450064.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings
+# 450067.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --elastic_net
 
 # ---
 
