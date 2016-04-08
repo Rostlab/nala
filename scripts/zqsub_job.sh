@@ -17,25 +17,70 @@ train="time $python $trainscript $common "
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
-as=('0' '0.1' '0.5' '1' '2' '3')
-#ms=('1' '1.1' '1.5' '2' '3' '4')
-ms=('2' '3' '4')
-cv_folds=('0' '1' '2' '3' '4')
+# as=('0' '0.1' '0.5' '1' '2' '3')
+# #ms=('1' '1.1' '1.5' '2' '3' '4')
+# ms=('2' '3' '4')
+# cv_folds=('0' '1' '2' '3' '4')
 
-for a in "${as[@]}"
-do
-  for m in "${ms[@]}"
-  do
-    jobid="we_${a}_${m}"
-    for cv_fold in "${cv_folds[@]}"
-    do
-      echo "$jobid"
-      common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
-      train="time $python $trainscript $common "
-      $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive $a --we_multiplicative $m &> "$outputdir2/wesearch_o${jobid}.${cv_fold}"
-    done
-  done
-done
+# 450424.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
+# 450430.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 1
+# 450433.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 1
+# 450434.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 1
+# 450435.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 1
+# 450436.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 1
+#
+# 450437.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.1
+# 450438.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 1.1
+# 450439.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 1.1
+# 450440.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 1.1
+# 450441.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 1.1
+# 450442.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 1.1
+#
+# 450443.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.5
+# 450444.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 1.5
+# 450446.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 1.5
+# 450447.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 1.5
+# 450448.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 1.5
+# 450450.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 1.5
+#
+# 450451.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 2
+# 450452.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 2
+# 450453.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 2
+# 450454.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 2
+# 450455.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 2
+# 450456.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 2
+#
+# 450457.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 3
+# 450458.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 3
+# 450459.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 3
+# 450460.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 3
+# 450461.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 3
+# 450462.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 3
+#
+# 450463.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 4
+# 450464.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 4
+# 450465.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 4
+# 450466.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 4
+# 450467.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 4
+# 450468.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 4
+
+#
+# for a in "${as[@]}"
+# do
+#   for m in "${ms[@]}"
+#   do
+#     jobid="we_${a}_${m}"
+#     for cv_fold in "${cv_folds[@]}"
+#     do
+#       echo "$jobid - $cv_fold"
+#       common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
+#       train="time $python $trainscript $common "
+#       $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive $a --we_multiplicative $m &> "$outputdir2/wesearch_o${jobid}.${cv_fold}"
+#     done
+#   done
+# done
+
+# ---
 
 # 450064.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings
 # 450067.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --elastic_net
