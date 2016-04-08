@@ -33,7 +33,7 @@ def run():
 def upload(n):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
     params = {'project': 'nala', 'output': 'null', 'owner': 'jmcejuela'}
-    iter_dir = 'resources/bootstrapping/iteration_{}/candidates'.format(n)
+    iter_dir = '../resources/bootstrapping/iteration_{}/candidates'.format(n)
 
     file = shutil.make_archive(iter_dir, 'zip', iter_dir)
     files = {'files': open(file, 'rb')}
@@ -52,11 +52,11 @@ def upload(n):
 
 
 def download(n, ids=None):
-    cnd_dir = 'resources/bootstrapping/iteration_{}/candidates/html'.format(n)
+    cnd_dir = '../resources/bootstrapping/iteration_{}/candidates/html'.format(n)
     if not ids:
         ids = [file.replace('.html', '') for file in os.listdir(cnd_dir)]
 
-    rev_dir = 'resources/bootstrapping/iteration_{}/reviewed'.format(n)
+    rev_dir = '../resources/bootstrapping/iteration_{}/reviewed'.format(n)
     if not os.path.exists(rev_dir):
         os.makedirs(rev_dir)
 
@@ -77,8 +77,8 @@ def download(n, ids=None):
 
 
 def validate(n, ids):
-    cnd_dir = 'resources/bootstrapping/iteration_{}/candidates/html'.format(n)
-    rev_dir = 'resources/bootstrapping/iteration_{}/reviewed'.format(n)
+    cnd_dir = '../resources/bootstrapping/iteration_{}/candidates/html'.format(n)
+    rev_dir = '../resources/bootstrapping/iteration_{}/reviewed'.format(n)
 
     data = HTMLReader(cnd_dir).read()
     print(len(data))
