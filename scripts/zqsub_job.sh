@@ -30,7 +30,8 @@ do
     for cv_fold in "${cv_folds[@]}"
     do
       echo "$jobid"
-      $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive $a --we_multiplicative $m &> "$outputdir2/wesearch_o${jobid}.${cv_fold}"
+      common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
+      $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive $a --we_multiplicative $m &> "$outputdir2/wesearch_o${jobid}.${cv_fold}" &
     done
   done
 done
