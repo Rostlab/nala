@@ -55,8 +55,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--word_embeddings', action='store_true',
                         help='Use word embeddings features')
-    parser.add_argument('--we_additive', type=int, default = 2)
-    parser.add_argument('--we_multiplicative', type=int, default=3)
+    parser.add_argument('--we_additive', type=float, default=2)
+    parser.add_argument('--we_multiplicative', type=float, default=3)
     parser.add_argument('--we_model_location', type=str, default=None)
 
     parser.add_argument('--use_feat_windows', default='True')
