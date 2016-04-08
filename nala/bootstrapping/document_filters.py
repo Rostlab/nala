@@ -108,8 +108,8 @@ class QuickNalaFilter(DocumentFilter):
     def __init__(self, binary_model="nala/data/default_model", threshold=1, labeler=BIEOLabeler()):
         self.binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
-        self.threshold=threshold
-        """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
+        self.threshold = threshold
+        """threshold for nala to include documents that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline = get_prepare_pipeline_for_best_model()
         """best features and hyperparameters"""
         self.labeler = labeler
