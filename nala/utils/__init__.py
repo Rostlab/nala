@@ -49,6 +49,10 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
 
     ]
 
+    if nl_features:
+        f = NLMentionFeatureGenerator(nl_features['threshold'])
+        generators.append(f)
+
     if use_windows:
         include = ['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
                    'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]']
@@ -57,10 +61,6 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
 
     if we_params:
         generators.append(get_word_embeddings_feature_generator(we_params['location'], we_params['additive'], we_params['multiplicative']))
-
-    if nl_features:
-        f = NLMentionFeatureGenerator(nl_features['threshold'])
-        generators.append(f)
 
     return PrepareDatasetPipeline(feature_generators=generators)
 
