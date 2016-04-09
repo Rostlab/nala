@@ -63,6 +63,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--nl', action='store_true', help='Use NLMentionFeatureGenerator')
     parser.add_argument('--nl_threshold', type=int, default=4)
+    parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
     args = parser.parse_args()
 
@@ -99,7 +100,8 @@ if __name__ == "__main__":
 
     if args.nl:
         args.nl_features = {
-            'threshold': args.nl_threshold  # threshold for neighbour space in dictionaries
+            'threshold': args.nl_threshold,  # threshold for neighbour space in dictionaries
+            'window': args.nl_window,
         }
     else:
         args.nl_features = None
