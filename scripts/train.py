@@ -19,26 +19,26 @@ if __name__ == "__main__":
     group1 = parser.add_mutually_exclusive_group(required=True)
 
     group1.add_argument('--training_corpus',
-        help='Name of the corpus to train on. Examples: IDP4+, nala_training, IDP4+_training, nala_training_5')
+                        help='Name of the corpus to train on. Ex: nala_training, IDP4+_training, nala_training_5')
     group1.add_argument('--test_corpus',
-        help='Name of the corpus to test on')
+                        help='Name of the corpus to test on')
 
     parser.add_argument('--cv_n', required=False,
-        help='if given, cross validation (instead of stratification) is used for validating the training. \
-             In this case you must also set `cv_fold` and only that fold number will be run')
+                        help='if given, cross validation (instead of stratification) is used for validating the training. \
+                        In this case you must also set `cv_fold` and only that fold number will be run')
     parser.add_argument('--cv_fold', required=False,
-        help='fold number to train and validate if cross validation is activated')
+                        help='fold number to train and validate if cross validation is activated')
 
     parser.add_argument('--output_folder', required=False,
-        help='Folder where the training model is written to. Otherwise a tmp folder is used')
+                        help='Folder where the training model is written to. Otherwise a tmp folder is used')
     parser.add_argument('--model_name_suffix', default='', required=False,
-        help='Optional suffix to add to the generated model name in training mode'),
+                        help='Optional suffix to add to the generated model name in training mode'),
     parser.add_argument('--write_anndoc', required=False, action='store_true',
-        help='Write anndoc of predicted test_corpus'),
+                        help='Write anndoc of predicted test_corpus'),
     parser.add_argument('--model_path_1', required=False,
-        help='Path of the first model binary file if evaluation is performed')
+                        help='Path of the first model binary file if evaluation is performed')
     parser.add_argument('--model_path_2', required=False,
-        help='Path of the second model binary file if evaluation is performed with two models')
+                        help='Path of the second model binary file if evaluation is performed with two models')
 
     parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
