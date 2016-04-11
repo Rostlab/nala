@@ -40,6 +40,8 @@ train="time $python $trainscript $common "
 # ms=('2' '3' '4')
 # cv_folds=('0' '1' '2' '3' '4')
 
+# 455886.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.0 --we_model_location /mnt/project/pubseq/nala/backup_we/300_10_0_5_False.model
+
 # $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 1.0
 # $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 1.0
 # $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 1.0
