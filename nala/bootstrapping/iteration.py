@@ -278,7 +278,7 @@ class Iteration:
     @staticmethod
     def read_nala_test():
         dataset = Dataset()
-        for itr in IterationRound.all(including_seed = False):
+        for itr in IterationRound.all(including_seed=False):
             if itr.is_test():
                 try:
                     dataset.extend_dataset(itr.read())
