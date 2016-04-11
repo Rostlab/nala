@@ -22,31 +22,36 @@ train="time $python $trainscript $common "
 # ms=('2' '3' '4')
 # cv_folds=('0' '1' '2' '3' '4')
 
+# 455758.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 0
+# 455759.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.0
+# 455760.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.1
+# 455761.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.5
 #
-# 450501.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 2
+# 455762.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 2
 # 450502.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 2
 # 450503.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 2
 # 450850.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 2
 # 450455.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 2
 # 450810.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 2
 #
-# 450811.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 3
+# 455763.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 3
 # 450812.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 3
 # 450459.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 3
 # 450460.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 3
 # 450461.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 3
 # 450462.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 3
 #
-# 450813.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 4
+# 455764.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 4
 # 450814.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 4
 # 450465.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 4
 # 450815.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 4
 # 450467.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 4
 # 450468.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 4
-
-# 451147.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 5
-# 451148.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 6
-# 451149.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 7
+#
+# 455765.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 5
+# 455766.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 6
+# 455767.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 7
+# 455768.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 10
 
 #
 # for a in "${as[@]}"
