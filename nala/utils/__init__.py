@@ -85,6 +85,7 @@ def get_word_embeddings_feature_generator(model_location=None, additive=None, mu
     from nalaf import print_verbose, print_warning
 
     if model_location is None:
+        # D=100, no discretization, epoch=1, window=10
         last_model = "word_embeddings_2016-03-28"
         we_model = pkg_resources.resource_filename('nala.data', os.path.join(last_model, 'word_embeddings.model'))
         if not os.path.exists(we_model):
