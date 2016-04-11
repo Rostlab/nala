@@ -7,6 +7,8 @@ The import and export classes are contained there as well. Other classes are:
 – Uniprot helps with normalising EntrezGene IDs [22] to Uniprot IDs [23]. This is part of the normalisation process in class GNormPlusGeneTagger.
 """
 
+import os
+
 PRO_CLASS_ID = 'e_1'
 MUT_CLASS_ID = 'e_2'
 ORG_CLASS_ID = 'e_3'
@@ -15,8 +17,6 @@ PRO_REL_ORG_CLASS_ID = 'r_5'  # e_1/e_3
 THRESHOLD_VALUE = 1
 ENTREZ_GENE_ID = 'n_4'
 UNIPROT_ID = 'n_5'
-
-import os
 
 __nala_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
@@ -39,7 +39,6 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
     from nalaf.features.window import WindowFeatureGenerator
     from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
     from nala.features.nl_mutations import NLMentionFeatureGenerator
-
 
     generators = [
         SpacyLemmatizer(),
@@ -77,7 +76,6 @@ def get_word_embeddings_feature_generator(model_location=None, additive=None, mu
     additive = 2 if not additive else additive
     multiplicative = 3 if not multiplicative else multiplicative
 
-    import os
     import tarfile
 
     import pkg_resources
