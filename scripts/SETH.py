@@ -22,7 +22,7 @@ def run_seth_on_string_with_filename(text, filename, useMutationFinderOnly):
             subprocess.run(["java", "seth.ner.wrapper.SETHNERAppMut", text, useMutationFinderOnly], stdout=outfile, stderr=subprocess.PIPE, universal_newlines=True, check=True)
     except CalledProcessError as e:
         if "Error: Could not find or load main class seth.ner.wrapper.SETHNERAppMut" in e.stderr:
-            raise Exception("Make sure to add seth.jar to your classpath (use repo https://github.com/jmcejuela/SETH) -- " + e.stderr)
+            raise Exception("Make sure to add seth.jar to your classpath (use repo https://github.com/juanmirocks/SETH) -- " + e.stderr)
         else:
             raise
 
