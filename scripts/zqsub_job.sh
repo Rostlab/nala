@@ -17,6 +17,24 @@ train="time $python $trainscript $common "
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+# $train --training_corpus nala_training --pruner parts --labeler IO
+# 455859.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 0
+# 455860.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 1
+# 455861.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 2
+# 455862.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 3
+# 455863.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 4
+# 455864.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 5
+# 455865.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 6
+# 455866.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 7
+# 455867.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 8
+# 455868.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 9
+# 455869.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 10
+
+# 455870.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 4 --nl_window
+
+
+# ------------------------------------------------------------------------------------------
+
 # as=('0' '0.1' '0.5' '1' '2' '3')
 # #ms=('1' '1.1' '1.5' '2' '3' '4')
 # ms=('2' '3' '4')
