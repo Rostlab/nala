@@ -62,7 +62,7 @@ if __name__ == "__main__":
     parser.add_argument('--use_feat_windows', default='True')
 
     parser.add_argument('--nl', action='store_true', help='Use NLMentionFeatureGenerator')
-    parser.add_argument('--nl_threshold', type=int, default=4)
+    parser.add_argument('--nl_threshold', type=int, default=0)
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
     args = parser.parse_args()
