@@ -1,7 +1,7 @@
 import os
 from nala.utils import nala_repo_path
 from nala.bootstrapping.iteration import Iteration
-from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader
+from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader, MutationFinderReader
 from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader
 from nalaf.structures.data import Dataset
 
@@ -36,6 +36,24 @@ def get_corpus(name, training=False, test=False):
 
         entirecorpusfile = os.path.join(__corpora_folder, 'tmvar', fn)
         return TmVarReader(entirecorpusfile).read()
+
+    if name == "MF":
+        ret = Dataset()
+
+        if not (training or test):
+            training = test = True
+
+        if training:
+            fn = 'devo_set.txt'
+            entirecorpusfile = os.path.join(__corpora_folder, 'mutationfinder', 'cleaned corpus', fn)
+            ret.extend_dataset(MutationFinderReader(entirecorpusfile).read())
+
+        if test:
+            fn = 'test_set.txt'
+            entirecorpusfile = os.path.join(__corpora_folder, 'mutationfinder', 'cleaned corpus', fn)
+            ret.extend_dataset(MutationFinderReader(entirecorpusfile).read())
+
+        return ret
 
     if name == "SETH":
         ret = SETHReader(os.path.join(__corpora_folder, 'seth', 'corpus.txt')).read()
