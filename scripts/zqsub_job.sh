@@ -32,6 +32,10 @@ train="time $python $trainscript $common "
 
 # 455870.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 4 --nl_window
 
+# 456048.1-5 $train --training_corpus nala_training --pruner parts --labeler IO
+# 456049.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 0
+# 456050.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 0 --nl_window
+
 
 # ------------------------------------------------------------------------------------------
 
