@@ -27,7 +27,13 @@ def get_corpus(name, training=False, test=False):
         until_iteration = int(parts[2]) if len(parts) > 2 else None
 
     if name == "tmVar":
-        fn = 'test.PubTator.txt' if test else 'corpus.txt'
+        if not (training or test):
+            fn = 'corpus.txt'
+        elif training:
+            fn = 'train.PubTator.txt'
+        elif test:
+            fn = 'test.PubTator.txt'
+
         entirecorpusfile = os.path.join(__corpora_folder, 'tmvar', fn)
         return TmVarReader(entirecorpusfile).read()
 
