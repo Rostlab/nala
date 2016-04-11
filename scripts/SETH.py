@@ -31,6 +31,6 @@ corpus = get_corpus(corpusName)
 folderName = sys.argv[2]
 if not os.path.exists(folderName):
     os.makedirs(folderName)
-useMutationFinderOnly = sys.argv[3] if len(sys.argv) > 3 else "false"
+useMutationFinderOnly = sys.argv[3] if len(sys.argv) > 3 else "false"  # otherwise set to "true"
 
 run_seth_on_corpus(corpus, folderName, useMutationFinderOnly)
