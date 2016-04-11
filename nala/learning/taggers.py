@@ -112,6 +112,12 @@ class TmVarTagger(Cacheable, Tagger):
         2. the doc should have 2 parts, where the first part is the title and the second part is the abstract
 
     Any dataset that satisfies both of these should be taggable
+
+    Note also that the official TmVar API doesn't work with title-only pubmed documents as PMID7175934
+    (http://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/RESTful/tmTool.cgi/Mutation/7175934/Pubtator/)
+
+    However, tmVar works with their other provided demo service:
+    http://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/tmTools/demo/tmVar/
     """
 
     def __init__(self):
