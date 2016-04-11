@@ -26,11 +26,15 @@ def run_seth_on_string_with_filename(text, filename, useMutationFinderOnly):
         else:
             raise
 
-corpusName = sys.argv[1]
+methodName = sys.argv[1]
+assert methodName in {"SETH", "MFmodified"}, "Method name must be SETH or MFmodified"
+corpusName = sys.argv[2]
 corpus = get_corpus(corpusName)
-folderName = sys.argv[2]
+folderName = sys.argv[3]
+folderName = os.path.join(folderName, methodName, corpusName)
 if not os.path.exists(folderName):
     os.makedirs(folderName)
-useMutationFinderOnly = sys.argv[3] if len(sys.argv) > 3 else "false"  # otherwise set to "true"
+
+useMutationFinderOnly = "true" if methodName == "MFmodified" else "false"
 
 run_seth_on_corpus(corpus, folderName, useMutationFinderOnly)
