@@ -11,7 +11,7 @@ from spacy.en import English
 import sys
 import logging
 
-from scripts.train_idp4 import read_data
+from nala.utils.corpora import get_corpus
 
 """
 Script for training word embeddings using abstracts from the whole PubMed/Medline database
@@ -63,7 +63,7 @@ class CorpusGenerator:
     :type data: nalaf.structures.data.Dataset
     """
     def __init__(self):
-        self.data = read_data(51, True)
+        self.data = get_corpus('IDP4+')
         NLTKSplitter().split(self.data)
         TmVarTokenizer().tokenize(self.data)
 

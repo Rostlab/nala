@@ -18,6 +18,7 @@ ALL_CORPORA = [
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
+
 def get_corpus(name, training=False, test=False):
     parts = name.split("_")
     if len(parts) > 1:
@@ -70,7 +71,7 @@ def get_corpus(name, training=False, test=False):
 
     elif name in ALL_CORPORA:
         return Dataset()
-        #raise NotImplementedError("My bad, not implemented: " + name)
+        # raise NotImplementedError("My bad, not implemented: " + name)
 
     else:
         raise Exception("Do not recognize given corpus name: " + name)
