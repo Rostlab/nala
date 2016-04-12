@@ -14,14 +14,16 @@ from nala.bootstrapping.document_filters import HighRecallRegexClassifier
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Print corpora stats')
+    parser = argparse.ArgumentParser(description='Train model')
 
-    group1 = parser.add_mutually_exclusive_group(required=True)
-
-    group1.add_argument('--training_corpus',
+    parser.add_argument('--training_corpus',
                         help='Name of the corpus to train on. Ex: nala_training, IDP4+_training, nala_training_5')
-    group1.add_argument('--test_corpus',
+    parser.add_argument('--test_corpus',
                         help='Name of the corpus to test on')
+
+    parser.add_argument('--validation', required=False, default="stratified",
+                        choices=["cross-validation", "stratified", "none"],
+                        help='Type of validation to use when training')
 
     parser.add_argument('--cv_n', required=False,
                         help='if given, cross validation (instead of stratification) is used for validating the training. \
@@ -33,8 +35,8 @@ if __name__ == "__main__":
                         help='Folder where the training model is written to. Otherwise a tmp folder is used')
     parser.add_argument('--model_name_suffix', default='', required=False,
                         help='Optional suffix to add to the generated model name in training mode'),
-    parser.add_argument('--write_anndoc', required=False, action='store_true',
-                        help='Write anndoc of predicted test_corpus'),
+    parser.add_argument('--write_anndoc', required=False, default=False, action='store_true',
+                        help='Write anndoc of predicted test_corpus (validation corpus in fact)'),
     parser.add_argument('--model_path_1', required=False,
                         help='Path of the first model binary file if evaluation is performed')
     parser.add_argument('--model_path_2', required=False,
@@ -66,6 +68,8 @@ if __name__ == "__main__":
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
     args = parser.parse_args()
+
+    # ------------------------------------------------------------------------------
 
     delete_subclasses = []
     for c in args.delete_subclasses.split(","):
@@ -117,9 +121,12 @@ if __name__ == "__main__":
     args.use_feat_windows = False if args.use_feat_windows.lower() in ['false', '0', 'no'] else True
 
     args.do_train = False if args.model_path_1 else True
-    if args.cv_n:
-        assert args.cv_fold is not None, "You must set both cv_n AND cv_n"
-    args.validation = "cross-validation" if args.cv_n else "stratified"
+
+    if args.cv_n is not None or args.cv_fold is not None:
+        args.validation = "cross-validation"
+
+    if args.validation == "cross-validation":
+        assert (args.cv_n is not None and args.cv_fold is not None), "You must set both cv_n AND cv_n"
 
     # ------------------------------------------------------------------------------
 
@@ -132,17 +139,39 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
+    if args.training_corpus:
+        train_set = get_corpus(args.training_corpus)
+
+        if args.test_corpus:
+            test_set = get_corpus(args.test_corpus)
+        elif args.validation == "none":
+            test_set = None
+        elif args.validation == "cross-validation":
+            train_set, test_set = train_set.fold_nr_split(int(args.cv_n), int(args.cv_fold))
+        else:
+            ExclusiveNLDefiner().define(train_set)
+            train_set, test_set = train_set.stratified_split()
+    else:
+        train_set = None
+        test_set = get_corpus(args.test_corpus)
+
+    if test_set:
+        ExclusiveNLDefiner().define(test_set)
+
+    # ------------------------------------------------------------------------------
+
+    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
+
+    # ------------------------------------------------------------------------------
+
     def print_run_args():
         for key, value in sorted((vars(args)).items()):
             print("\t{} = {}".format(key, value))
         print()
 
     print("Running arguments: ")
+
     print_run_args()
-
-    # ------------------------------------------------------------------------------
-
-    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
 
     # ------------------------------------------------------------------------------
 
@@ -176,16 +205,6 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
-    if args.training_corpus:
-        train_set = get_corpus(args.training_corpus)
-        if args.validation == "cross-validation":
-            train_set, test_set = train_set.fold_nr_split(int(args.cv_n), int(args.cv_fold))
-        else:
-            ExclusiveNLDefiner().define(train_set)
-            train_set, test_set = train_set.stratified_split()
-    else:
-        train_set = test_set = None
-
     if args.do_train:
         args.model_path_1 = train(train_set)
 
@@ -193,15 +212,6 @@ if __name__ == "__main__":
 
     def test(tagger, test_set):
         tagger.tag(test_set)
-
-        ExclusiveNLDefiner().define(test_set)
-
-        print("\n{}".format(args.model_name))
-        if train_set:
-            stats(train_set, "training")
-        stats(test_set, "test")
-        print_run_args()
-
         evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(test_set)
 
         print(evaluation)
@@ -217,10 +227,18 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
-    if test_set is None:
-        test_set = get_corpus(args.test_corpus)
+    print("\n{}".format(args.model_name))
 
-    test(tagger, test_set)
+    if train_set:
+        stats(train_set, "training")
+
+    if test_set:
+        stats(test_set, "test")
+
+    print_run_args()
+
+    if test_set:
+        test(tagger, test_set)
 
     if args.do_train:
         print("\nThe model is saved to: {}\n".format(args.model_path_1))
