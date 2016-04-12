@@ -6,12 +6,9 @@ import multiprocessing
 
 from nalaf.preprocessing.spliters import NLTKSplitter
 from nalaf.preprocessing.tokenizers import TmVarTokenizer
-from nltk import sent_tokenize
-from spacy.en import English
 import sys
 import logging
-
-from scripts.train_idp4 import read_data
+from nala.utils.corpora import get_corpus
 
 """
 Script for training word embeddings using abstracts from the whole PubMed/Medline database
@@ -21,7 +18,6 @@ Script for training word embeddings using abstracts from the whole PubMed/Medlin
 class MedlineSentenceGenerator:
     def __init__(self, directory):
         self.directory = directory
-        self.nlp = English(parser=False, entity=False)
 
     @staticmethod
     def tokenize(sentence):
@@ -36,26 +32,16 @@ class MedlineSentenceGenerator:
 
         return sentence.lower().split()
 
-    def lemmatize(self, sentence):
-        spacy_doc = self.nlp.tokenizer.tokens_from_list(sentence)
-        self.nlp.tagger(spacy_doc)
-        return [spacy_token.lemma_ for spacy_token in spacy_doc]
-
     def __iter__(self):
         for root, _, files in os.walk(self.directory):
             for file in files:
                 if file.startswith('medline') and file.endswith('xml'):
-                    try:
-                        xml = os.path.join(root, file)
+                    context = etree.iterparse(os.path.join(root, file), events=('end',),
+                                              tag=('ArticleTitle', 'AbstractText'))
 
-                        for child in etree.parse(xml).getroot():
-                            for title in child.iter('ArticleTitle'):
-                                yield self.tokenize(title.text)
-                            for abstract in child.iter('AbstractText'):
-                                for sentence in sent_tokenize(abstract.text):
-                                    yield self.tokenize(sentence)
-                    except:
-                        pass
+                    for event, elem in context:
+                        if elem.text:
+                            yield self.tokenize(elem.text)
 
 
 class CorpusGenerator:
@@ -63,7 +49,7 @@ class CorpusGenerator:
     :type data: nalaf.structures.data.Dataset
     """
     def __init__(self):
-        self.data = read_data(51, True)
+        self.data = get_corpus('IDP4+')
         NLTKSplitter().split(self.data)
         TmVarTokenizer().tokenize(self.data)
 
@@ -84,12 +70,8 @@ def train():
 
     suffix = '{}_{}_{}_{}_{}'.format(dimension, window_size, is_sg, num_iterations, use_corpus)
 
-    # logging.basicConfig(filename='we_{}.log'.format(suffix),
-    #                     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-
-    logging.log(logging.INFO,
-                'start training a model {}'.format(suffix))
+    logging.log(logging.INFO, 'start training a model {}'.format(suffix))
 
     if use_corpus:
         dataset = CorpusGenerator()
