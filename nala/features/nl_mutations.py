@@ -114,10 +114,20 @@ class NLMentionFeatureGenerator(FeatureGenerator):
                 'transition(s)|miss(es|ing)|intron(s)'
         )
 
-        self.connecting_words = ['of', 'at', 'by', 'in', 'into', 'on', 'an', 'to', 'between', 'with', 'a', 'each',
-                                 'from', 'which', 'the', 'without',
-                                 'is', 'was', 'were', 'been', 'have', 'having', 'for', 'that', 'than', 'this', 'these',
-                                 'its', 'rather', 'not', 'non', 'through', 'but']
+        self.nl_words = ['of', 'at', 'by', 'in', 'into', 'on', 'an', 'to', 'between', 'with', 'a', 'each',
+                         'from', 'which', 'the', 'without',
+                         'is', 'was', 'were', 'been', 'have', 'having', 'for', 'that', 'than', 'this', 'these',
+                         'its', 'rather', 'not', 'non', 'through', 'but']
+
+        self.nl_in_words = ['of', 'at', 'by', 'in', 'into', 'on', 'to', 'between', 'with',
+                            'from', 'for', 'without']
+
+        self.nl_sent_link = ['that', 'but', 'which']
+
+        self.nl_verb = ['is', 'was', 'were', 'been', 'have', 'having']
+
+        self.nl_other_words = list(
+            set(self.nl_words) - set(self.nl_in_words) - set(self.nl_sent_link) - set(self.nl_verb))
 
         self.threshold = thr
         # self.amino_acids = re.compile(
@@ -163,7 +173,7 @@ class NLMentionFeatureGenerator(FeatureGenerator):
 
                     for i, token in enumerate(sentence):
                         if start_p <= token.start < token.end <= end_p:
-                            token.features['nl_dict'] = 'pos'
+                            token.features['tag_dict'] = 'pos'
                             ta[i] = 'pos'
 
                 # indicative word
@@ -180,17 +190,26 @@ class NLMentionFeatureGenerator(FeatureGenerator):
                             end_m += sentence[0].start
 
                             if start_m <= token.start < token.end <= end_m:
-                                token.features['nl_dict'] = 'word'
-                                ta[i] = 'word'
+                                token.features['tag_dict'] = 'ind'
+                                ta[i] = 'ind'
 
                 # amino acids and connecting words
                 for i, token in enumerate(sentence):
                     if token.word.lower() in self.amino_acids:
-                        token.features['nl_dict'] = 'aa'
+                        token.features['tag_dict'] = 'aa'
                         ta[i] = 'aa'
-                    if token.word.lower() in self.connecting_words:
-                        token.features['nl_dict'] = 'con'
-                        ta[i] = 'con'
+                    if token.word.lower() in self.nl_words:
+                        token.features['tag_dict'] = 'nl'
+                        ta[i] = 'nl'
+                    # following found dictionaries are not taken into the tag_prox
+                    if token.word.lower() in self.nl_in_words:
+                        token.features['nl_tag_dict'] = 'in'
+                    if token.word.lower() in self.nl_verb:
+                        token.features['nl_tag_dict'] = 'verb'
+                    if token.word.lower() in self.nl_sent_link:
+                        token.features['nl_tag_dict'] = 'sen'
+                    if token.word.lower() in self.nl_other_words:
+                        token.features['nl_tag_dict'] = 'oth'
 
                 ta_prox = [[] for _ in sentence]
                 for i in range(len(ta)):
@@ -201,22 +220,22 @@ class NLMentionFeatureGenerator(FeatureGenerator):
                 for i, tok in enumerate(sentence):
                     ta_raw = [ti for ti in ta_prox[i] if ti != '']
                     if len(ta_raw) > 0:
-                        ta_ocon = [t for t in ta_raw if t != 'con']
-                        ta_word = [t for t in ta_raw if t == 'word']
+                        ta_wo_con = [t for t in ta_raw if t != 'nl']
+                        ta_word = [t for t in ta_raw if t == 'ind']
                         ta_aa = [t for t in ta_raw if t == 'aa']
                         ta_pos = [t for t in ta_raw if t == 'pos']
                         feature_str = '-'.join(sorted(ta_raw))
                         feature_str_easy = '-'.join(sorted(list(set(ta_raw))))
                         feature_str_hard = '-'.join(ta_raw)
-                        tok.features['nl_prox'] = feature_str
-                        tok.features['nl_easy'] = feature_str_easy
-                        tok.features['nl_hard'] = feature_str_hard
-                        if any(ta_ocon):
-                            tok.features['nl_no_con'] = True
-                            tok.features['nl_hard_ocon'] = '-'.join(ta_ocon)
+                        tok.features['prox_tag'] = feature_str
+                        tok.features['prox_tag_easy'] = feature_str_easy
+                        tok.features['prox_tag_hard'] = feature_str_hard
+                        if any(ta_wo_con):
+                            tok.features['prox_no_nl_bool'] = True
+                            tok.features['prox_tag_hard_no_nl'] = '-'.join(ta_wo_con)
                         if any(ta_word) and any(ta_aa):
-                            tok.features['nl_aa_word'] = True
+                            tok.features['prox_tag_aa_bool'] = True
                         if any(ta_word) and any(ta_pos):
-                            tok.features['nl_pos_word'] = True
+                            tok.features['prox_tag_word_pos_bool'] = True
                     else:
-                        tok.features['nl_prox'] = False
+                        tok.features['prox_tag'] = False

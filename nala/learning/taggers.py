@@ -102,6 +102,24 @@ class MultipleModelTagger(Tagger):
 
 
 class TmVarTagger(Cacheable, Tagger):
+    """
+    The tagger doesn't work on any dataset as we cannot use the free-form text tmVar API at the moment.
+    We default to the API that works only on PubMed abstracts.
+
+    In general these are the 2 restrictions:
+
+        1. doc_ic in the dictionary should be the pubmed ID
+        2. the doc should have 2 parts, where the first part is the title and the second part is the abstract
+
+    Any dataset that satisfies both of these should be taggable
+
+    Note also that the official TmVar API doesn't work with title-only pubmed documents as PMID7175934
+    (http://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/RESTful/tmTool.cgi/Mutation/7175934/Pubtator/)
+
+    However, tmVar works with their other provided demo service:
+    http://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/tmTools/demo/tmVar/
+    """
+
     def __init__(self):
         Cacheable.__init__(self)
         Tagger.__init__(self, predicts_classes=[MUT_CLASS_ID])

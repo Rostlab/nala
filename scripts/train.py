@@ -19,31 +19,31 @@ if __name__ == "__main__":
     group1 = parser.add_mutually_exclusive_group(required=True)
 
     group1.add_argument('--training_corpus',
-        help='Name of the corpus to train on. Examples: IDP4+, nala_training, IDP4+_training, nala_training_5')
+                        help='Name of the corpus to train on. Ex: nala_training, IDP4+_training, nala_training_5')
     group1.add_argument('--test_corpus',
-        help='Name of the corpus to test on')
+                        help='Name of the corpus to test on')
 
-    parser.add_argument('--cv_n', required = False,
-        help='if given, cross validation (instead of stratification) is used for validating the training. \
-             In this case you must also set `cv_fold` and only that fold number will be run')
-    parser.add_argument('--cv_fold', required = False,
-        help='fold number to train and validate if cross validation is activated')
+    parser.add_argument('--cv_n', required=False,
+                        help='if given, cross validation (instead of stratification) is used for validating the training. \
+                        In this case you must also set `cv_fold` and only that fold number will be run')
+    parser.add_argument('--cv_fold', required=False,
+                        help='fold number to train and validate if cross validation is activated')
 
-    parser.add_argument('--output_folder', required = False,
-        help='Folder where the training model is written to. Otherwise a tmp folder is used')
-    parser.add_argument('--model_name_suffix', required = False,
-        help='Optional suffix to add to the generated model name in training mode'),
-    parser.add_argument('--write_anndoc', required = False, action='store_true',
-        help='Write anndoc of predicted test_corpus'),
-    parser.add_argument('--model_path_1', required = False,
-        help='Path of the first model binary file if evaluation is performed')
-    parser.add_argument('--model_path_2', required = False,
-        help='Path of the second model binary file if evaluation is performed with two models')
+    parser.add_argument('--output_folder', required=False,
+                        help='Folder where the training model is written to. Otherwise a tmp folder is used')
+    parser.add_argument('--model_name_suffix', default='', required=False,
+                        help='Optional suffix to add to the generated model name in training mode'),
+    parser.add_argument('--write_anndoc', required=False, action='store_true',
+                        help='Write anndoc of predicted test_corpus'),
+    parser.add_argument('--model_path_1', required=False,
+                        help='Path of the first model binary file if evaluation is performed')
+    parser.add_argument('--model_path_2', required=False,
+                        help='Path of the second model binary file if evaluation is performed with two models')
 
     parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
-    parser.add_argument('--delete_subclasses', required = False, default = "",
-        help='Comma-separated subclasses to delete. Example: "2,3"')
+    parser.add_argument('--delete_subclasses', required=False, default="",
+                        help='Comma-separated subclasses to delete. Example: "2,3"')
 
     parser.add_argument('--pruner', required=False, default="parts", choices=["parts", "sentences"])
     parser.add_argument('--ps_ST', required=False, default=False, action='store_true')
@@ -51,18 +51,19 @@ if __name__ == "__main__":
     parser.add_argument('--ps_random', required=False, default=0.0, type=float)
 
     parser.add_argument('--elastic_net', action='store_true',
-        help='Use elastic net regularization')
+                        help='Use elastic net regularization')
 
     parser.add_argument('--word_embeddings', action='store_true',
-        help='Use word embeddings features')
-    parser.add_argument('--we_additive', type=int, default = 2)
-    parser.add_argument('--we_multiplicative', type=int, default=3)
+                        help='Use word embeddings features')
+    parser.add_argument('--we_additive', type=float, default=2)
+    parser.add_argument('--we_multiplicative', type=float, default=3)
     parser.add_argument('--we_model_location', type=str, default=None)
 
     parser.add_argument('--use_feat_windows', default='True')
 
     parser.add_argument('--nl', action='store_true', help='Use NLMentionFeatureGenerator')
-    parser.add_argument('--nl_threshold', type=int, default=4)
+    parser.add_argument('--nl_threshold', type=int, default=0)
+    parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
     args = parser.parse_args()
 
@@ -99,15 +100,16 @@ if __name__ == "__main__":
 
     if args.nl:
         args.nl_features = {
-            'threshold': args.nl_threshold  # threshold for neighbour space in dictionaries
+            'threshold': args.nl_threshold,  # threshold for neighbour space in dictionaries
+            'window': args.nl_window,
         }
     else:
         args.nl_features = None
 
     if args.elastic_net:
         args.crf_train_params = {
-        'c1': 1.0, # coefficient for L1 penalty
-        'c2': 1e-3, # coefficient for L2 penalty
+            'c1': 1.0,  # coefficient for L1 penalty
+            'c2': 1e-3,  # coefficient for L2 penalty
         }
     else:
         args.crf_train_params = None
@@ -119,15 +121,16 @@ if __name__ == "__main__":
         assert args.cv_fold is not None, "You must set both cv_n AND cv_n"
     args.validation = "cross-validation" if args.cv_n else "stratified"
 
-    #------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
 
     args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
     if args.validation == "cross-validation":
         args.model_name += "_cvfold_" + str(args.cv_fold)
+    args.model_name_suffix = args.model_name_suffix.strip()
     if args.model_name_suffix:
         args.model_name += "_" + str(args.model_name_suffix)
 
-    #------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
 
     def print_run_args():
         for key, value in sorted((vars(args)).items()):
@@ -137,11 +140,11 @@ if __name__ == "__main__":
     print("Running arguments: ")
     print_run_args()
 
-    #------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
 
     features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
 
-    #------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
 
     def stats(dataset, name):
         print('\n\t{} size: {}'.format(name, len(dataset)))
@@ -185,7 +188,7 @@ if __name__ == "__main__":
     if args.do_train:
         args.model_path_1 = train(train_set)
 
-    #------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
 
     def test(tagger, test_set):
         tagger.tag(test_set)
@@ -202,14 +205,12 @@ if __name__ == "__main__":
 
         print(evaluation)
 
-
-
     assert(args.model_path_1 is not None)
 
     if args.model_path_2:
-        tagger = NalaTagger(st_model = args.model_path_1, all3_model=args.model_path_2, features_pipeline = features_pipeline)
+        tagger = NalaTagger(st_model=args.model_path_1, all3_model=args.model_path_2, features_pipeline=features_pipeline)
     else:
-        tagger = NalaSingleModelTagger(bin_model = args.model_path_1, features_pipeline = features_pipeline)
+        tagger = NalaSingleModelTagger(bin_model=args.model_path_1, features_pipeline=features_pipeline)
 
     if test_set is None:
         test_set = get_corpus(args.test_corpus)

@@ -1,3 +1,7 @@
+"""
+DEPRECATED code used once to calculate the appropriate nala test size === where the SE stabilizes
+"""
+
 from itertools import chain
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator

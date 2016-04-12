@@ -1,10 +1,192 @@
 # Script to CV-evaluate very last experiments, https://github.com/abojchevski/nala/issues/58
 
-# qsub -m aes -M i@juanmi.rocks -t 1-5 zqsub_job.sh
+# qsub -m aes -M i@juanmi.rocks -t 1-5 -j y zqsub_job.sh
 
+SGE_TASK_ID=${SGE_TASK_ID-1}
 let cv_fold=$SGE_TASK_ID-1
+jobid=${JOB_ID-last}
+
+python='/mnt/home/cejuela/anaconda3/latest/bin/python'
+trainscript='/mnt/home/cejuela/nala/nala/scripts/train.py'
+outputdir='/mnt/home/cejuela/tmp/models/'
+outputdir2='/mnt/home/cejuela/tmp/zqsub/'
+common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
+train="time $python $trainscript $common "
 
 # FINAL EXPERIMENTS
+# ------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
+
+# $train --training_corpus nala_training --pruner parts --labeler IO
+# 455859.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 0
+# 455860.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 1
+# 455861.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 2
+# 455862.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 3
+# 455863.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 4
+# 455864.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 5
+# 455865.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 6
+# 455866.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 7
+# 455867.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 8
+# 455868.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 9
+# 455869.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 10
+
+# 455870.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 4 --nl_window
+
+# 456048.1-5 $train --training_corpus nala_training --pruner parts --labeler IO
+# 456049.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 0
+# 456050.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --nl --nl_threshold 0 --nl_window
+
+
+# ------------------------------------------------------------------------------------------
+
+# as=('0' '0.1' '0.5' '1' '2' '3')
+# #ms=('1' '1.1' '1.5' '2' '3' '4')
+# ms=('2' '3' '4')
+# cv_folds=('0' '1' '2' '3' '4')
+
+# 455886.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.0 --we_model_location /mnt/project/pubseq/nala/backup_we/300_10_0_5_False.model
+
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 1.0
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 1.0
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 1.0
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 1.0
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 1.0
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 1.1
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 1.1
+# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 1.1
+
+# 455774.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 1.1
+# 455775.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 1.1
+# 455777.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 1.5
+# 455778.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 1.5
+# 455779.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 1.5
+# 455780.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 1.5
+# 455781.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 1.5
+
+
+# 455758.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 0
+# 455759.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.0
+# 455760.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.1
+# 455761.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1.5
+#
+# 455762.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 2
+# 450502.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 2
+# 450503.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 2
+# 450850.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 2
+# 450455.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 2
+# 450810.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 2
+#
+# 455763.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 3
+# 450812.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 3
+# 450459.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 3
+# 450460.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 3
+# 450461.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 3
+# 450462.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 3
+#
+# 455764.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 4
+# 450814.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.1 --we_multiplicative 4
+# 450465.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0.5 --we_multiplicative 4
+# 450815.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 1.0 --we_multiplicative 4
+# 450467.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 2.0 --we_multiplicative 4
+# 450468.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 3.0 --we_multiplicative 4
+#
+# 455765.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 5
+# 455766.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 6
+# 455767.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 7
+# 455768.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 10
+
+#
+# for a in "${as[@]}"
+# do
+#   for m in "${ms[@]}"
+#   do
+#     jobid="we_${a}_${m}"
+#     for cv_fold in "${cv_folds[@]}"
+#     do
+#       echo "$jobid - $cv_fold"
+#       common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
+#       train="time $python $trainscript $common "
+#       $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive $a --we_multiplicative $m &> "$outputdir2/wesearch_o${jobid}.${cv_fold}"
+#     done
+#   done
+# done
+
+# ---
+
+# 450064.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings
+# 450067.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --elastic_net
+
+# ---
+
+# ST
+# (BASELINE) $train --training_corpus nala_training --pruner parts --labeler BIEO --output_folder $outputdir
+# 446478.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --output_folder $outputdir
+
+# all3
+# 446477.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler BIO --output_folder $outputdir
+
+# ---
+
+# Question elastic net
+
+# 446460.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler BIO --elastic_net --output_folder $outputdir
+
+# ---
+
+# Question IO labeler
+
+# Deleting class 0, all suck
+# 432102.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL --labeler IO
+# 432103.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --labeler IO
+# 432104.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner parts --labeler IO
+#
+# 432105.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler IO
+# 432106.1-5 $train --training_corpus nala_training --pruner sentences --labeler IO
+# 432107.1-5 $train --training_corpus nala_training --pruner parts --labeler IO
+#
+# # Question BIO labeler
+#
+# 432108.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL --labeler BIO
+# 432109.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --labeler BIO
+# 432110.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner parts --labeler BIO
+#
+# 432111.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --labeler BIO
+# 432112.1-5 $train --training_corpus nala_training --pruner sentences --labeler BIO
+# 432113.1-5 $train --training_corpus nala_training --pruner parts --labeler BIO
+#
+# # ---
+#
+# # Question combination of training data, del classes, and pruning --> IDP4+_training
+#
+# 446459.1-5 $train --training_corpus IDP4+_training --delete_subclasses "1,2" --pruner sentences --ps_ST --ps_NL
+# 446458.1-5 $train --training_corpus IDP4+_training --delete_subclasses "1,2" --pruner parts
+# 446456.1-5 $train --training_corpus IDP4+_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL
+# 446455.1-5 $train --training_corpus IDP4+_training --delete_subclasses "0" --pruner parts
+# 446454.1-5 $train --training_corpus IDP4+_training --pruner sentences --ps_ST --ps_NL
+# 446453.1-5 $train --training_corpus IDP4+_training --pruner parts
+#
+# # ---
+#
+# # Question combination of training data, del classes, and pruning --> nala_training
+#
+# 432131.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences --ps_ST --ps_NL
+# 432132.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences --ps_NL
+# 432133.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences --ps_ST
+# 432134.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner sentences
+# 432135.1-5 $train --training_corpus nala_training --delete_subclasses "1,2" --pruner parts
+#
+# 432136.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST --ps_NL
+# 432137.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_NL
+# 432138.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences --ps_ST
+# 432139.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner sentences
+# 432140.1-5 $train --training_corpus nala_training --delete_subclasses "0" --pruner parts
+#
+# 432141.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST --ps_NL
+# 432142.1-5 $train --training_corpus nala_training --pruner sentences --ps_NL
+# 432143.1-5 $train --training_corpus nala_training --pruner sentences --ps_ST
+# 432144.1-5 $train --training_corpus nala_training --pruner sentences
+# this is the baseline, so no run $train --training_corpus nala_training --pruner parts
+
 
 # BASELINE 430489.1-5:1 time /mnt/home/cejuela/anaconda3/latest/bin/python /mnt/home/cejuela/nala/nala/scripts/train.py --training_corpus nala_training --cv_n 5 --cv_fold $cv_fold --pruner parts --labeler BIEO --model_name_suffix "BASELINE" --output_folder /mnt/home/cejuela/tmp/models/
 

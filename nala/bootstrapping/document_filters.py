@@ -108,8 +108,8 @@ class QuickNalaFilter(DocumentFilter):
     def __init__(self, binary_model="nala/data/default_model", threshold=1, labeler=BIEOLabeler()):
         self.binary_model = binary_model
         """ location where binary model for nala (crfsuite) is saved """
-        self.threshold=threshold
-        """threshold for nala to include docuements that contain overlapping annotations with confidence lower than set threshold"""
+        self.threshold = threshold
+        """threshold for nala to include documents that contain overlapping annotations with confidence lower than set threshold"""
         self.pipeline = get_prepare_pipeline_for_best_model()
         """best features and hyperparameters"""
         self.labeler = labeler
@@ -139,7 +139,7 @@ class QuickNalaFilter(DocumentFilter):
 
 class HighRecallRegexClassifier():
 
-    def __init__(self, ST = True, NL = True):
+    def __init__(self, ST=True, NL=True):
         assert(ST or NL)
 
         self.patterns = []
@@ -151,8 +151,6 @@ class HighRecallRegexClassifier():
                 self.patterns += [re.compile(x) for x in conventions]
 
             tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
-
-
             with open(tmvarregex_file) as file:
                 raw_regexps = list(csv.reader(file, delimiter='\t'))
                 regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
@@ -270,7 +268,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
                 sent_offset = 0
                 cur_part = doc.parts.get(x)
                 sentences = cur_part.sentences_
-                
+
                 for sent in sentences:
                     sent_length = len(sent)
                     new_text = sent.lower()

@@ -22,15 +22,19 @@ def run_seth_on_string_with_filename(text, filename, useMutationFinderOnly):
             subprocess.run(["java", "seth.ner.wrapper.SETHNERAppMut", text, useMutationFinderOnly], stdout=outfile, stderr=subprocess.PIPE, universal_newlines=True, check=True)
     except CalledProcessError as e:
         if "Error: Could not find or load main class seth.ner.wrapper.SETHNERAppMut" in e.stderr:
-            raise Exception("Make sure to add seth.jar to your classpath (use repo https://github.com/jmcejuela/SETH) -- " + e.stderr)
+            raise Exception("Make sure to add seth.jar to your classpath (use repo https://github.com/juanmirocks/SETH) -- " + e.stderr)
         else:
             raise
 
-corpusName = sys.argv[1]
+methodName = sys.argv[1]
+assert methodName in {"SETH", "MFmodified"}, "Method name must be SETH or MFmodified"
+corpusName = sys.argv[2]
 corpus = get_corpus(corpusName)
-folderName = sys.argv[2]
+folderName = sys.argv[3]
+folderName = os.path.join(folderName, methodName, corpusName)
 if not os.path.exists(folderName):
     os.makedirs(folderName)
-useMutationFinderOnly = sys.argv[3] if len(sys.argv) > 3 else "false"
+
+useMutationFinderOnly = "true" if methodName == "MFmodified" else "false"
 
 run_seth_on_corpus(corpus, folderName, useMutationFinderOnly)

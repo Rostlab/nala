@@ -7,6 +7,8 @@ The import and export classes are contained there as well. Other classes are:
 – Uniprot helps with normalising EntrezGene IDs [22] to Uniprot IDs [23]. This is part of the normalisation process in class GNormPlusGeneTagger.
 """
 
+import os
+
 PRO_CLASS_ID = 'e_1'
 MUT_CLASS_ID = 'e_2'
 ORG_CLASS_ID = 'e_3'
@@ -15,8 +17,6 @@ PRO_REL_ORG_CLASS_ID = 'r_5'  # e_1/e_3
 THRESHOLD_VALUE = 1
 ENTREZ_GENE_ID = 'n_4'
 UNIPROT_ID = 'n_5'
-
-import os
 
 __nala_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
@@ -40,7 +40,6 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
     from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
     from nala.features.nl_mutations import NLMentionFeatureGenerator
 
-
     generators = [
         SpacyLemmatizer(),
         SentenceMarkerFeatureGenerator(),
@@ -49,18 +48,23 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
 
     ]
 
+    include = []
+
+    if nl_features:
+        f = NLMentionFeatureGenerator(nl_features['threshold'])
+        if nl_features['window']:
+            include.extend(['tag_dict[0]', 'nl_tag_dict[0]'])
+
+        generators.append(f)
+
     if use_windows:
-        include = ['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
-                   'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]']
+        include.extend(['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
+                   'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]'])
         f = WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
         generators.append(f)
 
     if we_params:
         generators.append(get_word_embeddings_feature_generator(we_params['location'], we_params['additive'], we_params['multiplicative']))
-
-    if nl_features:
-        f = NLMentionFeatureGenerator(nl_features['threshold'])
-        generators.append(f)
 
     return PrepareDatasetPipeline(feature_generators=generators)
 
@@ -69,10 +73,10 @@ def get_word_embeddings_feature_generator(model_location=None, additive=None, mu
     """
     :returns: nalaf.features.embeddings.WordEmbeddingsFeatureGenerator
     """
-    additive = 2 if not additive else additive
-    multiplicative = 3 if not multiplicative else multiplicative
 
-    import os
+    additive = 2 if additive is None else additive
+    multiplicative = 3 if multiplicative is None else multiplicative
+
     import tarfile
 
     import pkg_resources
@@ -81,6 +85,7 @@ def get_word_embeddings_feature_generator(model_location=None, additive=None, mu
     from nalaf import print_verbose, print_warning
 
     if model_location is None:
+        # D=100, no discretization, epoch=1, window=10
         last_model = "word_embeddings_2016-03-28"
         we_model = pkg_resources.resource_filename('nala.data', os.path.join(last_model, 'word_embeddings.model'))
         if not os.path.exists(we_model):

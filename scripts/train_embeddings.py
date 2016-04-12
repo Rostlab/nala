@@ -77,7 +77,7 @@ def train():
     training_folder = sys.argv[1]
     dimension = int(sys.argv[2])
     window_size = int(sys.argv[3])
-    is_sg = int(sys.argv[4])
+    is_sg = int(sys.argv[4])  # bag_of_words if is_sg == 0 else skip gram
     num_iterations = int(sys.argv[5])
 
     use_corpus = training_folder == 'corpus'
