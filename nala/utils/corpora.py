@@ -20,6 +20,9 @@ __corpora_folder = nala_repo_path(["resources", "corpora"])
 
 
 def get_corpus(name, training=False, test=False):
+    """
+    :rtype: nalaf.structures.data.Dataset
+    """
     parts = name.split("_")
     if len(parts) > 1:
         name = parts[0]
