@@ -152,7 +152,6 @@ if __name__ == "__main__":
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
 
     def train(train_set):
-
         ExclusiveNLDefiner().define(train_set)
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
@@ -174,6 +173,8 @@ if __name__ == "__main__":
         crf.train(train_set, model_path, args.crf_train_params)
 
         return model_path
+
+    # ------------------------------------------------------------------------------
 
     if args.training_corpus:
         train_set = get_corpus(args.training_corpus)
@@ -205,12 +206,16 @@ if __name__ == "__main__":
 
         print(evaluation)
 
+    # ------------------------------------------------------------------------------
+
     assert(args.model_path_1 is not None)
 
     if args.model_path_2:
         tagger = NalaTagger(st_model=args.model_path_1, all3_model=args.model_path_2, features_pipeline=features_pipeline)
     else:
         tagger = NalaSingleModelTagger(bin_model=args.model_path_1, features_pipeline=features_pipeline)
+
+    # ------------------------------------------------------------------------------
 
     if test_set is None:
         test_set = get_corpus(args.test_corpus)
