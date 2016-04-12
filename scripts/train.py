@@ -40,7 +40,7 @@ if __name__ == "__main__":
     parser.add_argument('--model_path_2', required=False,
                         help='Path of the second model binary file if evaluation is performed with two models')
 
-    parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
+    parser.add_argument('--labeler', required=False, default="IO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
