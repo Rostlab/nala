@@ -25,7 +25,7 @@ precomputed_SEs = {label: {match: {key: [] for key in ['precision_SE', 'recall_S
 
 # New version, output looks like this:
 
-# # class	tp	fp	fn	fp_ov	fn_ov	match	P	±P_SE	R	±R_SE	F	±F_SE	match	P	±P_SE	R	±R_SE	F	±F_SE
+# # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
 # 0	46	16	15	12	13	e	0.7419	0.0072	0.7541	0.0074	0.7480	0.0053	o	0.9467	0.0063	0.9726	0.0021	0.9595	0.0027
 # 1	2	8	20	6	6	e	0.2000	0.0147	0.0909	0.0066	0.1250	0.0367	o	0.8750	0.0143	0.5000	0.0125	0.6364	0.0086
 # 2	3	0	2	0	0	e	1.0000	0.0000	0.6000	0.0211	0.7500	0.0133	o	1.0000	0.0000	0.6000	0.0216	0.7500	0.0137
