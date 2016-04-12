@@ -139,6 +139,9 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
+    run_definer = True
+    definer = ExclusiveNLDefiner()
+
     if args.training_corpus:
         train_set = get_corpus(args.training_corpus)
 
@@ -149,14 +152,18 @@ if __name__ == "__main__":
         elif args.validation == "cross-validation":
             train_set, test_set = train_set.fold_nr_split(int(args.cv_n), int(args.cv_fold))
         else:
-            ExclusiveNLDefiner().define(train_set)
+            run_definer = False
+            definer.define(train_set)
             train_set, test_set = train_set.stratified_split()
     else:
         train_set = None
         test_set = get_corpus(args.test_corpus)
 
-    if test_set:
-        ExclusiveNLDefiner().define(test_set)
+    if run_definer:
+        if train_set:
+            definer.define(train_set)
+        if test_set:
+            definer.define(test_set)
 
     # ------------------------------------------------------------------------------
 
@@ -181,7 +188,6 @@ if __name__ == "__main__":
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
 
     def train(train_set):
-        ExclusiveNLDefiner().define(train_set)
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
         labeler.label(train_set)
