@@ -17,6 +17,7 @@ train="time $python $trainscript $common "
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+# 461602.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
 # 461501.1-5 $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --nl --nl_threshold 0
 # 461502.1-5 $train --training_corpus IDP4+_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
 
