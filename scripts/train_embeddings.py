@@ -6,7 +6,6 @@ import multiprocessing
 
 from nalaf.preprocessing.spliters import NLTKSplitter
 from nalaf.preprocessing.tokenizers import TmVarTokenizer
-from nltk import sent_tokenize
 import sys
 import logging
 from nala.utils.corpora import get_corpus
