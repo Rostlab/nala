@@ -9,6 +9,7 @@ def n(cols, index, typ=int):
     return typ(cols[index])
 
 labels = {'0', '1', '2', MentionLevelEvaluator.TOTAL_LABEL}
+first_letter_labels = {label[0] for label in labels}
 
 counts = {label: {key: 0 for key in ['tp', 'fp', 'fn', 'fp_ov', 'fn_ov']} for label in labels}
 
@@ -28,7 +29,7 @@ precomputed_SEs = {label: {match: {key: [] for key in ['precision_SE', 'recall_S
 # 0	46	16	15	12	13	e	0.7419	0.0072	0.7541	0.0074	0.7480	0.0053	o	0.9467	0.0063	0.9726	0.0021	0.9595	0.0027
 # 1	2	8	20	6	6	e	0.2000	0.0147	0.0909	0.0066	0.1250	0.0367	o	0.8750	0.0143	0.5000	0.0125	0.6364	0.0086
 # 2	3	0	2	0	0	e	1.0000	0.0000	0.6000	0.0211	0.7500	0.0133	o	1.0000	0.0000	0.6000	0.0216	0.7500	0.0137
-# ∑	51	24	37	18	19	e	0.6800	0.0069	0.5795	0.0070	0.6258	0.0060	o	0.9362	0.0043	0.8302	0.0060	0.8800	0.0046
+# TOTAL	51	24	37	18	19	e	0.6800	0.0069	0.5795	0.0070	0.6258	0.0060	o	0.9362	0.0043	0.8302	0.0060	0.8800	0.0046
 
 
 for fn in glob.glob(folder + "/*o{}.*".format(jobid)):
@@ -37,7 +38,7 @@ for fn in glob.glob(folder + "/*o{}.*".format(jobid)):
         for line in f.readlines():
             valid_line = False
 
-            if line[0] in labels:
+            if line[0] in first_letter_labels:
                 c = line.split()
 
                 if len(c) == 20 and c[6] == 'e' and c[13] == 'o':
