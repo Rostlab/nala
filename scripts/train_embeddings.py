@@ -40,7 +40,8 @@ class MedlineSentenceGenerator:
                                               tag=('ArticleTitle', 'AbstractText'))
 
                     for event, elem in context:
-                        yield self.tokenize(elem.text)
+                        if elem.text:
+                            yield self.tokenize(elem.text)
 
 
 class CorpusGenerator:
@@ -81,7 +82,7 @@ def train():
                      iter=num_iterations)
 
     model.init_sims(True)
-    model.save('/mnt/project/pubseq/nala/backup_we/{}.model'.format('test2'))
+    model.save('/mnt/project/pubseq/nala/backup_we/{}.model'.format(suffix))
 
     print(model.total_train_time, len(model.vocab))
 
