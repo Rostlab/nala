@@ -1,8 +1,9 @@
 import os
 from nala.utils import nala_repo_path
 from nala.bootstrapping.iteration import Iteration
-from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader, MutationFinderReader
-from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader
+from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader, MutationFinderReader, PMIDReader
+from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader, \
+    DownloadedSETHAnnotationReader
 from nalaf.structures.data import Dataset
 
 # Var = Variome
@@ -60,9 +61,17 @@ def get_corpus(name, training=False, test=False):
         return ret
 
     if name == "SETH":
-        ret = SETHReader(os.path.join(__corpora_folder, 'seth', 'corpus.txt')).read()
-        annreader = SETHAnnotationReader(os.path.join(__corpora_folder, 'seth', 'annotations'))
-        annreader.annotate(ret)
+        # this is implementation with everthing into single part
+        # ret = SETHReader(os.path.join(__corpora_folder, 'seth', 'corpus.txt')).read()
+        # annreader = SETHAnnotationReader(os.path.join(__corpora_folder, 'seth', 'annotations'))
+        # annreader.annotate(ret)
+
+        # alternative implementation with abstract and title in separate parts
+        ann_folder = os.path.join(__corpora_folder, 'seth', 'annotations')
+        pmids = [file[:-4] for file in os.listdir(ann_folder) if file.endswith('.ann')]
+        ret = PMIDReader(pmids).read()
+        DownloadedSETHAnnotationReader(ann_folder).annotate(ret)
+
         return ret
 
     elif name == "IDP4":
