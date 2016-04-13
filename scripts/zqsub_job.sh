@@ -12,7 +12,7 @@ outputdir='/mnt/home/cejuela/tmp/models/'
 outputdir2='/mnt/home/cejuela/tmp/zqsub/'
 train="time $python $trainscript --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid "
 train_cv=$train
-train_no_cv="time $python $trainscript --model_name_suffix $jobid "
+train_no_cv="time $python $trainscript --validation none --model_name_suffix $jobid "
 
 # FINAL EXPERIMENTS
 # ------------------------------------------------------------------------------------------
@@ -21,12 +21,12 @@ train_no_cv="time $python $trainscript --model_name_suffix $jobid "
 # 464576.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
 # 464577.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --nl --nl_threshold 0
 
-# 464578 $train_no_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# 464579 $train_no_cv --training_corpus nala --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# 464580 $train_no_cv --training_corpus IDP4+_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# 464581 $train_no_cv --training_corpus IDP4+ --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# 464582 $train_no_cv --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# 464583 $train_no_cv --training_corpus tmVar --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 464587 $train_no_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 464588 $train_no_cv --training_corpus nala --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 464589 $train_no_cv --training_corpus IDP4+_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 464590 $train_no_cv --training_corpus IDP4+ --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 464591 $train_no_cv --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 464592 $train_no_cv --training_corpus tmVar --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
 
 
 # ------------------------------------------------------------------------------------------
