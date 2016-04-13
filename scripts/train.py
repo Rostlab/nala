@@ -139,6 +139,15 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
+    def stats(dataset, name):
+        print('\n\t{} size: {}'.format(name, len(dataset)))
+        # Caveat: the dataset must be defined first
+        print('\tsubclass distribution: {}'.format(Counter(ann.subclass for ann in dataset.annotations())))
+        # Caveat: the dataset must be passed through the pipeline first
+        print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
+        for s in dataset.sentences():
+            pass  # print(s)
+
     run_definer = True
     definer = ExclusiveNLDefiner()
 
@@ -155,6 +164,7 @@ if __name__ == "__main__":
             run_definer = False
             definer.define(train_set)
             train_set, test_set = train_set.stratified_split()
+
     else:
         train_set = None
         test_set = get_corpus(args.test_corpus)
@@ -182,15 +192,11 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
-    def stats(dataset, name):
-        print('\n\t{} size: {}'.format(name, len(dataset)))
-        print('\tsubclass distribution: {}'.format(Counter(ann.subclass for ann in dataset.annotations())))
-        print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
-
     def train(train_set):
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
         labeler.label(train_set)
+
         if args.pruner == "parts":
             train_set.prune_empty_parts()
         else:
@@ -220,7 +226,7 @@ if __name__ == "__main__":
         tagger.tag(test_set)
         evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(test_set)
 
-        print(evaluation)
+        return evaluation
 
     # ------------------------------------------------------------------------------
 
@@ -238,13 +244,15 @@ if __name__ == "__main__":
     if train_set:
         stats(train_set, "training")
 
+    evaluation = None
     if test_set:
+        evaluation = test(tagger, test_set)
         stats(test_set, "test")
 
     print_run_args()
 
-    if test_set:
-        test(tagger, test_set)
+    if evaluation:
+        print(evaluation)
 
     if args.do_train:
         print("\nThe model is saved to: {}\n".format(args.model_path_1))
