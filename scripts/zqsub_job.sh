@@ -18,7 +18,7 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
-# 464576.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
+# BASELINE 464576.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
 # 464577.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --nl --nl_threshold 0
 
 # 464587 $train_no_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
