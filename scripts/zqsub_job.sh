@@ -18,6 +18,12 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+# These runs have the new post-processing rules hard-coded commented out
+# 464620.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
+# 464621.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
+
+# ------------------------------------------------------------------------------------------
+
 # BASELINE 464576.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
 # 464577.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --nl --nl_threshold 0
 
