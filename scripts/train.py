@@ -173,7 +173,8 @@ if __name__ == "__main__":
         if train_set:
             definer.define(train_set)
         if test_set:
-            definer.define(test_set)
+            pass
+            # definer.define(test_set)
 
     # ------------------------------------------------------------------------------
 
@@ -224,6 +225,7 @@ if __name__ == "__main__":
 
     def test(tagger, test_set):
         tagger.tag(test_set)
+        definer.define(test_set)
         evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(test_set)
 
         return evaluation
