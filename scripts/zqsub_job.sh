@@ -10,18 +10,24 @@ python='/mnt/home/cejuela/anaconda3/latest/bin/python'
 trainscript='/mnt/home/cejuela/nala/nala/scripts/train.py'
 outputdir='/mnt/home/cejuela/tmp/models/'
 outputdir2='/mnt/home/cejuela/tmp/zqsub/'
-common=" --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid"
-train="time $python $trainscript $common "
+train="time $python $trainscript --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid "
+train_cv=train
+train_no_cv="time $python $trainscript --model_name_suffix $jobid "
 
 # FINAL EXPERIMENTS
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
-# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
-# $train --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --nl --nl_threshold 0
-# $train --training_corpus IDP4+_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
-# $train --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
-# $train --training_corpus nala --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
+# $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
+# $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --nl --nl_threshold 0
+
+# $train_no_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# $train_no_cv --training_corpus nala --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# $train_no_cv --training_corpus IDP4+_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# $train_no_cv --training_corpus IDP4+ --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# $train_no_cv --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# $train_no_cv --training_corpus tmVar --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+
 
 # ------------------------------------------------------------------------------------------
 
