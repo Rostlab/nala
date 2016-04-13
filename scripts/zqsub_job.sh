@@ -29,6 +29,7 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # 464592 $train_no_cv --training_corpus tmVar --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
 
 # 464596 $train_no_cv --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir --test_corpus tmVar_test
+# 464618 $train_no_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir --test_corpus tmVar_test
 
 
 # ------------------------------------------------------------------------------------------
