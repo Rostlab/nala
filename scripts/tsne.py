@@ -1,16 +1,21 @@
+import os
+import re
+
 import numpy as np
 import matplotlib.pyplot as plt
 from gensim.models import Word2Vec
+from nalaf.features.embeddings import DiscreteWordEmbeddingsFeatureGenerator
 from sklearn.manifold import TSNE
 from scripts.train_idp4 import read_data
 from nalaf.preprocessing.spliters import NLTKSplitter
 from nalaf.preprocessing.tokenizers import TmVarTokenizer
 
 
-def transform():
-    m = Word2Vec.load('../nala/data/word_embeddings/word_embeddings.model')
+def transform(model_name, ax):
+    m = Word2Vec.load(model_name)
 
     words = [w for w in get_words() if w in m]
+    # words = [w for w in m.vocab]
 
     labels = get_word_labels(words)
 
@@ -22,23 +27,26 @@ def transform():
 
     y = model.fit_transform(data)
 
-    plt.rcParams['image.cmap'] = 'brg'
-    plt.scatter(y[:, 0], y[:, 1], c=labels)
-    plt.show()
+    ax.scatter(y[:, 0], y[:, 1], c=labels)
+    ax.set_title(model_name.split('/')[-1])
 
 
 def get_words():
-    return set(t.word.lower() for t in data.tokens())
+    return set(re.sub('\d', '0', token.word.lower()) for token in data.tokens())
 
 
 def get_word_labels(words):
     for part in data.parts():
         part.percolate_tokens_to_entities()
-    ann_words = set(token.word.lower() for ann in data.annotations() for token in ann.tokens)
+    ann_words = set(re.sub('\d', '0', token.word.lower()) for ann in data.annotations() for token in ann.tokens)
 
     return ['r' if word in ann_words else 'b' for word in words]
 
-data = read_data(41)
+
+data = read_data(51, True)
 NLTKSplitter().split(data)
 TmVarTokenizer().tokenize(data)
-transform()
+
+transform('/home/abojchevski/projects/nala/nala/data/models/300_10_0_5_False.model', plt.gca())
+plt.show()
+
