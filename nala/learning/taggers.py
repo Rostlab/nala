@@ -1,3 +1,4 @@
+import warnings
 import difflib
 import requests
 import re
@@ -146,36 +147,39 @@ class TmVarTagger(Cacheable, Tagger):
                 else:
                     continue
 
-            lines = response_text.strip().splitlines()
-            if len(lines) >= 2 and len(doc.parts) == 2:
-                tm_var_title = re.search('{}\|t\|(.*)'.format(doc_id), lines[0]).group(1)
-                tm_var_abstract = re.search('{}\|a\|(.*)'.format(doc_id), lines[1]).group(1)
+            if response_text.startswith('[Error]'):
+                warnings.warn(response_text)
+            else:
+                lines = response_text.strip().splitlines()
+                if len(lines) >= 2 and len(doc.parts) == 2:
+                    tm_var_title = re.search('{}\|t\|(.*)'.format(doc_id), lines[0]).group(1)
+                    tm_var_abstract = re.search('{}\|a\|(.*)'.format(doc_id), lines[1]).group(1)
 
-                parts = iter(doc.parts.values())
-                title = next(parts)
-                abstract = next(parts)
+                    parts = iter(doc.parts.values())
+                    title = next(parts)
+                    abstract = next(parts)
 
-                for line in lines[2:]:
-                    _, start, end, _, _, _ = line.split('\t')
-                    start = int(start)
-                    end = int(end)
+                    for line in lines[2:]:
+                        _, start, end, _, _, _ = line.split('\t')
+                        start = int(start)
+                        end = int(end)
 
-                    if 0 <= start < end <= len(tm_var_title):
-                        part = title
-                        tm_part = tm_var_title
-                    else:
-                        part = abstract
-                        tm_part = tm_var_abstract
-                        start -= len(tm_var_title) + 1
-                        end -= len(tm_var_title) + 1
+                        if 0 <= start < end <= len(tm_var_title):
+                            part = title
+                            tm_part = tm_var_title
+                        else:
+                            part = abstract
+                            tm_part = tm_var_abstract
+                            start -= len(tm_var_title) + 1
+                            end -= len(tm_var_title) + 1
 
-                    if part.text[start:end] != tm_part[start:end]:
-                        adjustments = self.__find_offset_adjustments(part.text, tm_part)
+                        if part.text[start:end] != tm_part[start:end]:
+                            adjustments = self.__find_offset_adjustments(part.text, tm_part)
 
-                        for offset_start, offset_count in adjustments:
-                            if start > offset_start:
-                                start -= offset_count
-                            if end > offset_start:
-                                end -= offset_count
+                            for offset_start, offset_count in adjustments:
+                                if start > offset_start:
+                                    start -= offset_count
+                                if end > offset_start:
+                                    end -= offset_count
 
-                    part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))
+                        part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))

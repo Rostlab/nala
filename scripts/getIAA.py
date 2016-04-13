@@ -77,8 +77,8 @@ def benchmark_IDP4(member1, member2):
 
     dataset = newcorpus
 
-    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "annjson", "members", member1), delete_incomplete_docs = True).annotate(dataset)
-    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "annjson", "members", member2), delete_incomplete_docs = True, is_predicted=True).annotate(dataset)
+    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "tmVar_test", "members", member1), delete_incomplete_docs = True).annotate(dataset)
+    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "tmVar_test", "members", member2), delete_incomplete_docs = True, is_predicted=True).annotate(dataset)
 
     print(dataset.__repr__())
 

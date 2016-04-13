@@ -1,0 +1,1 @@
+{"annotatable": {"parts": ["title", "abstract"]}, "anncomplete": false, "entities": [{"fields": {}, "offsets": [{"text": "c.[2484C>T]+[2484C>T", "start": 495}], "normalizations": {}, "confidence": {"who": ["ml:nalaf"], "prob": 1, "state": "selected"}, "part": "abstract", "classId": "e_2"}], "relations": [], "metas": {}, "sources": [{"url": "", "name": "ORIG", "id": "17041889"}]}
