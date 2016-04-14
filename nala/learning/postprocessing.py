@@ -2,6 +2,8 @@ import pkg_resources
 import csv
 import re
 from nalaf.structures.data import Entity
+
+from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils import MUT_CLASS_ID
 
 
@@ -60,8 +62,9 @@ class PostProcessing:
 
         self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
         self.keep_silent = keep_silent
+        self.definer = ExclusiveNLDefiner()
 
-    def process(self, dataset, class_id = MUT_CLASS_ID):
+    def process(self, dataset, class_id=MUT_CLASS_ID):
         for doc_id, doc in dataset.documents.items():
             for part_id, part in doc.parts.items():
                 self.__fix_issues(part)
@@ -99,25 +102,26 @@ class PostProcessing:
             end = ann.offset + len(ann.text)
 
             # split multiple mentions
-            if re.search(' *(/) *', ann.text):
-                split = re.split(' *(/) *', ann.text)
+            if re.search(r' *\band\b|/|,|;|\bor\b *', ann.text):
+                split = re.split(r' *\band\b|/|,|;|\bor\b *', ann.text)
 
-                if self.at_least_one_letter_n_number_letter_n_number.search(split[0]) \
-                        and self.at_least_one_letter_n_number_letter_n_number.search(split[2]):
+                # for each split part calculate the offsets and the constraints
+                offset = 0
+                split_info = []
+                for text in split:
+                    split_info.append((text, self.definer.define_string(text), ann.text.find(text, offset),
+                                       self.at_least_one_letter_n_number_letter_n_number.search(text)))
+                    offset += len(text)
+
+                # if all the non empty parts are from class ST (0) and also contain at least one number and one letter
+                if all(split_part[1] == 0 and split_part[3] for split_part in split_info if split_part[0] != ''):
                     to_be_removed.append(index)
-                    part.predicted_annotations.append(Entity(ann.class_id, ann.offset, split[0]))
-                    part.predicted_annotations.append(
-                        Entity(ann.class_id, part.text.find(split[2], ann.offset), split[2]))
 
-            # split multiple mentions
-            if re.search(r' *(\band\b|,|\bor\b) *', ann.text):
-                to_be_removed.append(index)
-                split = re.split(r' *(\band\b|,|\bor\b) *', ann.text)
-                if split[0]:
-                    part.predicted_annotations.append(Entity(ann.class_id, ann.offset, split[0]))
-                if split[2]:
-                    part.predicted_annotations.append(
-                        Entity(ann.class_id, part.text.find(split[2], ann.offset), split[2]))
+                    # add them to
+                    for split_text, split_class, split_offset, aonanl in split_info:
+                        if split_text != '':
+                            part.predicted_annotations.append(
+                                Entity(ann.class_id, ann.offset + split_offset, split_text))
 
             # fix boundary #17000021	251	258	1858C>T --> +1858C>T
             if re.search('^[0-9]', ann.text) and re.search('([\-\+])', part.text[start - 1]):
