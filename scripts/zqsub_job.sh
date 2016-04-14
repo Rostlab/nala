@@ -21,17 +21,17 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # FINAL MODELS
 
 # Includes PP improvements and can be tested directly against alex winner
-# FINAL BASELINE $train_cv --training_corpus nala_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
-# $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
-# $train_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
-# $train_cv --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
+# FINAL BASELINE 466739.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
+# 466740.1-5 $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
+# 466741.1-5 $train_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
+# 466742.1-5 $train_cv --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
 
-# $train_no_cv --training_corpus nala_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# $train_no_cv --training_corpus nala --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# $train_no_cv --training_corpus IDP4+_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# $train_no_cv --training_corpus IDP4+ --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# $train_no_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
-# $train_no_cv --training_corpus tmVar --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 466743 $train_no_cv --training_corpus nala_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 466744 $train_no_cv --training_corpus nala --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 466745 $train_no_cv --training_corpus IDP4+_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 466746 $train_no_cv --training_corpus IDP4+ --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 466747 $train_no_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
+# 466748 $train_no_cv --training_corpus tmVar --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1 --output_folder $outputdir
 
 # ------------------------------------------------------------------------------------------
 
