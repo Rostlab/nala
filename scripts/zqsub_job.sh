@@ -21,7 +21,7 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 ## Alex experiments
 
 # develop -> new code
-# 466671.1-5 $train_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
+$train_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
 
 # feature_rule_0 -> no rule at all
 # $train_cv --training_corpus tmVar_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
