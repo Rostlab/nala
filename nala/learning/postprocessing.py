@@ -102,8 +102,8 @@ class PostProcessing:
             end = ann.offset + len(ann.text)
 
             # split multiple mentions
-            if re.search(r' *\band\b|/|,|;|\bor\b *', ann.text):
-                split = re.split(r' *\band\b|/|,|;|\bor\b *', ann.text)
+            if re.search(r' *(?:\band\b|/|\\|,|;|\bor\b) *', ann.text):
+                split = re.split(r' *(?:\band\b|/|\\|,|;|\bor\b) *', ann.text)
 
                 # for each split part calculate the offsets and the constraints
                 offset = 0
