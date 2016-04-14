@@ -20,6 +20,7 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 
 # FINAL MODELS
 
+# Includes PP improvements and can be tested directly against alex winner
 # FINAL BASELINE $train_cv --training_corpus nala_training --pruner parts --labeler BIEO --word_embeddings --we_additive 0 --we_multiplicative 1
 # $train_cv --training_corpus nala_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
 # $train_cv --training_corpus tmVar_training --pruner parts --labeler IO --word_embeddings --we_additive 0 --we_multiplicative 1
