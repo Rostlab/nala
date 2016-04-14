@@ -164,7 +164,6 @@ class PostProcessing:
 
             isword = re.compile("\\w")
 
-            before = ann.text
             # The word must end in space to the left
             # not matched: 'and+2740 A>G'
             # matched: c.615delC
@@ -173,32 +172,18 @@ class PostProcessing:
                     ann.text = part.text[ann.offset - 1] + ann.text
                     ann.offset -= 1
 
-            if (ann.text != before):
-                print("0 changed: ", before, " --> ", ann.text)
-
             veryend = len(part.text)
             end = ann.offset + len(ann.text)
 
-            if ('D13S265' in ann.text):
-                print("++++++++++++++", ann.text, isword.search(ann.text[-1]), end, veryend, isword.search(part.text[end]))
-
-            before = ann.text
             # The word must end in space to the right
             while end < veryend and isword.search(part.text[end]):
                 ann.text = ann.text + part.text[end]
                 end += 1
 
-            if (ann.text != before):
-                print("1 changed: ", before, " --> ", ann.text)
-
-            before = ann.text
             # Remove parenthesis if within parenthesis but no parentesis either in between
             if ann.text[0] in ['('] and ann.text[-1] in [')'] and (ann.text.count('(') < 2 and ann.text.count(')') < 2):
                 ann.offset += 1
                 ann.text = ann.text[1:-1]
-
-            if (ann.text != before):
-                print("2 changed: ", before, " --> ", ann.text)
 
             # Follow the rule of abbreviations + first gene mutation (then protein mutation)
             if ((ann.text[-1] == ')' or (end < veryend and part.text[end] == ")")) and ann.text[:-1].count('(') == 1):
@@ -236,7 +221,6 @@ class PostProcessing:
                         ann2text = split[1] if ann.text[-1] != ')' else split[1][:-1]
                         # last part is number of spaces + (
                         ann2offset = ann.offset + len(ann1text) + (len(ann.text) - sum(len(x) for x in split))
-                        print('* changed: ', ann1text, " ----- ", ann2text, " ///// ", any(c.isdigit() for c in split[0]), ann.text)
                         part.predicted_annotations.append(Entity(ann.class_id, ann2offset, ann2text))
 
 
