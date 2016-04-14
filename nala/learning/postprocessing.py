@@ -160,7 +160,7 @@ class PostProcessing:
 
             isword = re.compile("\\w")
 
-            # Do not allow spaces to the left
+            # The word must end in space to the left
             while ann.offset > 0 and isword.search(part.text[ann.offset - 1]):
                 ann.text = part.text[ann.offset - 1] + ann.text
                 ann.offset -= 1
@@ -168,7 +168,7 @@ class PostProcessing:
             veryend = len(ann.text)
             end = ann.offset + len(ann.text)
 
-            # Do not allow spaces to the right
+            # The word must end in space to the right
             while end < veryend and isword.search(part.text[end]):
                 ann.text = ann.text + part.text[end]
                 end += 1
