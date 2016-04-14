@@ -164,47 +164,74 @@ class PostProcessing:
 
             isword = re.compile("\\w")
 
+            before = ann.text
             # The word must end in space to the left
             while ann.offset > 0 and isword.search(part.text[ann.offset - 1]):
                 ann.text = part.text[ann.offset - 1] + ann.text
                 ann.offset -= 1
 
+            if (ann.text != before):
+                print("0 changed: ", before, " --> ", ann.text)
+
             veryend = len(ann.text)
             end = ann.offset + len(ann.text)
 
+            before = ann.text
             # The word must end in space to the right
             while end < veryend and isword.search(part.text[end]):
                 ann.text = ann.text + part.text[end]
                 end += 1
 
+            if (ann.text != before):
+                print("1 changed: ", before, " --> ", ann.text)
+
+            before = ann.text
             # Remove parenthesis if within parenthesis but no parentesis either in between
             if ann.text[0] in ['('] and ann.text[-1] in [')'] and (ann.text.count('(') < 2 and ann.text.count(')') < 2):
                 ann.offset += 1
                 ann.text = ann.text[1:-1]
 
+            if (ann.text != before):
+                print("2 changed: ", before, " --> ", ann.text)
+
             # Follow the rule of abbreviations + first gene mutation (then protein mutation)
             if ((ann.text[-1] == ')' or (end < veryend and part.text[end] == ")")) and ann.text[:-1].count('(') == 1):
+                # Requirement 1: must be space to the left of (, not to match things like in Arg407(AGG) or IVS3(+1)
                 p = re.compile("\\s+\\(")
                 split = p.split(ann.text)
+                if len(split) == 2:
 
-                # Requirement 1: must be space to the left of (, not to match things like in Arg407(AGG) or IVS3(+1)
-                # Requirement 2: both parths must contain a number (both parts contain a position and can stand alone)
-                #   Negative: Arg407(AGG) - single amino acid substitution (Phe for Val) - nonsense mutation (286T)
-                #   Negative: deletion (229bp) -  nonsense mutation (glycine 568 to stop)
-                #   Negative: one insertion mutation (698insC) - AChR epsilon (CHRNE E376K)
-                #
-                #   Positive: serine to arginine at the codon 113 (p. S113R)
-                #   Positive: mutagenesis of the initial ATG codon to ACG (Met 1 to Thr) - H2A at position 105 (Q105)
-                #   Positive: Trp replacing Gln in position 156 (A*2406) - A-1144-to-C transversion (K382Q)
-                #   Positive: deletion of 123 bases (41 codons) - exon 12 (R432T)
-                if len(split) == 2 and any(c.isdigit() for c in split[1]):  # any(c.isdigit() for c in split[0])
-                    ann1text = split[0]
-                    to_be_removed.append(index)
-                    part.predicted_annotations.append(Entity(ann.class_id, ann.offset, ann1text))
-                    ann2text = split[1] if ann.text[-1] != ')' else split[1][:-1]
-                    # last part is number of spaces + (
-                    ann2offset = ann.offset + len(ann1text) + (len(ann.text) - sum(len(x) for x in split))
-                    part.predicted_annotations.append(Entity(ann.class_id, ann2offset, ann2text))
+                    # Requirement 2: both parths must contain a number (== position, they can stand alone)
+                    def req2(): return any(c.isdigit() for c in split[0]) and any(c.isdigit() for c in split[1])
+
+                    # Other Reqs on left part
+                    def req3():
+                        return any(c.isalpha() for c in split[0].replace('and', '').replace('or', ''))
+
+                    # Other Reqs on right part
+                    def req4():
+                        return any(c.isalpha() for c in split[1].replace('and', '').replace('or', ''))
+
+                    if req2() and len(split[0]) > 2 and req3() and req4():
+                        # Neg.: Arg407(AGG) - single amino acid substitution (Phe for Val) - nonsense mutation (286T)
+                        # Neg.: deletion (229bp) -  nonsense mutation (glycine 568 to stop)
+                        # Neg.: one insertion mutation (698insC) - AChR epsilon (CHRNE E376K)
+                        # Neg. (other reqs): M1 (Val213) - 207 and 208 (207-HA)
+                        # Neg. (other reqs): located 14 amino acids toward the amino-terminal end from the (682)
+                        #
+                        # Pos.: serine to arginine at the codon 113 (p. S113R)
+                        # Pos.: mutagenesis of the initial ATG codon to ACG (Met 1 to Thr) - H2A at position 105 (Q105)
+                        # Pos.: Trp replacing Gln in position 156 (A*2406) - A-1144-to-C transversion (K382Q)
+                        # Pos: deletion of 123 bases (41 codons) - exon 12 (R432T)
+
+                        ann1text = split[0]
+                        to_be_removed.append(index)
+                        part.predicted_annotations.append(Entity(ann.class_id, ann.offset, ann1text))
+                        ann2text = split[1] if ann.text[-1] != ')' else split[1][:-1]
+                        # last part is number of spaces + (
+                        ann2offset = ann.offset + len(ann1text) + (len(ann.text) - sum(len(x) for x in split))
+                        print('* changed: ', ann1text, " ----- ", ann2text, " ///// ", any(c.isdigit() for c in split[0]), ann.text)
+                        part.predicted_annotations.append(Entity(ann.class_id, ann2offset, ann2text))
 
 
         part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
