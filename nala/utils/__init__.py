@@ -8,6 +8,12 @@ The import and export classes are contained there as well. Other classes are:
 """
 
 import os
+from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
+from nalaf.features.simple import SentenceMarkerFeatureGenerator
+from nalaf.features.stemming import SpacyLemmatizer
+from nalaf.features.window import WindowFeatureGenerator
+from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
+from nala.features.nl_mutations import NLMentionFeatureGenerator
 
 PRO_CLASS_ID = 'e_1'
 MUT_CLASS_ID = 'e_2'
@@ -26,19 +32,19 @@ def nala_repo_path(listOrString):
     else:
         return os.path.join(__nala_repo_root, *listOrString)
 
+
 def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_features=None):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating mutation mentions.
 
+    if we_params is empty dict, no we is applied
+
     :returns nalaf.structures.dataset_pipelines.PrepareDatasetPipeline
     """
-    from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
-    from nalaf.features.simple import SentenceMarkerFeatureGenerator
-    from nalaf.features.stemming import SpacyLemmatizer
-    from nalaf.features.window import WindowFeatureGenerator
-    from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
-    from nala.features.nl_mutations import NLMentionFeatureGenerator
+
+    default_we_params = {'additive': None, 'multiplicative': None, 'location': None}
+    we_params = default_we_params if we_params is None else we_params
 
     generators = [
         SpacyLemmatizer(),
@@ -74,8 +80,8 @@ def get_word_embeddings_feature_generator(model_location=None, additive=None, mu
     :returns: nalaf.features.embeddings.WordEmbeddingsFeatureGenerator
     """
 
-    additive = 2 if additive is None else additive
-    multiplicative = 3 if multiplicative is None else multiplicative
+    additive = 0 if additive is None else additive
+    multiplicative = 1 if multiplicative is None else multiplicative
 
     import tarfile
 
