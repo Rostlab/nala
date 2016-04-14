@@ -11,7 +11,7 @@ The goals of this project can be found on the [wiki.](https://github.com/carsten
 
 ##  Requirements
 
-* Requires Python 3
+* Requires Python 3 (>= 3.3)
 * Requires a working installation of CRFsuite
     * The easieast way to install it is to download compiled binaries from the [official website.](http://www.chokkan.org/software/crfsuite/) For example for linux systems do the following:
         * `wget https://github.com/downloads/chokkan/crfsuite/crfsuite-0.12-x86_64.tar.gz`
