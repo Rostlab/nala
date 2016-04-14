@@ -166,15 +166,21 @@ class PostProcessing:
 
             before = ann.text
             # The word must end in space to the left
-            while ann.offset > 0 and isword.search(part.text[ann.offset - 1]):
-                ann.text = part.text[ann.offset - 1] + ann.text
-                ann.offset -= 1
+            # not matched: 'and+2740 A>G'
+            # matched: c.615delC
+            if isword.search(ann.text[0]) or ann.text[0] == '.':
+                while ann.offset > 0 and isword.search(part.text[ann.offset - 1]):
+                    ann.text = part.text[ann.offset - 1] + ann.text
+                    ann.offset -= 1
 
             if (ann.text != before):
                 print("0 changed: ", before, " --> ", ann.text)
 
-            veryend = len(ann.text)
+            veryend = len(part.text)
             end = ann.offset + len(ann.text)
+
+            if ('D13S265' in ann.text):
+                print("++++++++++++++", ann.text, isword.search(ann.text[-1]), end, veryend, isword.search(part.text[end]))
 
             before = ann.text
             # The word must end in space to the right
