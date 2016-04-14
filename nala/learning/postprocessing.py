@@ -173,7 +173,7 @@ class PostProcessing:
                 ann.text = ann.text + part.text[end]
                 end += 1
 
-            # within parenthesis but no parentesis either in between
+            # Remove parenthesis if within parenthesis but no parentesis either in between
             if ann.text[0] in ['('] and ann.text[-1] in [')'] and (ann.text.count('(') < 2 and ann.text.count(')') < 2):
                 ann.offset += 1
                 ann.text = ann.text[1:-1]
