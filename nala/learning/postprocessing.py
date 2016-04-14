@@ -164,7 +164,7 @@ class PostProcessing:
 
             isword = re.compile("\\w")
 
-            # Do not allow spaces to the left
+            # The word must end in space to the left
             while ann.offset > 0 and isword.search(part.text[ann.offset - 1]):
                 ann.text = part.text[ann.offset - 1] + ann.text
                 ann.offset -= 1
@@ -172,12 +172,12 @@ class PostProcessing:
             veryend = len(ann.text)
             end = ann.offset + len(ann.text)
 
-            # Do not allow spaces to the right
+            # The word must end in space to the right
             while end < veryend and isword.search(part.text[end]):
                 ann.text = ann.text + part.text[end]
                 end += 1
 
-            # within parenthesis but no parentesis either in between
+            # Remove parenthesis if within parenthesis but no parentesis either in between
             if ann.text[0] in ['('] and ann.text[-1] in [')'] and (ann.text.count('(') < 2 and ann.text.count(')') < 2):
                 ann.offset += 1
                 ann.text = ann.text[1:-1]
