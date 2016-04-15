@@ -203,12 +203,14 @@ class PostProcessing:
                     ann.text = part.text[ann.offset:start] + ann.text
                     start = tmp
 
-            isword = re.compile("\\w")
+            isword = re.compile(r'\w')
 
             # The word must end in space to the left
             # not matched: 'and+2740 A>G'
-            # matched: c.615delC
-            if isword.search(ann.text[0]) or ann.text[0] == '.':
+            if isword.search(ann.text[0]) and \
+                (not (ann.offset >= 3 and part.text[ann.offset - 3: ann.offset] == "and"
+                or (ann.offset >= 2 and part.text[ann.offset - 2: ann.offset] == "or"))):
+
                 while ann.offset > 0 and isword.search(part.text[ann.offset - 1]):
                     ann.text = part.text[ann.offset - 1] + ann.text
                     ann.offset -= 1
