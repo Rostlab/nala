@@ -1,0 +1,1 @@
+{"relations": [], "metas": {}, "entities": [{"confidence": {"state": "selected", "who": ["ml:nalaf"], "prob": 1}, "classId": "e_2", "offsets": [{"text": "L16G", "start": 956}], "fields": {}, "normalizations": {}, "part": "abstract"}], "sources": [{"id": "16008357", "name": "ORIG", "url": ""}], "anncomplete": false, "annotatable": {"parts": ["title", "abstract"]}}
