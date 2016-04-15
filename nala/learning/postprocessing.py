@@ -158,16 +158,22 @@ class PostProcessing:
             except IndexError:
                 pass
 
+            before = ann.text
             # fix boundary add missing number after fsX
             try:
-                if ann.text.endswith('fs') or ann.text.endswith('fsX'):
-                    tmp = end
-                    if not ann.text.endswith('X') and part.text[tmp] == 'X':
-                        ann.text += 'X'
-                        tmp += 1
-                    while part.text[tmp].isnumeric():
-                        ann.text += part.text[tmp]
-                        tmp += 1
+                found_missing_fsx = False
+                if part.text[end:end + 2] == 'fs':
+                    ann.text += 'fs'
+                    end += 2
+                    found_missing_fsx = True
+                if ann.text.endswith('fs') and part.text[end] == 'X':
+                    ann.text += 'X'
+                    end += 1
+                    found_missing_fsx = True
+                if found_missing_fsx:
+                    while part.text[end].isnumeric():
+                        ann.text += part.text[end]
+                        end += 1
             except IndexError:
                 pass
 
@@ -177,11 +183,23 @@ class PostProcessing:
                     if part.text[start - 1] in ('c', 'p'):
                         ann.offset -= 1
                         ann.text = part.text[start - 1] + ann.text
-                elif part.text[start - 2:start] in ('c.', 'p.'):
+                elif part.text[start - 2:start] in ('c.', 'p.', 'rt'):
                     ann.offset -= 2
                     ann.text = part.text[start - 2:start] + ann.text
             except IndexError:
                 pass
+
+            # fix boundary add missing \d+ at the beginning
+            if ann.text[0] == '-' or part.text[start-1] == '-':
+                tmp = start
+                while tmp - 1 > 0 and (part.text[tmp-1].isnumeric() or part.text[tmp-1] == '-'):
+                    tmp -= 1
+                if part.text[tmp - 1] == ' ':
+                    ann.offset = tmp
+                    ann.text = part.text[ann.offset:start-1] + ann.text
+
+            if ann.text != before:
+                print('************', before, '>>>  ', ann.text)
 
             isword = re.compile("\\w")
 
@@ -214,7 +232,8 @@ class PostProcessing:
                 if len(split) == 2:
 
                     # Requirement 2: both parths must contain a number (== position, they can stand alone)
-                    def req2(): return any(c.isdigit() for c in split[0]) and any(c.isdigit() for c in split[1])
+                    def req2():
+                        return any(c.isdigit() for c in split[0]) and any(c.isdigit() for c in split[1])
 
                     # Other Reqs on left part
                     def req3():
