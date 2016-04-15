@@ -158,7 +158,6 @@ class PostProcessing:
             except IndexError:
                 pass
 
-            before = ann.text
             # fix boundary add missing number after fsX
             try:
                 found_missing_fsx = False
@@ -197,9 +196,6 @@ class PostProcessing:
                 if part.text[tmp - 1] == ' ':
                     ann.offset = tmp
                     ann.text = part.text[ann.offset:start-1] + ann.text
-
-            if ann.text != before:
-                print('************', before, '>>>  ', ann.text)
 
             isword = re.compile("\\w")
 
