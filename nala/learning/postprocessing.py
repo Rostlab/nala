@@ -38,6 +38,7 @@ class PostProcessing:
             re.compile(r'\b(c\. *)?[ATCG] *([-+]|\d)\d+ *[ATCG]\b'),
             re.compile(r'\b(c\.|E(X|x)\d+) *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
             re.compile(r'\b[ATCG](/|-|-*>|→|)[ATCG] *[-+]*[0-9]+\b'),
+            re.compile(r'(?<![\w-])[-+]*\d+ *[ATCG] *(/|-|-*>|→|) *[ATCG]\b'),
             re.compile(r'\b[-+]*\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'\b[^\x00-\x7F]?[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9ATCGU]+\b'),
             re.compile(r'\b[ATCG]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
@@ -91,11 +92,19 @@ class PostProcessing:
                 part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
                                               if index not in to_delete]
 
+        # sanity check, make sure annotations match their offset
+        for part in dataset.parts():
+            for ann in part.predicted_annotations:
+                assert ann.text == part.text[ann.offset:ann.offset + len(ann.text)]
+
     def __is_silent(self, ann):
         split = re.split('[-+]?[\d]+', ann.text)
         return len(split) == 2 and split[0] == split[1]
 
     def __fix_issues(self, part):
+        """
+        :type part: nalaf.structures.data.Part
+        """
         to_be_removed = []
         for index, ann in enumerate(part.predicted_annotations):
             start = ann.offset
@@ -162,6 +171,18 @@ class PostProcessing:
             except IndexError:
                 pass
 
+            # fix boundary add missing c. or p. before ann
+            try:
+                if ann.text.startswith('.'):
+                    if part.text[start - 1] in ('c', 'p'):
+                        ann.offset -= 1
+                        ann.text = part.text[start - 1] + ann.text
+                elif part.text[start - 2:start] in ('c.', 'p.'):
+                    ann.offset -= 2
+                    ann.text = part.text[start - 2:start] + ann.text
+            except IndexError:
+                pass
+
             isword = re.compile("\\w")
 
             # The word must end in space to the left
@@ -222,7 +243,6 @@ class PostProcessing:
                         # last part is number of spaces + (
                         ann2offset = ann.offset + len(ann1text) + (len(ann.text) - sum(len(x) for x in split))
                         part.predicted_annotations.append(Entity(ann.class_id, ann2offset, ann2text))
-
 
         part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
                                       if index not in to_be_removed]
