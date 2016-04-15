@@ -136,11 +136,13 @@ class PostProcessing:
             if re.search('^[0-9]', ann.text) and re.search('([\-\+])', part.text[start - 1]):
                 ann.offset -= 1
                 ann.text = part.text[start - 1] + ann.text
+                start -= 1
 
             # fix boundary delete (
             if ann.text[0] == '(' and ')' not in ann.text:
                 ann.offset += 1
                 ann.text = ann.text[1:]
+                start += 1
 
             # fix boundary delete )
             if ann.text[-1] == ')' and '(' not in ann.text:
@@ -150,6 +152,7 @@ class PostProcessing:
             if part.text[start - 1] == '(' and ')' in ann.text:
                 ann.offset -= 1
                 ann.text = '(' + ann.text
+                start -= 1
 
             # fix boundary add missing )
             try:
@@ -182,9 +185,11 @@ class PostProcessing:
                     if part.text[start - 1] in ('c', 'p'):
                         ann.offset -= 1
                         ann.text = part.text[start - 1] + ann.text
+                        start -= 1
                 elif part.text[start - 2:start] in ('c.', 'p.', 'rt'):
                     ann.offset -= 2
                     ann.text = part.text[start - 2:start] + ann.text
+                    start -= 2
             except IndexError:
                 pass
 
@@ -195,7 +200,8 @@ class PostProcessing:
                     tmp -= 1
                 if part.text[tmp - 1] == ' ':
                     ann.offset = tmp
-                    ann.text = part.text[ann.offset:start-1] + ann.text
+                    ann.text = part.text[ann.offset:start] + ann.text
+                    start = tmp
 
             isword = re.compile("\\w")
 
