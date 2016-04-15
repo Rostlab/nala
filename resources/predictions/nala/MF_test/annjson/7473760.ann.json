@@ -1,0 +1,1 @@
+{"metas": {}, "relations": [], "entities": [{"part": "abstract", "fields": {}, "classId": "e_2", "offsets": [{"text": "Ile --> Val", "start": 133}], "confidence": {"prob": 0.7863893837287048, "state": "", "who": ["ml:nalaf"]}, "normalizations": {}}], "sources": [{"url": "", "id": "7473760", "name": "ORIG"}], "anncomplete": false, "annotatable": {"parts": ["title", "abstract"]}}

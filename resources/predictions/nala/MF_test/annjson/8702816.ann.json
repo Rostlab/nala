@@ -1,0 +1,1 @@
+{"metas": {}, "relations": [], "entities": [{"part": "abstract", "fields": {}, "classId": "e_2", "offsets": [{"text": "Delta109-114", "start": 974}], "confidence": {"prob": 0.8480378033670533, "state": "", "who": ["ml:nalaf"]}, "normalizations": {}}], "sources": [{"url": "", "id": "8702816", "name": "ORIG"}], "anncomplete": false, "annotatable": {"parts": ["title", "abstract"]}}

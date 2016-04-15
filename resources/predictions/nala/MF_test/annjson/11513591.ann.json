@@ -1,0 +1,1 @@
+{"metas": {}, "relations": [], "entities": [{"part": "abstract", "fields": {}, "classId": "e_2", "offsets": [{"text": "Val --> Cys", "start": 675}], "confidence": {"prob": 0.7354795690469894, "state": "", "who": ["ml:nalaf"]}, "normalizations": {}}], "sources": [{"url": "", "id": "11513591", "name": "ORIG"}], "anncomplete": false, "annotatable": {"parts": ["title", "abstract"]}}
