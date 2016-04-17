@@ -18,6 +18,45 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner parts
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner parts --delete_subclasses "0"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner parts --delete_subclasses "0,2"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner parts --delete_subclasses "1,2"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner parts --delete_subclasses "1"
+
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --delete_subclasses "0"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --delete_subclasses "0,2"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --delete_subclasses "1,2"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --delete_subclasses "1"
+
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --ps_ST --ps_NL
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "0"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "0,2"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "1,2"
+$train_cv --labeler BIEO --we --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "1"
+
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner parts
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner parts --delete_subclasses "0"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner parts --delete_subclasses "0,2"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner parts --delete_subclasses "1,2"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner parts --delete_subclasses "1"
+
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --delete_subclasses "0"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --delete_subclasses "0,2"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --delete_subclasses "1,2"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --delete_subclasses "1"
+
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --ps_ST --ps_NL
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "0"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "0,2"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "1,2"
+$train_cv --labeler BIEO --we --training_corpus IDP4+_training --pruner sentences --ps_ST --ps_NL --delete_subclasses "1"
+
+
+# ------------------------------------------------------------------------------------------
+
 # FINAL MODELS
 
 # Includes PP improvements and can be tested directly against alex winner
