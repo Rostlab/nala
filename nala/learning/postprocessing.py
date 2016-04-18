@@ -37,23 +37,24 @@ class PostProcessing:
                        .format(AA=AA, SS=SS), re.IGNORECASE),
             re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA=AA), re.IGNORECASE),
             re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA=AA), re.IGNORECASE),
+
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
+
             re.compile(r'\b(c\. *)?[ATCG] *([-+]|\d)\d+ *[ATCG]\b'),
             re.compile(r'\b(c\.|E(X|x)\d+) *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
+            re.compile(r'\b[ATCG][-+]*\d+[ATCG]/[ATCG]\b'),
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*[0-9]+\b'),
             re.compile(r'(?<![\w-])[-+]*\d+:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|to|-to-) *[CISQMNPKDTFAGHLRWVEYX]\b'),
 
-            re.compile(r'\b[-+]*\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
-            re.compile(r'\b[^\x00-\x7F]?[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9ATCGU]+\b'),
+            re.compile(r'\b[-+]?\d+ *\d* *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
+            re.compile(r'\b[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9CISQMNPKDTFAGHLRWVEYX]+\b'),
             re.compile(r'\b[ATCG]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
-            re.compile(r'\b(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup) *(\d+(b|bp|N|ntb|p|BP|B)|[ATCG]{2,})\b'),
-            re.compile(r'\b[-+]?\d+ *\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
-            re.compile(r'\b[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[A-Z]+\b'),
-            re.compile(r'\b[^\x00-\x7F]?[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]'
-                       r'( *(/) *[CISQMNPKDTFAGHLRWVEYX])*\b'),
+            re.compile(r'\b(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup) *(\d+(b|bp|N|ntb|p|BP|B)|[ATCG]{1,})\b'),
+            re.compile(r'\b[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[CISQMNPKDTFAGHLRWVEYX]+\b'),
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
-            re.compile(r'\b[ATCG][-+]*\d+[ATCG]/[ATCG]\b')
+
+            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]( *(/) *[CISQMNPKDTFAGHLRWVEYX])*\b')
         ]
 
         self.negative_patterns = [
