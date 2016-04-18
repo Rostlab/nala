@@ -40,7 +40,7 @@ class PostProcessing:
 
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
 
-            re.compile(r'\b(\d+-)?\d*[D|d]elta\d{2,}\b'),
+            re.compile(r'\b(\d+-)?\d*[D|d]elta(\d{2,}|[CISQMNPKDTFAGHLRWVEYX])\b'),
 
             re.compile(r'\b(c\. *)?[ATCG] *([-+]|\d)\d+ *[ATCG]\b'),
             re.compile(r'\b(c\.|E(X|x)\d+) *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
