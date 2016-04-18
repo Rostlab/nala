@@ -65,9 +65,9 @@ class PostProcessing:
 
         self.negative_patterns = [
             # single AAs
-            re.compile('^({SS}) *\d+$'.format(SS=AA_NN), re.IGNORECASE),
+            re.compile(r'^({SS}) *\d+$'.format(SS=AA_NN), re.IGNORECASE),
             re.compile(r'^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$'),
-            re.compile('^({SS})([-/>]({SS}))*$'.format(SS=AA_LL), re.IGNORECASE),
+            re.compile(r'^({SS})([-/>]({SS}))*$'.format(SS=AA_LL), re.IGNORECASE),
             # just numbers
             re.compile(r'^[-+]?\d+([-+/ ]+\d+)*( *(b|bp|N|ntb|p|BP|B))?$')
         ]
