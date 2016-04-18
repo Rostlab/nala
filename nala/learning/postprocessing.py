@@ -44,7 +44,7 @@ class PostProcessing:
             re.compile(r'\b({SS})[-to ]*[-+]*\d+[-to ]*({SS})\b'.format(SS=AA_NN), re.IGNORECASE),
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*\d+\b'),
-            re.compile(r'((?<!\w)[-+]*\d*:? *?)??[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
+            re.compile(r'((?<!\w)[-+]*\d+:? *?)??[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX]{3,}/-(?<!\w)'),
 
