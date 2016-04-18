@@ -23,7 +23,7 @@ class PostProcessing:
                     'alter\w*', 'switch\w*', 'variat\w*', 'instead\w*', 'replac\w*', 'in place', 'convert\w*',
                     'becom\w*']
 
-        #AA = '|'.join(amino_acids)
+        # AA = '|'.join(amino_acids)
         AA_NN = '|'.join(amino_acids + nucleotides)
         SS = '|'.join(keywords)
 
@@ -38,8 +38,13 @@ class PostProcessing:
                        '|([- ]*[1-9]\d*( +((has|have|had) +been|is|are|was|were|) '
                        '+(({SS})))? +(in|to|into|for|of|by|with|at) +({AA})( *(,|or|and|, and|, or) +({AA}))*))'
                        .format(AA=AA_NN, SS=SS), re.IGNORECASE),
+
             re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
             re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
+
+            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*\d+\b'),
+            re.compile(r'(?<!\w)[-+]*\d*:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
+            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]( *(/) *[CISQMNPKDTFAGHLRWVEYX])*\b'),
 
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
 
@@ -49,17 +54,12 @@ class PostProcessing:
             re.compile(r'\b(c\.|E(X|x)\d+) *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
             re.compile(r'\b[ATCG][-+]*\d+[ATCG]/[ATCG]\b'),
 
-            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*\d+\b'),
-            re.compile(r'(?<!\w)[-+]*\d*:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
-
             re.compile(r'(?<!\w)[-+]?\d+ *\d* *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'(?<!\w)[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9CISQMNPKDTFAGHLRWVEYX]+\b'),
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'\b(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup) *(\d+(b|bp|N|ntb|p|BP|B)|[ATCG]{1,})\b'),
             re.compile(r'(?<!\w)[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[CISQMNPKDTFAGHLRWVEYX]+\b'),
-            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
-
-            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]( *(/) *[CISQMNPKDTFAGHLRWVEYX])*\b')
+            re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b')
         ]
 
         self.negative_patterns = [
