@@ -17,26 +17,29 @@ class PostProcessing:
             'tyrosine', 'tyr', 'valine', 'val', 'aspartic acid', 'asparagine', 'asx', 'glutamine', 'glutamic acid',
             'glx']
 
+        nucleotides = ['adenine', 'guanine', 'thymine', 'cytosine', 'uracil']
+
         keywords = ['substit\w*', 'lead\w*', 'exchang\w*', 'chang\w*', 'mutant\w*', 'mutate\w*', 'devia\w*', 'modif\w*',
                     'alter\w*', 'switch\w*', 'variat\w*', 'instead\w*', 'replac\w*', 'in place', 'convert\w*',
                     'becom\w*']
 
-        AA = '|'.join(amino_acids)
+        #AA = '|'.join(amino_acids)
+        AA_NN = '|'.join(amino_acids + nucleotides)
         SS = '|'.join(keywords)
 
         self.patterns = [
             re.compile('({AA})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({AA})( *(,|,?or|,?and) +({AA}))*'
-                       .format(AA=AA), re.IGNORECASE),
+                       .format(AA=AA_NN), re.IGNORECASE),
             re.compile('({AA}) +(in|to|into|for|of|by|with|at) +({AA})[- ]*[1-9][0-9]*'
                        '( *(,|,?or|,?and) +({AA})[- ]*[1-9][0-9]*)*'
-                       .format(AA=AA), re.IGNORECASE),
+                       .format(AA=AA_NN), re.IGNORECASE),
             re.compile('({AA})(( (({SS})) (in|to|into|for|of|by|with|at) (a|an|the|) '
                        '*({AA})[1-9]\d*( *(,|or|and|, and|, or) ({AA})[1-9]\d*)*)'
                        '|([- ]*[1-9]\d*( +((has|have|had) +been|is|are|was|were|) '
                        '+(({SS})))? +(in|to|into|for|of|by|with|at) +({AA})( *(,|or|and|, and|, or) +({AA}))*))'
-                       .format(AA=AA, SS=SS), re.IGNORECASE),
-            re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA=AA), re.IGNORECASE),
-            re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA=AA), re.IGNORECASE),
+                       .format(AA=AA_NN, SS=SS), re.IGNORECASE),
+            re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
+            re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
 
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
 
@@ -61,7 +64,7 @@ class PostProcessing:
 
         self.negative_patterns = [
             # single AAs
-            re.compile('^({AA}) *\d+$'.format(AA=AA), re.IGNORECASE),
+            re.compile('^({AA}) *\d+$'.format(AA=AA_NN), re.IGNORECASE),
             re.compile('^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$'),
             re.compile('^({AA})([-/>]({AA}))*$'
                        .format(AA='|'.join(amino_acids + [aa for aa in 'CISQMNPKDTFAGHLRWVEYX'])), re.IGNORECASE),
