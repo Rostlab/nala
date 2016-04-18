@@ -132,7 +132,7 @@ class PostProcessing:
                             part.predicted_annotations.append(
                                 Entity(ann.class_id, ann.offset + split_offset, split_text))
 
-            # fix boundary #17000021	251	258	1858C>T --> +1858C>T
+            # fix boundary, 1858C>T --> +1858C>T
             if re.search('^[0-9]', ann.text) and re.search('([\-\+])', part.text[start - 1]):
                 ann.offset -= 1
                 ann.text = part.text[start - 1] + ann.text
