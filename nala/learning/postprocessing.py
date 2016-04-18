@@ -25,6 +25,7 @@ class PostProcessing:
 
         # AA = '|'.join(amino_acids)
         AA_NN = '|'.join(amino_acids + nucleotides)
+        AA_LL = '|'.join(amino_acids + list('CISQMNPKDTFAGHLRWVEYX'))
         SS = '|'.join(keywords)
 
         self.patterns = [
@@ -65,11 +66,10 @@ class PostProcessing:
         self.negative_patterns = [
             # single AAs
             re.compile('^({AA}) *\d+$'.format(AA=AA_NN), re.IGNORECASE),
-            re.compile('^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$'),
-            re.compile('^({AA})([-/>]({AA}))*$'
-                       .format(AA='|'.join(amino_acids + [aa for aa in 'CISQMNPKDTFAGHLRWVEYX'])), re.IGNORECASE),
+            re.compile(r'^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$'),
+            re.compile('^({AA})([-/>]({AA}))*$'.format(AA=AA_LL), re.IGNORECASE),
             # just numbers
-            re.compile('^[-+]?\d+([-+/ ]+\d+)*( *(b|bp|N|ntb|p|BP|B))?$')
+            re.compile(r'^[-+]?\d+([-+/ ]+\d+)*( *(b|bp|N|ntb|p|BP|B))?$')
         ]
 
         self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
