@@ -122,6 +122,9 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(0, f("GAT-->GTT, Asp-->Val"))
         testEqual(2, f("codon 98 GAT-->GTT, Asp-->Val"))
         testEqual(2, f("codon 92, TAC-->TAT"))
+        testEqual(1, f("arginine-127 into glutamine and arginine-469 into tryptophan"))
+        testEqual(2, f("arginine-127 into glutamine"))
+        testEqual(2, f("arginine-469 into tryptophan"))
 
 
 class TestTmVarRegexNLDefiner(unittest.TestCase):
