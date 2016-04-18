@@ -44,7 +44,8 @@ class PostProcessing:
             re.compile(r'\b({SS})[-to ]*[-+]*\d+[-to ]*({SS})\b'.format(SS=AA_NN), re.IGNORECASE),
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*\d+\b'),
-            re.compile(r'(?<!\w)[-+]*\d*:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
+            re.compile(r'((?<!\w)[-+]*\d*:? *?)??[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
+
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]( *(/) *[CISQMNPKDTFAGHLRWVEYX])*\b'),
 
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
@@ -107,6 +108,12 @@ class PostProcessing:
         for part in dataset.parts():
             for ann in part.predicted_annotations:
                 assert ann.text == part.text[ann.offset:ann.offset + len(ann.text)]
+                while ann.text[0] == ' ':
+                    ann.offset += 1
+                    ann.text = ann.text[1:]
+                while ann.text[-1] == ' ':
+                    ann.text = ann.text[:-1]
+                # assert ann.text == ann.text.strip(), ("'" + ann.text + "'")
 
     def __is_silent(self, ann):
         split = re.split('[-+]?[\d]+', ann.text)
