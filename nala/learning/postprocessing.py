@@ -26,7 +26,7 @@ class PostProcessing:
         # AA = '|'.join(amino_acids)
         AA_NN = '|'.join(amino_acids + nucleotides)
         AA_LL = '|'.join(amino_acids + list('CISQMNPKDTFAGHLRWVEYX'))
-        SS = '|'.join(keywords)
+        KK = '|'.join(keywords)
 
         self.patterns = [
             re.compile('({AA})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({AA})( *(,|,?or|,?and) +({AA}))*'
@@ -34,11 +34,11 @@ class PostProcessing:
             re.compile('({AA}) +(in|to|into|for|of|by|with|at) +({AA})[- ]*[1-9][0-9]*'
                        '( *(,|,?or|,?and) +({AA})[- ]*[1-9][0-9]*)*'
                        .format(AA=AA_NN), re.IGNORECASE),
-            re.compile('({AA})(( (({SS})) (in|to|into|for|of|by|with|at) (a|an|the|) '
+            re.compile('({AA})(( (({KK})) (in|to|into|for|of|by|with|at) (a|an|the|) '
                        '*({AA})[1-9]\d*( *(,|or|and|, and|, or) ({AA})[1-9]\d*)*)'
                        '|([- ]*[1-9]\d*( +((has|have|had) +been|is|are|was|were|) '
-                       '+(({SS})))? +(in|to|into|for|of|by|with|at) +({AA})( *(,|or|and|, and|, or) +({AA}))*))'
-                       .format(AA=AA_NN, SS=SS), re.IGNORECASE),
+                       '+(({KK})))? +(in|to|into|for|of|by|with|at) +({AA})( *(,|or|and|, and|, or) +({AA}))*))'
+                       .format(AA=AA_NN, KK=KK), re.IGNORECASE),
 
             re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
             re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
