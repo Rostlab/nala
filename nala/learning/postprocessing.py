@@ -133,9 +133,11 @@ class PostProcessing:
                     offset += len(text)
 
                 split_parts = [split_part for split_part in split_info if split_part[0] != '']
+                lens = [len(split_part[0]) for split_part in split_parts]
 
                 # if all the non empty parts are from class ST (0) and also contain at least one number and one letter
-                if all(split_part[1] == 0 and split_part[3] for split_part in split_parts):
+                # or if the lengths of the splitted parts are the same (idea: they follow the same pattern)
+                if all(split_part[1] == 0 and split_part[3] for split_part in split_parts) or max(lens) == min(lens):
                     to_be_removed.append(index)
 
                     # add them to
