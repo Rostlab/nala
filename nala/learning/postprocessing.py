@@ -47,7 +47,7 @@ class PostProcessing:
             re.compile(r'\b[ATCG][-+]*\d+[ATCG]/[ATCG]\b'),
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*\d+\b'),
-            re.compile(r'(?<!\w)[-+]*\d*:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|to|-to-) *[CISQMNPKDTFAGHLRWVEYX]\b'),
+            re.compile(r'(?<!\w)[-+]*\d*:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
 
             re.compile(r'(?<!\w)[-+]?\d+ *\d* *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'(?<!\w)[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9CISQMNPKDTFAGHLRWVEYX]+\b'),
