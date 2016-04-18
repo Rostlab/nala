@@ -21,25 +21,29 @@ class PostProcessing:
                     'alter\w*', 'switch\w*', 'variat\w*', 'instead\w*', 'replac\w*', 'in place', 'convert\w*',
                     'becom\w*']
 
+        AA = '|'.join(amino_acids)
+        SS = '|'.join(keywords)
+
         self.patterns = [
             re.compile('({AA})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({AA})( *(,|,?or|,?and) +({AA}))*'
-                       .format(AA='|'.join(amino_acids)), re.IGNORECASE),
+                       .format(AA=AA), re.IGNORECASE),
             re.compile('({AA}) +(in|to|into|for|of|by|with|at) +({AA})[- ]*[1-9][0-9]*'
                        '( *(,|,?or|,?and) +({AA})[- ]*[1-9][0-9]*)*'
-                       .format(AA='|'.join(amino_acids)), re.IGNORECASE),
+                       .format(AA=AA), re.IGNORECASE),
             re.compile('({AA})(( (({SS})) (in|to|into|for|of|by|with|at) (a|an|the|) '
                        '*({AA})[1-9]\d*( *(,|or|and|, and|, or) ({AA})[1-9]\d*)*)'
                        '|([- ]*[1-9]\d*( +((has|have|had) +been|is|are|was|were|) '
                        '+(({SS})))? +(in|to|into|for|of|by|with|at) +({AA})( *(,|or|and|, and|, or) +({AA}))*))'
-                       .format(AA='|'.join(amino_acids), SS='|'.join(keywords)), re.IGNORECASE),
-            re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA='|'.join(amino_acids)), re.IGNORECASE),
-            re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA='|'.join(amino_acids)), re.IGNORECASE),
+                       .format(AA=AA, SS=SS), re.IGNORECASE),
+            re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA=AA), re.IGNORECASE),
+            re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA=AA), re.IGNORECASE),
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
             re.compile(r'\b(c\. *)?[ATCG] *([-+]|\d)\d+ *[ATCG]\b'),
             re.compile(r'\b(c\.|E(X|x)\d+) *([-+]|\d)\d+[ATCG] *> *[ATCG]\b'),
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*[0-9]+\b'),
             re.compile(r'(?<![\w-])[-+]*\d+:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|to|-to-) *[CISQMNPKDTFAGHLRWVEYX]\b'),
+
             re.compile(r'\b[-+]*\d+ *(b|bp|N|ntb|p|BP|B) *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
             re.compile(r'\b[^\x00-\x7F]?[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)[0-9ATCGU]+\b'),
             re.compile(r'\b[ATCG]+ *[-+]*\d+ *(INS|DEL|INDEL|DELINS|DUP|ins|del|indel|delins|dup)\b'),
@@ -54,7 +58,7 @@ class PostProcessing:
 
         self.negative_patterns = [
             # single AAs
-            re.compile('^({AA}) *\d+$'.format(AA='|'.join(amino_acids)), re.IGNORECASE),
+            re.compile('^({AA}) *\d+$'.format(AA=AA), re.IGNORECASE),
             re.compile('^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$'),
             re.compile('^({AA})([-/>]({AA}))*$'
                        .format(AA='|'.join(amino_acids + [aa for aa in 'CISQMNPKDTFAGHLRWVEYX'])), re.IGNORECASE),
