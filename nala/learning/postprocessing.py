@@ -122,9 +122,8 @@ class PostProcessing:
             end = ann.offset + len(ann.text)
 
             # split multiple mentions
-            if re.search(r' *(?:\band\b|/|\\|,|;|\bor\b) *', ann.text):
-                split = re.split(r' *(?:\band\b|/|\\|,|;|\bor\b) *', ann.text)
-
+            split = re.split(r' *(?:\band\b|/|\\|,|;|\bor\b) *', ann.text)
+            if len(split) > 1:
                 # for each split part calculate the offsets and the constraints
                 offset = 0
                 split_info = []
@@ -133,8 +132,10 @@ class PostProcessing:
                                        self.at_least_one_letter_n_number_letter_n_number.search(text)))
                     offset += len(text)
 
+                split_parts = [split_part for split_part in split_info if split_part[0] != '']
+
                 # if all the non empty parts are from class ST (0) and also contain at least one number and one letter
-                if all(split_part[1] == 0 and split_part[3] for split_part in split_info if split_part[0] != ''):
+                if all(split_part[1] == 0 and split_part[3] for split_part in split_parts):
                     to_be_removed.append(index)
 
                     # add them to
