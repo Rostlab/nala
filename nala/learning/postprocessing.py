@@ -29,19 +29,19 @@ class PostProcessing:
         KK = '|'.join(keywords)
 
         self.patterns = [
-            re.compile('({AA})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({AA})( *(,|,?or|,?and) +({AA}))*'
-                       .format(AA=AA_NN), re.IGNORECASE),
-            re.compile('({AA}) +(in|to|into|for|of|by|with|at) +({AA})[- ]*[1-9][0-9]*'
-                       '( *(,|,?or|,?and) +({AA})[- ]*[1-9][0-9]*)*'
-                       .format(AA=AA_NN), re.IGNORECASE),
-            re.compile('({AA})(( (({KK})) (in|to|into|for|of|by|with|at) (a|an|the|) '
-                       '*({AA})[1-9]\d*( *(,|or|and|, and|, or) ({AA})[1-9]\d*)*)'
+            re.compile('({SS})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({SS})( *(,|,?or|,?and) +({SS}))*'
+                       .format(SS=AA_NN), re.IGNORECASE),
+            re.compile('({SS}) +(in|to|into|for|of|by|with|at) +({SS})[- ]*[1-9][0-9]*'
+                       '( *(,|,?or|,?and) +({SS})[- ]*[1-9][0-9]*)*'
+                       .format(SS=AA_NN), re.IGNORECASE),
+            re.compile('({SS})(( (({KK})) (in|to|into|for|of|by|with|at) (a|an|the|) '
+                       '*({SS})[1-9]\d*( *(,|or|and|, and|, or) ({SS})[1-9]\d*)*)'
                        '|([- ]*[1-9]\d*( +((has|have|had) +been|is|are|was|were|) '
-                       '+(({KK})))? +(in|to|into|for|of|by|with|at) +({AA})( *(,|or|and|, and|, or) +({AA}))*))'
-                       .format(AA=AA_NN, KK=KK), re.IGNORECASE),
+                       '+(({KK})))? +(in|to|into|for|of|by|with|at) +({SS})( *(,|or|and|, and|, or) +({SS}))*))'
+                       .format(SS=AA_NN, KK=KK), re.IGNORECASE),
 
-            re.compile(r'\bp\. *({AA}) *[-+]*\d+ *({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
-            re.compile(r'\b({AA})[-to ]*[-+]*\d+[-to ]*({AA})\b'.format(AA=AA_NN), re.IGNORECASE),
+            re.compile(r'\bp\. *({SS}) *[-+]*\d+ *({SS})\b'.format(SS=AA_NN), re.IGNORECASE),
+            re.compile(r'\b({SS})[-to ]*[-+]*\d+[-to ]*({SS})\b'.format(SS=AA_NN), re.IGNORECASE),
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX](/|-|-*>|→|-to-)[CISQMNPKDTFAGHLRWVEYX] *[-+]*\d+\b'),
             re.compile(r'(?<!\w)[-+]*\d*:? *[CISQMNPKDTFAGHLRWVEYX] *(/|-|-*>|→|-*to-*) *[CISQMNPKDTFAGHLRWVEYX]\b'),
@@ -65,9 +65,9 @@ class PostProcessing:
 
         self.negative_patterns = [
             # single AAs
-            re.compile('^({AA}) *\d+$'.format(AA=AA_NN), re.IGNORECASE),
+            re.compile('^({SS}) *\d+$'.format(SS=AA_NN), re.IGNORECASE),
             re.compile(r'^[CISQMNPKDTFAGHLRWVEYX]+ *\d+$'),
-            re.compile('^({AA})([-/>]({AA}))*$'.format(AA=AA_LL), re.IGNORECASE),
+            re.compile('^({SS})([-/>]({SS}))*$'.format(SS=AA_LL), re.IGNORECASE),
             # just numbers
             re.compile(r'^[-+]?\d+([-+/ ]+\d+)*( *(b|bp|N|ntb|p|BP|B))?$')
         ]
