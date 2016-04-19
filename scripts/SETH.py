@@ -3,6 +3,9 @@ import os
 import subprocess
 from subprocess import CalledProcessError
 from nala.utils.corpora import get_corpus
+from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader
+from nalaf.learning.evaluators import MentionLevelEvaluator
+from nala.preprocessing.definers import ExclusiveNLDefiner
 
 def run_seth_on_corpus(corpus, folder, useMutationFinderOnly):
     counter = 0
@@ -27,14 +30,22 @@ def run_seth_on_string_with_filename(text, filename, useMutationFinderOnly):
             raise
 
 methodName = sys.argv[1]
-assert methodName in {"SETH", "MFmodified"}, "Method name must be SETH or MFmodified"
+assert methodName in {"SETH", "MFmodified", "check_performance"}, \
+    "Method name must be SETH or MFmodified or check_performance"
 corpusName = sys.argv[2]
 corpus = get_corpus(corpusName)
 folderName = sys.argv[3]
-folderName = os.path.join(folderName, methodName, corpusName)
-if not os.path.exists(folderName):
-    os.makedirs(folderName)
 
-useMutationFinderOnly = "true" if methodName == "MFmodified" else "false"
+if (methodName != 'check_performance'):
+    folderName = os.path.join(folderName, methodName, corpusName)
+    if not os.path.exists(folderName):
+        os.makedirs(folderName)
 
-run_seth_on_corpus(corpus, folderName, useMutationFinderOnly)
+    useMutationFinderOnly = "true" if methodName == "MFmodified" else "false"
+
+    run_seth_on_corpus(corpus, folderName, useMutationFinderOnly)
+else:
+    BRATPartsAnnotationReader(folderName, is_predicted=True).annotate(corpus)
+    ExclusiveNLDefiner().define(corpus)
+    evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(corpus)
+    print(evaluation)
