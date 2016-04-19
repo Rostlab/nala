@@ -1,1 +1,0 @@
-{"anncomplete": false, "entities": [{"part": "abstract", "normalizations": {}, "confidence": {"state": "", "who": ["ml:nalaf"], "prob": 0.5301829393223009}, "classId": "e_2", "offsets": [{"text": "F13A", "start": 488}], "fields": {}}], "metas": {}, "sources": [{"name": "ORIG", "id": "8352275", "url": ""}], "relations": [], "annotatable": {"parts": ["title", "abstract"]}}
