@@ -1,0 +1,115 @@
+* docid=1334229 part=03-Methods-p02-p8
+test: codon 33: C→A || codon 41: A→G || codon 45: 3 bp deletion || codon 45: C→T
+pred: 
+
+* docid=1334229 part=04-Results-p01-p2
+test: codons 37 and 45, all were C→T transitions, leading to Ser→Phe amino acid changes || loss of one of the Ser/Thr phosphorylation sites and subsequent stabilisation of the protein, occurred at codons 37 and 45, all were C→T
+pred: 
+
+* docid=1360090 part=02-Background-p01-p2
+test: 1796T to A || V600E || V600E
+pred: V600E || V600E
+
+* docid=1360090 part=03-Results-p01-p2
+test: 1799T to A || V600E
+pred: V600E
+
+* docid=1360090 part=03-Results-p01-p3
+test: 1799T to A mutation || V600E
+pred: V600E
+
+* docid=1373649 part=01-Abstract-p01-p9
+test: c.1864C>A || missense (c.1864C>A) mutation in exon 12 || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
+pred: c.1864C>A || p.Pro622Thr || proline 622 to threonine
+
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=1373649 part=04-Results-and-discussion-p01-p6
+test: a c.1864C>A transversion in exon 12 || c.1864C>A || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
+pred: c.1864C>A || p.Pro622Thr || proline 622 to threonine
+
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 1 0
+* docid=1601966 part=03-Results-p06-p5
+test: M23A
+pred: 
+
+* docid=1619718 part=03-Materials-and-methods-p02-p5
+test: A1796 || V599E || V600E
+pred: V599E || V600E
+
+* docid=1619718 part=04-Results-p01-p3
+test: V600E || codon 12 (G→T at position 35 and T→G at position 36)
+pred: 20 G→A || V600E
+
+* docid=2275286 part=05-Discussion-p02-p1
+test: C1668 C > T || C1886 A > G
+pred: 
+
+* docid=2386495 part=03-Methods-p02-p4
+test: c.5465A > T
+pred: 
+
+* docid=2386495 part=04-Results-p02-p1
+test: 1825del3595 || c.423-1662_531+1825del3595
+pred: c.423-1662_531+1825del3595
+
+* docid=2386495 part=04-Results-p02-p4
+test: 
+pred: c.2700_2701delTC
+
+* docid=2386495 part=04-Results-p02-p6
+test: c.70C > T substitution which introduces a nonsense mutation in codon 24
+pred: 
+
+* docid=2386495 part=04-Results-p03-p2
+test: c.835-7T > G
+pred: 
+
+* docid=2386495 part=04-Results-p03-p3
+test: c.835-7T > G
+pred: 
+
+* docid=2386495 part=04-Results-p03-p4
+test: c. 423 -6delAAATAGGTinsGAAGCAAGATCAG || c.423-6del8ins13 || c.834G > C
+pred: c.423-6del8
+
+* docid=2386495 part=04-Results-p04-p1
+test: c.834G > C
+pred: 
+
+* docid=2386495 part=04-Results-p04-p3
+test: c.5465A > T
+pred: 
+
+* docid=2386495 part=04-Results-p04-p4
+test: c.5465A > T
+pred: 
+
+* docid=2386495 part=05-Discussion-p01-p2
+test: c.3183_3187delACAAA || c.3927_3931del AAAGA || c.3927_3931del AAAGA || c.70C > T
+pred: c.3183_3187delACAAA || c.3927_3931del || c.3927_3931del
+
+* docid=2386495 part=05-Discussion-p02-p1
+test: c.70C > T
+pred: 
+
+* docid=2386495 part=05-Discussion-p02-p2
+test: c.70C > T
+pred: 
+
+* docid=2386495 part=05-Discussion-p03-p6
+test: c.834G > C || c.835-7T > G || c.845-17A > G
+pred: 
+
+* docid=2386495 part=05-Discussion-p04-p3
+test: c.5465A > T
+pred: 
+
+# class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
+0	78	5	24	3	4	e	0.9398	0.0075	0.7647	0.0140	0.8432	0.0106	o	0.9770	0.0033	0.8095	0.0130	0.8854	0.0066
+1	4	2	9	2	4	e	0.6667	0.0000	0.3077	0.0108	0.4211	0.0100	o	1.0000	0.0000	0.6667	0.0226	0.8000	0.0133
+2	0	0	5	0	0	e	   nan	   nan	0.0000	0.0000	   nan	   nan	o	   nan	   nan	0.0000	0.0000	   nan	   nan
+TOTAL	82	7	38	5	8	e	0.9213	0.0080	0.6833	0.0135	0.7847	0.0107	o	0.9794	0.0034	0.7600	0.0126	0.8559	0.0068
