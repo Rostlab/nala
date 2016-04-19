@@ -11,6 +11,8 @@ from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.learning.taggers import NalaSingleModelTagger, NalaTagger
 from nalaf.utils.writers import TagTogFormat
 from nala.bootstrapping.document_filters import HighRecallRegexClassifier
+from nalaf.utils.readers import StringReader
+from nalaf.utils.writers import ConsoleWriter
 
 if __name__ == "__main__":
 
@@ -20,6 +22,8 @@ if __name__ == "__main__":
                         help='Name of the corpus to train on. Ex: nala_training, IDP4+_training, nala_training_5')
     parser.add_argument('--test_corpus',
                         help='Name of the corpus to test on')
+    parser.add_argument('--string',
+                        help='String to tag')
 
     parser.add_argument('--validation', required=False, default="stratified",
                         choices=["cross-validation", "stratified", "none"],
@@ -162,9 +166,16 @@ if __name__ == "__main__":
             definer.define(train_set)
             train_set, test_set = train_set.stratified_split()
 
-    else:
+    elif args.test_corpus:
         train_set = None
         test_set = get_corpus(args.test_corpus)
+
+    elif args.string:
+        train_set = None
+        test_set = StringReader(args.string).read()
+
+    else:
+        raise Exception("you must give a training_corpus, test_corpus, or string")
 
     # ------------------------------------------------------------------------------
 
@@ -214,7 +225,7 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
-    def test(tagger, test_set):
+    def test(tagger, test_set, print_eval=True, print_results=False):
         tagger.tag(test_set)
         definer.define(test_set)
         stats(test_set, "test")
@@ -222,7 +233,10 @@ if __name__ == "__main__":
 
         print_run_args()
 
-        print(evaluation)
+        if print_eval:
+            print(evaluation)
+        if print_results:
+            ConsoleWriter(True).write(test_set)
 
     # ------------------------------------------------------------------------------
 
@@ -241,7 +255,7 @@ if __name__ == "__main__":
         stats(train_set, "training")
 
     if test_set:
-        test(tagger, test_set)
+        test(tagger, test_set, print_eval=args.string is None, print_results=args.string is not None)
 
     if args.do_train:
         print("\nThe model is saved to: {}\n".format(args.model_path_1))
