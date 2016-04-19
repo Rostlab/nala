@@ -18,6 +18,21 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+# Iterations CV
+
+# 471590.1-5 $train_cv --training_corpus nala_training_5 --we
+# 471591.1-5 $train_cv --training_corpus nala_training_10 --we
+# 471592.1-5 $train_cv --training_corpus nala_training_15 --we
+# 471593.1-5 $train_cv --training_corpus nala_training_20 --we
+# 471594.1-5 $train_cv --training_corpus nala_training_25 --we
+# 471595.1-5 $train_cv --training_corpus nala_training_30 --we
+# 471596.1-5 $train_cv --training_corpus nala_training_35 --we
+# 471597.1-5 $train_cv --training_corpus nala_training_40 --we
+# 471598.1-5 $train_cv --training_corpus nala_training_45 --we
+# 471599.1-5 $train_cv --training_corpus nala_training_50 --we
+
+# ------------------------------------------------------------------------------------------
+
 # 471417.1-5 $train_cv --training_corpus nala_training
 # 471430.1-5 $train_cv --training_corpus nala_training --we
 # 471431 $train_no_cv --training_corpus nala_training --we
