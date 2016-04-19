@@ -12,10 +12,27 @@ outputdir='/mnt/home/cejuela/tmp/models/'
 outputdir2='/mnt/home/cejuela/tmp/zqsub/'
 train="time $python $trainscript --cv_n 5 --cv_fold $cv_fold --model_name_suffix $jobid "
 train_cv=$train
-train_no_cv="time $python $trainscript --validation none --model_name_suffix $jobid "
+train_no_cv="time $python $trainscript --validation none --model_name_suffix $jobid --output_folder $outputdir "
 
 # FINAL EXPERIMENTS
 # ------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
+
+# 471417.1-5 $train_cv --training_corpus nala_training
+# 471430.1-5 $train_cv --training_corpus nala_training --we
+# 471431 $train_no_cv --training_corpus nala_training --we
+# 471432 $train_no_cv --training_corpus nala
+# 471433 $train_no_cv --training_corpus nala --we
+# 471434 $train_no_cv --training_corpus tmVar_training --test_corpus tmVar_test --we
+
+# 469533.1-5 $train_cv --training_corpus nala_training --pruner parts
+# 469534.1-5 $train_cv --training_corpus nala_training --pruner parts --we
+# 469535.1-5 $train_cv --training_corpus nala_training --pruner sentences --ps_ST --ps_NL --we
+# 471410.1-5 $train_cv --training_corpus IDP4+_training --pruner parts --we
+# 469537.1-5 $train_cv --training_corpus IDP4+_training --pruner parts --we --delete_subclasses "2"
+# 469539.1-5 $train_cv --training_corpus IDP4+_training --pruner parts --we --delete_subclasses "1,2"
+# 471411.1-5 $train_cv --training_corpus nala_training --pruner parts --we --delete_subclasses "1"
+
 # ------------------------------------------------------------------------------------------
 
 # 467068.1-5 $train_cv --labeler BIEO --we --training_corpus nala_training --pruner parts
