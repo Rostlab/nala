@@ -8,7 +8,7 @@ from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, IOLabeler, TmV
 from nala.utils import get_prepare_pipeline_for_best_model
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
-from nala.learning.taggers import NalaSingleModelTagger, NalaTagger
+from nala.learning.taggers import NalaSingleModelTagger, NalaMultipleModelTagger
 from nalaf.utils.writers import TagTogFormat
 from nala.bootstrapping.document_filters import HighRecallRegexClassifier
 from nalaf.utils.readers import StringReader
@@ -71,6 +71,9 @@ if __name__ == "__main__":
     parser.add_argument('--nl_threshold', type=int, default=0)
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
+    parser.add_argument('--keep_genetic_markers', default='True',
+                        help='keep genetic markers of the form D17S250, true (default) or false')
+
     args = parser.parse_args()
 
     # ------------------------------------------------------------------------------
@@ -122,7 +125,9 @@ if __name__ == "__main__":
     else:
         args.crf_train_params = None
 
-    args.use_feat_windows = False if args.use_feat_windows.lower() in ['false', '0', 'no'] else True
+    args.use_feat_windows = False if args.use_feat_windows.lower() in ['false', '0', 'no', 'none'] else True
+
+    args.keep_genetic_markers = False if args.keep_genetic_markers.lower() in ['false', '0', 'no', 'none'] else True
 
     args.do_train = False if args.model_path_1 else True
 
@@ -243,9 +248,16 @@ if __name__ == "__main__":
     assert(args.model_path_1 is not None)
 
     if args.model_path_2:
-        tagger = NalaTagger(st_model=args.model_path_1, all3_model=args.model_path_2, features_pipeline=features_pipeline)
+        tagger = NalaMultipleModelTagger(
+                                       st_model=args.model_path_1,
+                                       all3_model=args.model_path_2,
+                                       features_pipeline=features_pipeline,
+                                       keep_genetic_markers=args.keep_genetic_markers)
     else:
-        tagger = NalaSingleModelTagger(bin_model=args.model_path_1, features_pipeline=features_pipeline)
+        tagger = NalaSingleModelTagger(
+                                       bin_model=args.model_path_1,
+                                       features_pipeline=features_pipeline,
+                                       keep_genetic_markers=args.keep_genetic_markers)
 
     # ------------------------------------------------------------------------------
 

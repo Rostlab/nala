@@ -8,7 +8,8 @@ from nala.utils import MUT_CLASS_ID
 
 
 class PostProcessing:
-    def __init__(self, keep_silent=True):
+
+    def __init__(self, keep_silent=True, keep_genetic_markers=True):
         amino_acids = [
             'alanine', 'ala', 'arginine', 'arg', 'asparagine', 'asn', 'aspartic acid', 'aspartate', 'asp',
             'cysteine', 'cys', 'glutamine', 'gln', 'glutamic acid', 'glutamate', 'glu', 'glycine', 'gly',
@@ -74,6 +75,9 @@ class PostProcessing:
             # just numbers
             re.compile(r'^[-+]?\d+([-+/ ]+\d+)*( *(b|bp|N|ntb|p|BP|B))?$')
         ]
+
+        if not keep_genetic_markers:
+            self.negative_patterns.append(re.compile(r'D\d+([A-Z]\d+)?S\d+'))
 
         self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
         self.keep_silent = keep_silent
