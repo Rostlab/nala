@@ -72,7 +72,11 @@ if __name__ == "__main__":
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
     parser.add_argument('--keep_genetic_markers', default='True',
-                        help='keep genetic markers of the form D17S250, true (default) or false')
+                        help='Keep genetic markers of the form D17S250, true (default) or false')
+    parser.add_argument('--keep_unnumbered', default='True',
+                        help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `C -> T`')
+
+    FALSE = ['false', '0', 'no', 'none']
 
     args = parser.parse_args()
 
@@ -125,9 +129,11 @@ if __name__ == "__main__":
     else:
         args.crf_train_params = None
 
-    args.use_feat_windows = False if args.use_feat_windows.lower() in ['false', '0', 'no', 'none'] else True
+    args.use_feat_windows = False if args.use_feat_windows.lower() in FALSE else True
 
-    args.keep_genetic_markers = False if args.keep_genetic_markers.lower() in ['false', '0', 'no', 'none'] else True
+    args.keep_genetic_markers = False if args.keep_genetic_markers.lower() in FALSE else True
+
+    args.keep_unnumbered = False if args.keep_unnumbered.lower() in FALSE else True
 
     args.do_train = False if args.model_path_1 else True
 
@@ -252,12 +258,14 @@ if __name__ == "__main__":
                                        st_model=args.model_path_1,
                                        all3_model=args.model_path_2,
                                        features_pipeline=features_pipeline,
-                                       keep_genetic_markers=args.keep_genetic_markers)
+                                       keep_genetic_markers=args.keep_genetic_markers,
+                                       keep_unnumbered=args.keep_unnumbered)
     else:
         tagger = NalaSingleModelTagger(
                                        bin_model=args.model_path_1,
                                        features_pipeline=features_pipeline,
-                                       keep_genetic_markers=args.keep_genetic_markers)
+                                       keep_genetic_markers=args.keep_genetic_markers,
+                                       keep_unnumbered=args.keep_unnumbered)
 
     # ------------------------------------------------------------------------------
 

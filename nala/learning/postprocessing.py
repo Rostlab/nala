@@ -9,7 +9,7 @@ from nala.utils import MUT_CLASS_ID
 
 class PostProcessing:
 
-    def __init__(self, keep_silent=True, keep_genetic_markers=True):
+    def __init__(self, keep_silent=True, keep_genetic_markers=True, keep_unnumbered=True):
         amino_acids = [
             'alanine', 'ala', 'arginine', 'arg', 'asparagine', 'asn', 'aspartic acid', 'aspartate', 'asp',
             'cysteine', 'cys', 'glutamine', 'gln', 'glutamic acid', 'glutamate', 'glu', 'glycine', 'gly',
@@ -79,6 +79,8 @@ class PostProcessing:
         if not keep_genetic_markers:
             self.negative_patterns.append(re.compile(r'D\d+([A-Z]\d+)?S\d+'))
 
+        self.keep_unnumbered = keep_unnumbered
+
         self.at_least_one_letter_n_number_letter_n_number = re.compile('(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]+')
         self.keep_silent = keep_silent
         self.definer = ExclusiveNLDefiner()
@@ -105,7 +107,8 @@ class PostProcessing:
 
                 to_delete = [index for index, ann in enumerate(part.predicted_annotations)
                              if any(r.search(ann.text) for r in self.negative_patterns)
-                             or (not self.keep_silent and self.__is_silent(ann))]
+                             or (not self.keep_silent and self.__is_silent(ann))
+                             or (not self.keep_unnumbered and not self._is_numbered(ann))]
 
                 part.predicted_annotations = [ann for index, ann in enumerate(part.predicted_annotations)
                                               if index not in to_delete]
@@ -124,6 +127,9 @@ class PostProcessing:
     def __is_silent(self, ann):
         split = re.split('[-+]?[\d]+', ann.text)
         return len(split) == 2 and split[0] == split[1]
+
+    def _is_numbered(self, ann):
+        return any(c.isdigit() for c in ann.text) or self.definer.define_string(ann.text) == 1
 
     def __fix_issues(self, part):
         """
