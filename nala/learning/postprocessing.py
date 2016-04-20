@@ -125,7 +125,7 @@ class PostProcessing:
                 # assert ann.text == ann.text.strip(), ("'" + ann.text + "'")
 
     def __is_silent(self, ann):
-        split = re.split('[-+]?[\d]+', ann.text)
+        split = re.split('[^A-Za-z]+', ann.text)
         return len(split) == 2 and split[0] == split[1]
 
     def _is_numbered(self, ann):
