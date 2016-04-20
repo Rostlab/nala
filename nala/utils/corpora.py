@@ -13,7 +13,7 @@ from nalaf.structures.data import Dataset
 ALL_CORPORA = [
     'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNP',
     'IDP4', 'IDP4A', 'IDP4F',
-    'nala', 'nala_training',  # 'nala_test', activate once we are done
+    'nala', 'nala_training', 'nala_test',
     'IDP4+',
     'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
