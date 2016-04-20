@@ -34,7 +34,7 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # ------------------------------------------------------------------------------------------
 
 # 471417.1-5 $train_cv --training_corpus nala_training
-# 471430.1-5 $train_cv --training_corpus nala_training --we
+# BASELINE 471430.1-5 $train_cv --training_corpus nala_training --we
 # 471431 $train_no_cv --training_corpus nala_training --we
 # 471432 $train_no_cv --training_corpus nala
 # 471433 $train_no_cv --training_corpus nala --we
