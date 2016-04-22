@@ -18,6 +18,28 @@ train_no_cv="time $python $trainscript --validation none --model_name_suffix $jo
 # ------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------
 
+# Features: we (on/off)
+
+# 482686.1-5 $train_cv --training_corpus nala_training --we --use_feat_windows false
+# 482687.1-5 $train_cv --training_corpus nala_training --use_feat_windows false --> 0 PERFORMANCE
+
+# Features: TokenStem + we (on/off)
+
+# 482690.1-5 $train_cv --training_corpus nala_training --we --use_feat_windows false
+# 482691.1-5 $train_cv --training_corpus nala_training --use_feat_windows false
+
+# Features: PostProcessing + we (on/off)
+
+# 482444.1-5 $train_cv --training_corpus nala_training --we --use_feat_windows false
+# 482493.1-5 $train_cv --training_corpus nala_training --use_feat_windows false
+
+# Features: TokenStem + PostProcessing + we (on/off)
+
+# 479727.1-5 $train_cv --training_corpus nala_training --we --use_feat_windows false
+# 479752.1-5 $train_cv --training_corpus nala_training --use_feat_windows false
+
+# ------------------------------------------------------------------------------------------
+
 # Iterations CV
 
 # 471590.1-5 $train_cv --training_corpus nala_training_5 --we
