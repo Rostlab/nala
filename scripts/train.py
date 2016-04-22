@@ -77,6 +77,8 @@ if __name__ == "__main__":
                         help='Keep genetic markers of the form D17S250, true (default) or false')
     parser.add_argument('--keep_unnumbered', default='True',
                         help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `C -> T`')
+    parser.add_argument('--keep_rs_ids', default='True',
+                        help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `rs1801280` or `ss221`')
 
     FALSE = ['false', '0', 'no', 'none']
 
@@ -138,6 +140,8 @@ if __name__ == "__main__":
     args.keep_genetic_markers = False if args.keep_genetic_markers.lower() in FALSE else True
 
     args.keep_unnumbered = False if args.keep_unnumbered.lower() in FALSE else True
+
+    args.keep_ids = False if args.keep_rs_ids.lower() in FALSE else True
 
     args.do_train = False if args.model_path_1 else True
 
@@ -264,14 +268,16 @@ if __name__ == "__main__":
                                        features_pipeline=features_pipeline,
                                        keep_silent=args.keep_silent,
                                        keep_genetic_markers=args.keep_genetic_markers,
-                                       keep_unnumbered=args.keep_unnumbered)
+                                       keep_unnumbered=args.keep_unnumbered,
+                                       keep_rs_ids=args.keep_rs_ids)
     else:
         tagger = NalaSingleModelTagger(
                                        bin_model=args.model_path_1,
                                        features_pipeline=features_pipeline,
                                        keep_silent=args.keep_silent,
                                        keep_genetic_markers=args.keep_genetic_markers,
-                                       keep_unnumbered=args.keep_unnumbered)
+                                       keep_unnumbered=args.keep_unnumbered,
+                                       keep_rs_ids=args.keep_rs_ids)
 
     # ------------------------------------------------------------------------------
 

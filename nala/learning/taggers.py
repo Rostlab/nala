@@ -23,7 +23,8 @@ class NalaSingleModelTagger(Tagger):
             execute_pipeline=True,
             keep_silent=True,
             keep_genetic_markers=True,
-            keep_unnumbered=True):
+            keep_unnumbered=True,
+            keep_rs_ids=True):
 
         super().__init__([class_id])
 
@@ -35,7 +36,8 @@ class NalaSingleModelTagger(Tagger):
         self.crf = PyCRFSuite()
         self.post = PostProcessing(keep_silent=keep_silent,
                                    keep_genetic_markers=keep_genetic_markers,
-                                   keep_unnumbered=keep_unnumbered)
+                                   keep_unnumbered=keep_unnumbered,
+                                   keep_rs_ids=keep_rs_ids)
 
     def tag(self, dataset):
         if self.execute_pipeline:
@@ -53,7 +55,8 @@ class NalaMultipleModelTagger(Tagger):
             features_pipeline=None,
             keep_silent=True,
             keep_genetic_markers=True,
-            keep_unnumbered=True):
+            keep_unnumbered=True,
+            keep_rs_ids=True):
 
         super().__init__([class_id])
 
@@ -63,7 +66,8 @@ class NalaMultipleModelTagger(Tagger):
         # ---
         self.post = PostProcessing(keep_silent=keep_silent,
                                    keep_genetic_markers=keep_genetic_markers,
-                                   keep_unnumbered=keep_unnumbered)
+                                   keep_unnumbered=keep_unnumbered,
+                                   keep_rs_ids=keep_rs_ids)
 
     def tag(self, dataset):
         self.tagger.tag(dataset)

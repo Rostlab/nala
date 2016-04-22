@@ -9,7 +9,7 @@ from nala.utils import MUT_CLASS_ID
 
 class PostProcessing:
 
-    def __init__(self, keep_silent=True, keep_genetic_markers=True, keep_unnumbered=True):
+    def __init__(self, keep_silent=True, keep_genetic_markers=True, keep_unnumbered=True, keep_rs_ids=True):
         amino_acids = [
             'alanine', 'ala', 'arginine', 'arg', 'asparagine', 'asn', 'aspartic acid', 'aspartate', 'asp',
             'cysteine', 'cys', 'glutamine', 'gln', 'glutamic acid', 'glutamate', 'glu', 'glycine', 'gly',
@@ -30,6 +30,9 @@ class PostProcessing:
         KK = '|'.join(keywords)
 
         genetic_marker_regex = re.compile(r'\bD\d+([A-Z]\d+)?S\d+\b')
+        rs_id_regex = re.compile(r'\b\[?rs\]? *\d{3,}(,\d+)*\b')
+        ss_id_regex = re.compile(r'\b\[?ss\]? *\d{3,}(,\d+)*\b')
+
         self.patterns = [
             re.compile('({SS})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({SS})( *(,|,?or|,?and) +({SS}))*'
                        .format(SS=AA_NN), re.IGNORECASE),
@@ -52,8 +55,9 @@ class PostProcessing:
 
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]( *(/) *[CISQMNPKDTFAGHLRWVEYX])*\b'),
 
-            re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
             genetic_marker_regex,
+            rs_id_regex,
+            ss_id_regex,
 
             re.compile(r'\b(\d+-)?\d*[D|d]elta(\d{2,}|[CISQMNPKDTFAGHLRWVEYX])\b'),
 
@@ -80,6 +84,10 @@ class PostProcessing:
 
         if not keep_genetic_markers:
             self.negative_patterns.append(genetic_marker_regex)
+
+        if not keep_rs_ids:
+            self.negative_patterns.append(rs_id_regex)
+            self.negative_patterns.append(ss_id_regex)
 
         self.keep_unnumbered = keep_unnumbered
 
