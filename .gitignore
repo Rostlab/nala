@@ -9,6 +9,7 @@ IDP4_*/
 node_modules/
 /crfsuite/*
 bin_model
+*.bin
 *.zip
 *.tar.gz
 *.tar
