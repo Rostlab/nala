@@ -51,7 +51,6 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
         SentenceMarkerFeatureGenerator(),
         TmVarFeatureGenerator(),
         TmVarDictionaryFeatureGenerator(),
-
     ]
 
     include = []
