@@ -30,55 +30,23 @@ test: 1799T to A mutation || V600E
 pred: 1799T to A || V600E
 
 overlapping subclasses do not match 1 2
-* docid=1373649 part=01-Abstract-p01-p7
-test: 
-pred: D17S250 || D2S123 || D5S346
-
 * docid=1373649 part=01-Abstract-p01-p9
 test: c.1864C>A || missense (c.1864C>A) mutation in exon 12 || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
-pred: D5S346 || c.1864C>A || p.Pro622Thr || proline 622 to threonine
+pred: c.1864C>A || p.Pro622Thr || proline 622 to threonine
 
 overlapping subclasses do not match 1 2
 overlapping subclasses do not match 1 0
 overlapping subclasses do not match 1 0
-* docid=1373649 part=02-Background-p01-p6
-test: 
-pred: D17S250 || D2S123 || D5S346
-
-* docid=1373649 part=03-Methods-p01-p11
-test: 
-pred: D17S250 || D2S123 || D5S346
-
-* docid=1373649 part=03-Methods-p02-p1
-test: 
-pred: D5S346
-
 * docid=1373649 part=04-Results-and-discussion-p01-p6
 test: a c.1864C>A transversion in exon 12 || c.1864C>A || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
-pred: D5S346 || c.1864C>A transversion in exon 12 || p.Pro622Thr || proline 622 to threonine
+pred: c.1864C>A transversion in exon 12 || p.Pro622Thr || proline 622 to threonine
 
 overlapping subclasses do not match 1 2
 overlapping subclasses do not match 1 0
 overlapping subclasses do not match 1 0
-* docid=1557864 part=03-Methods-p02-p1
-test: 
-pred: D2S123
-
-* docid=1557864 part=04-Results-p01-p3
-test: 
-pred: D2S123
-
 * docid=1557864 part=05-Discussion-p01-p3
 test: 
 pred: p53phe172 mutation [46,47]
-
-* docid=1557864 part=05-Discussion-p02-p1
-test: 
-pred: D2S123
-
-* docid=1557864 part=05-Discussion-p02-p3
-test: 
-pred: D17S250 || D2S123 || D5S346
 
 * docid=1601966 part=03-Results-p06-p5
 test: M23A
@@ -113,14 +81,6 @@ pred: C to A
 * docid=1619718 part=05-Discussion-p04-p4
 test: 
 pred: C to A
-
-* docid=2275286 part=03-Methods-p01-p7
-test: 
-pred: D17S250 || D2S123 || D5S346
-
-* docid=2275286 part=04-Results-p01-p6
-test: 
-pred: D17S250 || D2S123 || D5S346
 
 * docid=2275286 part=04-Results-p02-p4
 test: 
@@ -202,7 +162,7 @@ Running arguments:
 	delete_subclasses = []
 	do_train = False
 	elastic_net = False
-	keep_genetic_markers = True
+	keep_genetic_markers = False
 	keep_rs_ids = True
 	keep_silent = True
 	keep_unnumbered = True
@@ -215,7 +175,7 @@ Running arguments:
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp9b_s5iu1
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmptnvp3or9
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -228,7 +188,7 @@ Running arguments:
 	we_additive = 0
 	we_model_location = None
 	we_multiplicative = 1
-	we_params = {'multiplicative': 1, 'additive': 0, 'location': None}
+	we_params = {'additive': 0, 'location': None, 'multiplicative': 1}
 	word_embeddings = True
 	write_anndoc = False
 
@@ -245,7 +205,7 @@ None_BIEO_del_None
 	delete_subclasses = []
 	do_train = False
 	elastic_net = False
-	keep_genetic_markers = True
+	keep_genetic_markers = False
 	keep_rs_ids = True
 	keep_silent = True
 	keep_unnumbered = True
@@ -258,7 +218,7 @@ None_BIEO_del_None
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp9b_s5iu1
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmptnvp3or9
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -271,12 +231,12 @@ None_BIEO_del_None
 	we_additive = 0
 	we_model_location = None
 	we_multiplicative = 1
-	we_params = {'multiplicative': 1, 'additive': 0, 'location': None}
+	we_params = {'additive': 0, 'location': None, 'multiplicative': 1}
 	word_embeddings = True
 	write_anndoc = False
 
 # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
-0	90	41	13	9	11	e	0.6870	0.0139	0.8738	0.0136	0.7692	0.0119	o	0.7746	0.0133	0.9821	0.0094	0.8661	0.0098
-1	3	25	9	8	9	e	0.1071	0.0060	0.2500	0.0088	0.1500	0.0181	o	0.5405	0.0129	1.0000	0.0000	0.7018	0.0092
-2	1	7	4	3	4	e	0.1250	0.0078	0.2000	0.0123	0.1538	0.0206	o	0.6667	0.0181	1.0000	0.0000	0.8000	0.0074
-TOTAL	94	73	26	20	24	e	0.5629	0.0119	0.7833	0.0138	0.6551	0.0105	o	0.7225	0.0089	0.9857	0.0060	0.8338	0.0062
+0	90	17	13	9	11	e	0.8411	0.0143	0.8738	0.0135	0.8571	0.0090	o	0.9322	0.0122	0.9821	0.0096	0.9565	0.0054
+1	3	25	9	8	9	e	0.1071	0.0061	0.2500	0.0088	0.1500	0.0184	o	0.5405	0.0133	1.0000	0.0000	0.7018	0.0093
+2	1	7	4	3	4	e	0.1250	0.0078	0.2000	0.0124	0.1538	0.0208	o	0.6667	0.0189	1.0000	0.0000	0.8000	0.0075
+TOTAL	94	49	26	20	24	e	0.6573	0.0128	0.7833	0.0137	0.7148	0.0103	o	0.8263	0.0088	0.9857	0.0063	0.8990	0.0045
