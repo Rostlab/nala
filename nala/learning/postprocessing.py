@@ -29,6 +29,7 @@ class PostProcessing:
         AA_LL = '|'.join(amino_acids + list('CISQMNPKDTFAGHLRWVEYX'))
         KK = '|'.join(keywords)
 
+        genetic_marker_regex = re.compile(r'\bD\d+([A-Z]\d+)?S\d+\b')
         self.patterns = [
             re.compile('({SS})[- ]*[1-9][0-9]* +(in|to|into|for|of|by|with|at) +({SS})( *(,|,?or|,?and) +({SS}))*'
                        .format(SS=AA_NN), re.IGNORECASE),
@@ -52,6 +53,7 @@ class PostProcessing:
             re.compile(r'\b[CISQMNPKDTFAGHLRWVEYX] *\d{2,} *[CISQMNPKDTFAGHLRWVEYX]( *(/) *[CISQMNPKDTFAGHLRWVEYX])*\b'),
 
             re.compile(r'\b\[?rs\]? *\d{2,}(,\d+)*\b', re.IGNORECASE),
+            genetic_marker_regex,
 
             re.compile(r'\b(\d+-)?\d*[D|d]elta(\d{2,}|[CISQMNPKDTFAGHLRWVEYX])\b'),
 
@@ -77,7 +79,7 @@ class PostProcessing:
         ]
 
         if not keep_genetic_markers:
-            self.negative_patterns.append(re.compile(r'D\d+([A-Z]\d+)?S\d+'))
+            self.negative_patterns.append(genetic_marker_regex)
 
         self.keep_unnumbered = keep_unnumbered
 
