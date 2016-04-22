@@ -29,7 +29,7 @@ class PostProcessing:
         AA_LL = '|'.join(amino_acids + list('CISQMNPKDTFAGHLRWVEYX'))
         KK = '|'.join(keywords)
 
-        genetic_marker_regex = re.compile(r'\bD\d+([A-Z]\d+)?S\d+\b')
+        genetic_marker_regex = re.compile(r'\bD\d+([A-Z]\d+)?S\d{2,}\b')
         rs_id_regex = re.compile(r'\b\[?rs\]? *\d{3,}(,\d+)*\b')
         ss_id_regex = re.compile(r'\b\[?ss\]? *\d{3,}(,\d+)*\b')
 
