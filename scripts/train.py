@@ -134,13 +134,9 @@ if __name__ == "__main__":
         args.crf_train_params = None
 
     args.use_feat_windows = False if args.use_feat_windows.lower() in FALSE else True
-
     args.keep_silent = False if args.keep_silent.lower() in FALSE else True
-
     args.keep_genetic_markers = False if args.keep_genetic_markers.lower() in FALSE else True
-
     args.keep_unnumbered = False if args.keep_unnumbered.lower() in FALSE else True
-
     args.keep_ids = False if args.keep_rs_ids.lower() in FALSE else True
 
     args.do_train = False if args.model_path_1 else True
