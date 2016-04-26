@@ -248,6 +248,10 @@ test: -863C > A || -863C > A || C > A substitution at position -863
 pred: 863C > A || C > A substitution at position -863 || allele of the TNFA-863C > A
 
 overlapping subclasses do not match 0 1
+* docid=16540739 part=abstract
+test: 
+pred: D9S974
+
 * docid=16525586 part=abstract
 test: Arg260His || Ser263Phe || Ser290/Ala291fs || Ser413Leu || Tyr547fs || Tyr69X || Val414Phe || c.1642_1644dupA || c.2045-1G > A || c.210T > G || c.791C > T || c.892_895dupG
 pred: (c.892_895dupG) at codons Ser290/Ala291fs || Arg260His || Ser263Phe || Ser413Leu || Tyr69X || Val414Phe || at codonTyr547fs || c.1642_1644dupA || c.2045-1G > A || c.210T > G || c.791C > T || single base 'G' duplication
@@ -424,6 +428,10 @@ overlapping subclasses do not match 0 1
 test: 620-621del in cDNA || C877T in cDNA
 pred: C877T || deletion (620-621del
 
+* docid=12918106 part=abstract
+test: 
+pred: D5S410 || D5S416 || D5S416 || D5S428
+
 * docid=12915397 part=abstract
 test: -866 promoter (G/A) || A55V || Ala55Val
 pred: nonsynonymous (Ala55Val or A55V) single-nucleotide polymorphism in exon 4
@@ -460,6 +468,10 @@ Running arguments:
 	delete_subclasses = []
 	do_train = False
 	elastic_net = False
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
 	labeler = BIEO
 	model_name = None_BIEO_del_None
 	model_name_suffix = 
@@ -469,11 +481,12 @@ Running arguments:
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /Users/jmcejuela/Work/hck/nala/resources/predictions/nala/
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpw4n09jkv
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
 	ps_random = 0.0
+	string = None
 	test_corpus = tmVar_test
 	training_corpus = None
 	use_feat_windows = True
@@ -481,9 +494,9 @@ Running arguments:
 	we_additive = 0
 	we_model_location = None
 	we_multiplicative = 1
-	we_params = {'additive': 0, 'multiplicative': 1, 'location': None}
+	we_params = {'additive': 0, 'location': None, 'multiplicative': 1}
 	word_embeddings = True
-	write_anndoc = True
+	write_anndoc = False
 
 
 None_BIEO_del_None
@@ -498,6 +511,10 @@ None_BIEO_del_None
 	delete_subclasses = []
 	do_train = False
 	elastic_net = False
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
 	labeler = BIEO
 	model_name = None_BIEO_del_None
 	model_name_suffix = 
@@ -507,11 +524,12 @@ None_BIEO_del_None
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /Users/jmcejuela/Work/hck/nala/resources/predictions/nala/
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpw4n09jkv
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
 	ps_random = 0.0
+	string = None
 	test_corpus = tmVar_test
 	training_corpus = None
 	use_feat_windows = True
@@ -519,15 +537,12 @@ None_BIEO_del_None
 	we_additive = 0
 	we_model_location = None
 	we_multiplicative = 1
-	we_params = {'additive': 0, 'multiplicative': 1, 'location': None}
+	we_params = {'additive': 0, 'location': None, 'multiplicative': 1}
 	word_embeddings = True
-	write_anndoc = True
+	write_anndoc = False
 
 # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
-0	361	78	84	56	66	e	0.8223	0.0021	0.8112	0.0025	0.8167	0.0022	o	0.9564	0.0012	0.9641	0.0013	0.9602	0.0009
-1	7	93	10	8	10	e	0.0700	0.0023	0.4118	0.0112	0.1197	0.0045	o	0.2273	0.0045	1.0000	0.0000	0.3704	0.0052
-2	0	16	2	2	2	e	0.0000	0.0000	0.0000	0.0000	   nan	   nan	o	0.2222	0.0085	1.0000	0.0000	0.3636	0.0189
-TOTAL	368	187	96	66	78	e	0.6631	0.0027	0.7931	0.0025	0.7223	0.0024	o	0.8088	0.0020	0.9660	0.0011	0.8805	0.0014
-
-The predicted test data is saved to: /Users/jmcejuela/Work/hck/nala/resources/predictions/nala/None_BIEO_del_None
-
+0	361	83	84	56	66	e	0.8131	0.0022	0.8112	0.0025	0.8121	0.0022	o	0.9471	0.0014	0.9641	0.0013	0.9555	0.0010
+1	7	93	10	8	10	e	0.0700	0.0023	0.4118	0.0113	0.1197	0.0044	o	0.2273	0.0045	1.0000	0.0000	0.3704	0.0051
+2	0	16	2	2	2	e	0.0000	0.0000	0.0000	0.0000	   nan	   nan	o	0.2222	0.0093	1.0000	0.0000	0.3636	0.0190
+TOTAL	368	192	96	66	78	e	0.6571	0.0026	0.7931	0.0024	0.7188	0.0023	o	0.8025	0.0021	0.9660	0.0012	0.8767	0.0015
