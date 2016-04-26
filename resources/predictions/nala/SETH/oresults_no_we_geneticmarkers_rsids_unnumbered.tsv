@@ -73,7 +73,7 @@ pred: W1282X || W1282X || W1282X || W1282X || W1282X
 
 * docid=11443547 part=abstract
 test: 1397-1401delAGAAC || Q119X || R150G
-pred: 1397-1401delAGAAC || 5-bp deletion || A-->G || Q119X || R150G
+pred: 1397-1401delAGAAC || 5-bp deletion || Q119X || R150G
 
 * docid=11524734 part=abstract
 test: 2104-2105delGGins29-bp || D468V || IVS12-1G>C || IVS13-2delA || Q436X || S206P
@@ -94,14 +94,12 @@ pred: 304 of the 882
 
 * docid=11813133 part=abstract
 test: G --> A polymorphism was identified at -112 bp
-pred: G --> A
+pred: 
 
-overlapping subclasses do not match 1 0
 * docid=11822023 part=abstract
 test: (C-->T) at position -158 upstream
-pred: C-->T
+pred: 
 
-overlapping subclasses do not match 1 0
 * docid=11968091 part=abstract
 test: 35delG || 35delG || 35delG || W24X || non-35delG
 pred: 35delG || 35delG || 35delG || 35delG || W24X
@@ -154,10 +152,6 @@ overlapping subclasses do not match 0 1
 test: 
 pred: 571 bp deletion which removed exon 6
 
-* docid=1329505 part=abstract
-test: 
-pred: valine-to-methionine
-
 * docid=1363805 part=abstract
 test: 985A-->G || 985A-->G || 985A-->G || glutamate substitution for lysine-304
 pred: 985A-->G || 985A-->G || 985A-->G causes glutamate substitution for lysine-304
@@ -192,10 +186,6 @@ pred: *207G-->C || IVS1+26G-->A || IVS10-18C-->T || IVS11+21G-->A || IVS12+15C--
 test: 
 pred: in exon 5
 
-* docid=15449241 part=abstract
-test: 
-pred: CAA/-
-
 * docid=15712269 part=abstract
 test: c.157G>T || c.2402G>A || c.293dupA || c.562C>T || c.599A>T || p.E53X || p.G801D || p.G801D || p.H200L || p.H200L || p.R188X || p.Y99VfsX61
 pred: c.157G>T || c.2402G>A || c.293dupA || c.562C>T || c.599A>T || p.E53X || p.G801D || p.G801D || p.H200L || p.H200L || p.R188X
@@ -210,7 +200,7 @@ pred: 1209delC || A443T || R357H || c.1070G>A || c.1327G>A || c.1405C>T || c.654
 
 * docid=17160901 part=abstract
 test: ACA-->ACG change of codon 990 || c.2970-2972 delAAT || c.2970-2972 delAAT || p.990delM
-pred: (c.2970-2972 delAAT) in exon 17 || Delta AAT mutation || Delta Met991 || c.2970-2972 delAAT || p.990delM
+pred: (c.2970-2972 delAAT) in exon 17 || Delta Met991 || c.2970-2972 delAAT || p.990delM
 
 overlapping subclasses do not match 0 1
 * docid=17436244 part=abstract
@@ -331,11 +321,7 @@ pred: A118T || A192V || G280R || R272C || R304W || R304W || R363L || absence of 
 
 * docid=8105686 part=abstract
 test: codon 228 in exon 6, because of a CGA-->TGA
-pred: G-->C
-
-* docid=8199594 part=abstract
-test: 
-pred: T to G
+pred: 
 
 * docid=8328452 part=abstract
 test: Gln310-->Ter || Gln310-->Ter || Gly409-->Arg || Gly409-->Arg || Thr366-->Pro || Thr366-->Pro || Tyr64-->Ter || Tyr64-->Ter
@@ -354,16 +340,10 @@ pred: F13A
 test: alpha 1 Ser-415
 pred: 
 
-* docid=8364588 part=abstract
-test: Gly-415 with serine
-pred: A G-to-A || Gly-415 with serine
-
 * docid=8387722 part=abstract
 test: -104A-55G || A-to-C base substitution at nucleotide position -61 || T to A and A to G, at positions -104 and -55G, respectively
-pred: A to G, at positions -104 and -55G || A-to-C || T to A
+pred: A to G, at positions -104 and -55G
 
-overlapping subclasses do not match 1 2
-overlapping subclasses do not match 1 2
 * docid=8401541 part=title
 test: Q254X || del nt1050-54
 pred: Q254X
@@ -388,10 +368,6 @@ overlapping subclasses do not match 2 1
 * docid=8829650 part=abstract
 test: C73R || G to T transversion of the last nucleotide of exon 4, || L4F || V82F
 pred: C73R || G to T transversion of the last nucleotide of exon 4 || V82F
-
-* docid=8940265 part=abstract
-test: 
-pred: C-to-A || G-->G
 
 * docid=8956037 part=abstract
 test: frameshift after amino acid 525 (glycine) and leads to a premature termination codon at amino acid position 538
@@ -420,15 +396,12 @@ pred: Deletions of the entire gene
 
 * docid=9259194 part=abstract
 test: 2789 + 5 G > A || 3845 + 10kb C > T || 3849 + 10kb C > T || 3849 + 10kb C > T || 3849 + 10kb C > T || 3849 + 10kb C > T || D1152H || G85E || R117H || R117H || R117H || R117H || R117H || R117H || R334W || R334W || R347P || R553X || R75Q || S945L || delta F508
-pred: 2789 + 5 G > A, 3849 + 10kb C > T || C > T || C > T || C > T || D1152H || G85E || R117H || R117H || R117H || R117H || R117H || R117H, 3845 + 10kb C > T || R334W || R334W || R347P || R553X || R75Q || S945L || delta F508
+pred: 2789 + 5 G > A, 3849 + 10kb C > T || D1152H || G85E || R117H || R117H || R117H || R117H || R117H || R117H, 3845 + 10kb C > T || R334W || R334W || R347P || R553X || R75Q || S945L || delta F508
 
-overlapping subclasses do not match 1 0
-overlapping subclasses do not match 1 0
-overlapping subclasses do not match 1 0
 overlapping subclasses do not match 1 0
 * docid=9259197 part=abstract
 test: 1078delT || 1609delCA || 1677delTA || 1717-1G-->A || 1717-1G-->A || 1811 + 1.6kbA-->G || 1898 + 1G-->A || 2183AA-->G || 2183AA-->G || 2789 + 5G-->A || 3659delC || 3849 + 10kbC-->T || 3905insT || 394delTT || 451 + 1G--A || 621 + 1G-->T || 621 + 1G-->T || 711 + 1G-->T || A455E || G542X || G542X || G551D || G551D || G85E || N1303K || N1303K || R1066C || R1162X || R1162X || R117H || R334W || R347H || R347P || R553X || R553X || R560T || S549R || T338I || W1282X || W1282X || delta F308 || delta F508 || delta I507
-pred: 1078delT || 1609delCA || 1677delTA || 1717-1G-->A || 1717-1G-->A || 1898 + 1G-->A || 1G-->T || 2183AA-->G || 2183AA-->G || 2789 + 5G-->A || 3659delC || 3905insT || 394delTT || 621 + 1G-->T || 621 + 1G-->T || 6kbA-->G || A455E || C-->T || G542X || G542X || G551D || G551D || G85E || N1303K || N1303K || R1066C || R1162X || R1162X || R117H || R334W || R347H || R347P || R553X || R553X || R560T || S549R || T338I || W1282X || W1282X || delta F308 || delta F508
+pred: 1078delT || 1609delCA || 1677delTA || 1717-1G-->A || 1717-1G-->A || 1898 + 1G-->A || 1G-->T || 2183AA-->G || 2183AA-->G || 2789 + 5G-->A || 3659delC || 3905insT || 394delTT || 621 + 1G-->T || 621 + 1G-->T || 6kbA-->G || A455E || G542X || G542X || G551D || G551D || G85E || N1303K || N1303K || R1066C || R1162X || R1162X || R117H || R334W || R347H || R347P || R553X || R553X || R560T || S549R || T338I || W1282X || W1282X || delta F308 || delta F508
 
 * docid=9326322 part=abstract
 test: 
@@ -438,10 +411,6 @@ pred: IVS10+3
 test: 3121-1G-->A || R117P || deltaD192
 pred: 1G-->A || R117P || deltaD192
 
-* docid=9497253 part=abstract
-test: 
-pred: A-->G || G-->C
-
 * docid=9633815 part=abstract
 test: DEL366S || F405H || G158D || IVS12+5(g-a) || IVS2+1(g-t) || IVS6-1(g-c) || IVS6-1(g-t) || IVS8-1(g-c) || P261L
 pred: F405H || G158D || IVS12+5 || IVS6-1(g-c) || IVS6-1(g-t) || IVS8-1(g-c) || P261L || deletion of serine (DEL366S)
@@ -449,7 +418,7 @@ pred: F405H || G158D || IVS12+5 || IVS6-1(g-c) || IVS6-1(g-t) || IVS8-1(g-c) || 
 overlapping subclasses do not match 0 1
 * docid=9792408 part=abstract
 test: (deltaTG) was found in the 3' untranslated region (3'UTR) of the gene, 7 bp upstream from the polyadenylation signal || IVS-2 + 1G-->A
-pred: G-->A || IVS-2 + 1G-->A (G-->A)
+pred: IVS-2 + 1G-->A (G-->A)
 
 * docid=9837820 part=abstract
 test: 964del13 || 964del13 || 964del13 || 964del13 || 964del13 || L28P || R15L || R257* || Y90C
@@ -465,7 +434,7 @@ Running arguments:
 	keep_genetic_markers = False
 	keep_rs_ids = False
 	keep_silent = True
-	keep_unnumbered = True
+	keep_unnumbered = False
 	labeler = BIEO
 	model_name = None_BIEO_del_None
 	model_name_suffix = 
@@ -475,7 +444,7 @@ Running arguments:
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpphku3q0o
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp7q8t53cu
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -508,7 +477,7 @@ None_BIEO_del_None
 	keep_genetic_markers = False
 	keep_rs_ids = False
 	keep_silent = True
-	keep_unnumbered = True
+	keep_unnumbered = False
 	labeler = BIEO
 	model_name = None_BIEO_del_None
 	model_name_suffix = 
@@ -518,7 +487,7 @@ None_BIEO_del_None
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpphku3q0o
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp7q8t53cu
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -536,7 +505,7 @@ None_BIEO_del_None
 	write_anndoc = False
 
 # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
-0	755	50	107	32	36	e	0.9379	0.0008	0.8759	0.0014	0.9058	0.0010	o	0.9786	0.0005	0.9206	0.0012	0.9487	0.0007
-1	11	47	22	18	18	e	0.1897	0.0057	0.3333	0.0096	0.2418	0.0078	o	0.6184	0.0081	0.9216	0.0073	0.7402	0.0059
-2	3	10	6	3	3	e	0.2308	0.0097	0.3333	0.0152	0.2727	0.0174	o	0.5625	0.0127	0.7500	0.0129	0.6429	0.0077
-TOTAL	769	107	135	53	57	e	0.8779	0.0012	0.8507	0.0015	0.8640	0.0012	o	0.9421	0.0009	0.9185	0.0012	0.9302	0.0009
+0	755	42	107	31	35	e	0.9473	0.0008	0.8759	0.0015	0.9102	0.0010	o	0.9868	0.0004	0.9194	0.0012	0.9519	0.0007
+1	11	40	22	11	12	e	0.2157	0.0060	0.3333	0.0096	0.2619	0.0075	o	0.5397	0.0081	0.7727	0.0079	0.6355	0.0055
+2	3	5	6	3	3	e	0.3750	0.0148	0.3333	0.0152	0.3529	0.0207	o	0.8182	0.0132	0.7500	0.0125	0.7826	0.0065
+TOTAL	769	87	135	45	50	e	0.8984	0.0011	0.8507	0.0015	0.8739	0.0011	o	0.9536	0.0008	0.9104	0.0011	0.9315	0.0008

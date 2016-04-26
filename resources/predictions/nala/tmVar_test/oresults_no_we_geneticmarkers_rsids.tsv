@@ -2,7 +2,7 @@ SpacyLemmatizer: INIT START
 SpacyLemmatizer: INIT END
 * docid=22051099 part=abstract
 test: Ex2+860G>C || S276T || rs2234671 || rs2234671 || rs2234671
-pred: S276T || rs2234671 || rs2234671 || rs2234671 at position Ex2+860G>C
+pred: S276T
 
 * docid=22188495 part=abstract
 test: 3190C>T || Arg987Ter || Arg987Ter
@@ -17,6 +17,10 @@ pred: insertion of A between nucleotides 1900 and 1901
 test: c.104delT || p.Val35AlafsX25
 pred: c.104delT || p.Val35AlafsX25 || premature termination codon
 
+* docid=21798259 part=abstract
+test: rs16754 || rs16754
+pred: 
+
 * docid=21897748 part=abstract
 test: c.130G>A || c.130G>A || p.V44M
 pred: c.130G>A || c.130G>A || p.V44M || valine-to-methionine at codon 44
@@ -28,6 +32,10 @@ pred: 13-bp deletion at nucleotide 90 downstream of the termination codon || CD 
 * docid=22129472 part=abstract
 test: c.1706-1715del.ATCTCCTCAG || c.1706-2 A>T || p.(Asp569Valfs*93)
 pred: c.1706-1715del || c.1706-2 A>T || c.1991-1993
+
+* docid=21682595 part=abstract
+test: Arg399Gln || Arg399Gln || Arg399Gln || Arg399Gln || rs25487
+pred: Arg399Gln || Arg399Gln || Arg399Gln || Arg399Gln
 
 * docid=21054465 part=abstract
 test: 
@@ -57,9 +65,17 @@ pred: I597T
 test: delta32
 pred: 
 
+* docid=21070631 part=abstract
+test: rs1611115 || rs1800587
+pred: 
+
 * docid=20709368 part=abstract
 test: 10034C>T || 10034C>T || rs2066865
-pred: FGG 10034C>T || FGG 10034C>T || rs2066865
+pred: FGG 10034C>T || FGG 10034C>T
+
+* docid=21493871 part=abstract
+test: rs20551 || rs525549 || rs5758222 || rs6589664 || rs6589664 || rs7286979
+pred: 
 
 * docid=21138945 part=abstract
 test: 
@@ -69,9 +85,21 @@ pred: lack of CDKN2A
 test: c.2554+1G>T
 pred: c.2554+1G>T || deletion of amino acids 809-852
 
+* docid=20454699 part=abstract
+test: C119Y || C119Y || c.356G>A || rs13267
+pred: C119Y || C119Y || c.356G>A
+
 * docid=20335448 part=abstract
 test: (G-->A) at nucleotide position 2141
 pred: (G-->A) at nucleotide position 2141 (exon 8), which resulted in substitution of arginine by glutamine at amino acid position 714 || replacement of arginine by glutamine at position 714
+
+* docid=20331852 part=abstract
+test: R68C || rs4112788 || rs4112788
+pred: R68C
+
+* docid=20080916 part=abstract
+test: rs10954213 || rs10954213 || rs10954213 || rs2004640 || rs2070197
+pred: 
 
 * docid=20019594 part=abstract
 test: p.C152G || p.D157fsX158 || p.E180K || p.R194S || p.S173fsX174
@@ -79,11 +107,19 @@ pred: p.C152G || p.D157fsX158 || p.E180K || p.R194S
 
 * docid=19881468 part=abstract
 test: rs1052133 || rs1052133 || rs1052133
-pred: rs1052133 || rs1052133 || rs1052133, which leads to substitution of the amino acid at codon 326 from Ser to Cys
+pred: 
+
+* docid=19781362 part=abstract
+test: G>A substitution at nucleotide 893 || R298Q || rs16864880
+pred: G>A substitution at nucleotide 893 || R298Q
 
 * docid=19624485 part=abstract
 test: rs16375
-pred: A 14 bp insertion/deletion polymorphism || between the HLA-G 14 bp deletion/insertion polymorphism || rs16375
+pred: A 14 bp insertion/deletion polymorphism || between the HLA-G 14 bp deletion/insertion polymorphism
+
+* docid=19565319 part=abstract
+test: rs2236624 || rs35320474 || rs3761422 || rs5751876
+pred: 
 
 * docid=19561170 part=abstract
 test: 
@@ -104,6 +140,10 @@ pred:
 * docid=18945288 part=abstract
 test: R58fs || c.342delA || p.Arg58fs || p.R58fs
 pred: c.342delA || p.Arg58fs
+
+* docid=18694509 part=abstract
+test: rs12329760
+pred: 
 
 * docid=18672102 part=abstract
 test: 118-119insA || 125-126insAA || 46delS || A442V || A6V || E359K || E359K || P163S || P407Q || S429T || c.1146+25insA
@@ -145,6 +185,10 @@ pred: 652-653delAG || 652-653delAG || heterozygous AG-deletion at nucleotide 652
 
 * docid=17909797 part=abstract
 test: Delta32 || Delta32 || Delta32 || Delta32
+pred: 
+
+* docid=17395743 part=abstract
+test: rs2648875 || rs2720709 || rs2720709
 pred: 
 
 * docid=17292585 part=abstract
@@ -211,6 +255,18 @@ overlapping subclasses do not match 0 1
 * docid=16051693 part=abstract
 test: V175M || V175M || V175M || V175M
 pred: Met/Met at residue 175 || V175M || V175M || V175M || V175M
+
+* docid=15983230 part=abstract
+test: rs5393
+pred: 
+
+* docid=15867855 part=abstract
+test: 157delMTTTVP || 157delMTTTVP || rs2277025
+pred: 157delMTTTVP || 157delMTTTVP
+
+* docid=15824163 part=abstract
+test: rs1639679
+pred: 
 
 * docid=15820770 part=abstract
 test: ACG-->AAG substitution in codon 420 || GAT-->GAG
@@ -310,7 +366,7 @@ Running arguments:
 	do_train = False
 	elastic_net = False
 	keep_genetic_markers = False
-	keep_rs_ids = True
+	keep_rs_ids = False
 	keep_silent = True
 	keep_unnumbered = True
 	labeler = BIEO
@@ -322,7 +378,7 @@ Running arguments:
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp2ckfi495
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp4wq8w6bo
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -353,7 +409,7 @@ None_BIEO_del_None
 	do_train = False
 	elastic_net = False
 	keep_genetic_markers = False
-	keep_rs_ids = True
+	keep_rs_ids = False
 	keep_silent = True
 	keep_unnumbered = True
 	labeler = BIEO
@@ -365,7 +421,7 @@ None_BIEO_del_None
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp2ckfi495
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp4wq8w6bo
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -383,7 +439,7 @@ None_BIEO_del_None
 	write_anndoc = False
 
 # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
-0	375	41	70	33	37	e	0.9014	0.0016	0.8427	0.0023	0.8711	0.0019	o	0.9823	0.0008	0.9310	0.0016	0.9560	0.0009
-1	5	37	12	8	11	e	0.1190	0.0045	0.2941	0.0110	0.1695	0.0086	o	0.4528	0.0078	0.9600	0.0065	0.6154	0.0058
-2	0	11	2	2	2	e	0.0000	0.0000	0.0000	0.0000	   nan	   nan	o	0.3077	0.0131	1.0000	0.0000	0.4706	0.0209
-TOTAL	380	89	84	43	50	e	0.8102	0.0022	0.8190	0.0024	0.8146	0.0021	o	0.9114	0.0015	0.9329	0.0015	0.9220	0.0011
+0	338	39	107	31	34	e	0.8966	0.0018	0.7596	0.0029	0.8224	0.0023	o	0.9805	0.0009	0.8466	0.0024	0.9087	0.0015
+1	5	37	12	8	11	e	0.1190	0.0049	0.2941	0.0113	0.1695	0.0093	o	0.4528	0.0077	0.9600	0.0066	0.6154	0.0057
+2	0	11	2	2	2	e	0.0000	0.0000	0.0000	0.0000	   nan	   nan	o	0.3077	0.0132	1.0000	0.0000	0.4706	0.0211
+TOTAL	343	87	121	41	47	e	0.7977	0.0024	0.7392	0.0029	0.7673	0.0025	o	0.9036	0.0015	0.8535	0.0023	0.8778	0.0016
