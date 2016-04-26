@@ -1,8 +1,8 @@
-T1488	mutation 1488 1498	c.360+1G>C
-T1247	mutation 1247 1256	c.520delC
-T1331	mutation 1331 1341	c.899+1G>T
-T1319	mutation 1319 1329	c.360+1G>C
-T1269	mutation 1269 1278	c.956delC
-T1258	mutation 1258 1267	c.681dupA
-T1343	mutation 1343 1354	c.1570+2T>C
-T1409	mutation 1409 1418	p.Arg153X
+T1350	mutation 1350 1360	c.360+1G>C
+T1193	mutation 1193 1203	c.899+1G>T
+T1181	mutation 1181 1191	c.360+1G>C
+T1109	mutation 1109 1118	c.520delC
+T1271	mutation 1271 1280	p.Arg153X
+T1131	mutation 1131 1140	c.956delC
+T1120	mutation 1120 1129	c.681dupA
+T1205	mutation 1205 1216	c.1570+2T>C
