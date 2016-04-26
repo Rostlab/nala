@@ -13,6 +13,7 @@ def run_seth_on_corpus(corpus, folder, useMutationFinderOnly):
         counter += 1
         print(counter, docid)
         for partid, part in document.parts.items():
+            print('\t', partid)
             run_seth_on_string(part.text, docid, partid, folder, useMutationFinderOnly)
 
 def run_seth_on_string(text, docid, partid, folder, useMutationFinderOnly):
@@ -37,6 +38,7 @@ corpus = get_corpus(corpusName)
 folderName = sys.argv[3]
 
 if (methodName != 'check_performance'):
+    # Given predictions folder
     folderName = os.path.join(folderName, methodName, corpusName)
     if not os.path.exists(folderName):
         os.makedirs(folderName)
