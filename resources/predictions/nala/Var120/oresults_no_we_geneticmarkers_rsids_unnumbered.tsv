@@ -9,60 +9,27 @@ overlapping subclasses do not match 2 0
 overlapping subclasses do not match 2 0
 * docid=1334229 part=04-Results-p01-p2
 test: codons 37 and 45, all were C→T transitions, leading to Ser→Phe amino acid changes || loss of one of the Ser/Thr phosphorylation sites and subsequent stabilisation of the protein, occurred at codons 37 and 45, all were C→T
-pred: C→T
+pred: 
 
-overlapping subclasses do not match 1 0
 * docid=1360090 part=03-Results-p01-p3
 test: 1799T to A mutation || V600E
 pred: 1799T to A || V600E
 
 overlapping subclasses do not match 1 2
-* docid=1373649 part=01-Abstract-p01-p7
-test: 
-pred: D17S250 || D2S123 || D5S346
-
 * docid=1373649 part=01-Abstract-p01-p9
 test: c.1864C>A || missense (c.1864C>A) mutation in exon 12 || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
-pred: D5S346 || c.1864C>A || p.Pro622Thr || proline 622 to threonine
+pred: c.1864C>A || p.Pro622Thr || proline 622 to threonine
 
 overlapping subclasses do not match 1 2
 overlapping subclasses do not match 1 0
 overlapping subclasses do not match 1 0
-* docid=1373649 part=02-Background-p01-p6
-test: 
-pred: D17S250 || D2S123 || D5S346
-
-* docid=1373649 part=03-Methods-p01-p11
-test: 
-pred: D17S250 || D2S123 || D5S346
-
-* docid=1373649 part=03-Methods-p02-p1
-test: 
-pred: D5S346
-
 * docid=1373649 part=04-Results-and-discussion-p01-p6
 test: a c.1864C>A transversion in exon 12 || c.1864C>A || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
-pred: D5S346 || c.1864C>A || p.Pro622Thr || proline 622 to threonine
+pred: c.1864C>A || p.Pro622Thr || proline 622 to threonine
 
 overlapping subclasses do not match 1 2
 overlapping subclasses do not match 1 0
 overlapping subclasses do not match 1 0
-* docid=1557864 part=03-Methods-p02-p1
-test: 
-pred: D2S123
-
-* docid=1557864 part=04-Results-p01-p3
-test: 
-pred: D2S123
-
-* docid=1557864 part=05-Discussion-p02-p1
-test: 
-pred: D2S123
-
-* docid=1557864 part=05-Discussion-p02-p3
-test: 
-pred: D17S250 || D2S123 || D5S346
-
 * docid=1601966 part=03-Results-p06-p5
 test: M23A
 pred: 
@@ -73,30 +40,9 @@ pred: V599E || V600E
 
 * docid=1619718 part=04-Results-p01-p3
 test: V600E || codon 12 (G→T at position 35 and T→G at position 36)
-pred: 20 G→A || G→C || G→T || G→T at position 35 || T→G || mutation at V600E || six mutations were in codon 13 (all G→A)
+pred: 20 G→A || G→T at position 35 || mutation at V600E || six mutations were in codon 13 (all G→A)
 
-overlapping subclasses do not match 1 0
 overlapping subclasses do not match 0 1
-* docid=1619718 part=04-Results-p03-p2
-test: 
-pred: G→A || G→A
-
-* docid=1619718 part=05-Discussion-p04-p3
-test: 
-pred: C to A
-
-* docid=1619718 part=05-Discussion-p04-p4
-test: 
-pred: C to A
-
-* docid=2275286 part=03-Methods-p01-p7
-test: 
-pred: D17S250 || D2S123 || D5S346
-
-* docid=2275286 part=04-Results-p01-p6
-test: 
-pred: D17S250 || D2S123 || D5S346
-
 * docid=2275286 part=05-Discussion-p02-p1
 test: C1668 C > T || C1886 A > G
 pred: mutation of C1886 A > G, C1668 C > T
@@ -123,10 +69,6 @@ pred: c.70C > T
 test: c.835-7T > G
 pred: A search for deletion or duplication of || c.835-7T > G
 
-* docid=2386495 part=04-Results-p03-p3
-test: c.835-7T > G
-pred: T > G || c.835-7T > G
-
 * docid=2386495 part=04-Results-p03-p4
 test: c. 423 -6delAAATAGGTinsGAAGCAAGATCAG || c.423-6del8ins13 || c.834G > C
 pred: 11-bp deletion in the 3' end of exon 7 || c. 423 -6delAAATAGGTinsGAAGCAAGATCAG || c.423-6del8ins13 || c.834G > C
@@ -151,10 +93,10 @@ Running arguments:
 	delete_subclasses = []
 	do_train = False
 	elastic_net = False
-	keep_genetic_markers = True
-	keep_rs_ids = True
+	keep_genetic_markers = False
+	keep_rs_ids = False
 	keep_silent = True
-	keep_unnumbered = True
+	keep_unnumbered = False
 	labeler = BIEO
 	model_name = None_BIEO_del_None
 	model_name_suffix = 
@@ -164,7 +106,7 @@ Running arguments:
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpk7s6f0cv
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpjgpzh5p3
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -194,10 +136,10 @@ None_BIEO_del_None
 	delete_subclasses = []
 	do_train = False
 	elastic_net = False
-	keep_genetic_markers = True
-	keep_rs_ids = True
+	keep_genetic_markers = False
+	keep_rs_ids = False
 	keep_silent = True
-	keep_unnumbered = True
+	keep_unnumbered = False
 	labeler = BIEO
 	model_name = None_BIEO_del_None
 	model_name_suffix = 
@@ -207,7 +149,7 @@ None_BIEO_del_None
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpk7s6f0cv
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpjgpzh5p3
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -225,7 +167,7 @@ None_BIEO_del_None
 	write_anndoc = False
 
 # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
-0	91	38	11	7	9	e	0.7054	0.0139	0.8922	0.0132	0.7879	0.0119	o	0.7754	0.0124	0.9817	0.0089	0.8664	0.0102
-1	4	11	9	6	8	e	0.2667	0.0103	0.3077	0.0107	0.2857	0.0185	o	0.7826	0.0130	0.9474	0.0041	0.8571	0.0055
-2	2	5	3	3	3	e	0.2857	0.0203	0.4000	0.0267	0.3333	0.0433	o	0.8000	0.0212	1.0000	0.0000	0.8889	0.0063
-TOTAL	97	54	23	16	20	e	0.6424	0.0127	0.8083	0.0135	0.7159	0.0104	o	0.7778	0.0092	0.9779	0.0068	0.8664	0.0063
+0	91	9	11	7	9	e	0.9100	0.0118	0.8922	0.0135	0.9010	0.0075	o	0.9817	0.0023	0.9817	0.0088	0.9817	0.0028
+1	4	9	9	4	6	e	0.3077	0.0120	0.3077	0.0105	0.3077	0.0157	o	0.7368	0.0155	0.8235	0.0164	0.7778	0.0086
+2	2	3	3	3	3	e	0.4000	0.0245	0.4000	0.0245	0.4000	0.0388	o	1.0000	0.0000	1.0000	0.0000	1.0000	0.0000
+TOTAL	97	21	23	14	18	e	0.8220	0.0135	0.8083	0.0138	0.8151	0.0090	o	0.9485	0.0026	0.9627	0.0075	0.9556	0.0026

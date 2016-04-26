@@ -4,7 +4,7 @@ from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.utils.writers import PubTatorFormat, TagTogFormat
 
-data = get_corpus('SETH')
+data = get_corpus('nala_test')
 
 
 def predict():
@@ -18,7 +18,7 @@ def predict():
 def evaluate():
     from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
     print(len(data))
-    AnnJsonAnnotationReader('/home/abojchevski/projects/nala/resources/predictions/tmVar/SETH',
+    AnnJsonAnnotationReader('/Users/jmcejuela/Work/hck/nala/resources/predictions/SETH/nala_test/',
                             is_predicted=True, delete_incomplete_docs=False).annotate(data)
     print(len(data))
     # for part in data.parts():

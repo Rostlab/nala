@@ -16,20 +16,52 @@ test: 1799T to A mutation || V600E
 pred: 1799T to A || V600E
 
 overlapping subclasses do not match 1 2
+* docid=1373649 part=01-Abstract-p01-p7
+test: 
+pred: D17S250 || D2S123 || D5S346
+
 * docid=1373649 part=01-Abstract-p01-p9
 test: c.1864C>A || missense (c.1864C>A) mutation in exon 12 || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
-pred: c.1864C>A || p.Pro622Thr || proline 622 to threonine
+pred: D5S346 || c.1864C>A || p.Pro622Thr || proline 622 to threonine
 
 overlapping subclasses do not match 1 2
 overlapping subclasses do not match 1 0
 overlapping subclasses do not match 1 0
+* docid=1373649 part=02-Background-p01-p6
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=03-Methods-p01-p11
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=03-Methods-p02-p1
+test: 
+pred: D5S346
+
 * docid=1373649 part=04-Results-and-discussion-p01-p6
 test: a c.1864C>A transversion in exon 12 || c.1864C>A || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
-pred: c.1864C>A || p.Pro622Thr || proline 622 to threonine
+pred: D5S346 || c.1864C>A || p.Pro622Thr || proline 622 to threonine
 
 overlapping subclasses do not match 1 2
 overlapping subclasses do not match 1 0
 overlapping subclasses do not match 1 0
+* docid=1557864 part=03-Methods-p02-p1
+test: 
+pred: D2S123
+
+* docid=1557864 part=04-Results-p01-p3
+test: 
+pred: D2S123
+
+* docid=1557864 part=05-Discussion-p02-p1
+test: 
+pred: D2S123
+
+* docid=1557864 part=05-Discussion-p02-p3
+test: 
+pred: D17S250 || D2S123 || D5S346
+
 * docid=1601966 part=03-Results-p06-p5
 test: M23A
 pred: 
@@ -43,6 +75,14 @@ test: V600E || codon 12 (G→T at position 35 and T→G at position 36)
 pred: 20 G→A || G→T at position 35 || mutation at V600E || six mutations were in codon 13 (all G→A)
 
 overlapping subclasses do not match 0 1
+* docid=2275286 part=03-Methods-p01-p7
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=2275286 part=04-Results-p01-p6
+test: 
+pred: D17S250 || D2S123 || D5S346
+
 * docid=2275286 part=05-Discussion-p02-p1
 test: C1668 C > T || C1886 A > G
 pred: mutation of C1886 A > G, C1668 C > T
@@ -94,6 +134,7 @@ Running arguments:
 	do_train = False
 	elastic_net = False
 	keep_genetic_markers = True
+	keep_rs_ids = True
 	keep_silent = True
 	keep_unnumbered = False
 	labeler = BIEO
@@ -105,7 +146,7 @@ Running arguments:
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpybrrhly7
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpqr0nyilf
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -136,6 +177,7 @@ None_BIEO_del_None
 	do_train = False
 	elastic_net = False
 	keep_genetic_markers = True
+	keep_rs_ids = True
 	keep_silent = True
 	keep_unnumbered = False
 	labeler = BIEO
@@ -147,7 +189,7 @@ None_BIEO_del_None
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpybrrhly7
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpqr0nyilf
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -165,7 +207,7 @@ None_BIEO_del_None
 	write_anndoc = False
 
 # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
-0	91	9	11	7	9	e	0.9100	0.0118	0.8922	0.0136	0.9010	0.0075	o	0.9817	0.0022	0.9817	0.0092	0.9817	0.0026
-1	4	9	9	4	6	e	0.3077	0.0123	0.3077	0.0107	0.3077	0.0158	o	0.7368	0.0151	0.8235	0.0159	0.7778	0.0083
-2	2	3	3	3	3	e	0.4000	0.0255	0.4000	0.0255	0.4000	0.0396	o	1.0000	0.0000	1.0000	0.0000	1.0000	0.0000
-TOTAL	97	21	23	14	18	e	0.8220	0.0133	0.8083	0.0137	0.8151	0.0091	o	0.9485	0.0025	0.9627	0.0080	0.9556	0.0025
+0	91	33	11	7	9	e	0.7339	0.0142	0.8922	0.0141	0.8053	0.0113	o	0.8045	0.0126	0.9817	0.0088	0.8843	0.0099
+1	4	9	9	4	6	e	0.3077	0.0120	0.3077	0.0108	0.3077	0.0167	o	0.7368	0.0155	0.8235	0.0163	0.7778	0.0085
+2	2	3	3	3	3	e	0.4000	0.0251	0.4000	0.0251	0.4000	0.0401	o	1.0000	0.0000	1.0000	0.0000	1.0000	0.0000
+TOTAL	97	45	23	14	18	e	0.6831	0.0126	0.8083	0.0132	0.7405	0.0097	o	0.8063	0.0089	0.9627	0.0074	0.8776	0.0060

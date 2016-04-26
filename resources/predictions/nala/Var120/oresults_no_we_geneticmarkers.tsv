@@ -124,7 +124,7 @@ Running arguments:
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpmehvuglh
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpkk0ma8ct
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -167,7 +167,7 @@ None_BIEO_del_None
 	nl_features = None
 	nl_threshold = 0
 	nl_window = False
-	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpmehvuglh
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpkk0ma8ct
 	pruner = parts
 	ps_NL = False
 	ps_ST = False
@@ -185,7 +185,7 @@ None_BIEO_del_None
 	write_anndoc = False
 
 # class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
-0	91	14	11	7	9	e	0.8667	0.0134	0.8922	0.0141	0.8792	0.0096	o	0.9386	0.0061	0.9817	0.0085	0.9596	0.0048
-1	4	11	9	6	8	e	0.2667	0.0101	0.3077	0.0105	0.2857	0.0168	o	0.7826	0.0130	0.9474	0.0040	0.8571	0.0055
-2	2	5	3	3	3	e	0.2857	0.0197	0.4000	0.0254	0.3333	0.0412	o	0.8000	0.0196	1.0000	0.0000	0.8889	0.0060
-TOTAL	97	30	23	16	20	e	0.7638	0.0139	0.8083	0.0143	0.7854	0.0101	o	0.9048	0.0051	0.9779	0.0075	0.9399	0.0036
+0	91	14	11	7	9	e	0.8667	0.0133	0.8922	0.0139	0.8792	0.0093	o	0.9386	0.0060	0.9817	0.0096	0.9596	0.0048
+1	4	11	9	6	8	e	0.2667	0.0103	0.3077	0.0107	0.2857	0.0180	o	0.7826	0.0128	0.9474	0.0039	0.8571	0.0054
+2	2	5	3	3	3	e	0.2857	0.0186	0.4000	0.0255	0.3333	0.0430	o	0.8000	0.0215	1.0000	0.0000	0.8889	0.0063
+TOTAL	97	30	23	16	20	e	0.7638	0.0127	0.8083	0.0131	0.7854	0.0092	o	0.9048	0.0052	0.9779	0.0067	0.9399	0.0037

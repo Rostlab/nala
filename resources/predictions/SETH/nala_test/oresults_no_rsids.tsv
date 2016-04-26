@@ -1,0 +1,357 @@
+Iteration: 52_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_52_test/
+	 Dataset(10 documents and 28 annotations)
+Iteration: 53_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_53_test/
+	 Dataset(10 documents and 55 annotations)
+Iteration: 54_test_IAA : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_54_test_IAA/
+	 Dataset(10 documents and 27 annotations)
+Iteration: 55_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_55_test/
+	 Dataset(10 documents and 52 annotations)
+Iteration: 56_test_IAA : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_56_test_IAA/
+	 Dataset(10 documents and 45 annotations)
+Iteration: 57_test_IAA : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_57_test_IAA/
+	 Dataset(10 documents and 36 annotations)
+Iteration: 58_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_58_test/
+	 Dataset(10 documents and 42 annotations)
+Iteration: 59_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_59_test/
+	 Dataset(10 documents and 25 annotations)
+Iteration: 60_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_60_test/
+	 Dataset(10 documents and 29 annotations)
+* docid=12407104 part=s1p2
+test: Ser(748) to alanines || glutamic acid replacing Ser(748) || mutation of Ser(744)
+pred: 
+
+* docid=10601491 part=s1p2
+test: W362F || W362F || W362F || W362F || W362F || W362F || W362F || deletion of Kv1.4 || deletion of the Kv1.4
+pred: 
+
+* docid=1714377 part=s1p2
+test: Glu582----Lys || Val831----Met || in-frame insertion, Gly-Asn-Asn-Lys, within the extracellular domain
+pred: Glu582----Lys || Val831----Met
+
+* docid=12424224 part=s1p2
+test: mutation of a centrally located tyrosine residue
+pred: 
+
+* docid=17962323 part=s1p2
+test: G339R || G339R || sequence substitution of tyrosine by histidine at this critical position
+pred: G339R || G339R
+
+* docid=2456920 part=s1p1
+test: deletion of extracellular domain and C terminus
+pred: 
+
+* docid=2456920 part=s1p2
+test: N-terminal sequences which include the extracellular domain || transmembrane domain as well as 50 amino acids from the C-terminus of c-kit are deleted in v-kit
+pred: 
+
+* docid=20304997 part=s1p2
+test: lacking tyrosine 868, 966, or 972
+pred: 
+
+* docid=19608738 part=s1p2
+test: Ser(937), since replacing this residue with alanine
+pred: 
+
+* docid=1693331 part=s1p2
+test: 78 amino acid deletion which includes the transmembrane domain || W37 E----K at position 582 || W41 V----M position 831 || Wv T----M position 660
+pred: 
+
+* docid=10359825 part=s1p2
+test: C-->T transition || C-->T transition || alanine to valine substitution
+pred: 
+
+* docid=10801795 part=s1p1
+test: four amino acid deletion polymorphism in the third intracellular loop
+pred: 
+
+* docid=10801795 part=s1p2
+test: Del322-325 || Del322-325 || Del322-325 || Del322-325 || in-frame 12-nucleic acid deletion || lacking Gly-Ala-Gly-Pro in the third intracellular loop
+pred: 
+
+* docid=10924277 part=s1p2
+test: 895-897delATA || 911T > C || F304S || IVS3 + 5G > A || delI299 || deletion of three bases || in-frame deletion of isoleucine 299 || intronic G --> A || skipping of exon3
+pred: 5G > A || 895-897delATA || 911T > C || F304S || IVS3 + 5G > A
+
+overlapping subclasses do not match 1 0
+* docid=10615133 part=s1p2
+test: D17S849 || D17S960 || mutation at codon 278
+pred: 
+
+* docid=8494891 part=s1p2
+test: Arg-115 is modified
+pred: 
+
+* docid=11698344 part=s1p2
+test: ((157)G/A) || (157)(G/A) || (157)(G/A) || (157)(G/A) || (157)(G/A) || (1721)(G/A) || (1721)(G/A) || (1721)(G/A) || (1721)(G/A) || (2417)(A/G) || (2417)(A/G) || (2417)(A/G) || (2417)(A/G) || Arg(554)Lys || Met(786)Val || substitution of a G by an A at position 157
+pred: Arg(554)Lys || Met(786)Val
+
+* docid=14567970 part=s1p2
+test: K69R || Q9R || W4R || residue lysine 69 substituted by arginine
+pred: K69R || lysine 69 substituted by arginine
+
+* docid=6374651 part=s1p2
+test: amino acid substitution occurs at position 7 of the largest CNBr fragment, corresponding to position 47 of the whole protein chain || histidine/arginine-47 mutational replacement
+pred: 
+
+* docid=10209029 part=s1p2
+test: T445A || T445A || T445D || T480A || T480A || T480D || substitution of Thr445 || substitution of Thr445
+pred: T480A || T480A || T480D || Thr445 and Thr480 by Ala || Thr445 and Thr480 by Asp || Thr480 by Ala || Thr480 by Asp
+
+* docid=9254849 part=s1p2
+test: C-to-T exchange at nucleotide position 943
+pred: 
+
+* docid=9829906 part=s1p2
+test: base pair substitution in exon 5 that alters aspartic acid to asparagine
+pred: 
+
+* docid=12149249 part=s1p2
+test: Substitution of Tyr-474 with phenylalanine
+pred: Tyr-474 with phenylalanine
+
+overlapping subclasses do not match 1 2
+* docid=8978681 part=s1p2
+test: Thr308 and/or Ser473 were mutated to Ala or Asp
+pred: 
+
+* docid=10634139 part=s1p2
+test: L311V || L311V || Leu311 to Val || S145C || S145C || Ser145 to Cys (S145C) || substitutions of C with G at positions 434 and 931
+pred: L311V || L311V || Leu311 to Val || S145C || S145C || S145C || Ser145 to Cys
+
+overlapping subclasses do not match 2 0
+* docid=8245005 part=s1p1
+test: mutagenesis of Asp-43, Tyr-48, Lys-77, and His-110
+pred: 
+
+* docid=8245005 part=s1p2
+test: D43N || D43N || H110N || K77M || Tyr-48 was mutated to phenylalanine || Y48F || asparagine substituted for His-110 || aspartate 43 substituted with asparagine || methionine substituted for lysine 77
+pred: D43N || D43N || H110N || K77M || Tyr-48 was mutated to phenylalanine || Y48F || asparagine substituted for His-110
+
+* docid=3619918 part=s1p2
+test: Cys for Arg-369 || substitution of Cys for Arg-369
+pred: Cys for Arg-369 || Cys for Arg-369
+
+overlapping subclasses do not match 1 2
+* docid=21092923 part=s1p2
+test: c.1150_1151del || c.1476+1G>T || c.1604del || leucine-to-arginine substitution in the DUF 590 domain || p.Leu384fs || p.Leu535X
+pred: c.1150_1151del || c.1476+1G>T || c.1604del || p.Leu384fs || p.Leu535X
+
+* docid=7669785 part=s1p2
+test: H112Q || H112Q || I298C || K79M || Lys79 to methionine || Mutation of Ile298 || Tyr49 to phenylalamine or histidine || V299C || Val299 || Y49F || Y49H
+pred: H112Q || H112Q || I298C || K79M || Lys79 to methionine || V299C || Y49F || Y49H
+
+* docid=8244338 part=s1p2
+test: Arg­<­-->Leu substitution || C­<­-->T at nt 257 || C­<­-->T at nucleotide (nt) 183 || T­<­-->G at nt 320 || Val­<­-->Ala substitution
+pred: 
+
+* docid=23827346 part=s1p2
+test: V883M || V883M || V883M || V883M || V883M || V883M || Val to Met missense mutation at position 883 || Val to Met substitution
+pred: V883M || V883M || V883M || V883M || V883M || V883M || Val to Met missense mutation at position 883
+
+* docid=6582480 part=s1p2
+test: glutamine leads to lysine substitution || the glutamine adjacent to lysine was substituted by lysine
+pred: 
+
+* docid=12093361 part=s1p2
+test: a premature translation stop with loss of the C-terminal 74 amino acids || exchange of leucine(158) for a proline residue
+pred: 
+
+* docid=8561277 part=s1p2
+test: 1464 G-->A || Glu-->Lys substitutions at both the 479 and 487 positions || two G-->A transitions at bases 1486 and 1510
+pred: 1464 G-->A
+
+* docid=3758060 part=s1p2
+test: At position 349, isoleucine in gamma 1 instead of valine in gamma 2 || at position 271, arginine in gamma 1 and glutamine in gamma 2
+pred: 
+
+* docid=2540197 part=s1p1
+test: Mutation of Cys341 in the carboxyl tail
+pred: 
+
+* docid=15280551 part=s1p2
+test: I447V || I447V || I447V || substitution of isoleucine 447 by valine
+pred: I447V || I447V || I447V || isoleucine 447 by valine
+
+overlapping subclasses do not match 1 2
+* docid=2831218 part=s1p2
+test: Substitution of aspartate 79 with asparagine || substitution of aspartate with asparagine at residue 79
+pred: aspartate 79 with asparagine || aspartate with asparagine at residue 79
+
+overlapping subclasses do not match 1 2
+* docid=8521811 part=s1p2
+test: Substitution of a phenylalanine residue for tyrosine-141
+pred: phenylalanine residue for tyrosine-141
+
+* docid=24568872 part=s1p2
+test: c.666G>A || homozygous G>A substitution (c.666G>A) at the last nucleotide of exon 6 || in-frame loss of 43 amino acids || novel missense c.1398C>A mutation in exon 12 || p.Asn466Lys || p.Trp180_Glu222del || substitution of a conserved asparagine by lysine at amino acid position 466
+pred: c.1398C>A || c.666G>A || c.666G>A || p.Asn466Lys || p.Trp180_Glu222del
+
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=11854867 part=s1p2
+test: Arg389Gly || Arg389Gly || Ser49Gly || Ser49Gly || Ser49Gly || arginine/glycine substitution at residue 389 || serine/glycine substitution at amino acid 49
+pred: Arg389Gly || Arg389Gly || Ser49Gly || Ser49Gly || Ser49Gly
+
+* docid=8383511 part=s1p2
+test: Arg16-->Gly || Arg16-->Gly || Arg16-->Gly || Gln27-->Glu || Nine different point mutations were found in both heterozygous and homozygous forms at nucleic acid residues 46, 79, 100, 252, 491, 523, 1053, 1098, and 1239 || arginine 16 to glycine || cause changes in the encoded amino acids at residues 16, 27, 34, and 164 || glutamine 27 to glutamic acid || threonine 164 to isoleucine || valine 34 to methionine
+pred: Arg16-->Gly || Arg16-->Gly || Arg16-->Gly || Gln27-->Glu || Gln27-->Glu || arginine 16 to glycine || glutamine 27 to glutamic acid || threonine 164 to isoleucine || valine 34 to methionine
+
+* docid=7782077 part=s1p2
+test: 9-bp deletion in exon 2 || mutation results in the loss of 3 amino acids
+pred: 
+
+* docid=23881059 part=s1p2
+test: p.Val71Met || substitution of valine (Val) to methionine (Met) at position 71
+pred: p.Val71Met
+
+* docid=9250352 part=s1p2
+test: 2 base deletion at nt 1297 || 2 base deletion at nt 1297 || 3 base deletion coupled with a 21 base insertion at intron 6/exon 7 || 5 base insertion at nt 1311 || Pro-->Ala at protein position 329 || consequent premature chain termination at protein position 434 || heterozygous with C-->G at nt 985 || premature chain termination at protein position 457
+pred: 985 (Pro-->Ala
+
+overlapping subclasses do not match 1 0
+* docid=8227344 part=s1p2
+test: Arg101 > Leu || Arg101 > Leu || Arg156 > His || Arg156 > His || IVS 10, 3'ss G-34 > A || IVS 10, 5'ss G+1 > A || IVS 5, 5'ss T+6 > A || Ser291 > Leu || Val177 > Met || delta 1019-1020 || delta 1019-1020 || delta 1019-1020 || delta 1019-1020 || delta 955-959 || three missense (Arg156 > His
+pred: Arg101 > Leu || Arg101 > Leu || Arg156 > His || Arg156 > His || Arg156 > His || Ser291 > Leu || Val177 > Met
+
+overlapping subclasses do not match 1 0
+* docid=17894550 part=s1p2
+test: both sites are mutated to alanine
+pred: 
+
+* docid=12354786 part=s1p2
+test: SNPs -11391
+pred: 
+
+* docid=2339709 part=s1p2
+test: M1 Glu342 GAG to Z Lys342 AAG
+pred: 
+
+* docid=9158150 part=s1p2
+test: 127ins5 || 553del 7 || C190T || P245L || P245L || R147L || R147L || R311W || R311W || R64X
+pred: 127ins5 || 553del 7 || P245L || P245L || R147L || R147L || R311W || R311W || R64X
+
+* docid=8645224 part=s1p2
+test: single serine-to-cysteine substitution at position 88 (position 84 in the liver sequence
+pred: serine-to-cysteine substitution at position 88
+
+* docid=10090526 part=s1p2
+test: E341K || G to A transition (codon 341 GAA-AAA)
+pred: E341K
+
+* docid=15670731 part=s1p1
+test: Single amino acid (482) variants
+pred: 
+
+* docid=15670731 part=s1p2
+test: Arg-482 mutants (G, I, M, S, T, D, N, K, Y) || Arg-482 variants || R482K || R482K and Y || R482K, Y || replacements at position 482 || single amino acid changes at position 482
+pred: R482K || R482K || R482K
+
+* docid=2539398 part=s1p2
+test: C to T transition at nucleotide 1066 || Msp I site obliteration, which mapped to exon 7 || arginine356 to tryptophan356 || deletions had breakpoints in intron 2 || obliteration of an Msp I restriction site || region of about 8 kb, containing exons 2 through 6, was duplicated
+pred: 
+
+* docid=2171331 part=s1p2
+test: G-to-A transition in exon 1 (codon 44) which substituted a termination codon (TAG) for a tryptophan codon (TGG) || G-to-A transition in exon 6 (codon 301) resulted in the replacement of a glutamine for an arginine
+pred: 
+
+* docid=17088252 part=s1p2
+test: Deltaalpha394 || Deltaalpha394 || L328Q || L328Q || V298G || V298G || V298G || deletion of residues 313-335
+pred: L328Q || L328Q || V298G || V298G || V298G
+
+* docid=12694230 part=s1p2
+test: A-to-G transition resulted in a substitution of alanine for threonine at amino acid 410 || C-to-A transversion resulted in an early termination at amino acid 222 || T410A || T410A || Y222X || Y222X
+pred: T410A || T410A || Y222X || Y222X || alanine for threonine at amino acid 410
+
+* docid=8738659 part=s1p2
+test: G to A in codon 301, resulting in a glutamine rather than an arginine
+pred: 
+
+* docid=15807535 part=s1p2
+test: N596Q || N596Q || N596Q || N596Q || each Asn was changed to Gln
+pred: N596Q || N596Q || N596Q || N596Q
+
+* docid=8832064 part=s1p2
+test: Arg492 to Cys492 || substitution of C residue for T at nucleotide 1441
+pred: 
+
+* docid=8896180 part=s1p2
+test: differs from these alleles at the crucial residue 79
+pred: 
+
+* docid=15358775 part=s1p2
+test: Mutation of the terminal valine residue || V477A || mutation of the terminal valine to alanine
+pred: V477A
+
+* docid=7915137 part=s1p2
+test: Arg16-->Gly || Arg16-->Gly || Arg16-->Gly+Gln27-->Glu || Gln27-->Glu || Gln27-->Glu || Gln27-->Glu || Glu for Gln at amino acid 27 || substitutions of Gly for Arg at amino acid 16
+pred: Arg16-->Gly || Arg16-->Gly || Gln27-->Glu || Gln27-->Glu || Gln27-->Glu || Glu for Gln at amino acid 27 || Gly for Arg at amino acid 16
+
+* docid=11387345 part=s1p1
+test: presence or absence of the regulatory phosphorylation site serine 472 in the carboxyl-terminal hydrophobic domain
+pred: 
+
+* docid=11387345 part=s1p2
+test: splice variant lacking the second regulatory phosphorylation site Ser-472 in the hydrophobic C-terminal domain
+pred: 
+
+* docid=11146000 part=s1p2
+test: Mutation of this site (Ala(345,346) || mutation of either Ser(345,346) || palmitoylation-less mutant (Gly(341
+pred: 
+
+* docid=10212248 part=s1p2
+test: At amino acid position 389, Gly or Arg can be found
+pred: 
+
+* docid=14684684 part=s1p2
+test: Thr278Ile || Thr278Ile || alteration of residue Thr278
+pred: Thr278Ile || Thr278Ile
+
+* docid=11052857 part=s1p2
+test: Ser49Gly || Ser49Gly || Ser49Gly || amino acid substitution at position 49 || missense mutation was identified at nucleotide position 145
+pred: Ser49Gly || Ser49Gly || Ser49Gly
+
+* docid=3182793 part=s1p2
+test: Ala-329 to Val-329 || altering amino acid 101 from Arg to Trp || altering amino acid 211 from Arg to His || mutation which eliminates exon 4 || single base change of A to G within the invariant bases of the 3' splice site of intron 3
+pred: 101 from Arg to Trp || 211 from Arg to His || Ala-329 to Val
+
+* docid=7531341 part=s1p2
+test: Thr-264-->Pro || adenosine-to-cytosine transversion at nucleotide 790 in exon 8 || proline for threonine at codon 264
+pred: Thr-264-->Pro || proline for threonine at codon 264 || proline for threonine at codon 264
+
+* docid=12665502 part=s1p2
+test: (Leu40, Ile70, Val73, Leu75, and Pro77) that, when mutated to alanine || kinase-deleted
+pred: 
+
+* docid=2783588 part=s1p2
+test: C to A transversion that results in the replacement of a proline by a glutamine residue at codon 297 || codon 297 mutation
+pred: 
+
+* docid=12878598 part=s1p2
+test: G84R || G90S || I164T || R112C || amino-terminal Cys-Ser mutation
+pred: G84R || G90S || I164T || R112C
+
+* docid=7538206 part=s1p1
+test: leucine-to-phenylalanine substitution in the acetylcholine receptor ion channel
+pred: 
+
+* docid=12174217 part=s1p2
+test: 1396G or 1396A || G or A base at nucleotide 1396 || aspartic acid or asparagine at codon 466
+pred: 
+
+* docid=11004509 part=s1p2
+test: agm1Delta null || alanine substitution for Arg(496) || alanine substitutions for Ser(64) and His(65) in region I, and for Asp(276), Asp(278), and Arg(281) in region II || mutations of His(65) and Asp(276) || those of Ser(64), Asp(278), and Arg(281)
+pred: 
+
+* docid=12589811 part=s1p2
+test: deletion or mutation of the binding site
+pred: 
+
+* docid=8040306 part=s1p2
+test: deletion of at least 17 kb, starting down-stream from exon 2 and extending beyond the 3' end
+pred: 
+
+# class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
+0	124	3	48	2	2	e	0.9764	0.0017	0.7209	0.0054	0.8294	0.0040	o	0.9922	0.0006	0.7356	0.0056	0.8449	0.0041
+1	14	19	129	19	19	e	0.4242	0.0080	0.0979	0.0021	0.1591	0.0030	o	1.0000	0.0000	0.3210	0.0036	0.4860	0.0042
+2	8	5	17	3	2	e	0.6154	0.0152	0.3200	0.0097	0.4211	0.0112	o	0.8667	0.0125	0.4643	0.0116	0.6047	0.0091
+TOTAL	146	27	194	24	23	e	0.8439	0.0029	0.4294	0.0036	0.5692	0.0037	o	0.9847	0.0008	0.5302	0.0035	0.6893	0.0031

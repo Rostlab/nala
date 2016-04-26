@@ -1,0 +1,224 @@
+* docid=22051099 part=abstract
+test: Ex2+860G>C || S276T
+pred: S276T
+
+* docid=21757944 part=abstract
+test: CD +90 del 13 bp || IVSII-1 (G > A) || IVSII-1 (G > A)
+pred: +90 del 13
+
+* docid=22129472 part=abstract
+test: c.1706-1715del.ATCTCCTCAG || c.1706-2 A>T || p.(Asp569Valfs*93)
+pred: c.1706-1715del || p.(Asp569Valfs*93)
+
+* docid=21054465 part=abstract
+test: 
+pred: C35322T
+
+* docid=20648600 part=abstract
+test: A1762T || E164D || G1764A || G1896A || G1899A || I195M || L180M || L180M || M204V || M204V || V173L || V173L
+pred: A1762T || G1764A || G1896A || G1899A
+
+* docid=20846357 part=abstract
+test: c.263C>T || c.263C>T || p.Ala88Val || p.Ala88Val || p.Asp50Asn
+pred: alanine for valine at position 88 || alanine for valine at position 88 || c.263C>T || c.263C>T || p.Ala88Val || p.Ala88Val || p.Asp50Asn
+
+* docid=21108633 part=abstract
+test: c.410+5 G/A || c.69delC
+pred: c.69delC
+
+* docid=21099701 part=abstract
+test: G303E || c.908G>A
+pred: G303E || c.908G>A || glycine at position 303 by glutamic acid
+
+* docid=20738799 part=abstract
+test: I597T || T>C
+pred: I597T
+
+* docid=20801104 part=abstract
+test: -1240 L/S || -521 C/T || -521 C/T || -521C/T || -616C/G
+pred: -521 C/T || -521 C/T || -521C/T || -616C/G
+
+* docid=21135151 part=title
+test: delta32
+pred: 
+
+* docid=20367983 part=abstract
+test: IVS3 + 18C > T || IVS3 + 18C > T || c.1546_1547insC
+pred: 18C > T || 18C > T || IVS3 + 18C > T || IVS3 + 18C > T || c.1546_1547insC
+
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=20335448 part=abstract
+test: (G-->A) at nucleotide position 2141
+pred: arginine by glutamine at position 714
+
+* docid=20154289 part=abstract
+test: codon 104 G --> A
+pred: 104 G --> A
+
+overlapping subclasses do not match 1 0
+* docid=19881468 part=abstract
+test: 
+pred: 326 from Ser to Cys
+
+* docid=19823838 part=abstract
+test: c.263 G>C || c.264 C>A
+pred: 
+
+* docid=19781362 part=abstract
+test: G>A substitution at nucleotide 893 || R298Q
+pred: R298Q
+
+* docid=19429592 part=abstract
+test: c.1558-1559insA || c.507G>T || c.867G>T || c.897G>T || p.E169stop || p.E299stop || p.G289stop || p.S522fs 525stop
+pred: c.507G>T || c.867G>T || c.897G>T || p.S522fs
+
+* docid=19223935 part=abstract
+test: G-669A || Glu98X || Leu203fsX15 || Ser863Asn
+pred: G-669A || Glu98X || Ser863Asn
+
+* docid=19067809 part=abstract
+test: A 11666C || A 1166C || A 1166C
+pred: 
+
+* docid=18699851 part=abstract
+test: 
+pred: t(11;14)(q13;q32)
+
+* docid=18672102 part=abstract
+test: 118-119insA || 125-126insAA || 46delS || A442V || A6V || E359K || E359K || P163S || P407Q || S429T || c.1146+25insA
+pred: 118-119insA || 125-126insAA || A442V || E359K || E359K || P163S || P407Q || S429T
+
+* docid=18397285 part=abstract
+test: L1503Q || L1503R || L1503R || L1503R || T-->G transversion at nucleotide 4508
+pred: L1503Q || L1503R || L1503R || L1503R
+
+* docid=18189233 part=abstract
+test: A/G transition -1,071 bp || D541E || D541E || K294E || R462Q || R462Q
+pred: D541E || D541E || K294E || R462Q || R462Q
+
+* docid=19276632 part=abstract
+test: 25*G>A || Ala88Thr || Ser424Ser || Tyr428Tyr || c.1272C>T || c.1284T>C || c.262G>A || c.97GCC[9]+[10]
+pred: Ala88Thr || c.1272C>T || c.1284T>C || c.262G>A || c.97GCC[9]
+
+* docid=17968299 part=abstract
+test: -1082(G/A) || G/A
+pred: 
+
+* docid=17961316 part=abstract
+test: G > C || IVS1-1G > A || IVS1-1G > C || IVS1-1G > C || IVS1-1G > C
+pred: IVS1-1G > A || IVS1-1G > C || IVS1-1G > C || IVS1-1G > C
+
+* docid=17935240 part=abstract
+test: g.ORF15 + 652-653delAG || g.ORF15 + 652-653delAG
+pred: 652-653delAG || 652-653delAG
+
+* docid=17909797 part=abstract
+test: Delta32 || Delta32 || Delta32 || Delta32
+pred: 
+
+* docid=17166870 part=abstract
+test: 6bINS || 6bINS || 6bINS || 6bINS || 6bINS
+pred: 
+
+* docid=17033974 part=abstract
+test: c.2406C-->A
+pred: 
+
+* docid=16728705 part=abstract
+test: -863C > A || -863C > A || C > A substitution at position -863
+pred: 
+
+* docid=16525586 part=abstract
+test: Arg260His || Ser263Phe || Ser290/Ala291fs || Ser413Leu || Tyr547fs || Tyr69X || Val414Phe || c.1642_1644dupA || c.2045-1G > A || c.210T > G || c.791C > T || c.892_895dupG
+pred: Arg260His || Ser263Phe || Ser413Leu || Tyr69X || Val414Phe || c.1642_1644dupA || c.892_895dupG
+
+* docid=16256386 part=abstract
+test: EX6-96A>G || F302fsX39 || G346R || I38fsX19 || IVS12+4A>G || IVS12+6T>A || IVS4+3G>C || L367L || Q267E || Q267H || R111X || R157I || R157K || R243Q || R400K || R413P || S349A || T200fsX6 || Y154H || Y356X
+pred: F302fsX39 || G346R || I38fsX19 || IVS12+4A>G || IVS12+6T>A || IVS4+3G>C || Q267E || Q267H || R111X || R157I || R157K || R243Q || R400K || R413P || S349A || T200fsX6 || Y154H || Y356X
+
+* docid=16252083 part=abstract
+test: A --> G transition at 127 position || Asn --> Ser substitution at codon 127 || Asn127Ser || G --> A transition at 1032 position || Gly --> Asp change at codon 322 || Gly322Asp || Gly322Asp || Gly322Asp
+pred: Asn127Ser || Gly322Asp || Gly322Asp || Gly322Asp
+
+* docid=16181814 part=abstract
+test: A467T || A467T || A467T || A467T || A467T || E873-TAG || E873stop || E873stop || E873stop || E873stop
+pred: A467T || A467T || A467T || A467T || A467T || E873stop || E873stop || E873stop || E873stop
+
+* docid=16143638 part=abstract
+test: IVS2-58_55insT
+pred: 
+
+* docid=16001362 part=abstract
+test: C-->T
+pred: 
+
+* docid=15867855 part=abstract
+test: 157delMTTTVP || 157delMTTTVP
+pred: 
+
+* docid=15834874 part=abstract
+test: A1053G || C3026T || C934A || G1915T/A || G529A || T2005C/A
+pred: A1053G || C3026T || C934A || G1915T || G529A || T2005C
+
+* docid=15820770 part=abstract
+test: ACG-->AAG substitution in codon 420 || GAT-->GAG
+pred: 
+
+* docid=15770495 part=abstract
+test: 217_218insC || 217_218insC || A207D || A207D || A49T || A49T || G158R || G158R || G183S || G183S || G196S || G196S || IVS3+1G>A || IVS3+1G>A || Q126R || Q126R || Q126R || R246W || R266W || V89L || del418T || del642T || del642T
+pred: 217_218insC || 217_218insC || A207D || A207D || A49T || A49T || G158R || G158R || G183S || G183S || G196S || G196S || IVS3+1G>A || IVS3+1G>A || Q126R || Q126R || Q126R || R246W || R266W || V89L
+
+* docid=15754732 part=abstract
+test: 222insT || 835del18 || 912delTA || D418D || GAC/GAT || L89R || P291A || Q536X || R171Q
+pred: 222insT || 835del18 || 912delTA || L89R || P291A || Q536X || R171Q
+
+* docid=15672026 part=title
+test: A>G polymorphism at position -670
+pred: 
+
+* docid=15667541 part=abstract
+test: E29K || E29K || Glu29 to Lys || g.3907G >A
+pred: E29K || E29K || Glu29 to Lys
+
+* docid=15579915 part=abstract
+test: IVS10 + 4G
+pred: 
+
+* docid=15485686 part=abstract
+test: G-->A substitution at codon 1763 || I1762A || V1763M || V1764M
+pred: I1762A || V1763M || V1764M
+
+* docid=15464247 part=abstract
+test: 1188-A/C
+pred: 
+
+* docid=15461822 part=abstract
+test: Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30
+pred: 
+
+* docid=15009222 part=abstract
+test: C435G || del 329C
+pred: C435G
+
+* docid=14508191 part=abstract
+test: A/C1166 || A/C1166 || A/C1166 || T/C-344 || T/C-344 || T/C-344 || T/C704 || T/C704 || T/C704
+pred: A/C1166 || A/C1166 || A/C1166 || T/C704 || T/C704 || T/C704
+
+* docid=12925671 part=abstract
+test: 620-621del in cDNA || C877T in cDNA
+pred: C877T
+
+* docid=12915397 part=abstract
+test: -866 promoter (G/A) || A55V || Ala55Val
+pred: A55V || Ala55Val
+
+* docid=12872254 part=title
+test: c.399_402del AGAG
+pred: c.399_402del
+
+# class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
+0	314	12	92	10	10	e	0.9632	0.0011	0.7734	0.0030	0.8579	0.0022	o	0.9940	0.0004	0.8029	0.0028	0.8883	0.0018
+1	4	8	13	3	1	e	0.3333	0.0130	0.2353	0.0108	0.2759	0.0204	o	0.6154	0.0183	0.4000	0.0132	0.4848	0.0159
+2	1	0	1	0	0	e	1.0000	0.0000	0.5000	0.0288	0.6667	0.0245	o	1.0000	0.0000	0.5000	0.0295	0.6667	0.0253
+TOTAL	319	20	106	13	11	e	0.9410	0.0014	0.7506	0.0030	0.8351	0.0022	o	0.9800	0.0007	0.7831	0.0028	0.8706	0.0019
