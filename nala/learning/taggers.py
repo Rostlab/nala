@@ -39,11 +39,13 @@ class NalaSingleModelTagger(Tagger):
                                    keep_unnumbered=keep_unnumbered,
                                    keep_rs_ids=keep_rs_ids)
 
-    def tag(self, dataset):
+    def tag(self, dataset, class_id=None):
+        class_id = self.class_id if class_id is None else class_id
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
-        self.crf.tag(dataset, self.bin_model, self.class_id)
-        self.post.process(dataset)
+
+        self.crf.tag(dataset, self.bin_model, class_id)
+        self.post.process(dataset, class_id=class_id)
 
 
 class NalaMultipleModelTagger(Tagger):
@@ -69,9 +71,10 @@ class NalaMultipleModelTagger(Tagger):
                                    keep_unnumbered=keep_unnumbered,
                                    keep_rs_ids=keep_rs_ids)
 
-    def tag(self, dataset):
-        self.tagger.tag(dataset)
-        self.post.process(dataset)
+    def tag(self, dataset, class_id=None):
+        class_id = self.class_id if class_id is None else class_id
+        self.tagger.tag(dataset, class_id)
+        self.post.process(dataset, class_id=class_id)
 
 
 class MultipleModelTagger(Tagger):
