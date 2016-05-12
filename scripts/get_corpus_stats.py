@@ -101,10 +101,13 @@ def print_stats(name, corpus, typ):
         '********'
     ]
 
+    counter = 0
+
     for ann in annotations(corpus, typ):
         if ann.class_id == MUT_CLASS_ID:
             if ann.subclass in args.listanns:
-                print('\t' + str(ann.subclass) + ' ' + marker[ann.subclass] + ' : ' + ann.text)
+                counter += 1
+                print('\t' + '#' + str(counter) + '  ' + str(ann.subclass) + ' ' + marker[ann.subclass] + ' : ' + ann.text)
             total += 1
             counts[ann.subclass] += 1
             # for word in ann.text.split(' '):
