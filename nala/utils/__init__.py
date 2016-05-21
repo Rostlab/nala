@@ -64,7 +64,7 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
 
     if use_windows:
         include.extend(['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
-                   'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]'])
+                        'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]'])
         f = WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
         generators.append(f)
 
