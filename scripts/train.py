@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 import tempfile
 from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
@@ -16,8 +17,7 @@ from nalaf.utils.writers import ConsoleWriter
 from nalaf import print_debug
 import time
 
-if __name__ == "__main__":
-
+def train(argv):
     parser = argparse.ArgumentParser(description='Train model')
 
     parser.add_argument('--training_corpus',
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     FALSE = ['false', '0', 'no', 'none']
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     start_time = time.time()
 
@@ -310,3 +310,9 @@ if __name__ == "__main__":
     end_time = time.time()
 
     print_debug("Elapsed time: ", (end_time - start_time))
+
+    return tagger
+
+
+if __name__ == "__main__":
+    train(sys.argv[1:])
