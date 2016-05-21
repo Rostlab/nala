@@ -13,6 +13,8 @@ from nalaf.utils.writers import TagTogFormat
 from nala.bootstrapping.document_filters import HighRecallRegexClassifier
 from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter
+from nalaf import print_debug
+import time
 
 if __name__ == "__main__":
 
@@ -85,6 +87,8 @@ if __name__ == "__main__":
     FALSE = ['false', '0', 'no', 'none']
 
     args = parser.parse_args()
+
+    start_time = time.time()
 
     # ------------------------------------------------------------------------------
 
@@ -302,3 +306,7 @@ if __name__ == "__main__":
         os.mkdir(outdir)
         print("\nThe predicted test data is saved to: {}\n".format(outdir))
         TagTogFormat(test_set, use_predicted=True, to_save_to=outdir).export(0)
+
+    end_time = time.time()
+
+    print_debug("Elapsed time: ", (end_time - start_time))
