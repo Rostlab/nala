@@ -178,6 +178,8 @@ if __name__ == "__main__":
 
         if args.test_corpus:
             test_set = get_corpus(args.test_corpus)
+        elif args.string:
+            test_set = StringReader(args.string).read()
         elif args.validation == "none":
             test_set = None
         elif args.validation == "cross-validation":
