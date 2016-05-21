@@ -20,7 +20,6 @@ class TmVarFeatureGenerator(FeatureGenerator):
         Contains all regular expressions.
         """
         self.reg_spec_chars = re.compile('[-;:,.>+_]')
-        self.reg_chr_keys = re.compile('(q|p|q[0-9]+|p[0-9]+|qter|pter|XY|t)')
         self.reg_char_simple_bracket = re.compile('[\(\)]')
         self.reg_char_square_bracket = re.compile('[\[\]]')
         self.reg_char_curly_bracket = re.compile('[\{\}]')
@@ -40,6 +39,7 @@ class TmVarFeatureGenerator(FeatureGenerator):
         self.reg_shape_chars_plus = re.compile('[A-Za-z]+')
 
         # Mutation related
+        self.reg_chr_keys = re.compile('(q|p|q[0-9]+|p[0-9]+|qter|pter|XY|t)')
         self.reg_mutat_type = re.compile('(del|ins|dup|tri|qua|con|delins|indel)')
         self.reg_frameshift_type = re.compile('(fs|fsX|fsx)')
         self.reg_mutat_word = re.compile(
@@ -85,6 +85,8 @@ class TmVarFeatureGenerator(FeatureGenerator):
             # suffix patterns
             for index, value in enumerate(self.suffix_pattern(token.word)):
                 token.features['suffix{}'.format(index+1)] = value
+
+            # Mutation related
 
             token.features['mutat_article_bp'] = self.mutation_article_bp(token.word)
             token.features['type1'] = self.is_special_type_1(token.word)
