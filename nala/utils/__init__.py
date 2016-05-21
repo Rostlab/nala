@@ -55,18 +55,18 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
         #TmVarDictionaryFeatureGenerator(),
     ]
 
-    include = []
+    windows_include = []
 
     if nl_features:
         f = NLMentionFeatureGenerator(nl_features['threshold'])
         if nl_features['window']:
-            include.extend(['tag_dict[0]', 'nl_tag_dict[0]'])
+            windows_include.extend(['tag_dict[0]', 'nl_tag_dict[0]'])
 
         generators.append(f)
 
     if use_windows:
-        include.extend(['stem[0]', 'pos[0]'])
-        f = WindowFeatureGenerator(template=(-2, -1, 1, 2), include_list=include)
+        windows_include.extend(['stem[0]', 'pos[0]'])
+        f = WindowFeatureGenerator(template=(-2, -1, 1, 2), include_list=windows_include)
         generators.append(f)
 
     if we_params:
