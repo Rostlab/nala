@@ -1,9 +1,10 @@
 import os
 from nala.utils import nala_repo_path
 from nala.bootstrapping.iteration import Iteration
-from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader, MutationFinderReader, PMIDReader
+from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader, MutationFinderReader, \
+    PMIDReader, HTMLReader
 from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader, \
-    DownloadedSETHAnnotationReader
+    DownloadedSETHAnnotationReader, AnnJsonAnnotationReader
 from nalaf.structures.data import Dataset
 
 # Var = Variome
@@ -19,8 +20,18 @@ ALL_CORPORA = [
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
-
 def get_corpus(name, training=False, test=False):
+    if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
+        return get_annjson_corpus(name)
+    else:
+        return get_corpus_name(name, training, test)
+
+def get_annjson_corpus(folder):
+    ret = HTMLReader(folder).read()
+    AnnJsonAnnotationReader(folder, read_just_mutations=False).annotate(ret)
+    return ret
+
+def get_corpus_name(name, training=False, test=False):
     """
     :rtype: nalaf.structures.data.Dataset
     """
