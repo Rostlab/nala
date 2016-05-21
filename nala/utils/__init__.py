@@ -11,6 +11,7 @@ import os
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.features.simple import SentenceMarkerFeatureGenerator
 from nalaf.features.stemming import SpacyLemmatizer
+from nalaf.features.parsing import SpacyPosTagger
 from nalaf.features.window import WindowFeatureGenerator
 from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
 from nala.features.nl_mutations import NLMentionFeatureGenerator
@@ -48,9 +49,10 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
 
     generators = [
         SpacyLemmatizer(),
+        SpacyPosTagger(),
         SentenceMarkerFeatureGenerator(),
-        TmVarFeatureGenerator(),
-        TmVarDictionaryFeatureGenerator(),
+        TmVarFeatureGenerator(get_mutation_features=False),
+        #TmVarDictionaryFeatureGenerator(),
     ]
 
     include = []
@@ -63,9 +65,8 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
         generators.append(f)
 
     if use_windows:
-        include.extend(['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
-                        'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]'])
-        f = WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
+        include.extend(['stem[0]', 'pos[0]'])
+        f = WindowFeatureGenerator(template=(-2, -1, 1, 2), include_list=include)
         generators.append(f)
 
     if we_params:
