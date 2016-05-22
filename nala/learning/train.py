@@ -6,7 +6,7 @@ from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus
 from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, IOLabeler, TmVarLabeler
-from nala.utils import get_prepare_pipeline_for_best_model
+from nala.utils import get_prepare_pipeline_for_best_model, get_prepare_pipeline_for_best_model_general
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.learning.taggers import NalaSingleModelTagger, NalaMultipleModelTagger
@@ -75,8 +75,10 @@ def train(argv):
     parser.add_argument('--nl_threshold', type=int, default=0)
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
+    parser.add_argument('--mutations_specific', default='True',
+                        help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
     parser.add_argument('--execute_pp', default='True',
-                        help='Execute post processing (default) or not')
+                        help='Execute post processing specific to mutations (default) or not')
     parser.add_argument('--keep_silent', default='True',
                         help='Keep silent mutations (default) or not, i.e., delete mentions like `Cys23-Cys`')
     parser.add_argument('--keep_genetic_markers', default='True',
@@ -142,6 +144,7 @@ def train(argv):
         args.crf_train_params = None
 
     args.use_feat_windows = False if args.use_feat_windows.lower() in FALSE else True
+    args.mutations_specific = False if args.mutations_specific.lower() in FALSE else True
     args.execute_pp = False if args.execute_pp.lower() in FALSE else True
     args.keep_silent = False if args.keep_silent.lower() in FALSE else True
     args.keep_genetic_markers = False if args.keep_genetic_markers.lower() in FALSE else True
@@ -214,7 +217,12 @@ def train(argv):
 
     # ------------------------------------------------------------------------------
 
-    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
+    if args.mutations_specific:
+        print("Pipeline specific to mutations")
+        features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
+    else:
+        print("Pipeline is general")
+        features_pipeline = get_prepare_pipeline_for_best_model_general(args.use_feat_windows, args.we_params, args.nl_features)
 
     # ------------------------------------------------------------------------------
 
