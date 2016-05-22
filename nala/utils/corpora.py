@@ -27,8 +27,8 @@ def get_corpus(name, only_class_id=None, training=False, test=False):
         return get_corpus_name(name, training, test)
 
 def get_annjson_corpus(folder, only_class_id=None):
-    ret = HTMLReader(folder).read()
-    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id).annotate(ret)
+    ret = HTMLReader(folder, whole_basename_as_docid=True).read()
+    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id, whole_basename_as_docid=True).annotate(ret)
     return ret
 
 def get_corpus_name(name, training=False, test=False):
