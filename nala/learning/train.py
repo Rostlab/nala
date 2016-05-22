@@ -50,6 +50,8 @@ def train(argv):
 
     parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
+    parser.add_argument('--only_class_id', required=False, default=None,
+                        help="By default corpora's all entities are read. Set this class_id to filter rest out")
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
 
@@ -178,10 +180,10 @@ def train(argv):
     definer = ExclusiveNLDefiner()
 
     if args.training_corpus:
-        train_set = get_corpus(args.training_corpus)
+        train_set = get_corpus(args.training_corpus, args.only_class_id)
 
         if args.test_corpus:
-            test_set = get_corpus(args.test_corpus)
+            test_set = get_corpus(args.test_corpus, args.only_class_id)
         elif args.string:
             test_set = StringReader(args.string).read()
         elif args.validation == "none":
@@ -194,7 +196,7 @@ def train(argv):
 
     elif args.test_corpus:
         train_set = None
-        test_set = get_corpus(args.test_corpus)
+        test_set = get_corpus(args.test_corpus, args.only_class_id)
 
     elif args.string:
         train_set = None

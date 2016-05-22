@@ -20,15 +20,15 @@ ALL_CORPORA = [
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
-def get_corpus(name, training=False, test=False):
+def get_corpus(name, only_class_id=None, training=False, test=False):
     if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
-        return get_annjson_corpus(name)
+        return get_annjson_corpus(name, only_class_id)
     else:
         return get_corpus_name(name, training, test)
 
-def get_annjson_corpus(folder):
+def get_annjson_corpus(folder, only_class_id=None):
     ret = HTMLReader(folder).read()
-    AnnJsonAnnotationReader(folder, read_just_mutations=False).annotate(ret)
+    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id).annotate(ret)
     return ret
 
 def get_corpus_name(name, training=False, test=False):
