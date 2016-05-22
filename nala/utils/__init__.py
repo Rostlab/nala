@@ -38,6 +38,45 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating mutation mentions.
+    if we_params is empty dict, no we is applied
+    :returns nalaf.structures.dataset_pipelines.PrepareDatasetPipeline
+    """
+
+    default_we_params = {'additive': None, 'multiplicative': None, 'location': None}
+    we_params = default_we_params if we_params is None else we_params
+
+    generators = [
+        SpacyLemmatizer(),
+        SentenceMarkerFeatureGenerator(),
+        TmVarFeatureGenerator(get_mutation_features=True),
+        TmVarDictionaryFeatureGenerator(),
+    ]
+
+    include = []
+
+    if nl_features:
+        f = NLMentionFeatureGenerator(nl_features['threshold'])
+        if nl_features['window']:
+            include.extend(['tag_dict[0]', 'nl_tag_dict[0]'])
+
+        generators.append(f)
+
+    if use_windows:
+        include.extend(['pattern0[0]', 'pattern1[0]', 'pattern2[0]', 'pattern3[0]', 'pattern4[0]', 'pattern5[0]',
+                        'pattern6[0]', 'pattern7[0]', 'pattern8[0]', 'pattern9[0]', 'pattern10[0]', 'stem[0]'])
+        f = WindowFeatureGenerator(template=(-4, -3, -2, -1, 1, 2, 3, 4), include_list=include)
+        generators.append(f)
+
+    if we_params:
+        generators.append(get_word_embeddings_feature_generator(we_params['location'], we_params['additive'], we_params['multiplicative']))
+
+    return PrepareDatasetPipeline(feature_generators=generators)
+
+
+def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None, nl_features=None):
+    """
+    Helper method that returns an instance of PrepareDatasetPipeline
+    which uses the best configuration for predicating mutation mentions.
 
     if we_params is empty dict, no we is applied
 
@@ -51,8 +90,7 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
         SpacyLemmatizer(),
         SpacyPosTagger(),
         SentenceMarkerFeatureGenerator(),
-        TmVarFeatureGenerator(get_mutation_features=False),
-        #TmVarDictionaryFeatureGenerator(),
+        TmVarFeatureGenerator(get_mutation_features=False)
     ]
 
     windows_include = []
