@@ -205,6 +205,13 @@ def train(argv):
     else:
         raise Exception("you must give a training_corpus, test_corpus, or string")
 
+    def verify_corpus(corpus):
+        if corpus is not None:
+            assert len(corpus) > 0, 'The corpus has no documents'
+            assert next(corpus.annotations(), None) is not None, 'The corpus has no annotations'
+
+    verify_corpus(train_set)
+
     # ------------------------------------------------------------------------------
 
     features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
