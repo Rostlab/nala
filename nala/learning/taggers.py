@@ -196,28 +196,29 @@ class TmVarTagger(Cacheable, Tagger):
                     start -= len(tm_var_title) + 1
                     end -= len(tm_var_title) + 1
 
-                start, end = TmVarTagger._adjust_offsets(part.text, tm_part)
+                start, end = TmVarTagger._adjust_offsets(part.text, tm_part, start, end)
 
                 part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))
 
     @staticmethod
     def _parse_json(doc_id, doc, response_text):
         for pred_part in json.loads(response_text):
-            part = doc[pred_part['sourceid']]
+            partid = pred_part['sourceid']
+            part = doc.parts[partid]
             for pred in pred_part['denotations']:
                 start = pred['span']['begin']
                 end = pred['span']['end']
 
-                start, end = TmVarTagger._adjust_offsets(part.text, pred_part['text'])
+                start, end = TmVarTagger._adjust_offsets(part.text, pred_part['text'], start, end)
 
                 part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))
 
     @staticmethod
     def _doc_to_json(doc):
         ret = []
-        for partid, text in doc.parts.items():
-            sub = {'sourcedb': 'undefined', 'sourceid': partid, 'text': text}
-            ret += sub
+        for partid, part in doc.parts.items():
+            sub = {'sourcedb': 'undefined', 'sourceid': partid, 'text': part.text}
+            ret.append(sub)
         ret = json.dumps(ret, separators=(',', ':'))
         return ret
 
