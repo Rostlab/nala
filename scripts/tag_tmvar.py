@@ -9,6 +9,7 @@ from nalaf.utils.writers import TagTogFormat
 corpus_name = sys.argv[1]
 preds_folder = sys.argv[2]
 folder_name = os.path.join(preds_folder, 'tmVar', corpus_name)
+is_predict = sys.argv[3] == "predict"
 
 data = get_corpus(corpus_name)
 
@@ -29,5 +30,7 @@ def evaluate():
     e = MentionLevelEvaluator(subclass_analysis=True).evaluate(data)
     print(e)
 
-#predict()
-evaluate()
+if is_predict:
+    predict()
+else:
+    evaluate()
