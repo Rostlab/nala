@@ -202,22 +202,34 @@ class TmVarTagger(Cacheable, Tagger):
 
     @staticmethod
     def _parse_json(doc_id, doc, response_text):
-        for pred_part in json.loads(response_text):
-            partid = pred_part['sourceid']
-            part = doc.parts[partid]
-            for pred in pred_part['denotations']:
-                start = pred['span']['begin']
-                end = pred['span']['end']
+        try:
+            for pred_part in json.loads(response_text, strict=False):
+                partid = pred_part['sourceid']
+                part = doc.parts[partid]
+                for pred in pred_part['denotations']:
+                    start = pred['span']['begin']
+                    end = pred['span']['end']
 
-                start, end = TmVarTagger._adjust_offsets(part.text, pred_part['text'], start, end)
+                    start, end = TmVarTagger._adjust_offsets(part.text, pred_part['text'], start, end)
 
-                part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))
+                    part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))
+        except:
+            print("ERROR PARSING JSON", response_text)
+            raise
 
     @staticmethod
     def _doc_to_json(doc):
+        """
+        tmVar API has many quirks to put it mildly.
+
+        The sent JSON hast to be compressed in order to be understood as JSON and receive a JSON back.
+        Furthermore, double quotes are note treated properly. That's why we replace them by simple apostrophes
+        """
+
         ret = []
         for partid, part in doc.parts.items():
-            sub = {'sourcedb': 'undefined', 'sourceid': partid, 'text': part.text}
+            text_for_tmvar_api = part.text.replace('"', "'")
+            sub = {'sourcedb': 'undefined', 'sourceid': partid, 'text': text_for_tmvar_api}
             ret.append(sub)
         ret = json.dumps(ret, separators=(',', ':'))
         return ret
@@ -228,8 +240,12 @@ class TmVarTagger(Cacheable, Tagger):
         """
         for doc_id, doc in data.documents.items():
             if doc_id in self.cache:
+                print_debug("Use cached response", doc_id)
+
                 response_text = self.cache[doc_id]
             elif len(doc.parts) == 2 and self._is_pmid(doc_id):
+                print_debug("Use PMID-based API", doc_id)
+
                 r = requests.get(self.url_tmvar_pmids.format(doc_id))
                 if r.status_code == 200:
                     response_text = r.text
@@ -237,6 +253,8 @@ class TmVarTagger(Cacheable, Tagger):
                 else:
                     continue
             else:
+                print_debug("Use free-text API", doc_id)
+
                 r = requests.post(self.url_tmvar_freetext, self._doc_to_json(doc))
 
                 if 'Receive' in r.url:
