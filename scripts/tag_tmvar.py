@@ -22,7 +22,9 @@ def predict():
 
 def evaluate():
     from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
+    size_before = len(data)
     AnnJsonAnnotationReader(os.path.join(folder_name, "annjson"), is_predicted=True, delete_incomplete_docs=False).annotate(data)
+    assert(size_before == len(data))
 
     ExclusiveNLDefiner().define(data)
     e = MentionLevelEvaluator(subclass_analysis=True).evaluate(data)
