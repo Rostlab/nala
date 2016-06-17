@@ -14,6 +14,7 @@ from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.preprocessing.spliters import NLTKSplitter
 from nalaf.structures.data import Dataset
 from nalaf.utils.cache import Cacheable
+from collections import Counter
 
 from nala.utils import MUT_CLASS_ID
 from nala.utils import get_prepare_pipeline_for_best_model
@@ -102,6 +103,43 @@ class ManualDocumentFilter(DocumentFilter, Cacheable):
 
             if self.cache[pmid]:
                 yield pmid, doc
+
+
+class ManualStatsDocumentFilter(DocumentFilter, Cacheable):
+    """
+    Displays each document to the user on the standard console.
+    The user inputs any of the accepted answers for document acceptance or the document is rejected.
+    The exact answer is stored for the corresponding docid.
+    """
+    def __init__(self, accepted_answers):
+        super().__init__()
+        self.is_timed = False
+        self.accepted_answers = [a.lower() for a in accepted_answers]
+        self.answers = {}
+        self.counter = Counter()
+
+
+    def filter(self, documents):
+        """
+        :type documents: collections.Iterable[(str, nalaf.structures.data.Document)]
+        """
+        for docid, doc in documents:
+            # if we can't find it in the cache
+            # ask the user and save it to the cache
+            if docid not in self.cache:
+                print('http://www.ncbi.nlm.nih.gov/pubmed/{}'.format(docid))
+                print(highlighted_text(doc.get_text()))
+                answer = input("do? ({} or 'stop') ".format(self.accepted_answers)).lower()
+                self.answers[docid] = answer
+                self.counter.update([answer])
+
+                if answer == 'stop':
+                    break
+
+                self.cache[docid] = answer in self.accepted_answers
+
+            if self.cache[docid]:
+                yield docid, doc
 
 
 class QuickNalaFilter(DocumentFilter):
