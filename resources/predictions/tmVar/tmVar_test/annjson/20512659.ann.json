@@ -1,0 +1,1 @@
+{"metas": {}, "relations": [], "sources": [{"id": "20512659", "name": "ORIG", "url": ""}], "anncomplete": false, "annotatable": {"parts": ["title", "abstract"]}, "entities": [{"offsets": [{"start": 647, "text": "c.2515_2519delAAGTT"}], "normalizations": {}, "confidence": {"prob": 1, "who": ["ml:nalaf"], "state": "selected"}, "part": "abstract", "classId": "e_2", "fields": {}}]}

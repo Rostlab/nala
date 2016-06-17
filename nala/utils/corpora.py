@@ -19,8 +19,13 @@ ALL_CORPORA = [
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
+def get_corpora(names):
+    dataset = Dataset()
+    for name in names.split(','):
+        dataset.extend_dataset(get_corpus(name))
+    return dataset
 
-def get_corpus(name, training=False, test=False):
+def get_corpus(name):
     """
     :rtype: nalaf.structures.data.Dataset
     """
