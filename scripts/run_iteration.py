@@ -15,19 +15,20 @@ assert os.path.exists('../resources/bootstrapping/'), 'You must be in the scrips
 try:
     username = sys.argv[1]
     password = sys.argv[2]
+    itr_size = int(sys.argv[3])  # For example, 10
 except:
-    print("You must pass in tagtog username and password")
+    print("You must pass in tagtog username and password, and itr size (nr documents)")
     raise
 
 try:
-    pmids = [p.strip() for p in sys.argv[3].split(',')]
+    pmids = [p.strip() for p in sys.argv[4].split(',')]
     folder = 'test'
 except:
     pmids = None
     folder = 'pool'
 
 try:
-    itr_number = sys.argv[4]
+    itr_number = sys.argv[5]
 except:
     itr_number = None
 
@@ -38,11 +39,11 @@ def run():
     print("Running ({}) iteration # : {}".format(folder, itr.number))
 
     if folder == 'test':
-        itr.docselection_pmids(20, pmids)
+        itr.docselection_pmids(itr_size, pmids)
 
     else:
         itr.docselection(just_caching=True, nr=500)
-        itr.before_annotation(10)
+        itr.before_annotation(itr_size)
 
     print('Size to upload: ', len(itr.candidates))
 
