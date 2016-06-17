@@ -12,19 +12,24 @@ url = 'https://www.tagtog.net/api/0.1/documents'
 try:
     username = sys.argv[1]
     password = sys.argv[2]
-    if len(sys.argv) > 3:
-        itr_number = sys.argv[3]
-    else:
-        itr_number = None
 except:
     print("You must pass in tagtog username and password")
     raise
 
+try:
+    folder = sys.argv[3]
+except:
+    folder = 'test'
+
+try:
+    itr_number = sys.argv[4]
+except:
+    itr_number = None
 
 
 def run():
     itr = Iteration(iteration_nr=itr_number)
-    print("Running iteration #: ", itr.number)
+    print("Running ({}) iteration # : {}".format(folder, itr.number))
     itr.docselection(just_caching=True, nr=500)
     itr.before_annotation(10)
     return itr.number
@@ -32,7 +37,7 @@ def run():
 
 def upload(n):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
-    params = {'project': 'nala', 'output': 'null', 'owner': 'jmcejuela'}
+    params = {'project': 'nala', 'output': 'null', 'owner': 'jmcejuela', 'folder': folder}
     iter_dir = '../resources/bootstrapping/iteration_{}/candidates'.format(n)
 
     file = shutil.make_archive(iter_dir, 'zip', iter_dir)

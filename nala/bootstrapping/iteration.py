@@ -220,14 +220,14 @@ class Iteration:
                                  'tp', 'fp', 'fn', 'fp_overlap', 'fn_overlap', 'precision', 'recall', 'f1-score'])
 
 
-    def before_annotation(self, nr_new_docs=10):
-        # self.read_learning_data()
-        # self.preprocessing()
-        # self.crf_learning()
+    def before_annotation(self, nr_new_docs=10, is_test=False):
+        if not is_test:
+            self.learning()
 
-        self.learning()
         self.docselection(nr=nr_new_docs)
-        self.tagging(threshold_val=self.threshold_val)
+
+        if not is_test:
+            self.tagging(threshold_val=self.threshold_val)
 
     def after_annotation(self):
         self.clean_reviewed_files()
