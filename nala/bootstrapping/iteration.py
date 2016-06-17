@@ -6,9 +6,10 @@ import time
 import csv
 
 from collections import defaultdict
-from itertools import product, chain
-from nala.bootstrapping.utils import UniprotDocumentSelector
-from nala.bootstrapping.document_filters import HighRecallRegexDocumentFilter, ManualDocumentFilter
+from itertools import product, chain, count
+from nala.bootstrapping.utils import UniprotDocumentSelector, PMIDDocumentSelector
+from nala.structures.selection_pipelines import DocumentSelectorPipeline
+from nala.bootstrapping.document_filters import HighRecallRegexDocumentFilter, ManualDocumentFilter, ManualStatsDocumentFilter
 from nala.bootstrapping.pmid_filters import AlreadyConsideredPMIDFilter
 from nala.learning.postprocessing import PostProcessing
 from nalaf import print_verbose, print_debug
@@ -380,15 +381,49 @@ class Iteration:
             print_verbose("Already existing binary model is used.")
         print_verbose('Model at "{}".'.format(self.bin_model))
 
+    def docselection_pmids(self, nr, pmids):
+
+        dataset = Dataset()
+        doc_filter = ManualStatsDocumentFilter(['NL', 'ST'])
+
+        with DocumentSelectorPipeline(
+                document_selector=PMIDDocumentSelector(pmids),
+                pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
+                document_filters=[doc_filter]) as dsp:
+
+            for pmid, document in dsp.execute():
+                dataset.documents[pmid] = document
+
+                left = nr - doc_filter.counter['NL']
+
+                print_verbose('Documents found {}. {} more to go.'.format(doc_filter.counter, left))
+
+                # if we have generated enough documents stop
+                if left == 0:
+                    break
+
+        self.candidates = dataset
+        len_cand = len(self.candidates)
+        if len_cand < nr:
+            exit('Not {} documents as expected. only {}'.format(nr, len_cand))
+
+        print(doc_filter.counter)
+
+        # export to anndoc format
+        ttf_candidates = TagTogFormat(self.candidates, use_predicted=False, to_save_to=self.candidates_folder, use_original_partids=False)
+        ttf_candidates.export_html()
+        ttf_candidates.export_ann_json(THRESHOLD_VALUE)
+
+        return doc_filter
+
     def docselection(self, nr=2, just_caching=False):
         """
         Does the same as generate_documents(n) but the bootstrapping folder is specified in here.
         :param nr: amount of new documents wanted
         """
         print_verbose("\n\n\n======DocSelection======\n\n\n")
-        from nalaf.structures.data import Dataset
-        from nala.structures.selection_pipelines import DocumentSelectorPipeline
-        from itertools import count
+
+
         c = count(1)
 
         dataset = Dataset()
