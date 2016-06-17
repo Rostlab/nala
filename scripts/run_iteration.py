@@ -3,36 +3,55 @@ import requests
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
 from nalaf.utils.readers import HTMLReader
 from nala.bootstrapping.iteration import Iteration
+from nala.bootstrapping.document_filters import ManualStatsDocumentFilter
 import shutil
 import os
 import sys
 
 url = 'https://www.tagtog.net/api/0.1/documents'
 
+assert os.path.exists('../resources/bootstrapping/'), 'You must be in the scrips folder to run this'
+
 try:
     username = sys.argv[1]
     password = sys.argv[2]
-    if len(sys.argv) > 3:
-        itr_number = sys.argv[3]
-    else:
-        itr_number = None
 except:
     print("You must pass in tagtog username and password")
     raise
 
+try:
+    pmids = [p.strip() for p in sys.argv[3].split(',')]
+    folder = 'test'
+except:
+    pmids = None
+    folder = 'pool'
 
+try:
+    itr_number = sys.argv[4]
+except:
+    itr_number = None
+
+print(username, folder)
 
 def run():
     itr = Iteration(iteration_nr=itr_number)
-    print("Running iteration #: ", itr.number)
-    itr.docselection(just_caching=True, nr=500)
-    itr.before_annotation(10)
+    print("Running ({}) iteration # : {}".format(folder, itr.number))
+
+    if folder == 'test':
+        itr.docselection_pmids(20, pmids)
+
+    else:
+        itr.docselection(just_caching=True, nr=500)
+        itr.before_annotation(10)
+
+    print('Size to upload: ', len(itr.candidates))
+
     return itr.number
 
 
 def upload(n):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
-    params = {'project': 'nala', 'output': 'null', 'owner': 'jmcejuela'}
+    params = {'project': 'nala', 'output': 'null', 'owner': 'jmcejuela', 'folder': folder}
     iter_dir = '../resources/bootstrapping/iteration_{}/candidates'.format(n)
 
     file = shutil.make_archive(iter_dir, 'zip', iter_dir)
@@ -63,7 +82,7 @@ def download(n, ids=None):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
 
     for tagtog_id in ids:
-        params = {'project': 'nala', 'output': 'ann.json', 'owner': 'jmcejuela',
+        params = {'project': 'nala', 'output': 'ann.json', 'owner': 'jmcejuela', 'folder': folder,
                   'ids': tagtog_id, 'member': username, 'idType': 'tagtogID'}
         response = requests.get(url, params=params, auth=auth)
         if response.status_code == 200:
