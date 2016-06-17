@@ -439,7 +439,6 @@ class Iteration:
                     pmid_filters=[AlreadyConsideredPMIDFilter(self.bootstrapping_folder, self.number)],
                     document_filters=[HighRecallRegexDocumentFilter(binary_model=self.bin_model,
                                                                     expected_max_results=nr, use_nala=True),
-                                      # QuickNalaFilter(binary_model=self.bin_model, threshold=1),
                                       ManualDocumentFilter()]) as dsp:
                 for pmid, document in dsp.execute():
                     dataset.documents[pmid] = document
