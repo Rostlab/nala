@@ -10,6 +10,8 @@ import sys
 
 url = 'https://www.tagtog.net/api/0.1/documents'
 
+assert os.path.exists('../resources/bootstrapping/'), 'You must be in the scrips folder to run this'
+
 try:
     username = sys.argv[1]
     password = sys.argv[2]
@@ -41,6 +43,8 @@ def run():
     else:
         itr.docselection(just_caching=True, nr=500)
         itr.before_annotation(10)
+
+    print('Size to upload: ', len(itr.dataset))
 
     return itr.number
 

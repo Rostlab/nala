@@ -384,7 +384,7 @@ class Iteration:
     def docselection_pmids(self, nr, pmids):
 
         dataset = Dataset()
-        doc_filter = ManualStatsDocumentFilter(['NL', 'ST'])
+        doc_filter = ManualStatsDocumentFilter(['nl', 'st'])
 
         with DocumentSelectorPipeline(
                 document_selector=PMIDDocumentSelector(pmids),
@@ -394,18 +394,16 @@ class Iteration:
             for pmid, document in dsp.execute():
                 dataset.documents[pmid] = document
 
-                left = nr - doc_filter.counter['NL']
-
-                print_verbose('Documents found {}. {} more to go.'.format(doc_filter.counter, left))
+                print_verbose('Documents found: {}'.format(doc_filter.counter))
 
                 # if we have generated enough documents stop
-                if left == 0:
+                if doc_filter.counter['nl'] == nr:
                     break
 
         self.candidates = dataset
         len_cand = len(self.candidates)
         if len_cand < nr:
-            exit('Not {} documents as expected. only {}'.format(nr, len_cand))
+            exit('Not {} documents as expected. Only {}'.format(nr, len_cand))
 
         print(doc_filter.counter)
 

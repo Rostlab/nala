@@ -117,7 +117,7 @@ class ManualStatsDocumentFilter(DocumentFilter, Cacheable):
         self.yes_answers = [a.lower() for a in yes_answers]
         assert('no' not in self.yes_answers)
         self.answers = {}
-        self.counter = Counter([self.yes_answers] + ['no'])
+        self.counter = Counter({s: 0 for s in (self.yes_answers + ['no'])})
 
     def filter(self, documents):
         """
@@ -131,7 +131,7 @@ class ManualStatsDocumentFilter(DocumentFilter, Cacheable):
                 print(highlighted_text(doc.get_text()))
 
                 while True:
-                    answer = input("\nCounter: {}\nDo? ({} or 'no', or 'stop') ".format(self.counter, self.yes_answers)).lower()
+                    answer = input("\n{}\n\nDo? (or stop): ".format(self.counter)).lower()
 
                     if answer in self.yes_answers or answer == 'no' or answer == 'stop':
                         break
