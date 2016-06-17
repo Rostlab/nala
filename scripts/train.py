@@ -3,7 +3,7 @@ import os
 import tempfile
 from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
-from nala.utils.corpora import get_corpus
+from nala.utils.corpora import get_corpus, get_corpora
 from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, IOLabeler, TmVarLabeler
 from nala.utils import get_prepare_pipeline_for_best_model
 from nalaf.learning.crfsuite import PyCRFSuite
@@ -183,7 +183,7 @@ if __name__ == "__main__":
 
     elif args.test_corpus:
         train_set = None
-        test_set = get_corpus(args.test_corpus)
+        test_set = get_corpora(args.test_corpus)
 
     elif args.string:
         train_set = None
