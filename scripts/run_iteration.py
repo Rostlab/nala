@@ -44,14 +44,14 @@ def run():
         itr.docselection(just_caching=True, nr=500)
         itr.before_annotation(10)
 
-    print('Size to upload: ', len(itr.dataset))
+    print('Size to upload: ', len(itr.candidates))
 
     return itr.number
 
 
 def upload(n):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
-    params = {'project': 'nala-test', 'output': 'null', 'owner': 'jmcejuela', 'folder': folder}
+    params = {'project': 'nala', 'output': 'null', 'owner': 'jmcejuela', 'folder': folder}
     iter_dir = '../resources/bootstrapping/iteration_{}/candidates'.format(n)
 
     file = shutil.make_archive(iter_dir, 'zip', iter_dir)
@@ -82,7 +82,7 @@ def download(n, ids=None):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
 
     for tagtog_id in ids:
-        params = {'project': 'nala', 'output': 'ann.json', 'owner': 'jmcejuela',
+        params = {'project': 'nala', 'output': 'ann.json', 'owner': 'jmcejuela', 'folder': folder,
                   'ids': tagtog_id, 'member': username, 'idType': 'tagtogID'}
         response = requests.get(url, params=params, auth=auth)
         if response.status_code == 200:

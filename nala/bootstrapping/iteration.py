@@ -405,7 +405,7 @@ class Iteration:
         if len_cand < nr:
             exit('Not {} documents as expected. Only {}'.format(nr, len_cand))
 
-        print(doc_filter.counter)
+        print("\n\n\n", doc_filter.answers, "\n\n", doc_filter.counter, "\n\n\n")
 
         # export to anndoc format
         ttf_candidates = TagTogFormat(self.candidates, use_predicted=False, to_save_to=self.candidates_folder, use_original_partids=False)
