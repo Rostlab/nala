@@ -3,6 +3,7 @@ import requests
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
 from nalaf.utils.readers import HTMLReader
 from nala.bootstrapping.iteration import Iteration
+from nala.bootstrapping.document_filters import ManualStatsDocumentFilter
 import shutil
 import os
 import sys
@@ -17,27 +18,36 @@ except:
     raise
 
 try:
-    folder = sys.argv[3]
-except:
+    pmids = [p.strip() for p in sys.argv[3].split(',')]
     folder = 'test'
+except:
+    pmids = None
+    folder = 'pool'
 
 try:
     itr_number = sys.argv[4]
 except:
     itr_number = None
 
+print(username, folder)
 
 def run():
     itr = Iteration(iteration_nr=itr_number)
     print("Running ({}) iteration # : {}".format(folder, itr.number))
-    itr.docselection(just_caching=True, nr=500)
-    itr.before_annotation(10)
+
+    if folder == 'test':
+        itr.docselection_pmids(20, pmids)
+
+    else:
+        itr.docselection(just_caching=True, nr=500)
+        itr.before_annotation(10)
+
     return itr.number
 
 
 def upload(n):
     auth = requests.auth.HTTPBasicAuth(username=username, password=password)
-    params = {'project': 'nala', 'output': 'null', 'owner': 'jmcejuela', 'folder': folder}
+    params = {'project': 'nala-test', 'output': 'null', 'owner': 'jmcejuela', 'folder': folder}
     iter_dir = '../resources/bootstrapping/iteration_{}/candidates'.format(n)
 
     file = shutil.make_archive(iter_dir, 'zip', iter_dir)

@@ -111,13 +111,13 @@ class ManualStatsDocumentFilter(DocumentFilter, Cacheable):
     The user inputs any of the accepted answers for document acceptance or the document is rejected.
     The exact answer is stored for the corresponding docid.
     """
-    def __init__(self, accepted_answers):
+    def __init__(self, yes_answers):
         super().__init__()
         self.is_timed = False
-        self.accepted_answers = [a.lower() for a in accepted_answers]
+        self.yes_answers = [a.lower() for a in yes_answers]
+        assert('no' not in self.yes_answers)
         self.answers = {}
-        self.counter = Counter()
-
+        self.counter = Counter([self.yes_answers] + ['no'])
 
     def filter(self, documents):
         """
@@ -129,14 +129,19 @@ class ManualStatsDocumentFilter(DocumentFilter, Cacheable):
             if docid not in self.cache:
                 print('http://www.ncbi.nlm.nih.gov/pubmed/{}'.format(docid))
                 print(highlighted_text(doc.get_text()))
-                answer = input("do? ({} or 'stop') ".format(self.accepted_answers)).lower()
-                self.answers[docid] = answer
-                self.counter.update([answer])
+
+                while True:
+                    answer = input("\nCounter: {}\nDo? ({} or 'no', or 'stop') ".format(self.counter, self.yes_answers)).lower()
+
+                    if answer in self.yes_answers or answer == 'no' or answer == 'stop':
+                        break
 
                 if answer == 'stop':
-                    break
+                    return
 
-                self.cache[docid] = answer in self.accepted_answers
+                self.answers[docid] = answer
+                self.counter.update([answer])
+                self.cache[docid] = answer in self.yes_answers
 
             if self.cache[docid]:
                 yield docid, doc
