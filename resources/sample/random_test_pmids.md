@@ -21,7 +21,16 @@ juanmi
 
 {'25061210': 'nl', '24486104': 'no', '23873039': 'no', '26479034': 'no', '23201680': 'nl'}
 Counter({'no': 3, 'nl': 2, 'st': 0})
-Note: was not sure about http://www.ncbi.nlm.nih.gov/pubmed/26479034 (lacking pPD1; it's another strain, don't know if it's a mutation)
+
+{'25762137': 'no', '24482479': 'nl', '24703711': 'nl', '24572362': 'nl', '25043001': 'no'}
+Counter({'nl': 3, 'no': 2, 'st': 0})
+
+* Difficult, said no: http://www.ncbi.nlm.nih.gov/pubmed/26479034 (lacking pPD1; it's another strain, don't know if it's a mutation)
+* Difficult, said no: http://www.ncbi.nlm.nih.gov/pubmed/25043001 (proteins inserted into endoplasmic reticulum membrane, and translocation?)
+* Difficult, said yes: http://www.ncbi.nlm.nih.gov/pubmed/24703711
+* Difficult, said yes: http://www.ncbi.nlm.nih.gov/pubmed/24482479
+
+
 
 ---
 
