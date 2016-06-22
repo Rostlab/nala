@@ -25,10 +25,15 @@ Counter({'no': 3, 'nl': 2, 'st': 0})
 {'25762137': 'no', '24482479': 'nl', '24703711': 'nl', '24572362': 'nl', '25043001': 'no'}
 Counter({'nl': 3, 'no': 2, 'st': 0})
 
+{'24436418': 'no', '26245375': 'no', '25525250': 'nl', '23222518': 'no', '25414302': 'no', '25707801': 'no', '26548953': 'no', '24670643': 'nl', '26273057': 'no', '24132290': 'no', '25119037': 'nl', '25215489': 'nl', '23498941': 'nl', '23540689': 'no', '26091034': 'no'}
+
+Counter({'no': 10, 'nl': 5, 'st': 0})
+
 * Difficult, said no: http://www.ncbi.nlm.nih.gov/pubmed/26479034 (lacking pPD1; it's another strain, don't know if it's a mutation)
 * Difficult, said no: http://www.ncbi.nlm.nih.gov/pubmed/25043001 (proteins inserted into endoplasmic reticulum membrane, and translocation?)
 * Difficult, said yes: http://www.ncbi.nlm.nih.gov/pubmed/24703711
 * Difficult, said yes: http://www.ncbi.nlm.nih.gov/pubmed/24482479
+* Difficult, said yes: http://www.ncbi.nlm.nih.gov/pubmed/23498941 (Should I just annotate "DSB" ?)
 
 
 
