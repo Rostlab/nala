@@ -76,6 +76,8 @@
   "\\bcataly(?:z|t|s)[a-z]*\\b",
   "\\balleles?\\b",
   "\\bsingle\\b",
+  "\\bdouble\\b",
+  "\\btriple\\b",
   "\\ball\\b",
   "\\bframe\\b",
   "\\bbinding\\b",
@@ -184,5 +186,13 @@
   "\\bdirected\\b",
   "\\bgermline\\b",
   "\\bgerms?\\b",
-  "\\bbases?\\b"
+  "\\bbases?\\b",
+  "\\bchromothripsis\\b",
+  "\\bcataclysmic\\b",
+  "\\bmassive\\b",
+  "\\bDNA\\b",
+  "\\bRNA\\b",
+  "\\bDSB\\b",
+  "\\bstrands?\\b",
+  "\\b(?re)arrangements?\\b"
 ]

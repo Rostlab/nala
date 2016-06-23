@@ -29,6 +29,14 @@ Counter({'nl': 3, 'no': 2, 'st': 0})
 
 Counter({'no': 10, 'nl': 5, 'st': 0})
 
+{'25533962': 'no', '25860606': 'nl', '26168399': 'nl', '24926018': 'no', '25814066': 'nl', '23812588': 'nl', '23302800': 'st', '23746830': 'no', '24630729': 'nl'}
+
+Counter({'nl': 5, 'no': 3, 'st': 1})
+
+{'24413397': 'no', '25043003': 'no', '23719379': 'no', '25236469': 'no', '26206934': 'no', '25901682': 'no', '23498933': 'nl', '23539596': 'no', '23953110': 'no', '24121438': 'no', '23993097': 'st', '26160943': 'no', '24725402': 'no', '24074859': 'no', '24352232': 'nl', '25652997': 'no', '24390348': 'st', '26544944': 'no', '23604253': 'nl', '24267891': 'no', '23722159': 'no', '24243016': 'nl', '25274309': 'nl', '23374337': 'no', '23932120': 'no', '25278608': 'no'}
+
+Counter({'no': 19, 'nl': 5, 'st': 2})
+
 * Difficult, said no: http://www.ncbi.nlm.nih.gov/pubmed/26479034 (lacking pPD1; it's another strain, don't know if it's a mutation)
 * Difficult, said no: http://www.ncbi.nlm.nih.gov/pubmed/25043001 (proteins inserted into endoplasmic reticulum membrane, and translocation?)
 * Difficult, said yes: http://www.ncbi.nlm.nih.gov/pubmed/24703711
