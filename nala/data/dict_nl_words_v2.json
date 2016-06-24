@@ -194,5 +194,5 @@
   "\\bRNA\\b",
   "\\bDSB\\b",
   "\\bstrands?\\b",
-  "\\b(?re)arrangements?\\b"
+  "\\b(?:re)arrangements?\\b"
 ]
