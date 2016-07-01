@@ -62,7 +62,7 @@ class IterationRound:
     def __repr__(self):
         return self.__str__()
 
-    def read(self, read_annotations = True):
+    def read(self, read_annotations=True):
         print_debug(self)
         dataset = None
 
@@ -73,10 +73,11 @@ class IterationRound:
 
             dataset = HTMLReader(html_folder).read()
             if read_annotations:
-                AnnJsonMergerAnnotationReader(os.path.join(annjson_folder, 'members'),
+                AnnJsonMergerAnnotationReader(
+                    os.path.join(annjson_folder, 'members'),
                     strategy='intersection',
                     entity_strategy='priority',
-                    priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
+                    priority=['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
                     delete_incomplete_docs=True).annotate(dataset)
 
         elif self.is_IAA():
@@ -86,10 +87,11 @@ class IterationRound:
 
             dataset = HTMLReader(html_folder).read()
             if read_annotations:
-                AnnJsonMergerAnnotationReader(annjson_folder,
+                AnnJsonMergerAnnotationReader(
+                    annjson_folder,
                     strategy='intersection',
                     entity_strategy='priority',
-                    priority = ['cuhlig', 'abojchevski', 'jmcejuela'],
+                    priority=['cuhlig', 'abojchevski', 'jmcejuela'],
                     delete_incomplete_docs=False).annotate(dataset)
 
         else:
@@ -105,15 +107,15 @@ class IterationRound:
         return dataset
 
     @staticmethod
-    def all(including_seed = True):
+    def all(including_seed=True):
         ret = []
         for fn in glob.glob(IterationRound.bootstrapping_folder + "/iteration_*/"):
             match = re.search('iteration_(([0-9]+).*)/$', fn)
             if match:
                 ret.append(IterationRound(
-                    name = match.group(1),
-                    number = int(match.group(2)),
-                    path = fn))
+                    name= match.group(1),
+                    number= int(match.group(2)),
+                    path= fn))
 
         ret.sort(key=lambda x: x.number)
 
