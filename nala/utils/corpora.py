@@ -1,9 +1,8 @@
 import os
 from nala.utils import nala_repo_path
 from nala.bootstrapping.iteration import Iteration
-from nalaf.utils.readers import VerspoorReader, TmVarReader, SETHReader, OSIRISReader, MutationFinderReader, PMIDReader
-from nalaf.utils.annotation_readers import SETHAnnotationReader, BRATPartsAnnotationReader, \
-    DownloadedSETHAnnotationReader
+from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, PMIDReader
+from nalaf.utils.annotation_readers import DownloadedSETHAnnotationReader
 from nalaf.structures.data import Dataset
 
 # Var = Variome
