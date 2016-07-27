@@ -34,6 +34,12 @@ ST = 0  # Standard
 NL = 1  # Natural Language
 SS = 2  # Semi-Standard
 
+MARKER = [
+    '        ',
+    '@@@@@@@@',
+    '********'
+]
+
 # ------------------------------------------------------------------------------
 
 def get_corpus_type(name):
@@ -92,13 +98,8 @@ header = ["Corpus", "#docs", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "
 
 def print_stats(name, corpus, typ):
     corpus = filter_only_full_text(corpus) if typ == "F" else corpus
-    total = 0
+    num_muts = 0
     counts = [0, 0, 0]
-    marker = [
-        '        ',
-        '@@@@@@@@',
-        '********'
-    ]
 
     counter = 0
 
@@ -106,8 +107,8 @@ def print_stats(name, corpus, typ):
         if ann.class_id == MUT_CLASS_ID:
             if ann.subclass in args.listanns:
                 counter += 1
-                print('\t' + '#' + str(counter) + '  ' + str(ann.subclass) + ' ' + marker[ann.subclass] + ' : ' + ann.text)
-            total += 1
+                print('\t' + '#' + str(counter) + '  ' + str(ann.subclass) + ' ' + MARKER[ann.subclass] + ' : ' + ann.text)
+            num_muts += 1
             counts[ann.subclass] += 1
             # for word in ann.text.split(' '):
             #     WordsCounter[word.lower()] += 1
@@ -115,13 +116,13 @@ def print_stats(name, corpus, typ):
     num_tokens = get_num_tokens(corpus, typ)
 
     fs = "{0:.3f}"
-    percents = list(map(lambda x: (fs.format(x / total) if x > 0 else "0"), counts))
+    percents = list(map(lambda x: (fs.format(x / num_muts) if x > 0 else "0"), counts))
 
     # if (args.listall):
     #     print('\t'.join(header))
 
     # The limit of 7 for the corpus name is the size that fits into a tab column, so that it looks good on print
-    values = [name[:7], len(corpus.documents), total, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST])), num_tokens]
+    values = [name[:7], len(corpus.documents), num_muts, counts[ST], percents[ST], counts[NL], percents[NL], counts[SS], percents[SS], (counts[NL] + counts[SS]), "{0:.3f}".format(1 - float(percents[ST])), num_tokens]
     print(*values, sep='\t')
 
 # ------------------------------------------------------------------------------
