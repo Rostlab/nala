@@ -5,7 +5,7 @@ from nala.utils.corpora import get_corpus, ALL_CORPORA
 from nala.utils import MUT_CLASS_ID
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.structures.data import Dataset
-from collections import Counter
+# from collections import Counter
 
 parser = argparse.ArgumentParser(description='Print corpora stats')
 
@@ -14,7 +14,6 @@ parser.add_argument('corpora', default='*', metavar='corpus', nargs='+',
 parser.add_argument('--listanns', default="",
                     help='Print mutation comma-separated subclasses. Examples: 1 or 1,2 or * for all')
 parser.add_argument('--counttokens', help='Count the tokens. Note, this is considerably slower', action='store_true')
-parser.add_argument('--test', help='Get the test (sub)set if any, otherwise the entire corpus', action='store_true')
 
 args = parser.parse_args()
 
@@ -131,7 +130,7 @@ print('\t'.join(header))
 
 for corpus_name in args.corpora:
     realname, typ = get_corpus_type(corpus_name)
-    corpus = get_corpus(realname, args.test)
+    corpus = get_corpus(realname)
     print_stats(corpus_name, corpus, typ)
 
 # for count in WordsCounter.most_common()[:-len(WordsCounter)-1:-1]:
