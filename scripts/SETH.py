@@ -29,13 +29,14 @@ def run_seth_on_string(text, docid, partid, folder, useMutationFinderOnly):
 def run_set_server(useMutationFinderOnly_IGNORED):
     assert useMutationFinderOnly_IGNORED is False or useMutationFinderOnly_IGNORED == "false"
     try:
-        subprocess.Popen(["java", "seth.ner.wrapper.SETHNERAppMut", "-p", str(SERVER_PORT)], check=False)
+        subprocess.Popen(["java", "seth.ner.wrapper.SETHNERAppMut", "-p", str(SERVER_PORT)])
     except CalledProcessError as e:
         if "Error: Could not find or load main class seth.ner.wrapper.SETHNERAppMut" in e.stderr:
             raise Exception("Make sure to add seth.jar to your classpath (use repo https://github.com/juanmirocks/SETH) -- " + e.stderr)
         else:
             raise
     except Exception as e:
+        # raise
         pass
 
 def run_seth_server_on_string_with_filename(text, filename):
