@@ -21,8 +21,13 @@ juanmi
 
 ---
 
-## Juanmi's comments after reviewing and annotating my new 20 documents
+## Stats from everybody
 
+```python
+from collections import Counter
+
+sample = 726
+c = Counter({'no': 206, 'nl': 60, 'st': 18})
 
 def stats(counter):
     num_nl_mut = counter['nl']
@@ -33,7 +38,16 @@ def stats(counter):
     ratio_muts_total = num_mut / total
     ratio_nl_muts_muts = num_nl_mut / num_mut
 
-    print('\%NL/total: {} -- \%muts/total: {} --  \%NL/muts'.format(ratio_nl_muts_total, ratio_muts_total, ratio_nl_muts_muts)
+    print('%NL/total: {} -- %muts/total: {} --  %NL/muts: {}'.format(ratio_nl_muts_total, ratio_muts_total, ratio_nl_muts_muts))
+
+stats(c)
+
+# %NL/total: 0.2112676056338028 -- %muts/total: 0.2746478873239437 --  %NL/muts: 0.7692307692307693
+```
+
+---
+
+## Juanmi's comments after reviewing and annotating my new 20 documents
 
 
 {'25061210': 'nl', '24486104': 'no', '23873039': 'no', '26479034': 'no', '23201680': 'nl'} # itr 61
@@ -111,6 +125,8 @@ Counter({'no': 46, 'nl': 9, 'st': 2})
 ---
 
 ## Comments from Carsten
+
+Counter({'no': 70, 'nl': 20, 'st': 6})
 
 26123021	n
 25061212	n	"unstructured amino-terminal and the leucine-rich repeat carboxy-terminal domains of Tmod"
