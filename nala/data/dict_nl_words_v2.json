@@ -75,6 +75,7 @@
   "\\bpatients?\\b",
   "\\bcataly(?:z|t|s)[a-z]*\\b",
   "\\balleles?\\b",
+  "\\bnumbers\\b",
   "\\bsingle\\b",
   "\\bdouble\\b",
   "\\btriple\\b",
@@ -103,6 +104,7 @@
   "\\bmethylat[a-z]+\\b",
   "\\bdeaminat[a-z]+\\b",
   "\\btruncat[a-z]+\\b",
+  "\\bdisplac[a-z]+\\b",
   "\\bdomains?\\b",
   "\\bremov[a-z]+\\b",
   "\\bintracellular\\b",
@@ -119,6 +121,8 @@
   "\\bsomatic[a-z]*\\b",
   "\\brepeat[a-z]*\\b",
   "\\bduplicat[a-z]+\\b",
+  "\\bcopy\\b",
+  "\\bcopies\\b",
   "[a-z]*nucleotides?\\b",
   "\\bresidues?\\b",
   "\\bamino\\b",
@@ -194,5 +198,9 @@
   "\\bRNA\\b",
   "\\bDSB\\b",
   "\\bstrands?\\b",
-  "\\b(?:re)arrangements?\\b"
+  "\\b(?:re)arrangements?\\b",
+  "\\bsyndromes?\\b",
+
+  "\\bhippocampal\\b",
+  "\\bneurons?\\b"
 ]
