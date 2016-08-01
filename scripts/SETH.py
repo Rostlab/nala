@@ -79,7 +79,7 @@ except:
 
 if (methodName != 'check_performance'):
     if folderName:
-        # Given predictions folder
+        # folderName = root predictions folder
         folderName = os.path.join(folderName, methodName, corpusName)
         if not os.path.exists(folderName):
             os.makedirs(folderName)
@@ -90,6 +90,7 @@ if (methodName != 'check_performance'):
 
     run_seth_on_corpus(corpus, folderName, useMutationFinderOnly)
 else:
+    # folderName = final/leaf predictions folder
     BRATPartsAnnotationReader(folderName, is_predicted=True).annotate(corpus)
     ExclusiveNLDefiner().define(corpus)
     evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(corpus)
