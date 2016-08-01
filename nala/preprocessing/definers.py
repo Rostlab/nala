@@ -66,6 +66,8 @@ class ExclusiveNLDefiner(NLDefiner):
     """NLDefiner that uses an mixed approach of max words, regexs',
     min words and a dictionary of probable nl words."""
 
+    VERSION = "20160801"
+
     def __init__(self):
         self.max_words = 4
 
