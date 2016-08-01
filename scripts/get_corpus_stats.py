@@ -121,7 +121,7 @@ def get_stats(name, corpus, typ):
                 num_muts += 1
                 counts[ann.subclass] += 1
 
-                if ann.subclass == NL:
+                if ann.subclass != ST:  # This considers Alex's manual definition: NL = NL + SS
                     doc_has_NL = True
                     docs_num_NL += 1
 
