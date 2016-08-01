@@ -110,6 +110,231 @@ Counter({'no': 46, 'nl': 9, 'st': 2})
 
 ---
 
+## Comments from Carsten
+
+26123021	n
+25061212	n	"unstructured amino-terminal and the leucine-rich repeat carboxy-terminal domains of Tmod"
+23599266	y	"Missense mutations of some arginine residues at the surface of α-TTP"
+23687048	n
+25859046	n
+26618866	y
+26186187	n
+25679766	n
+24048069	n
+23791177	n
+23393263	y	"Mutational inactivation of the LxxLL binding pocket disrupts the oncogenic activities of both E6 proteins"	should the other "LxxLL" motifs be annotated too?
+25722414	n
+26176923	n
+23828941	n
+24132240	y	"PMDS is caused by heterozygous deletions of chromosome 22q13.3. Among the genes in the deleted region is SHANK3"	check again for "22q13 deletion" instead of "22q13.3" and "Among the genes in the -deleted region is SHANK3-" (-X- with X being the annotation)
+24876499	n
+24025772	n
+23283171	y	"to generate mice that lack both protein kinase C-ζ (PKC-ζ) and PKM-ζ (Prkcz(-/-) mice)"	should be separated into 2 annotations? (annotation guidelines not findable)
+25807484	n
+23449594	n
+25838384	n
+24030493	n
+26638079	n
+23452848	y	-	length of first annotation variable; "one conserved AT-hook" is disrupted (is one out of 3 domains which are easily identifiable), should be enough for mention?
+23990561	y	"Knockdown of IFT81 and rescue experiments with point mutants showed that tubulin binding by IFT81 was required for ciliogenesis in human cells."	"with point mutants" is not exact but could be annotated too
+25642960	y	"we found that loss of Polq in mice"	"non-TTAGGG nucleotide insertions at fusion breakpoints of dysfunctional telomeres" could be annotation too but no idea where fusion breakpoints are, and is too undefined to be automatically retrieved (too unsure for my personal standpoint)
+25043055	y	"Tgif2 deletion reduces bone resorption and abolishes miR-34a regulation. "	"[...] and heterozygous" was included as it is relevant for the type of mutation
+24336215	n	"We find that the rice (Oryza sativa) d53 mutant,"
+25814067	n
+26017310	n
+25838374	n
+24074868	y	-	both annotations are the same (but none is st so i didnt link them via relation!!!) check here!
+25768904	n
+26675724	n
+25201530	n
+23746843	st	"Mutation of Ub Glu16 inhibits OTULIN activity by reducing kcat 240-fold"	"OTULIN overexpression or knockdown" could be an annotation too
+26273056	n	"mutagenic synthesis is limited to within a few kilobases from the break by Mus81 endonuclease and a converging fork"
+23910378	st	-	no idea whether this is enough
+23449590	y	"Deletion of the class 2 KNOTTED1-LIKE HOMEOBOX"
+24995986	n
+23374339	n
+25146293	n
+23892781	n
+24362567	n
+26496602	n
+26404826	n
+24141946	n
+26430127	n
+24930765	n
+25056061	n
+24904170	st	"22q11 deletion syndrome (22q11DS)"	i consider this as standard. (actually would be semi)
+25860605	n
+24855271	st
+24766810	n
+24407481	y	"[...] including Toddler, a short, conserved, and secreted peptide. Both absence and overproduction of Toddler [...]"	difficult case
+25567286	n
+23903654	y	"The toxicity of antiprion antibodies is mediated by the flexible tail of the prion protein. [...] We also found that neurotoxicity was prevented by deletions of the octapeptide repeats within the flexible tail."	nl as st reoccuring/ at least i think so
+24766807	st
+25301631	n
+25631445	y	"by helical domain mutations of the oncogene PIK3CA, novel alterations involving loss of TRAF3, and amplification of the cell cycle gene E2F1"	"helical domain mutations [of the oncogene PIK3CA]" very borderline mentions according to our guidelines
+23704370	y	"pigmentosa-linked Prp8 mutations that map to its C-terminal tail"
+23371552	n
+24630716	n
+26276622	n
+26213385	n
+26258302	y	"Morpholino knockdown of the zebrafish homologue dachsous1b"
+23746829	n
+23348506	n
+25723166	n
+25428506	n
+26416735	n
+24870228	n
+26308893	n
+26785491	n
+24909994	y
+25504713	n
+25119043	n
+24723605	n
+24919155	st
+23201682	n
+23160493	n
+26234156	n
+25008523	n
+26430121	n
+23965628	n
+26785494	y
+24909990	n
+24243015	n
+24310608	n
+26700815	y	"We specifically demonstrate that loss of CTCF at a domain boundary"
+26675728	n
+24013173	n
+23744949	n
+25533785	n
+26186192	n
+25858979	y	"Clustered missense mutations were found at the amino-terminal portion of the delta subunit of guanine nucleotide exchange factor (GEF) eIF2B."
+25214632
+23328395
+25487151
+23969459
+23883930
+24213631
+23222544
+25693567
+24763590
+24572359
+23687047
+24675954
+25082706
+24408438
+24139898
+25394791
+24531971
+25363780
+24476892
+23975097
+23993095
+26275108
+24717437
+23744945
+24766815
+23955152
+25104390
+25679762
+25985178
+24670651
+23415221
+26675721
+24652937
+26045437
+24284629
+24402279
+24790029
+23792560
+24744377
+23579497
+24436419
+24429522
+26605526
+24603153
+24558158
+25013080
+25278611
+23540700
+23393093
+24336200
+26416731
+26516200
+26605532
+25607366
+25395539
+26432246
+24267882
+25719666
+25728666
+25838375
+26649818
+23349289
+26388441
+26406363
+24675953
+25778702
+25686606
+26108857
+25414306
+23643243
+26404825
+24670645
+25765070
+25938714
+24463508
+24482115
+25792329
+24439378
+24209692
+24092744
+24896181
+23908239
+26359403
+26276629
+25619690
+25119044
+25910211
+24578576
+23615615
+25043017
+23498943
+25910206
+25174708
+25259928
+24919149
+26073943
+26724866
+23842495
+25778704
+23791179
+23871696
+23455423
+26338797
+25723159
+26308889
+24855949
+26245371
+24598541
+25525159
+23539178
+23827680
+26308891
+24458646
+23888039
+23395960
+25337876
+23539595
+23911324
+26213383
+25043020
+26160376
+25301630
+23663786
+24670642
+
+---
+
 ## All 726 hits
 
 26785494
