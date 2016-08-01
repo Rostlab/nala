@@ -107,7 +107,7 @@ class IterationRound:
 
             dataset = HTMLReader(html_folder).read()
             if read_annotations:
-                AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False).annotate(dataset)
+                AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False, read_relations=self.is_random()).annotate(dataset)
 
         print_debug("\t", dataset.__repr__())
         return dataset
