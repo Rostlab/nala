@@ -181,6 +181,8 @@ for corpus_name in args.corpora:
     realname, typ = get_corpus_type(corpus_name)
     corpus = get_corpus(realname)
     columns = get_stats(corpus_name, corpus, typ)
+    if args.listanns:
+        print('\t'.join(header))
     print(*columns, sep='\t')
 
 # for count in WordsCounter.most_common()[:-len(WordsCounter)-1:-1]:
