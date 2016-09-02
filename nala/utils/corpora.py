@@ -1,8 +1,9 @@
 import os
 from nala.utils import nala_repo_path
 from nala.bootstrapping.iteration import Iteration
-from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, PMIDReader
-from nalaf.utils.annotation_readers import DownloadedSETHAnnotationReader
+from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, \
+    PMIDReader, HTMLReader
+from nalaf.utils.annotation_readers import DownloadedSETHAnnotationReader, AnnJsonAnnotationReader
 from nalaf.structures.data import Dataset
 
 # Var = Variome
@@ -18,16 +19,29 @@ ALL_CORPORA = [
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
-def get_corpora(names):
+def get_corpora(names, only_class_id=None):
     dataset = Dataset()
     for name in names.split(','):
-        dataset.extend_dataset(get_corpus(name))
+        dataset.extend_dataset(get_corpus(name, only_class_id))
     return dataset
 
-def get_corpus(name):
+def get_corpus(name, only_class_id=None):
+    if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
+        return get_annjson_corpus(name, only_class_id)
+    else:
+        return get_corpus_name(name, only_class_id)
+
+def get_annjson_corpus(folder, only_class_id=None):
+    ret = HTMLReader(folder, whole_basename_as_docid=True).read()
+    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id, whole_basename_as_docid=True).annotate(ret)
+    return ret
+
+def get_corpus_name(name, only_class_id=None):
     """
     :rtype: nalaf.structures.data.Dataset
     """
+    assert only_class_id is None, "The filtering of annotation class is not supported yet in this method"
+
     parts = name.split("_")
     training = test = random = False
 

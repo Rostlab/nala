@@ -10,6 +10,7 @@ from nala.utils import MUT_CLASS_ID
 class PostProcessing:
 
     def __init__(self, keep_silent=True, keep_genetic_markers=True, keep_unnumbered=True, keep_rs_ids=True):
+
         amino_acids = [
             'alanine', 'ala', 'arginine', 'arg', 'asparagine', 'asn', 'aspartic acid', 'aspartate', 'asp',
             'cysteine', 'cys', 'glutamine', 'gln', 'glutamic acid', 'glutamate', 'glu', 'glycine', 'gly',

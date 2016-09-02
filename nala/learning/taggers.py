@@ -23,6 +23,7 @@ class NalaSingleModelTagger(Tagger):
             bin_model=pkg_resources.resource_filename('nala.data', 'all3_model'),
             features_pipeline=None,
             execute_pipeline=True,
+            execute_pp=True,
             keep_silent=True,
             keep_genetic_markers=True,
             keep_unnumbered=True,
@@ -36,10 +37,13 @@ class NalaSingleModelTagger(Tagger):
         self.execute_pipeline = execute_pipeline
         # ---
         self.crf = PyCRFSuite()
-        self.post = PostProcessing(keep_silent=keep_silent,
-                                   keep_genetic_markers=keep_genetic_markers,
-                                   keep_unnumbered=keep_unnumbered,
-                                   keep_rs_ids=keep_rs_ids)
+
+        self.post = None
+        if execute_pp:
+            self.post = PostProcessing(keep_silent=keep_silent,
+                                       keep_genetic_markers=keep_genetic_markers,
+                                       keep_unnumbered=keep_unnumbered,
+                                       keep_rs_ids=keep_rs_ids)
 
     def tag(self, dataset, class_id=None):
         class_id = self.class_id if class_id is None else class_id
@@ -47,7 +51,8 @@ class NalaSingleModelTagger(Tagger):
             self.features_pipeline.execute(dataset)
 
         self.crf.tag(dataset, self.bin_model, class_id)
-        self.post.process(dataset, class_id=class_id)
+        if self.post:
+            self.post.process(dataset, class_id=class_id)
 
 
 class NalaMultipleModelTagger(Tagger):
@@ -57,6 +62,7 @@ class NalaMultipleModelTagger(Tagger):
             st_model=pkg_resources.resource_filename('nala.data', 'st_model'),
             all3_model=pkg_resources.resource_filename('nala.data', 'all3_model'),
             features_pipeline=None,
+            execute_pp=True,
             keep_silent=True,
             keep_genetic_markers=True,
             keep_unnumbered=True,
@@ -68,15 +74,18 @@ class NalaMultipleModelTagger(Tagger):
         tagger2 = NalaSingleModelTagger(class_id, all3_model, tagger1.features_pipeline, execute_pipeline=False)
         self.tagger = MultipleModelTagger(tagger1, tagger2, [class_id])
         # ---
-        self.post = PostProcessing(keep_silent=keep_silent,
-                                   keep_genetic_markers=keep_genetic_markers,
-                                   keep_unnumbered=keep_unnumbered,
-                                   keep_rs_ids=keep_rs_ids)
+        self.post = None
+        if execute_pp:
+            self.post = PostProcessing(keep_silent=keep_silent,
+                                       keep_genetic_markers=keep_genetic_markers,
+                                       keep_unnumbered=keep_unnumbered,
+                                       keep_rs_ids=keep_rs_ids)
 
     def tag(self, dataset, class_id=None):
         class_id = self.class_id if class_id is None else class_id
         self.tagger.tag(dataset, class_id)
-        self.post.process(dataset, class_id=class_id)
+        if self.post:
+            self.post.process(dataset, class_id=class_id)
 
 
 class MultipleModelTagger(Tagger):

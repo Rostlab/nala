@@ -1,11 +1,12 @@
 import argparse
 import os
+import sys
 import tempfile
 from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus, get_corpora
 from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, IOLabeler, TmVarLabeler
-from nala.utils import get_prepare_pipeline_for_best_model
+from nala.utils import get_prepare_pipeline_for_best_model, get_prepare_pipeline_for_best_model_general
 from nalaf.learning.crfsuite import PyCRFSuite
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.learning.taggers import NalaSingleModelTagger, NalaMultipleModelTagger
@@ -13,9 +14,10 @@ from nalaf.utils.writers import TagTogFormat
 from nala.bootstrapping.document_filters import HighRecallRegexClassifier
 from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter
+from nalaf import print_debug
+import time
 
-if __name__ == "__main__":
-
+def train(argv):
     parser = argparse.ArgumentParser(description='Train model')
 
     parser.add_argument('--training_corpus',
@@ -48,6 +50,8 @@ if __name__ == "__main__":
 
     parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
+    parser.add_argument('--only_class_id', required=False, default=None,
+                        help="By default corpora's all entities are read. Set this class_id to filter rest out")
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
 
@@ -71,6 +75,10 @@ if __name__ == "__main__":
     parser.add_argument('--nl_threshold', type=int, default=0)
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
+    parser.add_argument('--mutations_specific', default='True',
+                        help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
+    parser.add_argument('--execute_pp', default='True',
+                        help='Execute post processing specific to mutations (default) or not')
     parser.add_argument('--keep_silent', default='True',
                         help='Keep silent mutations (default) or not, i.e., delete mentions like `Cys23-Cys`')
     parser.add_argument('--keep_genetic_markers', default='True',
@@ -82,7 +90,9 @@ if __name__ == "__main__":
 
     FALSE = ['false', '0', 'no', 'none']
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
+
+    start_time = time.time()
 
     # ------------------------------------------------------------------------------
 
@@ -134,6 +144,8 @@ if __name__ == "__main__":
         args.crf_train_params = None
 
     args.use_feat_windows = False if args.use_feat_windows.lower() in FALSE else True
+    args.mutations_specific = False if args.mutations_specific.lower() in FALSE else True
+    args.execute_pp = False if args.execute_pp.lower() in FALSE else True
     args.keep_silent = False if args.keep_silent.lower() in FALSE else True
     args.keep_genetic_markers = False if args.keep_genetic_markers.lower() in FALSE else True
     args.keep_unnumbered = False if args.keep_unnumbered.lower() in FALSE else True
@@ -149,7 +161,9 @@ if __name__ == "__main__":
 
     # ------------------------------------------------------------------------------
 
-    args.model_name = "{}_{}_del_{}".format(args.training_corpus, args.labeler, str_delete_subclasses)
+    corpus_name = list(filter(None, args.training_corpus.split('/')))[-1]
+
+    args.model_name = "{}_{}_del_{}".format(corpus_name, args.labeler, str_delete_subclasses)
     if args.validation == "cross-validation":
         args.model_name += "_cvfold_" + str(args.cv_fold)
     args.model_name_suffix = args.model_name_suffix.strip()
@@ -169,10 +183,12 @@ if __name__ == "__main__":
     definer = ExclusiveNLDefiner()
 
     if args.training_corpus:
-        train_set = get_corpus(args.training_corpus)
+        train_set = get_corpus(args.training_corpus, args.only_class_id)
 
         if args.test_corpus:
-            test_set = get_corpus(args.test_corpus)
+            test_set = get_corpus(args.test_corpus, args.only_class_id)
+        elif args.string:
+            test_set = StringReader(args.string).read()
         elif args.validation == "none":
             test_set = None
         elif args.validation == "cross-validation":
@@ -183,7 +199,7 @@ if __name__ == "__main__":
 
     elif args.test_corpus:
         train_set = None
-        test_set = get_corpora(args.test_corpus)
+        test_set = get_corpora(args.test_corpus, args.only_class_id)
 
     elif args.string:
         train_set = None
@@ -192,9 +208,21 @@ if __name__ == "__main__":
     else:
         raise Exception("you must give a training_corpus, test_corpus, or string")
 
+    def verify_corpus(corpus):
+        if corpus is not None:
+            assert len(corpus) > 0, 'The corpus has no documents'
+            assert next(corpus.annotations(), None) is not None, 'The corpus has no annotations'
+
+    verify_corpus(train_set)
+
     # ------------------------------------------------------------------------------
 
-    features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
+    if args.mutations_specific:
+        print("Pipeline specific to mutations")
+        features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
+    else:
+        print("Pipeline is general")
+        features_pipeline = get_prepare_pipeline_for_best_model_general(args.use_feat_windows, args.we_params, args.nl_features)
 
     # ------------------------------------------------------------------------------
 
@@ -262,6 +290,7 @@ if __name__ == "__main__":
                                        st_model=args.model_path_1,
                                        all3_model=args.model_path_2,
                                        features_pipeline=features_pipeline,
+                                       execute_pp=args.execute_pp,
                                        keep_silent=args.keep_silent,
                                        keep_genetic_markers=args.keep_genetic_markers,
                                        keep_unnumbered=args.keep_unnumbered,
@@ -270,6 +299,7 @@ if __name__ == "__main__":
         tagger = NalaSingleModelTagger(
                                        bin_model=args.model_path_1,
                                        features_pipeline=features_pipeline,
+                                       execute_pp=args.execute_pp,
                                        keep_silent=args.keep_silent,
                                        keep_genetic_markers=args.keep_genetic_markers,
                                        keep_unnumbered=args.keep_unnumbered,
@@ -293,3 +323,13 @@ if __name__ == "__main__":
         os.mkdir(outdir)
         print("\nThe predicted test data is saved to: {}\n".format(outdir))
         TagTogFormat(test_set, use_predicted=True, to_save_to=outdir).export(0)
+
+    end_time = time.time()
+
+    print_debug("Elapsed time: ", (end_time - start_time))
+
+    return tagger
+
+
+if __name__ == "__main__":
+    train(sys.argv[1:])
