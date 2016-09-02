@@ -9,7 +9,7 @@ from nalaf.utils.writers import TagTogFormat
 corpus_name = sys.argv[1]
 preds_folder = sys.argv[2]
 folder_name = os.path.join(preds_folder, 'tmVar', corpus_name)
-is_predict = sys.argv[3] == "predict"
+is_predict = sys.argv[3] == "predict"  # anything else --> evaluate
 
 data = get_corpus(corpus_name)
 

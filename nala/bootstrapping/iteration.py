@@ -37,7 +37,7 @@ class IterationRound:
 
     bootstrapping_folder = nala_repo_path(["resources", "bootstrapping"])
 
-    def __init__(self, name, number = None, path = None):
+    def __init__(self, name, number=None, path=None):
         self.name = str(name)
         match = re.search('([0-9]+).*$', self.name)
         self.number = int(number) if number else int(match.group(1))
@@ -48,6 +48,12 @@ class IterationRound:
 
     def is_test(self):
         return "test" in self.name
+
+    def is_random(self):
+        return "random" in self.name
+
+    def is_training(self):
+        return not (self.is_test() or self.is_random())
 
     def is_IAA(self):
         return "IAA" in self.name
@@ -101,7 +107,7 @@ class IterationRound:
 
             dataset = HTMLReader(html_folder).read()
             if read_annotations:
-                AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False).annotate(dataset)
+                AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False, read_relations=self.is_random()).annotate(dataset)
 
         print_debug("\t", dataset.__repr__())
         return dataset
@@ -113,9 +119,9 @@ class IterationRound:
             match = re.search('iteration_(([0-9]+).*)/$', fn)
             if match:
                 ret.append(IterationRound(
-                    name= match.group(1),
-                    number= int(match.group(2)),
-                    path= fn))
+                    name=match.group(1),
+                    number=int(match.group(2)),
+                    path=fn))
 
         ret.sort(key=lambda x: x.number)
 
@@ -254,17 +260,17 @@ class Iteration:
         return dataset
 
     @staticmethod
-    def read_nala_training(until_iteration = None):
+    def read_nala_training(until_iteration=None):
         """
         optional until_iteration: only read from 1 to this iteration, otherwise read all iterations
         """
         dataset = Dataset()
-        itrs = IterationRound.all(including_seed = False)
+        itrs = IterationRound.all(including_seed=False)
         if until_iteration:
             itrs = itrs[:until_iteration]
 
         for itr in itrs:
-            if not itr.is_test():
+            if itr.is_training():
                 try:
                     dataset.extend_dataset(itr.read())
                 except FileNotFoundError as e:
@@ -279,6 +285,19 @@ class Iteration:
         dataset = Dataset()
         for itr in IterationRound.all(including_seed=False):
             if itr.is_test():
+                try:
+                    dataset.extend_dataset(itr.read())
+                except FileNotFoundError as e:
+                    print_debug(e)
+                    continue
+
+        return dataset
+
+    @staticmethod
+    def read_nala_random():
+        dataset = Dataset()
+        for itr in IterationRound.all(including_seed=False):
+            if itr.is_random():
                 try:
                     dataset.extend_dataset(itr.read())
                 except FileNotFoundError as e:

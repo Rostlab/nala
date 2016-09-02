@@ -126,6 +126,18 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(2, f("arginine-127 into glutamine"))
         testEqual(2, f("arginine-469 into tryptophan"))
 
+        # More difficult
+
+        testEqual(2, f("chromothripsis"))
+        testEqual(2, f("Morpholino knockdown"))
+        testEqual(2, f("methionine replaces lysine 27"))
+        testEqual(2, f("lysine(27)-to-methionine"))
+
+        testEqual(1, f("C-tail displacement"))
+        testEqual(1, f("22q11 deletion syndrome"))
+        testEqual(1, f("hippocampal neuron L1 insertions"))
+        testEqual(1, f("copy-number variants"))
+
 
 class TestTmVarRegexNLDefiner(unittest.TestCase):
     def test_define(self):

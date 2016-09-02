@@ -29,10 +29,14 @@ def get_corpus(name):
     :rtype: nalaf.structures.data.Dataset
     """
     parts = name.split("_")
+    training = test = random = False
+
     if len(parts) > 1:
         name = parts[0]
-        training = True if parts[1] == "training" else False
-        test = True if parts[1] == "test" else False
+        typ = parts[1]
+        training = True if typ == "training" else False
+        test = True if typ == "test" else False
+        random = True if typ == "random" else False
         until_iteration = int(parts[2]) if len(parts) > 2 else None
 
     if name == "tmVar":
@@ -86,6 +90,8 @@ def get_corpus(name):
             return Iteration.read_nala_training(until_iteration)
         elif test:
             return Iteration.read_nala_test()
+        elif random:
+            return Iteration.read_nala_random()
         else:
             return Iteration.read_nala()
 
