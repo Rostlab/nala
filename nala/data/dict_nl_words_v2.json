@@ -75,7 +75,7 @@
   "\\bpatients?\\b",
   "\\bcataly(?:z|t|s)[a-z]*\\b",
   "\\balleles?\\b",
-  "\\bnumbers\\b",
+  "\\bnumbers?\\b",
   "\\bsingle\\b",
   "\\bdouble\\b",
   "\\btriple\\b",
