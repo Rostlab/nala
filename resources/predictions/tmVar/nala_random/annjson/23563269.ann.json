@@ -1,0 +1,1 @@
+{"entities": [{"offsets": [{"text": "T790M", "start": 1792}], "confidence": {"prob": 1, "who": ["ml:nalaf"], "state": "selected"}, "part": "s1p2", "classId": "e_2", "fields": {}, "normalizations": {}}], "relations": [], "annotatable": {"parts": ["s1p1", "s1p2"]}, "metas": {}, "anncomplete": false, "sources": [{"url": "", "name": "ORIG", "id": "23563269"}]}

@@ -1,0 +1,1 @@
+{"entities": [], "relations": [{"directed": false, "classId": "r_6", "entities": ["s1p1|11,35", "s1p1|37,43"], "confidence": 1}, {"directed": false, "classId": "r_6", "entities": ["s1p2|11,35", "s1p2|37,43"], "confidence": 1}], "annotatable": {"parts": ["s1p1", "s1p2"]}, "metas": {}, "anncomplete": false, "sources": [{"url": "", "name": "ORIG", "id": "25170156"}]}
