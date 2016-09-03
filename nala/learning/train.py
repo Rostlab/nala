@@ -161,16 +161,20 @@ def train(argv):
 
     # ------------------------------------------------------------------------------
 
-    # Get the name of training corpus even if this is given as a folder path, in which case the last folder name is used
-    training_corpus_name = list(filter(None, args.training_corpus.split('/')))[-1] if args.training_corpus else None
+    if args.training_corpus:
+        # Get the name of training corpus even if this is given as a folder path, in which case the last folder name is used
+        training_corpus_name = list(filter(None, args.training_corpus.split('/')))[-1]
 
-    args.model_name = "{}_{}_del_{}".format(training_corpus_name, args.labeler, str_delete_subclasses)
+        args.model_name = "{}_{}_del_{}".format(training_corpus_name, args.labeler, str_delete_subclasses)
 
-    if args.validation == "cross-validation":
-        args.model_name += "_cvfold_" + str(args.cv_fold)
-    args.model_name_suffix = args.model_name_suffix.strip()
-    if args.model_name_suffix:
-        args.model_name += "_" + str(args.model_name_suffix)
+        if args.validation == "cross-validation":
+            args.model_name += "_cvfold_" + str(args.cv_fold)
+        args.model_name_suffix = args.model_name_suffix.strip()
+        if args.model_name_suffix:
+            args.model_name += "_" + str(args.model_name_suffix)
+
+    else:
+        args.model_name = args.test_corpus
 
     # ------------------------------------------------------------------------------
 
