@@ -66,6 +66,8 @@ def run_seth_on_string_with_filename(text, filename, useMutationFinderOnly):
         else:
             raise
 
+# ------------------------------------------------------------------------------
+
 methodName = sys.argv[1]
 assert methodName in {"SETH", "MFmodified", "check_performance"}, \
     "Method name must be SETH or MFmodified or check_performance"
@@ -77,10 +79,22 @@ except:
     corpus = StringReader(corpusName).read()
     folderName = None  # just print out in standard output
 
+# ------------------------------------------------------------------------------
 
-if (methodName != 'check_performance'):
+# Example calls:
+# python scripts/SETH.py SETH nala_test resources/predictions/  # predict
+# python scripts/SETH.py check_performance nala_test resources/predictions/SETH/nala_test &> resources/predictions/SETH/nala_test/oresults.tsv  # evaluate
+
+if (methodName == 'check_performance'):
+    # folderName is assumed to be the final/leaf predictions folder, e.g., `resources/predictions/SETH/nala_test`
+    BRATPartsAnnotationReader(folderName, is_predicted=True).annotate(corpus)
+    ExclusiveNLDefiner().define(corpus)
+    evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(corpus)
+    print(evaluation)
+
+else:
     if folderName:
-        # folderName = root predictions folder
+        # folderName is assumed to be the root predictions folder, e.g., `resources/predictions/`
         folderName = os.path.join(folderName, methodName, corpusName)
         if not os.path.exists(folderName):
             os.makedirs(folderName)
@@ -90,9 +104,3 @@ if (methodName != 'check_performance'):
     run_set_server(useMutationFinderOnly)
 
     run_seth_on_corpus(corpus, folderName, useMutationFinderOnly)
-else:
-    # folderName = final/leaf predictions folder
-    BRATPartsAnnotationReader(folderName, is_predicted=True).annotate(corpus)
-    ExclusiveNLDefiner().define(corpus)
-    evaluation = MentionLevelEvaluator(subclass_analysis=True).evaluate(corpus)
-    print(evaluation)

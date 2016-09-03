@@ -1,0 +1,1 @@
+{"metas": {}, "annotatable": {"parts": ["s1p1", "s1p2"]}, "relations": [], "sources": [{"url": "", "name": "ORIG", "id": "25274309"}], "entities": [{"confidence": {"who": ["ml:nalaf"], "state": "selected", "prob": 1}, "offsets": [{"text": "Leu98Pro", "start": 315}], "part": "s1p2", "normalizations": {}, "fields": {}, "classId": "e_2"}], "anncomplete": false}
