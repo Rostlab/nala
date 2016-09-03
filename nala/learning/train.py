@@ -161,9 +161,11 @@ def train(argv):
 
     # ------------------------------------------------------------------------------
 
-    corpus_name = list(filter(None, args.training_corpus.split('/')))[-1]
+    # Get the name of training corpus even if this is given as a folder path, in which case the last folder name is used
+    training_corpus_name = list(filter(None, args.training_corpus.split('/')))[-1] if args.training_corpus else None
 
-    args.model_name = "{}_{}_del_{}".format(corpus_name, args.labeler, str_delete_subclasses)
+    args.model_name = "{}_{}_del_{}".format(training_corpus_name, args.labeler, str_delete_subclasses)
+
     if args.validation == "cross-validation":
         args.model_name += "_cvfold_" + str(args.cv_fold)
     args.model_name_suffix = args.model_name_suffix.strip()
@@ -178,7 +180,6 @@ def train(argv):
         print('\tsubclass distribution: {}'.format(Counter(ann.subclass for ann in dataset.annotations())))
         # Caveat: the dataset must be passed through the pipeline first
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
-
 
     definer = ExclusiveNLDefiner()
 
@@ -206,7 +207,7 @@ def train(argv):
         test_set = StringReader(args.string).read()
 
     else:
-        raise Exception("you must give a training_corpus, test_corpus, or string")
+        raise Exception("you must give at least a parameter of: training_corpus, test_corpus, or string")
 
     def verify_corpus(corpus):
         if corpus is not None:
