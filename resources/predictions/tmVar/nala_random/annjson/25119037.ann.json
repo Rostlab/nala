@@ -1,1 +1,1 @@
-{"entities": [], "relations": [], "annotatable": {"parts": ["s1p1", "s1p2"]}, "metas": {}, "anncomplete": false, "sources": [{"url": "", "name": "ORIG", "id": "25119037"}]}
+{"metas": {}, "annotatable": {"parts": ["s1p1", "s1p2"]}, "relations": [], "sources": [{"url": "", "name": "ORIG", "id": "25119037"}], "entities": [], "anncomplete": false}
