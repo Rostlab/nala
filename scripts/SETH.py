@@ -83,7 +83,7 @@ except:
 
 # Example calls:
 # python scripts/SETH.py SETH nala_test resources/predictions/  # predict
-# python scripts/SETH.py check_performance resources/predictions/SETH/nala_test &> resources/predictions/SETH/nala_test/oresults.tsv  # evaluate
+# python scripts/SETH.py check_performance nala_test resources/predictions/SETH/nala_test &> resources/predictions/SETH/nala_test/oresults.tsv  # evaluate
 
 if (methodName == 'check_performance'):
     # folderName is assumed to be the final/leaf predictions folder, e.g., `resources/predictions/SETH/nala_test`
