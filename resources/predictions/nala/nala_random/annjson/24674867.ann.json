@@ -1,0 +1,1 @@
+{"metas": {}, "anncomplete": false, "entities": [{"confidence": {"prob": 0.6721296467739504, "state": "", "who": ["ml:nalaf"]}, "part": "s1p2", "offsets": [{"start": 196, "text": "replacement of E90"}], "classId": "e_2", "normalizations": {}, "fields": {}}], "relations": [], "sources": [{"id": "24674867", "name": "ORIG", "url": ""}], "annotatable": {"parts": ["s1p1", "s1p2"]}}
