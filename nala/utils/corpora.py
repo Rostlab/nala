@@ -53,6 +53,9 @@ def get_corpus_name(name, only_class_id=None):
         random = True if typ == "random" else False
         until_iteration = int(parts[2]) if len(parts) > 2 else None
 
+        if until_iteration:
+            assert training is True, "Iteration subsets are currently supported only with nala_training"
+
     if name == "tmVar":
         if not (training or test):
             fn = 'corpus.txt'
