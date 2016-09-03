@@ -6,6 +6,10 @@ from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nalaf.utils.writers import TagTogFormat
 
+# Example calls:
+# python scripts/tag_tmvar.py nala_test resources/predictions/ predict
+# python scripts/tag_tmvar.py nala_test resources/predictions/ evaluate &> resources/predictions/tmVar/nala_test/oresults.tsv
+
 corpus_name = sys.argv[1]
 preds_folder = sys.argv[2]
 folder_name = os.path.join(preds_folder, 'tmVar', corpus_name)
