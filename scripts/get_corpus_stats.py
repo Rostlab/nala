@@ -171,6 +171,8 @@ def get_stats(name, corpus, typ):
 
 # ------------------------------------------------------------------------------
 
+# The following measures currently only apply to the corpus nala_random, which has the appropriate relation annotations
+#
 # %d_u_NL == percentage of documents that have at least one untranslated NL mention
 # %m_u_NL == percentage of mentions that are NL and are untranslated to ST
 header = ["#Corpus", "#docs", "#tokens", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS", "%d_u_NL", "%m_u_NL"]
