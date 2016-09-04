@@ -145,8 +145,8 @@ def get_stats(name, corpus, typ):
     num_docs = len(corpus.documents)
     num_tokens = get_num_tokens(corpus, typ)
     percents = list(map(lambda x: (PROB.format(x / num_muts) if x > 0 else "0"), counts))
-    per_docs_with_NL_untraslated = PROB.format(num_docs_with_NL_untraslated / num_docs)
-    per_NLs_untraslated = PROB.format(num_NLs_untranslated / num_muts)
+    per_docs_with_NL_untraslated = PROB.format((num_docs_with_NL_untraslated / num_docs) if num_docs != 0 else 0)
+    per_NLs_untraslated = PROB.format((num_NLs_untranslated / num_muts) if num_muts != 0 else 0)
 
     # if (args.listall):
     #     print('\t'.join(header))
@@ -173,7 +173,7 @@ def get_stats(name, corpus, typ):
 
 # %d_u_NL == percentage of documents that have at least one untranslated NL mention
 # %m_u_NL == percentage of mentions that are NL and are untranslated to ST
-header = ["Corpus", "#docs", "#tokens", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS", "%d_u_NL", "%m_u_NL"]
+header = ["#Corpus", "#docs", "#tokens", "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS", "%d_u_NL", "%m_u_NL"]
 
 print('\t'.join(header))
 
