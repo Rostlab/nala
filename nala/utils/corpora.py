@@ -11,12 +11,16 @@ from nalaf.structures.data import Dataset
 # ?A = Abstracts only
 # ?F = Full Text only
 ALL_CORPORA = [
-    'tmVar', 'MF', 'SETH', 'OMM', 'OSIRIS', 'SNP',
+    'MF', 'OMM', 'OSIRIS', 'SNP',
+    'SETH',
+    'tmVar',
+    'Var', 'VarA', 'VarF',
+    'Var120', 'Var120A', 'Var120F',
     'IDP4', 'IDP4A', 'IDP4F',
     'nala', 'nala_training', 'nala_test',
     'IDP4+',
-    'nala_random',
-    'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
+    'nala_random'
+]
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
