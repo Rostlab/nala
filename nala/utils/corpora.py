@@ -15,6 +15,7 @@ ALL_CORPORA = [
     'IDP4', 'IDP4A', 'IDP4F',
     'nala', 'nala_training', 'nala_test',
     'IDP4+',
+    'nala_random',
     'Var', 'VarA', 'VarF', 'Var120', 'Var120A', 'Var120F']
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
