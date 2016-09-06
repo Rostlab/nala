@@ -17,6 +17,10 @@ Diseases Category[Mesh] AND (mutation[MeSH Terms] OR polymorphism, genetic[MeSH 
 ## Variome
 search query consisting of the three most common Lynch syndrome genes: ‘MLH1 or MSH2 or MSH6’
 
+Full:
+
+using PubMed Central® to loosely identify documents relevant to the genetics of Lynch syndrome, which covers inherited colon cancer as well as certain other cancers. This was done by using a search query consisting of the three most common Lynch syndrome genes: ‘MLH1 or MSH2 or MSH6’
+
 
 ## IDP4 and nala
 
