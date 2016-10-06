@@ -107,7 +107,7 @@ class MultipleModelTagger(Tagger):
     def tag(self, dataset):
         import tempfile
         from nalaf.utils.writers import TagTogFormat
-        from nalaf.utils.annotation_readers import AnnJsonMergerAnnotationReader, AnnJsonAnnotationReader
+        from nalaf.utils.annotation_readers import AnnJsonMergerAnnotationReader
         """
         Current implementation uses annjsonmergerreader for merging annotations
         This is far from ideal. Dataset objects should be merged on memory.
