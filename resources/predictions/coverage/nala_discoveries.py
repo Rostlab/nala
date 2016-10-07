@@ -2,7 +2,7 @@
 # tmVar 3366cc
 # dir=`mktemp -d` && python scripts/tag_tmvar.py nala_random $dir predict && python scripts/tag_tmvar.py nala_random $dir evaluate
 A = set([
-        '25525250|s1p2|e_2|124,4|0',
+    '25525250|s1p2|e_2|124,4|0',
     '25525250|s1p2|e_2|154,29|2',
     '23302800|s1p2|e_2|131,5|0',
     '23302800|s1p2|e_2|843,5|0',
