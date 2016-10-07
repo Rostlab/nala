@@ -35,7 +35,7 @@ def train(argv):
                         help='if given, cross validation (instead of stratification) is used for validating the training. \
                         In this case you must also set `cv_fold` and only that fold number will be run')
     parser.add_argument('--cv_fold', required=False,
-                        help='fold number to train and validate if cross validation is activated')
+                        help='fold number if cross validation is activated (it starts at 0; i.e. for cv_n=5, you have folds: [0,1,2,3,4] )')
 
     parser.add_argument('--output_folder', required=False,
                         help='Folder where the training model is written to. Otherwise a tmp folder is used')
