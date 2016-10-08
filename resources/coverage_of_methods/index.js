@@ -64,12 +64,18 @@ function intersect3(set1, set2, set3) {
   return intersect2(set1, intersect2(set2, set3));
 }
 
-function jsonpToVennSets(jsonp, filter_f) {
+function jsonpToVennSets(jsonp, filter_f, subclass) {
   filter_f = filter_f || (_ => true);
 
-  var A = new Set(jsonp.A.results.filter(filter_f));
-  var B = new Set(jsonp.B.results.filter(filter_f));
-  var C = new Set(jsonp.C.results.filter(filter_f));
+  var total_number = (subclass === "TOTAL") ? jsonp.counts.TOTAL : ((subclass === "ST") ? jsonp.counts.ST : jsonp.counts.NL);
+
+  var a = jsonp.A.results.filter(filter_f);
+  var b = jsonp.B.results.filter(filter_f);
+  var c = jsonp.C.results.filter(filter_f);
+
+  var A = new Set(a);
+  var B = new Set(b);
+  var C = new Set(c);
 
   var AiB = intersect2(A, B);
   var AiC = intersect2(A, C);
@@ -79,10 +85,10 @@ function jsonpToVennSets(jsonp, filter_f) {
 
   var AuBuC = new Set([...A, ...B, ...C]); //union
 
-  var sets = [
-    {sets: ['A'], size: A.size, label: jsonp.A.label, percentage: A.size / AuBuC.size},
-    {sets: ['B'], size: B.size, label: jsonp.B.label, percentage: B.size / AuBuC.size},
-    {sets: ['C'], size: C.size, label: jsonp.C.label, percentage: C.size / AuBuC.size},
+  var sets = [ //not unique percentages
+    {sets: ['A'], size: A.size, label: jsonp.A.label, percentage: a.length / total_number},
+    {sets: ['B'], size: B.size, label: jsonp.B.label, percentage: b.length / total_number},
+    {sets: ['C'], size: C.size, label: jsonp.C.label, percentage: c.length / total_number},
     {sets: ['A','B'], size: AiB.size},
     {sets: ['A','C'], size: AiC.size},
     {sets: ['B','C'], size: BiC.size},
@@ -100,9 +106,9 @@ function draw(jsonp, title_prefix, filter_f) {
   title_node.appendChild(document.createTextNode(title_prefix));
   div.appendChild(title_node);
 
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x))), title_prefix + " TOTAL");
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.endsWith('0'))), title_prefix + " ST");
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.endsWith('1'))), title_prefix + " NL");
+  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x)), "TOTAL"), title_prefix + " TOTAL");
+  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.endsWith('0')), "ST"), title_prefix + " ST");
+  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.endsWith('1')), "NL"), title_prefix + " NL");
 
   var row = document.createElement("hr");
   div.appendChild(row);
@@ -140,7 +146,5 @@ SetsKnownBalancedAll.forEach(function(x) {
     }
   }
 });
-
-console.log(SetsKnownBalancedAll.length, SetsKnownBalancedAccepted.size);
 
 draw(SetsKnown, 'SetsKnown(Balanced)', (x => SetsKnownBalancedAccepted.has(x)));
