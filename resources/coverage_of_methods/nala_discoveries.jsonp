@@ -1,5 +1,12 @@
 var nala_discoveries = {
 
+  //see: resources/corpora/stats.tsv
+  counts: {
+    TOTAL: 215,
+    ST: 104,
+    NL: 71,
+  },
+
   //# tmVar 3366cc
   //# dir=`mktemp -d` && python scripts/tag_tmvar.py nala_random $dir predict && python scripts/tag_tmvar.py nala_random $dir evaluate
   A: {

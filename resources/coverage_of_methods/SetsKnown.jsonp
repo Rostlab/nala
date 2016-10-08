@@ -1,5 +1,6 @@
 var SetsKnown = {
 
+  //see: resources/corpora/stats.tsv
   SETH_counts: {
     TOTAL: 904,
     ST: 862,
