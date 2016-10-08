@@ -369,6 +369,8 @@ A = set([
     '3034663|05-Discussion-p02-p3|e_2|249,11|0',
     '3034663|06-Conclusions-p01-p2|e_2|71,16|0',
 
+# SETH
+# dir=`mktemp -d` && python scripts/tag_tmvar.py SETH $dir predict && python scripts/tag_tmvar.py SETH $dir evaluate
 
 ])
 
@@ -667,6 +669,8 @@ B = set([
     '3034663|05-Discussion-p02-p3|e_2|249,11|0',
     '3034663|06-Conclusions-p01-p2|e_2|71,16|0',
 
+# SETH
+# dir=`mktemp -d` && python scripts/SETH.py SETH SETH $dir && python scripts/SETH.py check_performance SETH $dir/SETH/SETH
 
 ])
 
@@ -1155,6 +1159,9 @@ C = set([
     '3034663|05-Discussion-p02-p2|e_2|411,11|0',
     '3034663|05-Discussion-p02-p3|e_2|249,11|0',
     '3034663|06-Conclusions-p01-p2|e_2|71,16|0'
+
+# SETH
+# python nala/learning/train.py --model_path_1 nala/data/nala_training_BIEO_del_None_471431.bin --we --test_corpus SETH
 
 ])
 
