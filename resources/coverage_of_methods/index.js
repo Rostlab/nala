@@ -24,9 +24,7 @@ function drawVennDiagram(htmlElement, sets, title) {
   layout.enter
   .append("text")
   .attr("class", "sublabel")
-  .text(function(d) { return "size " + d.size; })
   .style("fill", "#666")
-  .style("font-size", "0px")
   .attr("text-anchor", "middle")
   .attr("dy", "0")
   .attr("x", chart.width() /2)
@@ -34,17 +32,22 @@ function drawVennDiagram(htmlElement, sets, title) {
 
   // move existing
   layout.update
+  .selectAll(".label")
+  .style("font-size", "16px")
+
+  // move existing
+  layout.update
   .selectAll(".sublabel")
   .filter(function (d) { return d.sets in textCentres; })
   .text(function(d) {
     if (d.sets.length === 1) {
-      return "" + d.size;
+      return "" + (d.percentage * 100).toFixed(0) + "%";
     }
     else {
       return "";
     }
   })
-  .style("font-size", "10px")
+  .style("font-size", "14px")
   .attr("dy", "18")
   .attr("x", function(d) { return Math.floor(textCentres[d.sets].x);})
   .attr("y", function(d) { return Math.floor(textCentres[d.sets].y);});
@@ -74,10 +77,12 @@ function jsonpToVennSets(jsonp, filter_f) {
 
   var AiBiC = intersect3(A, B, C);
 
+  var AuBuC = new Set([...A, ...B, ...C]); //union
+
   var sets = [
-    {sets: ['A'], size: A.size, label: jsonp.A.label},
-    {sets: ['B'], size: B.size, label: jsonp.B.label},
-    {sets: ['C'], size: C.size, label: jsonp.C.label},
+    {sets: ['A'], size: A.size, label: jsonp.A.label, percentage: A.size / AuBuC.size},
+    {sets: ['B'], size: B.size, label: jsonp.B.label, percentage: B.size / AuBuC.size},
+    {sets: ['C'], size: C.size, label: jsonp.C.label, percentage: C.size / AuBuC.size},
     {sets: ['A','B'], size: AiB.size},
     {sets: ['A','C'], size: AiC.size},
     {sets: ['B','C'], size: BiC.size},
