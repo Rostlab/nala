@@ -2,7 +2,7 @@ import sys
 import os
 import subprocess
 from subprocess import CalledProcessError
-from nala.utils.corpora import get_corpus
+from nala.utils.corpora import get_corpus, get_corpora
 from nalaf.utils.annotation_readers import BRATPartsAnnotationReader
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.preprocessing.definers import ExclusiveNLDefiner
@@ -73,7 +73,7 @@ assert methodName in {"SETH", "MFmodified", "check_performance"}, \
     "Method name must be SETH or MFmodified or check_performance"
 corpusName = sys.argv[2]
 try:
-    corpus = get_corpus(corpusName)
+    corpus = get_corpora(corpusName)
     folderName = sys.argv[3]
 except:
     corpus = StringReader(corpusName).read()
