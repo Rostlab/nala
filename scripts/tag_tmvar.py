@@ -1,6 +1,6 @@
 import sys
 import os
-from nala.utils.corpora import get_corpus
+from nala.utils.corpora import get_corpus, get_corpora
 from nala.learning.taggers import TmVarTagger
 from nalaf.learning.evaluators import MentionLevelEvaluator
 from nala.preprocessing.definers import ExclusiveNLDefiner
@@ -15,7 +15,7 @@ preds_folder = sys.argv[2]
 folder_name = os.path.join(preds_folder, 'tmVar', corpus_name)
 is_predict = sys.argv[3] == "predict"  # anything else --> evaluate
 
-data = get_corpus(corpus_name)
+data = get_corpora(corpus_name)
 
 def predict():
     with TmVarTagger() as t:
