@@ -2714,7 +2714,7 @@ C = set([
     '3034663|05-Discussion-p02-p2|e_2|43,11|0',
     '3034663|05-Discussion-p02-p2|e_2|411,11|0',
     '3034663|05-Discussion-p02-p3|e_2|249,11|0',
-    '3034663|06-Conclusions-p01-p2|e_2|71,16|0'
+    '3034663|06-Conclusions-p01-p2|e_2|71,16|0',
 
 # SETH
 # python nala/learning/train.py --model_path_1 nala/data/nala_BIEO_del_None_471433.bin --we --test_corpus SETH
