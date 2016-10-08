@@ -1,0 +1,14 @@
+{
+  "name": "coverage_of_methods",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Juan Miguel Cejuela",
+  "license": "ISC",
+  "dependencies": {
+    "venn.js": "^0.2.12"
+  }
+}
