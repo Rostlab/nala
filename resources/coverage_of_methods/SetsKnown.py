@@ -3708,6 +3708,13 @@ def print_sets(A, B, C, mapper_f=(lambda x: x[:-2]), filter_f=(lambda _: True)):
 
 # ------------------------------------------------
 
+# All
 print_sets(A, B, C)  # all
 print_sets(A, B, C, filter_f=(lambda x: x.endswith('0')))  # ST
 print_sets(A, B, C, filter_f=(lambda x: x.endswith('1')))  # NL
+
+# Just Var120
+print("----- Just Var120 ----\n")
+print_sets(A, B, C, filter_f=(lambda x: '-' in x))  # all
+print_sets(A, B, C, filter_f=(lambda x: '-' in x and x.endswith('0')))  # ST
+print_sets(A, B, C, filter_f=(lambda x: '-' in x and x.endswith('1')))  # NL
