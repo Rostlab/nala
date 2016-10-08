@@ -111,4 +111,31 @@ function draw(jsonp, title_prefix, filter_f) {
 draw(nala_discoveries, 'nala_discoveries');
 draw(SetsKnown, 'Var120', (x => x.includes('-')));
 draw(SetsKnown, 'SetsKnown');
-draw(SetsKnown, 'SetsKnown(Balanced)');
+
+var SetsKnownBalancedAccepted = new Set();
+var SetsKnownBalancedAll = SetsKnown.A.results.concat(SetsKnown.B.results.concat(SetsKnown.C.results));
+
+SetsKnownBalancedAll.forEach(function(x) {
+  //Var120
+  if (x.includes('-')) {
+    SetsKnownBalancedAccepted.add(x);
+  }
+  //nala-known
+  else if (x.includes('s1')) {
+    var bar = SetsKnown.Var120_counts.TOTAL / SetsKnown.nala_known_counts.TOTAL; //0.3539823009
+    if (Math.random() < bar) {
+      SetsKnownBalancedAccepted.add(x);
+    }
+  }
+  //SETH
+  else { //SETH
+    var bar = SetsKnown.Var120_counts.TOTAL / SetsKnown.SETH_counts.TOTAL; //0.1327433628
+    if (Math.random() < bar) {
+      SetsKnownBalancedAccepted.add(x);
+    }
+  }
+});
+
+console.log(SetsKnownBalancedAll.length, SetsKnownBalancedAccepted.size);
+
+draw(SetsKnown, 'SetsKnown(Balanced)', (x => SetsKnownBalancedAccepted.has(x)));

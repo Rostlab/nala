@@ -1,5 +1,23 @@
 var SetsKnown = {
 
+  SETH_counts: {
+    TOTAL: 904,
+    ST: 862,
+    NL: 33,
+  },
+
+  nala_known_counts: {
+    TOTAL: 339,
+    ST: 172,
+    NL: 142,
+  },
+
+  Var120_counts: {
+    TOTAL: 120,
+    ST: 106,
+    NL: 9
+  },
+
   //# tmVar 3366cc
   A: {
     label: 'tmVar',
@@ -3685,4 +3703,10 @@ var SetsKnown = {
       '9915968|title|e_2|4,9|0'
     ]
   }
+};
+
+SetsKnown.counts = {
+  TOTAL: SetsKnown.SETH_counts.TOTAL + SetsKnown.nala_known_counts.TOTAL + SetsKnown.Var120_counts.TOTAL,
+  ST: SetsKnown.SETH_counts.ST + SetsKnown.nala_known_counts.ST + SetsKnown.Var120_counts.ST,
+  NL: SetsKnown.SETH_counts.NL + SetsKnown.nala_known_counts.NL + SetsKnown.Var120_counts.NL,
 };
