@@ -73,8 +73,7 @@ function intersect3(set1, set2, set3) {
   return intersect2(set1, intersect2(set2, set3));
 }
 
-function jsonpToVennSets(jsonp, filter_f, subclass) {
-  filter_f = filter_f || (_ => true);
+function jsonpToVennSets(jsonp, corpus_name, filter_f, subclass) {
 
   var map_f = UNIQUE_MODE ? (x => x.substring(x.lastIndexOf('|')+1)) : (x => x);
 
@@ -92,14 +91,31 @@ function jsonpToVennSets(jsonp, filter_f, subclass) {
 
   var AiBiC = intersect3(A, B, C);
 
-  var AuBuC = new Set([...A, ...B, ...C]); //union
+  var AuBuC = new Set([a, b, c]); //union
 
   if (OVER_ABSOLUTE_TOTAL) {
-    var which_counts = (UNIQUE_MODE) ? jsonp.uniq_counts : jsonp.counts;
+    var which_counts;
+    if (corpus_name === "Var120") {
+      which_counts = (UNIQUE_MODE) ? jsonp.Var120_uniq_counts : jsonp.Var120_counts;
+    }
+    else if (corpus_name === 'SetsKnown(Balanced)') {
+      throw new Error('Approximation for calculating total size not implemented yet');
+
+      // which_counts = (UNIQUE_MODE) ? jsonp.Var120_uniq_counts : jsonp.Var120_counts;
+      // //Approximation
+      // which_counts = JSON.parse(JSON.stringify(which_counts));
+      // which_counts[subclass] = which_counts[subclass] * 3;
+    }
+    else {
+      which_counts = (UNIQUE_MODE) ? jsonp.uniq_counts : jsonp.counts;
+    }
+
     var total_number = which_counts[subclass];
 
     if (total_number < AuBuC.size) {
-      throw new Error("This cannot be: " + total_number + " -- " + AuBuC.size + " -- " + subclass);
+      console.log(a, b, c);
+      console.log(AuBuC);
+      throw new Error("This cannot be: " + total_number + " < " + AuBuC.size + " -- " + subclass);
     }
   }
   else {
@@ -144,10 +160,10 @@ function draw(jsonp, corpus_name, filter_f) {
   tr2.appendChild(tr2_c2);
   table.appendChild(tr2);
 
-  drawVennDiagram(tr1_c1, jsonpToVennSets(jsonp, (x => filter_f(x)), "TOTAL"), "TOTAL @ " + corpus_name);
-  drawVennDiagram(tr1_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), "ST @ " + corpus_name);
-  drawVennDiagram(tr2_c1, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), "NL @ " + corpus_name);
-  drawVennDiagram(tr2_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|2|')), "SST"), "SST @ " + corpus_name);
+  drawVennDiagram(tr1_c1, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x)), "TOTAL"), "TOTAL @ " + corpus_name);
+  drawVennDiagram(tr1_c2, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), "ST @ " + corpus_name);
+  drawVennDiagram(tr2_c1, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), "NL @ " + corpus_name);
+  drawVennDiagram(tr2_c2, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x) && x.includes('|e_2|2|')), "SST"), "SST @ " + corpus_name);
 
   htmlElement.appendChild(table);
   htmlElement.appendChild(document.createElement("hr"));
@@ -159,7 +175,7 @@ function draw(jsonp, corpus_name, filter_f) {
 //---------------------------------------------------------------------------------------------------------------
 
 draw(nala_discoveries, 'nala_discoveries');
-draw(SetsKnown, 'Var120', (x => x.includes('-'))); //The '-' character is unique of the Var120 partid's
+draw(SetsKnown, 'Var120', (x => /^\d+\|\d\d-/.test(x))); //Unique pattern for Var120, as in: '3034663|05-Discussion-p02-p2|411,422|e_2|0|p.Lys618Ala'
 draw(SetsKnown, 'SetsKnown');
 
 var SetsKnownBalancedAccepted = new Set();
