@@ -131,7 +131,7 @@ def get_stats(name, corpus, typ):
                     docs_num_NL += 1
 
                 if ann.subclass in args.listanns:
-                    print('\t' + '#' + str(counts_total) + '  ' + str(ann.subclass) + ' ' + MARKER[ann.subclass] + ' : ' + ann.text)
+                    print('\t' + '#' + str(counts_total) + ' (' + str(len(uniq_total)) + ')  ' + str(ann.subclass) + ' ' + MARKER[ann.subclass] + ' : ' + ann.text)
 
                 # for word in ann.text.split(' '):
                 #     WordsCounter[word.lower()] += 1
