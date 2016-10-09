@@ -1,7 +1,13 @@
 'use strict';
 
-var UNIQUE_MODE = true;
-var OVER_ABSOLUTE_TOTAL = true;
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+var UNIQUE_MODE = (getURLParameter('UNIQUE_MODE') || 'true') === 'true';
+var OVER_ABSOLUTE_TOTAL = (getURLParameter('OVER_ABSOLUTE_TOTAL') || 'true') === 'true';
+
+console.log(UNIQUE_MODE, OVER_ABSOLUTE_TOTAL);
 
 function drawVennDiagram(htmlElement, sets, title) {
 
