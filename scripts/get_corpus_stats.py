@@ -105,8 +105,10 @@ def get_stats(name, corpus, typ):
     nldefiner.define(corpus)  # classify subclasses
 
     corpus = filter_only_full_text(corpus) if typ == "F" else corpus
-    num_muts = 0
-    counts = [0, 0, 0]
+    counts_total = 0
+    counts_subs = [0, 0, 0]
+    uniq_total = set()
+    uniq_subs = [set(), set(), set()]
 
     num_docs_with_NL = 0
     num_docs_with_NL_untraslated = 0
@@ -118,15 +120,17 @@ def get_stats(name, corpus, typ):
 
         for ann in doc_annotations(document, typ):
             if ann.class_id == MUT_CLASS_ID:
-                num_muts += 1
-                counts[ann.subclass] += 1
+                counts_total += 1
+                counts_subs[ann.subclass] += 1
+                #uniq_total.add(ann.gen_corpus_uniq_id(docid, partid))
+                #uniq_subs[ann.subclass].add(ann.gen_corpus_uniq_id(docid, partid))
 
                 if ann.subclass != ST:  # This considers Alex's manual definition: NL = NL + SS
                     doc_has_NL = True
                     docs_num_NL += 1
 
                 if ann.subclass in args.listanns:
-                    print('\t' + '#' + str(num_muts) + '  ' + str(ann.subclass) + ' ' + MARKER[ann.subclass] + ' : ' + ann.text)
+                    print('\t' + '#' + str(counts_total) + '  ' + str(ann.subclass) + ' ' + MARKER[ann.subclass] + ' : ' + ann.text)
 
                 # for word in ann.text.split(' '):
                 #     WordsCounter[word.lower()] += 1
@@ -144,9 +148,9 @@ def get_stats(name, corpus, typ):
 
     num_docs = len(corpus.documents)
     num_tokens = get_num_tokens(corpus, typ)
-    percents = list(map(lambda x: (PROB.format(x / num_muts) if x > 0 else "0"), counts))
+    percents = list(map(lambda x: (PROB.format(x / counts_total) if x > 0 else "0"), counts_subs))
     per_docs_with_NL_untraslated = PROB.format((num_docs_with_NL_untraslated / num_docs) if num_docs != 0 else 0)
-    per_NLs_untraslated = PROB.format((num_NLs_untranslated / num_muts) if num_muts != 0 else 0)
+    per_NLs_untraslated = PROB.format((num_NLs_untranslated / counts_total) if counts_total != 0 else 0)
 
     # if (args.listall):
     #     print('\t'.join(header))
@@ -156,14 +160,14 @@ def get_stats(name, corpus, typ):
         name[:7],
         num_docs,
         num_tokens,
-        num_muts,
-        counts[ST],
+        counts_total,
+        counts_subs[ST],
         percents[ST],
-        counts[NL],
+        counts_subs[NL],
         percents[NL],
-        counts[SS],
+        counts_subs[SS],
         percents[SS],
-        (counts[NL] + counts[SS]),
+        (counts_subs[NL] + counts_subs[SS]),
         PROB.format(1 - float(percents[ST])),
         per_docs_with_NL_untraslated,
         per_NLs_untraslated
