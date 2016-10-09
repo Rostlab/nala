@@ -89,7 +89,9 @@ function jsonpToVennSets(jsonp, filter_f, subclass) {
   var AuBuC = new Set([...A, ...B, ...C]); //union
 
   if (OVER_ABSOLUTE_TOTAL) {
-    var total_number = (subclass === "TOTAL") ? jsonp.uniq_counts.TOTAL : ((subclass === "ST") ? jsonp.uniq_counts.ST : jsonp.uniq_counts.NL);
+    var which_counts = (UNIQUE_MODE) ? jsonp.uniq_counts : jsonp.counts;
+    var total_number = which_counts[subclass];
+
     if (total_number < AuBuC.size) {
       throw new Error("This cannot be: " + total_number + " -- " + AuBuC.size + " -- " + subclass);
     }
