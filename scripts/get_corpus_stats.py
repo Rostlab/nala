@@ -122,8 +122,9 @@ def get_stats(name, corpus, typ):
             if ann.class_id == MUT_CLASS_ID:
                 counts_total += 1
                 counts_subs[ann.subclass] += 1
-                uniq_total.add(ann.gen_corpus_uniq_id(docid, partid))
-                uniq_subs[ann.subclass].add(ann.gen_corpus_uniq_id(docid, partid))
+                e_uid = ann.gen_corpus_uniq_id(docid, partid)
+                uniq_total.add(e_uid)
+                uniq_subs[ann.subclass].add(e_uid)
 
                 if ann.subclass != ST:  # This considers Alex's manual definition: NL = NL + SS
                     doc_has_NL = True
