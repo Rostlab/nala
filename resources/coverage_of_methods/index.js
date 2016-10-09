@@ -114,13 +114,14 @@ function jsonpToVennSets(jsonp, filter_f, subclass) {
   return sets;
 }
 
-function draw(jsonp, title_prefix, filter_f) {
+function draw(jsonp, corpus_name, filter_f) {
   filter_f = filter_f || (_ => true);
 
-  var div = document.createElement("div");
-  var title_node = document.createElement("h1");
-  title_node.appendChild(document.createTextNode(title_prefix));
-  div.appendChild(title_node);
+  var htmlElement = document.createElement("div");
+
+  //var title_node = document.createElement("h1");
+  //title_node.appendChild(document.createTextNode(corpus_name));
+  //htmlElement.appendChild(title_node);
 
   var table = document.createElement("table");
   var tr1 = document.createElement("tr");
@@ -137,17 +138,16 @@ function draw(jsonp, title_prefix, filter_f) {
   tr2.appendChild(tr2_c2);
   table.appendChild(tr2);
 
-  drawVennDiagram(tr1_c1, jsonpToVennSets(jsonp, (x => filter_f(x)), "TOTAL"), "TOTAL");
-  drawVennDiagram(tr1_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), "ST");
-  drawVennDiagram(tr2_c1, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), "NL");
-  drawVennDiagram(tr2_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|2|')), "SST"), "SST");
+  drawVennDiagram(tr1_c1, jsonpToVennSets(jsonp, (x => filter_f(x)), "TOTAL"), "TOTAL @ " + corpus_name);
+  drawVennDiagram(tr1_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), "ST @ " + corpus_name);
+  drawVennDiagram(tr2_c1, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), "NL @ " + corpus_name);
+  drawVennDiagram(tr2_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|2|')), "SST"), "SST @ " + corpus_name);
 
-  div.appendChild(table);
-  var row = document.createElement("hr");
-  div.appendChild(row);
+  htmlElement.appendChild(table);
+  htmlElement.appendChild(document.createElement("hr"));
 
   var root_canvas = document.getElementById("venn");
-  root_canvas.appendChild(div);
+  root_canvas.appendChild(htmlElement);
 }
 
 //---------------------------------------------------------------------------------------------------------------
