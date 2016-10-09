@@ -5,12 +5,14 @@ var nala_discoveries = {
     TOTAL: 215,
     ST: 104,
     NL: 71,
+    SST: 40
   },
 
   uniq_counts: {
     TOTAL: 140,
     ST: 48,
     NL: 69,
+    SST: 23
   },
 
   //--------------------------------------------
