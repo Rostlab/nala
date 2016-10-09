@@ -32,7 +32,7 @@ pipeline = PrepareDatasetPipeline(feature_generators=[])
 
 ST = 0  # Standard
 NL = 1  # Natural Language
-SS = 2  # Semi-Standard
+SST = 2  # Semi-Standard -- also often denoted before as 'SS'
 
 MARKER = [
     '        ',
@@ -126,7 +126,7 @@ def get_stats(name, corpus, typ):
                 uniq_total.add(e_uid)
                 uniq_subs[ann.subclass].add(e_uid)
 
-                if ann.subclass != ST:  # This considers Alex's manual definition: NL = NL + SS
+                if ann.subclass != ST:  # This considers Alex's manual definition: NL = NL + SST
                     doc_has_NL = True
                     docs_num_NL += 1
 
@@ -162,8 +162,8 @@ def get_stats(name, corpus, typ):
         name[:7],
         num_docs,
         num_tokens,
-        counts_total, counts_subs[ST], percents[ST], counts_subs[NL], percents[NL], counts_subs[SS], percents[SS], (counts_subs[NL] + counts_subs[SS]), PROB.format(0 if (counts_total == 0) else (1 - float(percents[ST]))),
-        len(uniq_total), len(uniq_subs[ST]), u_percents[ST], len(uniq_subs[NL]), u_percents[NL], len(uniq_subs[SS]), u_percents[SS], (len(uniq_subs[NL]) + len(uniq_subs[SS])), PROB.format(0 if (len(uniq_total) == 0) else (1 - float(u_percents[ST]))),
+        counts_total, counts_subs[ST], percents[ST], counts_subs[NL], percents[NL], counts_subs[SST], percents[SST], (counts_subs[NL] + counts_subs[SST]), PROB.format(0 if (counts_total == 0) else (1 - float(percents[ST]))),
+        len(uniq_total), len(uniq_subs[ST]), u_percents[ST], len(uniq_subs[NL]), u_percents[NL], len(uniq_subs[SST]), u_percents[SST], (len(uniq_subs[NL]) + len(uniq_subs[SST])), PROB.format(0 if (len(uniq_total) == 0) else (1 - float(u_percents[ST]))),
         per_docs_with_NL_untraslated, per_NLs_untraslated
     ]
 
@@ -177,8 +177,8 @@ header = [
     "#Corpus",
     "#docs",
     "#tokens",
-    "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS",
-    "u#ann", "u#ST", "u%ST", "u#NL", "u%NL", "u#SS", "u%SS", "u#NL+SS", "u%NL+SS",
+    "#ann", "#ST", "%ST", "#NL", "%NL", "#SST", "%SST", "#NL+SST", "%NL+SST",
+    "u#ann", "u#ST", "u%ST", "u#NL", "u%NL", "u#SST", "u%SST", "u#NL+SS", "u%NL+SS", #here called SS (not SST) for lack of column width space for pretty alignment
     "%d_u_NL", "%m_u_NL"
 ]
 
