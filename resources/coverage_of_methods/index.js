@@ -70,7 +70,7 @@ function intersect3(set1, set2, set3) {
 function jsonpToVennSets(jsonp, filter_f, subclass) {
   filter_f = filter_f || (_ => true);
 
-  var map_f = (x => x.substring(x.lastIndexOf('|')+1))
+  var map_f = UNIQUE_MODE ? (x => x.substring(x.lastIndexOf('|')+1)) : (x => x);
 
   var a = jsonp.A.results.filter(filter_f).map(map_f);
   var b = jsonp.B.results.filter(filter_f).map(map_f);
