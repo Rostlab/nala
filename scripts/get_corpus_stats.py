@@ -162,8 +162,8 @@ def get_stats(name, corpus, typ):
         name[:7],
         num_docs,
         num_tokens,
-        counts_total, counts_subs[ST], percents[ST], counts_subs[NL], percents[NL], counts_subs[SS], percents[SS], (counts_subs[NL] + counts_subs[SS]), PROB.format(1 - float(percents[ST])),
-        len(uniq_total), len(uniq_subs[ST]), u_percents[ST], len(uniq_subs[NL]), u_percents[NL], len(uniq_subs[SS]), u_percents[SS], (len(uniq_subs[NL]) + len(uniq_subs[SS])), PROB.format(1 - float(u_percents[ST])),
+        counts_total, counts_subs[ST], percents[ST], counts_subs[NL], percents[NL], counts_subs[SS], percents[SS], (counts_subs[NL] + counts_subs[SS]), PROB.format(0 if (counts_total == 0) else (1 - float(percents[ST]))),
+        len(uniq_total), len(uniq_subs[ST]), u_percents[ST], len(uniq_subs[NL]), u_percents[NL], len(uniq_subs[SS]), u_percents[SS], (len(uniq_subs[NL]) + len(uniq_subs[SS])), PROB.format(0 if (len(uniq_total) == 0) else (1 - float(u_percents[ST]))),
         per_docs_with_NL_untraslated, per_NLs_untraslated
     ]
 
