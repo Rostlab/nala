@@ -122,7 +122,7 @@ def get_stats(name, corpus, typ):
             if ann.class_id == MUT_CLASS_ID:
                 counts_total += 1
                 counts_subs[ann.subclass] += 1
-                e_uid = ann.gen_corpus_uniq_id(docid, partid)
+                e_uid = ann.text  # We want to compare by text. Irrelevant: ann.gen_corpus_uniq_id(docid, partid)
                 uniq_total.add(e_uid)
                 uniq_subs[ann.subclass].add(e_uid)
 
@@ -150,6 +150,7 @@ def get_stats(name, corpus, typ):
     num_docs = len(corpus.documents)
     num_tokens = get_num_tokens(corpus, typ)
     percents = list(map(lambda x: (PROB.format(x / counts_total) if x > 0 else "0"), counts_subs))
+    u_percents = list(map(lambda x: (PROB.format(len(x) / len(uniq_total)) if len(x) > 0 else "0"), uniq_subs))
     per_docs_with_NL_untraslated = PROB.format((num_docs_with_NL_untraslated / num_docs) if num_docs != 0 else 0)
     per_NLs_untraslated = PROB.format((num_NLs_untranslated / counts_total) if counts_total != 0 else 0)
 
@@ -161,17 +162,9 @@ def get_stats(name, corpus, typ):
         name[:7],
         num_docs,
         num_tokens,
-        counts_total,
-        counts_subs[ST],
-        percents[ST],
-        counts_subs[NL],
-        percents[NL],
-        counts_subs[SS],
-        percents[SS],
-        (counts_subs[NL] + counts_subs[SS]),
-        PROB.format(1 - float(percents[ST])),
-        per_docs_with_NL_untraslated,
-        per_NLs_untraslated
+        counts_total, counts_subs[ST], percents[ST], counts_subs[NL], percents[NL], counts_subs[SS], percents[SS], (counts_subs[NL] + counts_subs[SS]), PROB.format(1 - float(percents[ST])),
+        len(uniq_total), len(uniq_subs[ST]), u_percents[ST], len(uniq_subs[NL]), u_percents[NL], len(uniq_subs[SS]), u_percents[SS], (len(uniq_subs[NL]) + len(uniq_subs[SS])), PROB.format(1 - float(u_percents[ST])),
+        per_docs_with_NL_untraslated, per_NLs_untraslated
     ]
 
 # ------------------------------------------------------------------------------
@@ -185,6 +178,7 @@ header = [
     "#docs",
     "#tokens",
     "#ann", "#ST", "%ST", "#NL", "%NL", "#SS", "%SS", "#NL+SS", "%NL+SS",
+    "u#ann", "u#ST", "u%ST", "u#NL", "u%NL", "u#SS", "u%SS", "u#NL+SS", "u%NL+SS",
     "%d_u_NL", "%m_u_NL"
 ]
 
