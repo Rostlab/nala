@@ -107,8 +107,8 @@ function draw(jsonp, title_prefix, filter_f) {
   div.appendChild(title_node);
 
   drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x)), "TOTAL"), title_prefix + " TOTAL");
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.endsWith('0')), "ST"), title_prefix + " ST");
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.endsWith('1')), "NL"), title_prefix + " NL");
+  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), title_prefix + " ST");
+  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), title_prefix + " NL");
 
   var row = document.createElement("hr");
   div.appendChild(row);
