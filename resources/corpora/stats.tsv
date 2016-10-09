@@ -1,4 +1,4 @@
-#Corpus	#docs	#tokens	#ann	#ST	%ST	#NL	%NL	#SS	%SS	#NL+SS	%NL+SS	u#ann	u#ST	u%ST	u#NL	u%NL	u#SS	u%SS	u#NL+SS	u%NL+SS	%d_u_NL	%m_u_NL
+#Corpus	#docs	#tokens	#ann	#ST	%ST	#NL	%NL	#SST	%SST	#NL+SST	%NL+SST	u#ann	u#ST	u%ST	u#NL	u%NL	u#SST	u%SST	u#NL+SS	u%NL+SS	%d_u_NL	%m_u_NL
 MF	813	220683	0	0	0	0	0	0	0	0	0.000	0	0	0	0	0	0	0	0	0.000	0.000	0.000
 OMM	0	0	0	0	0	0	0	0	0	0	0.000	0	0	0	0	0	0	0	0	0.000	0.000	0.000
 OSIRIS	105	34804	554	507	0.915	39	0.070	8	0.014	47	0.085	372	328	0.882	37	0.099	7	0.019	44	0.118	0.286	0.085
