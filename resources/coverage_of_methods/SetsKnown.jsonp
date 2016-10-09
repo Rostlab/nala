@@ -1,6 +1,6 @@
 var SetsKnown = {
 
-  //see: resources/corpora/stats.tsv
+  //for the counts, see: resources/corpora/stats.tsv
   SETH_counts: {
     TOTAL: 904,
     ST: 862,
@@ -18,6 +18,28 @@ var SetsKnown = {
     ST: 106,
     NL: 9
   },
+
+  //--------------------------------------------
+
+  SETH_uniq_counts: {
+    TOTAL: 692,
+    ST: 653,
+    NL: 30,
+  },
+
+  nala_known_uniq_counts: {
+    TOTAL: 256,
+    ST: 93,
+    NL: 140,
+  },
+
+  Var120_uniq_counts: {
+    TOTAL: 48,
+    ST: 35,
+    NL: 8
+  },
+
+  //--------------------------------------------
 
   //# tmVar 3366cc
   A: {
@@ -3710,4 +3732,10 @@ SetsKnown.counts = {
   TOTAL: SetsKnown.SETH_counts.TOTAL + SetsKnown.nala_known_counts.TOTAL + SetsKnown.Var120_counts.TOTAL,
   ST: SetsKnown.SETH_counts.ST + SetsKnown.nala_known_counts.ST + SetsKnown.Var120_counts.ST,
   NL: SetsKnown.SETH_counts.NL + SetsKnown.nala_known_counts.NL + SetsKnown.Var120_counts.NL,
+};
+
+SetsKnown.uniq_counts = {
+  TOTAL: SetsKnown.SETH_uniq_counts.TOTAL + SetsKnown.nala_known_uniq_counts.TOTAL + SetsKnown.Var120_uniq_counts.TOTAL,
+  ST: SetsKnown.SETH_uniq_counts.ST + SetsKnown.nala_known_uniq_counts.ST + SetsKnown.Var120_uniq_counts.ST,
+  NL: SetsKnown.SETH_uniq_counts.NL + SetsKnown.nala_known_uniq_counts.NL + SetsKnown.Var120_uniq_counts.NL,
 };

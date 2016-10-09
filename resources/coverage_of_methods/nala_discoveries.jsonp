@@ -1,10 +1,16 @@
 var nala_discoveries = {
 
-  //see: resources/corpora/stats.tsv
+  //for the counts, see: resources/corpora/stats.tsv
   counts: {
     TOTAL: 215,
     ST: 104,
     NL: 71,
+  },
+
+  uniq_counts: {
+    TOTAL: 140,
+    ST: 48,
+    NL: 69,
   },
 
   //# tmVar 3366cc
