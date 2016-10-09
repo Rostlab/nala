@@ -1,5 +1,8 @@
 'use strict';
 
+var UNIQUE_MODE = true;
+var OVER_ABSOLUTE_TOTAL = true;
+
 function drawVennDiagram(htmlElement, sets, title) {
 
   var sub_div = document.createElement("div");
@@ -83,10 +86,9 @@ function jsonpToVennSets(jsonp, filter_f, subclass) {
 
   var AiBiC = intersect3(A, B, C);
 
-  var overAbsoluteTotal = true;
   var AuBuC = new Set([...A, ...B, ...C]); //union
 
-  if (overAbsoluteTotal) {
+  if (OVER_ABSOLUTE_TOTAL) {
     var total_number = (subclass === "TOTAL") ? jsonp.uniq_counts.TOTAL : ((subclass === "ST") ? jsonp.uniq_counts.ST : jsonp.uniq_counts.NL);
     if (total_number < AuBuC.size) {
       throw new Error("This cannot be: " + total_number + " -- " + AuBuC.size + " -- " + subclass);
