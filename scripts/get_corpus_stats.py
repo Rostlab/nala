@@ -71,10 +71,10 @@ def corpus_annotations(corpus, typ):
                     yield annotation
 
 def doc_annotations(document, typ):
-    for part in document:
+    for partid, part in document.parts.items():
         if is_part_type(part, typ):
             for annotation in part.annotations:
-                yield annotation
+                yield partid, annotation
 
 def get_num_tokens(corpus, typ):
     if (args.counttokens):
@@ -118,12 +118,12 @@ def get_stats(name, corpus, typ):
         doc_has_NL = False
         docs_num_NL = 0
 
-        for ann in doc_annotations(document, typ):
+        for partid, ann in doc_annotations(document, typ):
             if ann.class_id == MUT_CLASS_ID:
                 counts_total += 1
                 counts_subs[ann.subclass] += 1
-                #uniq_total.add(ann.gen_corpus_uniq_id(docid, partid))
-                #uniq_subs[ann.subclass].add(ann.gen_corpus_uniq_id(docid, partid))
+                uniq_total.add(ann.gen_corpus_uniq_id(docid, partid))
+                uniq_subs[ann.subclass].add(ann.gen_corpus_uniq_id(docid, partid))
 
                 if ann.subclass != ST:  # This considers Alex's manual definition: NL = NL + SS
                     doc_has_NL = True
