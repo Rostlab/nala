@@ -41,7 +41,7 @@ function drawVennDiagram(htmlElement, sets, title) {
   .filter(function (d) { return d.sets in textCentres; })
   .text(function(d) {
     if (d.sets.length === 1) {
-      return "" + (d.percentage * 100).toFixed(0) + "%";
+      return "" + (d.percentage * 100).toFixed(0) + "% (" + d.size + ")";
     }
     else {
       return "";
