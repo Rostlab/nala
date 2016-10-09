@@ -122,11 +122,27 @@ function draw(jsonp, title_prefix, filter_f) {
   title_node.appendChild(document.createTextNode(title_prefix));
   div.appendChild(title_node);
 
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x)), "TOTAL"), title_prefix + " TOTAL");
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), title_prefix + " ST");
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), title_prefix + " NL");
-  drawVennDiagram(div, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|2|')), "SST"), title_prefix + " SST");
+  var table = document.createElement("table");
+  var tr1 = document.createElement("tr");
+  var tr1_c1 = document.createElement("td");
+  var tr1_c2 = document.createElement("td");
+  tr1.appendChild(tr1_c1);
+  tr1.appendChild(tr1_c2);
+  table.appendChild(tr1);
 
+  var tr2 = document.createElement("tr");
+  var tr2_c1 = document.createElement("td");
+  var tr2_c2 = document.createElement("td");
+  tr2.appendChild(tr2_c1);
+  tr2.appendChild(tr2_c2);
+  table.appendChild(tr2);
+
+  drawVennDiagram(tr1_c1, jsonpToVennSets(jsonp, (x => filter_f(x)), "TOTAL"), "TOTAL");
+  drawVennDiagram(tr1_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), "ST");
+  drawVennDiagram(tr2_c1, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), "NL");
+  drawVennDiagram(tr2_c2, jsonpToVennSets(jsonp, (x => filter_f(x) && x.includes('|e_2|2|')), "SST"), "SST");
+
+  div.appendChild(table);
   var row = document.createElement("hr");
   div.appendChild(row);
 
