@@ -63,7 +63,7 @@ def train(argv):
     parser.add_argument('--elastic_net', action='store_true',
                         help='Use elastic net regularization')
 
-    parser.add_argument('--word_embeddings', '--we', action='store_true',
+    parser.add_argument('--word_embeddings', '--we', default='True',
                         help='Use word embeddings features')
     parser.add_argument('--we_additive', type=float, default=0)
     parser.add_argument('--we_multiplicative', type=float, default=1)
@@ -88,7 +88,10 @@ def train(argv):
     parser.add_argument('--keep_rs_ids', default='True',
                         help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `rs1801280` or `ss221`')
 
-    FALSE = ['false', '0', 'no', 'none']
+    FALSE = ['false', 'f', '0', 'no', 'none']
+
+    def arg_bool(arg_value):
+        return False if arg_value.lower() in FALSE else True
 
     args = parser.parse_args(argv)
 
@@ -117,6 +120,8 @@ def train(argv):
         labeler = IOLabeler()
     elif args.labeler == "11labels":
         labeler = TmVarLabeler()
+
+    args.word_embeddings = arg_bool(args.word_embeddings)
 
     if args.word_embeddings:
         args.we_params = {
