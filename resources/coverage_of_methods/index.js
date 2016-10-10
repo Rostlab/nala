@@ -91,7 +91,7 @@ function jsonpToVennSets(jsonp, corpus_name, filter_f, subclass) {
 
   var AiBiC = intersect3(A, B, C);
 
-  var AuBuC = new Set([a, b, c]); //union
+  var AuBuC = new Set([...a, ...b, ...c]); //union
 
   if (OVER_ABSOLUTE_TOTAL) {
     var which_counts;
