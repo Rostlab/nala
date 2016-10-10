@@ -37,20 +37,15 @@ function drawVennDiagram(htmlElement, sets, title) {
   .selectAll(".label")
   .style("font-size", "16px")
 
-  // add new sublabels (growing from middle)
   layout.enter
   .append("text")
-  .attr("class", "sublabel")
+  .attr("class", "sublabel1")
   .style("fill", "#666")
   .attr("text-anchor", "middle")
-
-  // move existing
-  layout.update
-  .selectAll(".sublabel")
   .filter(function (d) { return d.sets in textCentres; })
   .text(function(d) {
     if (d.sets.length === 1) {
-      return "" + to100P(d.percentage) + "%|" + d.size + "|" + to100P(d.per_singular) + "%|" + d.num_singular + "";
+      return "" + to100P(d.percentage) + "% (" + d.size + ")";
     }
     else {
       return "";
@@ -58,6 +53,26 @@ function drawVennDiagram(htmlElement, sets, title) {
   })
   .style("font-size", "12px")
   .attr("dy", "18")
+  .attr("x", function(d) { return Math.floor(textCentres[d.sets].x);})
+  .attr("y", function(d) { return Math.floor(textCentres[d.sets].y);});
+
+
+  layout.enter
+  .append("text")
+  .attr("class", "sublabel2")
+  .style("fill", "#666")
+  .attr("text-anchor", "middle")
+  .filter(function (d) { return d.sets in textCentres; })
+  .text(function(d) {
+    if (d.sets.length === 1) {
+      return "" + to100P(d.per_singular) + "% (" + d.num_singular + ")";
+    }
+    else {
+      return "";
+    }
+  })
+  .style("font-size", "12px")
+  .attr("dy", "36")
   .attr("x", function(d) { return Math.floor(textCentres[d.sets].x);})
   .attr("y", function(d) { return Math.floor(textCentres[d.sets].y);});
 
