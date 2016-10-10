@@ -9,6 +9,10 @@ var OVER_ABSOLUTE_TOTAL = (getURLParameter('OVER_ABSOLUTE_TOTAL') || 'true') ===
 
 console.log(UNIQUE_MODE, OVER_ABSOLUTE_TOTAL);
 
+function to100P(x) {
+  return (x * 100).toFixed(0);
+}
+
 function drawVennDiagram(htmlElement, sets, title) {
 
   var sub_div = document.createElement("div");
@@ -29,20 +33,16 @@ function drawVennDiagram(htmlElement, sets, title) {
   var layout = chart(div);
   var textCentres = layout.textCentres;
 
+  layout.update
+  .selectAll(".label")
+  .style("font-size", "16px")
+
   // add new sublabels (growing from middle)
   layout.enter
   .append("text")
   .attr("class", "sublabel")
   .style("fill", "#666")
   .attr("text-anchor", "middle")
-  .attr("dy", "0")
-  .attr("x", chart.width() /2)
-  .attr("y", chart.height() /2);
-
-  // move existing
-  layout.update
-  .selectAll(".label")
-  .style("font-size", "16px")
 
   // move existing
   layout.update
@@ -50,13 +50,13 @@ function drawVennDiagram(htmlElement, sets, title) {
   .filter(function (d) { return d.sets in textCentres; })
   .text(function(d) {
     if (d.sets.length === 1) {
-      return "" + (d.percentage * 100).toFixed(0) + "%/" + d.size + "+" + d.num_singular + "";
+      return "" + to100P(d.percentage) + "%|" + d.size + "|" + to100P(d.per_singular) + "%|" + d.num_singular + "";
     }
     else {
       return "";
     }
   })
-  .style("font-size", "11px")
+  .style("font-size", "12px")
   .attr("dy", "18")
   .attr("x", function(d) { return Math.floor(textCentres[d.sets].x);})
   .attr("y", function(d) { return Math.floor(textCentres[d.sets].y);});
@@ -131,9 +131,9 @@ function jsonpToVennSets(jsonp, corpus_name, filter_f, subclass) {
   }
 
   var sets = [ //not unique percentages
-    {sets: ['A'], size: A.size, label: jsonp.A.label, percentage: A.size / total_number, num_singular: A_BuC.size},
-    {sets: ['B'], size: B.size, label: jsonp.B.label, percentage: B.size / total_number, num_singular: B_AuC.size},
-    {sets: ['C'], size: C.size, label: jsonp.C.label, percentage: C.size / total_number, num_singular: C_AuB.size},
+    {sets: ['A'], size: A.size, label: jsonp.A.label, percentage: A.size / total_number, num_singular: A_BuC.size, per_singular: A_BuC.size / total_number},
+    {sets: ['B'], size: B.size, label: jsonp.B.label, percentage: B.size / total_number, num_singular: B_AuC.size, per_singular: B_AuC.size / total_number},
+    {sets: ['C'], size: C.size, label: jsonp.C.label, percentage: C.size / total_number, num_singular: C_AuB.size, per_singular: C_AuB.size / total_number},
     {sets: ['A','B'], size: AiB.size},
     {sets: ['A','C'], size: AiC.size},
     {sets: ['B','C'], size: BiC.size},
