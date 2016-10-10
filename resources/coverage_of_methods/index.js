@@ -50,13 +50,13 @@ function drawVennDiagram(htmlElement, sets, title) {
   .filter(function (d) { return d.sets in textCentres; })
   .text(function(d) {
     if (d.sets.length === 1) {
-      return "" + (d.percentage * 100).toFixed(0) + "% (" + d.size + ")";
+      return "" + (d.percentage * 100).toFixed(0) + "%/" + d.size + "+" + d.num_singular + "";
     }
     else {
       return "";
     }
   })
-  .style("font-size", "14px")
+  .style("font-size", "11px")
   .attr("dy", "18")
   .attr("x", function(d) { return Math.floor(textCentres[d.sets].x);})
   .attr("y", function(d) { return Math.floor(textCentres[d.sets].y);});
@@ -91,7 +91,14 @@ function jsonpToVennSets(jsonp, corpus_name, filter_f, subclass) {
 
   var AiBiC = intersect3(A, B, C);
 
+  var AuB = new Set([...a, ...b]); //union
+  var AuC = new Set([...a, ...c]); //union
+  var BuC = new Set([...b, ...c]); //union
   var AuBuC = new Set([...a, ...b, ...c]); //union
+
+  var A_BuC = new Set([...a].filter(x => !BuC.has(x)));
+  var B_AuC = new Set([...b].filter(x => !AuC.has(x)));
+  var C_AuB = new Set([...c].filter(x => !AuB.has(x)));
 
   if (OVER_ABSOLUTE_TOTAL) {
     var which_counts;
@@ -124,9 +131,9 @@ function jsonpToVennSets(jsonp, corpus_name, filter_f, subclass) {
   }
 
   var sets = [ //not unique percentages
-    {sets: ['A'], size: A.size, label: jsonp.A.label, percentage: A.size / total_number},
-    {sets: ['B'], size: B.size, label: jsonp.B.label, percentage: B.size / total_number},
-    {sets: ['C'], size: C.size, label: jsonp.C.label, percentage: C.size / total_number},
+    {sets: ['A'], size: A.size, label: jsonp.A.label, percentage: A.size / total_number, num_singular: A_BuC.size},
+    {sets: ['B'], size: B.size, label: jsonp.B.label, percentage: B.size / total_number, num_singular: B_AuC.size},
+    {sets: ['C'], size: C.size, label: jsonp.C.label, percentage: C.size / total_number, num_singular: C_AuB.size},
     {sets: ['A','B'], size: AiB.size},
     {sets: ['A','C'], size: AiC.size},
     {sets: ['B','C'], size: BiC.size},
@@ -175,33 +182,34 @@ function draw(jsonp, corpus_name, filter_f) {
 //---------------------------------------------------------------------------------------------------------------
 
 draw(nala_discoveries, 'nala_discoveries');
-draw(SetsKnown, 'Var120', (x => /^\d+\|\d\d-/.test(x))); //Unique pattern for Var120, as in: '3034663|05-Discussion-p02-p2|411,422|e_2|0|p.Lys618Ala'
 draw(SetsKnown, 'SetsKnown');
 
-var SetsKnownBalancedAccepted = new Set();
-var SetsKnownBalancedAll = SetsKnown.A.results.concat(SetsKnown.B.results.concat(SetsKnown.C.results));
-
-SetsKnownBalancedAll.forEach(function(x) {
-  var sizeVar120 = (UNIQUE_MODE) ? SetsKnown.Var120_uniq_counts.TOTAL : SetsKnown.Var120_counts.TOTAL; //Smallest of all 3 corpora
-
-  //Var120
-  if (x.includes('-')) {
-    SetsKnownBalancedAccepted.add(x);
-  }
-  //nala-known
-  else if (x.includes('s1')) {
-    var bar = sizeVar120 / ((UNIQUE_MODE) ? SetsKnown.nala_known_uniq_counts.TOTAL : SetsKnown.nala_known_counts.TOTAL);
-    if (Math.random() < bar) {
-      SetsKnownBalancedAccepted.add(x);
-    }
-  }
-  //SETH
-  else {
-    var bar = sizeVar120 / ((UNIQUE_MODE) ? SetsKnown.SETH_uniq_counts.TOTAL : SetsKnown.SETH_counts.TOTAL);
-    if (Math.random() < bar) {
-      SetsKnownBalancedAccepted.add(x);
-    }
-  }
-});
-
-draw(SetsKnown, 'SetsKnown(Balanced)', (x => SetsKnownBalancedAccepted.has(x)));
+// draw(SetsKnown, 'Var120', (x => /^\d+\|\d\d-/.test(x))); //Unique pattern for Var120, as in: '3034663|05-Discussion-p02-p2|411,422|e_2|0|p.Lys618Ala'
+//
+// var SetsKnownBalancedAccepted = new Set();
+// var SetsKnownBalancedAll = SetsKnown.A.results.concat(SetsKnown.B.results.concat(SetsKnown.C.results));
+//
+// SetsKnownBalancedAll.forEach(function(x) {
+//   var sizeVar120 = (UNIQUE_MODE) ? SetsKnown.Var120_uniq_counts.TOTAL : SetsKnown.Var120_counts.TOTAL; //Smallest of all 3 corpora
+//
+//   //Var120
+//   if (x.includes('-')) {
+//     SetsKnownBalancedAccepted.add(x);
+//   }
+//   //nala-known
+//   else if (x.includes('s1')) {
+//     var bar = sizeVar120 / ((UNIQUE_MODE) ? SetsKnown.nala_known_uniq_counts.TOTAL : SetsKnown.nala_known_counts.TOTAL);
+//     if (Math.random() < bar) {
+//       SetsKnownBalancedAccepted.add(x);
+//     }
+//   }
+//   //SETH
+//   else {
+//     var bar = sizeVar120 / ((UNIQUE_MODE) ? SetsKnown.SETH_uniq_counts.TOTAL : SetsKnown.SETH_counts.TOTAL);
+//     if (Math.random() < bar) {
+//       SetsKnownBalancedAccepted.add(x);
+//     }
+//   }
+// });
+//
+// draw(SetsKnown, 'SetsKnown(Balanced)', (x => SetsKnownBalancedAccepted.has(x)));
