@@ -9,8 +9,8 @@ var OVER_ABSOLUTE_TOTAL = (getURLParameter('OVER_ABSOLUTE_TOTAL') || 'true') ===
 
 console.log(UNIQUE_MODE, OVER_ABSOLUTE_TOTAL);
 
-function to100P(x) {
-  return (x * 100).toFixed(0);
+function to100P(x, ndecimals) {
+  return (x * 100).toFixed(ndecimals || 0);
 }
 
 function drawVennDiagram(htmlElement, sets, title) {
@@ -51,7 +51,7 @@ function drawVennDiagram(htmlElement, sets, title) {
       return "";
     }
   })
-  .style("font-size", "12px")
+  .style("font-size", "14px")
   .attr("dy", "18")
   .attr("x", function(d) { return Math.floor(textCentres[d.sets].x);})
   .attr("y", function(d) { return Math.floor(textCentres[d.sets].y);});
@@ -71,7 +71,7 @@ function drawVennDiagram(htmlElement, sets, title) {
       return "";
     }
   })
-  .style("font-size", "12px")
+  .style("font-size", "14px")
   .attr("dy", "36")
   .attr("x", function(d) { return Math.floor(textCentres[d.sets].x);})
   .attr("y", function(d) { return Math.floor(textCentres[d.sets].y);});
