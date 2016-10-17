@@ -12,7 +12,7 @@ The goals of this project can be found on the [wiki.](https://github.com/carsten
 ##  Requirements
 
 * Requires Python 3 (>= 3.3)
-* [nalaf](Rostlab/nalaf)
+* [nalaf](https://github.com/Rostlab/nalaf)
 
 ## Install Code
 
