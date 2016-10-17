@@ -11,8 +11,9 @@ Motivation: _pending submitted paper_ (soon to be updated)
 
 ##  Requirements
 
-* Requires Python 3 (>= 3.3)
+* Requires Python 3 (>= 3.4)
 * [nalaf](https://github.com/Rostlab/nalaf)
+* [other unmanaged dependencies, see comments in `setup.py`](https://github.com/Rostlab/nala/blob/develop/setup.py)
 
 ## Install Code
 
