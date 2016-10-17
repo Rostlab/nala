@@ -182,7 +182,7 @@ function draw(jsonp, corpus_name, filter_f) {
   tr2.appendChild(tr2_c2);
   table.appendChild(tr2);
 
-  drawVennDiagram(tr1_c1, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x)), "TOTAL"), "TOTAL @ " + corpus_name);
+  drawVennDiagram(tr1_c1, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x)), "All"), "All @ " + corpus_name);
   drawVennDiagram(tr1_c2, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x) && x.includes('|e_2|0|')), "ST"), "ST @ " + corpus_name);
   drawVennDiagram(tr2_c1, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x) && x.includes('|e_2|1|')), "NL"), "NL @ " + corpus_name);
   drawVennDiagram(tr2_c2, jsonpToVennSets(jsonp, corpus_name, (x => filter_f(x) && x.includes('|e_2|2|')), "SST"), "SST @ " + corpus_name);
