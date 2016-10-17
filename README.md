@@ -1,11 +1,11 @@
-[![Build Status](https://travis-ci.com/abojchevski/nala.svg?token=VhCZKjoiPjzKEaXybidS)](https://travis-ci.com/abojchevski/nala)
+[![Build Status](https://travis-ci.com/Rostlab/nala.svg?token=VhCZKjoiPjzKEaXybidS)](https://travis-ci.com/Rostlab/nala)
 
-# NALA - Natural Language Text Mining
-Nala is a Text Mining (TM) tool and was initially created to serve as Natural Language (NL) mutation mention predictor for 2 theses from 2 students of the Technical University in Munich. The reason behind focusing on NL mentions is documented [here](https://github.com/carstenuhlig/thesis-alex-carsten/wiki/Natural-language-mentions). It is designed however, as extensible, module-based, easy-to-use and well documented tool for general Named Entity Recognition (NER) in TM. The software is under the MIT license. So people can use it and extend it with their own modules e.g. tokenizers,  dictionaries, features, etc. The method uses Conditional Random Fields (CRF), which are currently state-of-the-art for NER.
+# nala
 
-The goals of this project can be found on the [wiki.](https://github.com/carstenuhlig/thesis-alex-carsten/wiki#goals-of-2-theses-and-this-method)
+_Text mining_ method for the extraction of _sequence variants_ (genes or proteins) written in standard (ST) format (e.g. "E6V") or complex natural language (NL) (e.g. "glutamic acid was substituted by valine at residue 6").
 
-![Pipeline diagram](https://www.lucidchart.com/publicSegments/view/558052b8-fcf0-4e3b-a6b4-05990a008f2c/image.png)
+Motivation: _pending submitted paper_ (soon to be updated)
+
 
 # Install
 
@@ -43,9 +43,7 @@ The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the 
 
 Run:
 
-* `nala.py` for a simple example how to use NALA just for prediction with a pre-trained model
-    * `python3 nala.py -p 15878741 12625412`
-    * `python3 nala.py -s "This is c.A1003G an example"`
-    * `python3 nala.py -d example.txt`
+* `python3 nala.py -p 15878741 12625412`
+* `python3 nala.py -s "This are examples: Asp8Asn or delPhe1388 (ST); 3992-9g-->a mutation (SST); glycine was substituted by lysine at residue 18 (NNL)"`
 
 For API access, see: https://www.tagtog.net/-corpora/IDP4+
