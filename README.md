@@ -46,6 +46,6 @@ The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the 
   * `python3 nala.py -p 15878741 12625412`
  * `python3 nala.py -s "Standard (ST) examples: Asp8Asn or delPhe1388. Semi-standard (SST) examples: 3992-9g-->a mutation. Natural language (NL) examples: glycine was substituted by lysine at residue 18 (Gly18Lys)"`
 
-* Full control: [[nala/learning/train.py]]
+* Full control: [nala/learning/train.py](nala/learning/train.py)
 
 * API access: https://www.tagtog.net/-corpora/IDP4+
