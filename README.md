@@ -12,34 +12,40 @@ The goals of this project can be found on the [wiki.](https://github.com/carsten
 ##  Requirements
 
 * Requires Python 3 (>= 3.3)
-* Requires a working installation of CRFsuite
-    * The easieast way to install it is to download compiled binaries from the [official website.](http://www.chokkan.org/software/crfsuite/) For example for linux systems do the following:
-        * `wget https://github.com/downloads/chokkan/crfsuite/crfsuite-0.12-x86_64.tar.gz`
-        * `tar -xvf crfsuite-0.12-x86_64.tar.gz`
-        * then the working crf suite direcotry you need it under `/crfsuite-0.12/bin`
+* [nalaf](Rostlab/nalaf)
 
 ## Install Code
 
-    git clone https://github.com/carstenuhlig/thesis-alex-carsten.git
-    cd thesis-alex-carsten
-    python3 setup.py install
-    python3 -m nalaf.download_corpora
+```shell
+git clone https://github.com/Rostlab/nala.git
+cd nala
+python3 setup.py install
+python3 -m nalaf.download_corpora
+```
 
  If you want to run the unit tests (excluding the slow ones) do:
 
-    python3 setup.py nosetests -a '!slow'
+```shell
+python3 setup.py nosetests -a '!slow'
+```
 
  Note: When we eventually register the package on pypi, the first 3 steps will be replaced with just this next one:
 
-    pip3 install nala
+```shell
+pip3 install nala
+```
 
 ### Troubleshooting on Windows
 
 The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the [original module](https://github.com/tpeng/python-crfsuite).
 
 # Examples
+
 Run:
+
 * `nala.py` for a simple example how to use NALA just for prediction with a pre-trained model
     * `python3 nala.py -p 15878741 12625412`
     * `python3 nala.py -s "This is c.A1003G an example"`
     * `python3 nala.py -d example.txt`
+
+For API access, see: https://www.tagtog.net/-corpora/IDP4+
