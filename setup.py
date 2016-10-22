@@ -18,10 +18,10 @@ setup(
         'Topic :: Text Processing :: Linguistic'
     ],
     keywords='crf mutation natural language ner',
-    url='https://github.com/carstenuhlig/thesis-alex-carsten',
-    author='Aleksandar Bojchevski, Carsten Uhlig',
-    author_email='email@somedomain.com',
-    license='MIT',
+    url='https://github.com/Rostlab/nala',
+    author='Aleksandar Bojchevski, Carsten Uhlig, Juan Miguel Cejuela',
+    author_email='nala@rostlab.org',
+    #license='UNKNOWN',
     packages=find_packages(exclude=['tests']),
     #install_requires=[
     #    'nalaf'
