@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.com/Rostlab/nala.svg?token=VhCZKjoiPjzKEaXybidS)](https://travis-ci.com/Rostlab/nala)
+[![Build Status](https://travis-ci.org/Rostlab/nala.svg?branch=develop)](https://travis-ci.org/Rostlab/nala)
 [![codecov](https://codecov.io/gh/Rostlab/nala/branch/develop/graph/badge.svg)](https://codecov.io/gh/Rostlab/nala)
+
 
 # nala
 
