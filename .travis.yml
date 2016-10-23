@@ -21,7 +21,7 @@ install:
   - pip install .
 
 script:
-  - nosetests -a \"!slow\"" --with-coverage
+  - nosetests -a \"!slow\" --with-coverage
   # - "python nala.py -p 2581245"
 
 after_success:
