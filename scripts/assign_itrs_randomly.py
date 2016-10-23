@@ -69,7 +69,7 @@ for i in IAA:
 print()
 
 for annotator, itrs in annotators.items():
-    random.shuffle(itrs) # randomize training & test
+    random.shuffle(itrs)  # randomize training & test
     print(annotator, len(itrs), itrs)
     for i in itrs:
         get_itr_docs(i)
