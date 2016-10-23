@@ -1,5 +1,6 @@
 """
 nala.utils contains classes that help for instance with downloading doc- uments from the internet.
+
 The import and export classes are contained there as well. Other classes are:
 – Cacheprovidingcachingforclassesthatneedtodownloadstaticcontent often.
 – GNormPlus which annotates either full-text documents or PubMed abstracts through the RESTApi from PubTator.
