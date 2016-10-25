@@ -5,6 +5,7 @@ from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, Mutat
     PMIDReader, HTMLReader
 from nalaf.utils.annotation_readers import DownloadedSETHAnnotationReader, AnnJsonAnnotationReader
 from nalaf.structures.data import Dataset
+from nalaf import print_verbose, print_debug
 
 # Var = Variome
 # Var120 = Variome_120
