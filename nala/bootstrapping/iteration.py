@@ -513,7 +513,7 @@ class Iteration:
         PostProcessing().process(self.candidates)
         GNormPlusGeneTagger().tag(self.candidates)
 
-        self.candidates.validate_entity_offsets()
+        self.candidates.validate_annotation_offsets()
 
         # export to anndoc format
         ttf_candidates = TagTogFormat(self.candidates, use_predicted=True, to_save_to=self.candidates_folder, use_original_partids=False)
