@@ -23,7 +23,7 @@ from nalaf.utils.writers import TagTogFormat
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
 from nalaf.structures.data import Entity
-from nalaf.learning.taggers import GNormPlusGeneTagger
+from nalaf.domain.bio.gnormplus import GNormPlusGeneTagger
 from nalaf.structures.data import Dataset
 
 from nala.utils import get_prepare_pipeline_for_best_model
