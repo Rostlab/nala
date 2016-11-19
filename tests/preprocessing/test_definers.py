@@ -40,6 +40,9 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         f = self.definer.define_string
         testEqual = self.assertEqual
 
+        testEqual(0, f("rs206437"))  # rsid
+        testEqual(0, f("ss469415642"))  # ssid
+
         testEqual(2, f("C226 to T"))
         testEqual(2, f("G446 to A"))
         testEqual(2, f("C821 to T"))
