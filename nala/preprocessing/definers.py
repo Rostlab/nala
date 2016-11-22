@@ -78,6 +78,7 @@ class ExclusiveNLDefiner(NLDefiner):
 
         conventions_file = pkg_resources.resource_filename('nala.data', 'regex_st.json')
         tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
+        # dictionary with common English words (regarded as NL) that appear in mutation mentions
         dict_nl_words_file = pkg_resources.resource_filename('nala.data', 'dict_nl_words_v2.json')
 
         # read in file regex_st.json into conventions array
@@ -91,7 +92,6 @@ class ExclusiveNLDefiner(NLDefiner):
             regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
             self.compiled_regexps = [re.compile(x) for x in regexps]
 
-        # read dict_nl_words.json - dictionary for distinguishing between standard and partly with low word count
         with open(dict_nl_words_file) as f:
             dict_nl_words = json.load(f)
             self.compiled_dict_nl_words = list(set([re.compile(x, re.IGNORECASE) for x in dict_nl_words]))
