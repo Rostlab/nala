@@ -1,8 +1,7 @@
+.*
+!.gitignore
 *.class
 *.log
-
-# Sublime Text
-*.sublime-*
 
 # idp-4 resources
 IDP4_*/
@@ -16,11 +15,6 @@ bin_model
 
 # Word embeddings model
 nala/data/word_embeddings*
-
-# crfsuite specific
-/predict
-/output.txt
-/train
 
 # Python egg metadata, regenerated from source files by setuptools.
 /*.egg-info
