@@ -1,6 +1,6 @@
 import os
 from nala.utils import nala_repo_path
-from nala.utils import MUT_CLASS_ID
+from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
 from nala.bootstrapping.iteration import Iteration
 from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, \
     PMIDReader, HTMLReader
@@ -72,7 +72,7 @@ def get_corpus_name(name, only_class_id=None):
             fn = 'test.PubTator.txt'
 
         entirecorpusfile = os.path.join(__corpora_folder, 'tmvar', fn)
-        return TmVarReader(entirecorpusfile).read()
+        return TmVarReader(entirecorpusfile, MUT_CLASS_ID).read()
 
     if name == "MF":
         ret = Dataset()
@@ -102,7 +102,7 @@ def get_corpus_name(name, only_class_id=None):
         ann_folder = os.path.join(__corpora_folder, 'seth', 'annotations')
         pmids = [file[:-4] for file in os.listdir(ann_folder) if file.endswith('.ann')]
         ret = PMIDReader(pmids).read()
-        DownloadedSETHAnnotationReader(ann_folder).annotate(ret)
+        DownloadedSETHAnnotationReader(ann_folder, MUT_CLASS_ID).annotate(ret)
 
         return ret
 
@@ -129,11 +129,11 @@ def get_corpus_name(name, only_class_id=None):
 
     elif name == "Var":
         folder = os.path.join(__corpora_folder, 'variome', 'data')
-        return VerspoorReader(folder).read()
+        return VerspoorReader(folder, mut_class_id=MUT_CLASS_ID, gene_class_id=PRO_CLASS_ID).read()
 
     elif name == "Var120":
         folder = os.path.join(__corpora_folder, 'variome_120', 'annotations_mutations_explicit')
-        return VerspoorReader(folder).read()
+        return VerspoorReader(folder, mut_class_id=MUT_CLASS_ID, gene_class_id=PRO_CLASS_ID).read()
 
     elif name == "OSIRIS":
         file = os.path.join(__corpora_folder, 'osiris', 'OSIRIScorpusv01.xml')
