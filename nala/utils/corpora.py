@@ -1,5 +1,6 @@
 import os
 from nala.utils import nala_repo_path
+from nala.utils import MUT_CLASS_ID
 from nala.bootstrapping.iteration import Iteration
 from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, \
     PMIDReader, HTMLReader
@@ -136,7 +137,7 @@ def get_corpus_name(name, only_class_id=None):
 
     elif name == "OSIRIS":
         file = os.path.join(__corpora_folder, 'osiris', 'OSIRIScorpusv01.xml')
-        return OSIRISReader(file).read()
+        return OSIRISReader(file, MUT_CLASS_ID).read()
 
     elif name in ALL_CORPORA:
         return Dataset()
