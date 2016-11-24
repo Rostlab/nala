@@ -3,7 +3,7 @@ from nala.utils import nala_repo_path
 from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
 from nala.bootstrapping.iteration import Iteration
 from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, \
-    PMIDReader, HTMLReader
+    PMIDReader, HTMLReader, ProteinResidueCorpusPartialReader
 from nalaf.utils.annotation_readers import DownloadedSETHAnnotationReader, AnnJsonAnnotationReader
 from nalaf.structures.data import Dataset
 from nalaf import print_verbose, print_debug
@@ -18,6 +18,7 @@ ALL_CORPORA = [
     'tmVar',
     'Var', 'VarA', 'VarF',
     'Var120', 'Var120A', 'Var120F',
+    'LEAP-FS',
     'IDP4', 'IDP4A', 'IDP4F',
     'nala', 'nala_training', 'nala_test',
     'IDP4+',
@@ -103,6 +104,12 @@ def get_corpus_name(name, only_class_id=None):
         pmids = [file[:-4] for file in os.listdir(ann_folder) if file.endswith('.ann')]
         ret = PMIDReader(pmids).read()
         DownloadedSETHAnnotationReader(ann_folder, MUT_CLASS_ID).annotate(ret)
+
+        return ret
+
+    if name == "LEAP-FS":
+        corpus_file = os.path.join(__corpora_folder, 'ProteinResidueFullTextCorpus', 'ProteinResidueFullText.tsv')
+        ret = ProteinResidueCorpusPartialReader(corpus_file, mut_class_id=MUT_CLASS_ID, residue_class_id=None).read()
 
         return ret
 
