@@ -61,7 +61,7 @@ def get_corpus_name(name, only_class_id=None):
         until_iteration = int(parts[2]) if len(parts) > 2 else None
 
         if until_iteration:
-            assert training is True, "Iteration subsets are currently supported only with nala_training"
+            assert name == "nala", "Iteration subsets are currently supported only with nala (training or test/indexed, not random/discoveries)"
 
     if name == "tmVar":
         if not (training or test):
@@ -113,7 +113,7 @@ def get_corpus_name(name, only_class_id=None):
         if training:
             return Iteration.read_nala_training(until_iteration)
         elif test:
-            return Iteration.read_nala_test()
+            return Iteration.read_nala_test(number_iterations=until_iteration)
         elif random:
             return Iteration.read_nala_random()
         else:

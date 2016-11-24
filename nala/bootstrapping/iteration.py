@@ -281,15 +281,22 @@ class Iteration:
 
 
     @staticmethod
-    def read_nala_test():
+    def read_nala_test(number_iterations=-1):
         dataset = Dataset()
+
         for itr in IterationRound.all(including_seed=False):
-            if itr.is_test():
-                try:
-                    dataset.extend_dataset(itr.read())
-                except FileNotFoundError as e:
-                    print_debug(e)
-                    continue
+            if (number_iterations == 0):
+                break
+
+            else:
+                if itr.is_test():
+                    try:
+                        dataset.extend_dataset(itr.read())
+                        number_iterations -= 1
+
+                    except FileNotFoundError as e:
+                        print_debug(e)
+                        continue
 
         return dataset
 
@@ -313,7 +320,7 @@ class Iteration:
         return dataset
 
     @staticmethod
-    def read_IDP4Plus_training(until_iteration = None):
+    def read_IDP4Plus_training(until_iteration=None):
         dataset = Iteration.read_IDP4()
         dataset.extend_dataset(Iteration.read_nala_training(until_iteration))
         return dataset
