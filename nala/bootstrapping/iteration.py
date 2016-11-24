@@ -284,6 +284,8 @@ class Iteration:
     def read_nala_test(number_iterations=-1):
         dataset = Dataset()
 
+        number_iterations = -1 if number_iterations is None else number_iterations
+
         for itr in IterationRound.all(including_seed=False):
             if (number_iterations == 0):
                 break
