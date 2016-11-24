@@ -329,37 +329,6 @@ class Iteration:
     def read_IDP4Plus_test():
         return Iteration.read_nala_test()
 
-    def check_iterations_stats(self):
-        """
-        At the moment just prints the stats for each iteration.
-        Stats:
-        * total mentions
-        * st mentions
-        * nl mentions
-        * subclass 1 mentions and subclass 2 mentions
-        * nl mentions per document ratio
-        """
-        row_format = "{:>10} | {:>5.2f}"
-        counts = [0,0,0]
-
-        for itr in IterationRound.all():
-            tmp_data = itr.read()
-            sub_counts = [0,0,0]
-            ExclusiveNLDefiner().define(tmp_data)
-            for ann in tmp_data.annotations():
-                sub_counts[ann.subclass] += 1
-
-            counts = [x + y for x, y in zip(counts, sub_counts)]
-
-            print(row_format.format('iter', itr.number))
-            print(row_format.format('total', sum(sub_counts)))
-            print(row_format.format('st', sub_counts[0]))
-            print(row_format.format('nl + ss', sub_counts[1] + sub_counts[2]))
-            print(row_format.format('nl', sub_counts[1]))
-            print(row_format.format('ss', sub_counts[2]))
-            print(row_format.format('nl+ss/doc', (sub_counts[1] + sub_counts[2])/10)) #TODO wrong some iterations like 0 don't have 10 docs
-
-        print('ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2])
 
     def preprocessing(self):
         """
