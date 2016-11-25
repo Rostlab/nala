@@ -2,6 +2,8 @@
 !.gitignore
 *.class
 *.log
+.tags
+tags
 
 # idp-4 resources
 IDP4_*/
