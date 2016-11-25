@@ -89,17 +89,30 @@ def benchmark_IDP4(member1, member2):
 
     return (dataset, MentionLevelEvaluator(subclass_analysis=True).evaluate(dataset))
 
+
 def benchmark_nala(member1, member2):
-    dataset = Dataset()
+    itrs = []
+
     for itr in IterationRound.all():
         if itr.is_IAA():
-            dataset.extend_dataset(itr.read(read_annotations=False))
+            dataset = itr.read(read_annotations=False)
             AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member1), delete_incomplete_docs=False).annotate(dataset)
             AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member2), delete_incomplete_docs=False, is_predicted=True).annotate(dataset)
+            itrs.append(dataset)
+            dataset = None
 
-    ExclusiveNLDefiner().define(dataset)
+    all_itrs_dataset = Dataset()
 
-    return (dataset, MentionLevelEvaluator(subclass_analysis=True).evaluate(dataset))
+    for itr_dataset in itrs:
+        all_itrs_dataset.extend_dataset(itr_dataset)
+
+    ExclusiveNLDefiner().define(all_itrs_dataset)
+
+    return (all_itrs_dataset, MentionLevelEvaluator(subclass_analysis=True).evaluate(all_itrs_dataset))
+
+
+# ---
+
 
 if sys.argv[1] == "IDP4":
     members = IDP4_members
@@ -126,12 +139,14 @@ for member1, member2 in combinations(members, 2):
         individual_evaluations.append(evaluation)
 
     total_dataset.extend_dataset(dataset)
+    dataset = None
+    evaluation = None
 
 
-total_evaluation = Evaluations.merge(individual_evaluations)
+total_evaluation = Evaluations.merge(individual_evaluations, are_disjoint_evaluations=False)
 
 print()
 print()
-print("Num _total_ overlapping documents: ", len(total_dataset))
+print("Num _total_ overlapping documents: ", len(total_dataset), ", num members pairs: ", len(individual_evaluations))
 print()
 print(total_evaluation)
