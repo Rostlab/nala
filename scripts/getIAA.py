@@ -1,11 +1,13 @@
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
-from nalaf.learning.evaluators import MentionLevelEvaluator
+from nalaf.learning.evaluators import MentionLevelEvaluator, Evaluations
 from itertools import combinations
 import os
 import sys
 from nalaf.structures.data import Dataset
 from nala.bootstrapping.iteration import IterationRound
 from nala.preprocessing.definers import ExclusiveNLDefiner
+from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
+
 
 IDP4_members = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi']
 nala_members = ['cuhlig', 'abojchevski', 'jmcejuela']
@@ -111,6 +113,8 @@ show_only_total_results = True if len(sys.argv) > 2 and sys.argv[2] == "only_tot
 # ---
 
 total_dataset = Dataset()
+individual_evaluations = []
+
 for member1, member2 in combinations(members, 2):
     (dataset, evaluation) = benchmark(member1, member2)
 
@@ -119,9 +123,15 @@ for member1, member2 in combinations(members, 2):
         print("  -> Num overlapping documents: ", len(dataset))
         print(evaluation)
         print("")
+        individual_evaluations.append(evaluation)
 
     total_dataset.extend_dataset(dataset)
 
+
+total_evaluation = Evaluations.merge(individual_evaluations)
+
+print()
 print()
 print("Num _total_ overlapping documents: ", len(total_dataset))
 print()
+print(total_evaluation)
