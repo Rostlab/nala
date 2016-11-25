@@ -84,7 +84,7 @@ def benchmark_IDP4(member1, member2):
 
     ExclusiveNLDefiner().define(dataset)
 
-    return MentionLevelEvaluator(subclass_analysis=True).evaluate(dataset)
+    return (dataset, MentionLevelEvaluator(subclass_analysis=True).evaluate(dataset))
 
 def benchmark_nala(member1, member2):
     dataset = Dataset()
@@ -96,7 +96,7 @@ def benchmark_nala(member1, member2):
 
     ExclusiveNLDefiner().define(dataset)
 
-    return MentionLevelEvaluator(subclass_analysis=True).evaluate(dataset)
+    return (dataset, MentionLevelEvaluator(subclass_analysis=True).evaluate(dataset))
 
 if sys.argv[1] == "IDP4":
     members = IDP4_members
@@ -105,9 +105,18 @@ else:
     members = nala_members
     benchmark = benchmark_nala
 
-for member1, member2 in combinations(members, 2):
-    print(member1, member2)
-    evaluation = benchmark(member1, member2)
+show_only_num_overlapping_docs_for_IAA = True if len(sys.argv) > 2 and sys.argv[2] == "only_num_docs" else False
 
-    print(evaluation)
-    print("")
+# ---
+
+total_dataset = Dataset()
+for member1, member2 in combinations(members, 2):
+    (dataset, evaluation) = benchmark(member1, member2)
+    total_dataset.extend_dataset(dataset)
+
+    if not show_only_num_overlapping_docs_for_IAA:
+        print(member1, member2)
+        print(evaluation)
+        print("")
+
+print("Num total documents: ", len(total_dataset))
