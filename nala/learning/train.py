@@ -185,8 +185,8 @@ def train(argv):
 
     def stats(dataset, name):
         print('\n\t{} size: {}'.format(name, len(dataset)))
-        # Caveat: the dataset must be defined first
-        print('\tsubclass distribution: {}'.format(Counter(ann.subclass for ann in dataset.annotations())))
+        # Caveat: the dataset must be (mutations) defined first
+        print('\tsubclass distribution: {}'.format(repr(dataset)))
         # Caveat: the dataset must be passed through the pipeline first
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
 
