@@ -13,12 +13,11 @@ from nalaf import print_verbose, print_debug
 # ?A = Abstracts only
 # ?F = Full Text only
 ALL_CORPORA = [
-    'MF', 'OMM', 'OSIRIS', 'SNP',
+    'MF', 'OMM', 'OSIRIS', 'SNP', 'LEAP-FS',
     'SETH',
     'tmVar',
     'Var', 'VarA', 'VarF',
     'Var120', 'Var120A', 'Var120F',
-    'LEAP-FS',
     'IDP4', 'IDP4A', 'IDP4F',
     'nala', 'nala_training', 'nala_test',
     'IDP4+',
