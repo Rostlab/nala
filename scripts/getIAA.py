@@ -106,18 +106,22 @@ else:
     members = nala_members
     benchmark = benchmark_nala
 
-show_only_num_overlapping_docs_for_IAA = True if len(sys.argv) > 2 and sys.argv[2] == "only_num_docs" else False
+show_only_total_results = True if len(sys.argv) > 2 and sys.argv[2] == "only_total" else False
 
 # ---
 
 total_dataset = Dataset()
 for member1, member2 in combinations(members, 2):
     (dataset, evaluation) = benchmark(member1, member2)
-    total_dataset.extend_dataset(dataset)
 
-    if not show_only_num_overlapping_docs_for_IAA:
+    if not show_only_total_results:
         print(member1, member2)
+        print("  -> Num overlapping documents: ", len(dataset))
         print(evaluation)
         print("")
 
-print("Num total documents: ", len(total_dataset))
+    total_dataset.extend_dataset(dataset)
+
+print()
+print("Num _total_ overlapping documents: ", len(total_dataset))
+print()
