@@ -16,6 +16,8 @@ from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter
 from nalaf import print_debug
 import time
+from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
+
 
 def train(argv):
     parser = argparse.ArgumentParser(description='Train model')
@@ -50,8 +52,12 @@ def train(argv):
 
     parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
-    parser.add_argument('--only_class_id', required=False, default=None,
-                        help="By default corpora's all entities are read. Set this class_id to filter rest out")
+
+    parser.add_argument('--mutations_specific', default='True',
+                        help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
+
+    parser.add_argument('--only_class_id', required=False, default=MUT_CLASS_ID,
+                        help="By default, only the mutation entities are read from corpora (assumed to have class_id == MUT_CLASS_ID). Set this class_id to filter rest out")
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
 
@@ -75,8 +81,6 @@ def train(argv):
     parser.add_argument('--nl_threshold', type=int, default=0)
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
-    parser.add_argument('--mutations_specific', default='True',
-                        help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
     parser.add_argument('--execute_pp', default='True',
                         help='Execute post processing specific to mutations (default) or not')
     parser.add_argument('--keep_silent', default='True',
