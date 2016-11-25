@@ -69,40 +69,36 @@ IDP4_IAA_docs = [
 ]
 
 def benchmark_IDP4(member1, member2):
-    dataset = Dataset()
     itr = IterationRound(0)
-    dataset.extend_dataset(itr.read(read_annotations=False))
+    IDP4_corpus = itr.read(read_annotations=False)
 
-    newcorpus = Dataset()
-    for docid, document in dataset.documents.items():
+    IAA_IDP4_corpus = Dataset()
+    for docid, document in IDP4_corpus.documents.items():
         if docid in IDP4_IAA_docs:
-            newcorpus.documents[docid] = document
+            IAA_IDP4_corpus.documents[docid] = document
 
-    dataset = newcorpus
+    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "annjson", "members", member1), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=True).annotate(IAA_IDP4_corpus)
+    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "annjson", "members", member2), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=True, is_predicted=True).annotate(IAA_IDP4_corpus)
 
-    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "annjson", "members", member1), delete_incomplete_docs=True).annotate(dataset)
-    AnnJsonAnnotationReader(os.path.join(itr.path, "base", "annjson", "members", member2), delete_incomplete_docs=True, is_predicted=True).annotate(dataset)
+    ExclusiveNLDefiner().define(IAA_IDP4_corpus)
 
-    print(dataset.__repr__())
-
-    ExclusiveNLDefiner().define(dataset)
-
-    return (dataset, MentionLevelEvaluator(subclass_analysis=True).evaluate(dataset))
+    return (IAA_IDP4_corpus, MentionLevelEvaluator(subclass_analysis=True).evaluate(IAA_IDP4_corpus))
 
 
 def benchmark_nala(member1, member2):
     itrs = []
 
+    # Read the IAA iterations in blocks so that the plain documents are not deleted with the AnnJsonAnnotationReader's
     for itr in IterationRound.all():
         if itr.is_IAA():
             dataset = itr.read(read_annotations=False)
-            AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member1), delete_incomplete_docs=False).annotate(dataset)
-            AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member2), delete_incomplete_docs=False, is_predicted=True).annotate(dataset)
+            AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member1), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False).annotate(dataset)
+            AnnJsonAnnotationReader(os.path.join(itr.path, "reviewed", member2), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False, is_predicted=True).annotate(dataset)
             itrs.append(dataset)
             dataset = None
 
+    # Then merge the IAA iterations
     all_itrs_dataset = Dataset()
-
     for itr_dataset in itrs:
         all_itrs_dataset.extend_dataset(itr_dataset)
 
@@ -133,7 +129,7 @@ for member1, member2 in combinations(members, 2):
 
     if not show_only_total_results:
         print(member1, member2)
-        print("  -> Num overlapping documents: ", len(dataset))
+        print("  -> Overlapping: ", dataset.__repr__())
         print(evaluation)
         print("")
         individual_evaluations.append(evaluation)
@@ -147,6 +143,6 @@ total_evaluation = Evaluations.merge(individual_evaluations, are_disjoint_evalua
 
 print()
 print()
-print("Num _total_ overlapping documents: ", len(total_dataset), ", num members pairs: ", len(individual_evaluations))
+print("_Total_ overlapping: ", total_dataset.__repr__(), ", num members pairs: ", len(individual_evaluations))
 print()
 print(total_evaluation)
