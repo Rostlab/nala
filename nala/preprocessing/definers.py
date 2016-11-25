@@ -119,25 +119,23 @@ class SimpleExclusiveNLDefiner(NLDefiner):
 
     def define(self, dataset):
         counter = [0, 0]
+
         for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
-            # if ann.class_id == MUT_CLASS_ID:
-            #     print(ann.class_id, ann.text)
             if ann.class_id == MUT_CLASS_ID:
                 if len(ann.text.split(" ")) > self.max_spaces:
                     matches_tmvar = [regex.match(ann.text) for regex in self.compiled_regexps]
                     matches_custom = [regex.match(ann.text) for regex in self.compiled_regexps_custom]
+
                     if not any(matches_custom) and not any(matches_tmvar):
                         ann.subclass = 1
                         counter[1] += 1
-                        # print(ann.text)
+
                     else:
                         ann.subclass = 0
                         counter[0] += 1
                 else:
                     ann.subclass = 0
                     counter[0] += 1
-
-        # print(counter)
 
 
 class InclusiveNLDefiner(NLDefiner):
