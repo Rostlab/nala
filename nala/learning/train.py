@@ -292,7 +292,7 @@ def train(argv):
         if print_eval:
             print(evaluation)
         if print_results:
-            ConsoleWriter(True).write(test_set)
+            ConsoleWriter(ent1_class_id=PRO_CLASS_ID, ent2_class_id=MUT_CLASS_ID, color=True).write(test_set)
 
     # ------------------------------------------------------------------------------
 

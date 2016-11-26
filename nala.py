@@ -8,7 +8,7 @@ from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter, TagTogFormat, PubTatorFormat
 from nalaf.learning.crfsuite import PyCRFSuite
 from nala.utils import PRO_CLASS_ID, MUT_CLASS_ID, PRO_REL_MUT_CLASS_ID, get_prepare_pipeline_for_best_model
-from nalaf.learning.taggers import GNormPlusGeneTagger
+from nalaf.domain.bio.gnormplus import GNormPlusGeneTagger
 from nalaf.learning.taggers import StubSameSentenceRelationExtractor
 from nala.learning.postprocessing import PostProcessing
 
@@ -70,4 +70,4 @@ if __name__ == "__main__":
         elif args.file_format == 'pubtator':
             PubTatorFormat(dataset, location=os.path.join(args.output_dir, 'pubtator.txt')).export()
     else:
-        ConsoleWriter(args.color).write(dataset)
+        ConsoleWriter(args.color, ent1_class_id=PRO_CLASS_ID, ent2_class_id=MUT_CLASS_ID).write(dataset)
