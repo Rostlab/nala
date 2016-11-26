@@ -38,16 +38,18 @@ def get_corpus(name, only_class_id=None):
     else:
         return get_corpus_name(name, only_class_id)
 
+
 def get_annjson_corpus(folder, only_class_id=None):
     ret = HTMLReader(folder, whole_basename_as_docid=True).read()
     AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id, whole_basename_as_docid=True).annotate(ret)
     return ret
 
+
 def get_corpus_name(name, only_class_id=None):
     """
     :rtype: nalaf.structures.data.Dataset
     """
-    assert only_class_id is None, "The filtering of annotation class is not supported yet in this method"
+    assert only_class_id == MUT_CLASS_ID, "The class_id to read (only) is always assumed to be `MUT_CLASS_ID`"
 
     parts = name.split("_")
     training = test = random = False
@@ -102,7 +104,7 @@ def get_corpus_name(name, only_class_id=None):
         ann_folder = os.path.join(__corpora_folder, 'seth', 'annotations')
         pmids = [file[:-4] for file in os.listdir(ann_folder) if file.endswith('.ann')]
         ret = PMIDReader(pmids).read()
-        DownloadedSETHAnnotationReader(ann_folder, MUT_CLASS_ID).annotate(ret)
+        DownloadedSETHAnnotationReader(ann_folder, mut_class_id=MUT_CLASS_ID, gene_class_id=None).annotate(ret)
 
         return ret
 
@@ -135,11 +137,11 @@ def get_corpus_name(name, only_class_id=None):
 
     elif name == "Var":
         folder = os.path.join(__corpora_folder, 'variome', 'data')
-        return VerspoorReader(folder, mut_class_id=MUT_CLASS_ID, gene_class_id=PRO_CLASS_ID).read()
+        return VerspoorReader(folder, mut_class_id=MUT_CLASS_ID, gene_class_id=None).read()
 
     elif name == "Var120":
         folder = os.path.join(__corpora_folder, 'variome_120', 'annotations_mutations_explicit')
-        return VerspoorReader(folder, mut_class_id=MUT_CLASS_ID, gene_class_id=PRO_CLASS_ID).read()
+        return VerspoorReader(folder, mut_class_id=MUT_CLASS_ID, gene_class_id=None).read()
 
     elif name == "OSIRIS":
         file = os.path.join(__corpora_folder, 'osiris', 'OSIRIScorpusv01.xml')

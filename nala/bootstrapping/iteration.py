@@ -81,6 +81,7 @@ class IterationRound:
             if read_annotations:
                 AnnJsonMergerAnnotationReader(
                     os.path.join(annjson_folder, 'members'),
+                    read_only_class_id=MUT_CLASS_ID,
                     strategy='intersection',
                     entity_strategy='priority',
                     priority=['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
@@ -95,6 +96,7 @@ class IterationRound:
             if read_annotations:
                 AnnJsonMergerAnnotationReader(
                     annjson_folder,
+                    read_only_class_id=MUT_CLASS_ID,
                     strategy='intersection',
                     entity_strategy='priority',
                     priority=['cuhlig', 'abojchevski', 'jmcejuela'],
@@ -107,7 +109,7 @@ class IterationRound:
 
             dataset = HTMLReader(html_folder).read()
             if read_annotations:
-                AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False, read_relations=self.is_random()).annotate(dataset)
+                AnnJsonAnnotationReader(annjson_folder, read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False, read_relations=self.is_random()).annotate(dataset)
 
         print_debug("\t", dataset.__repr__())
         return dataset
@@ -504,10 +506,12 @@ class Iteration:
         :return:
         """
         self.reviewed = HTMLReader(os.path.join(self.candidates_folder, 'html')).read()
-        AnnJsonAnnotationReader(os.path.join(self.candidates_folder, 'annjson'), is_predicted=True,
-                                delete_incomplete_docs=False).annotate(
-            self.reviewed)
-        AnnJsonAnnotationReader(os.path.join(self.reviewed_folder), delete_incomplete_docs=False).annotate(self.reviewed)
+
+        AnnJsonAnnotationReader(os.path.join(self.candidates_folder, 'annjson'),
+                                read_only_class_id=MUT_CLASS_ID, is_predicted=True,
+                                delete_incomplete_docs=False).annotate(self.reviewed)
+
+        AnnJsonAnnotationReader(os.path.join(self.reviewed_folder), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False).annotate(self.reviewed)
         # automatic evaluation
 
     def evaluation(self):
@@ -573,6 +577,7 @@ class Iteration:
         base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
         data = HTMLReader(os.path.join(base_folder, 'html')).read()
         AnnJsonMergerAnnotationReader(os.path.join(os.path.join(base_folder, 'annjson'), 'members'),
+                                      read_only_class_id=MUT_CLASS_ID,
                                       strategy='intersection', entity_strategy='priority',
                                       priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
                                       delete_incomplete_docs=True).annotate(data)
@@ -582,7 +587,7 @@ class Iteration:
             iteration_base = os.path.join(self.bootstrapping_folder, "iteration_{}".format(fold))
 
             tmp_data = HTMLReader(os.path.join(os.path.join(iteration_base, 'candidates'), 'html')).read()
-            AnnJsonAnnotationReader(os.path.join(iteration_base, 'reviewed'), delete_incomplete_docs=False).annotate(tmp_data)
+            AnnJsonAnnotationReader(os.path.join(iteration_base, 'reviewed'), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False).annotate(tmp_data)
             data.extend_dataset(tmp_data)
         print_verbose(len(data), 'documents in total')
 
