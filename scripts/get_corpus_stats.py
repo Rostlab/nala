@@ -110,31 +110,34 @@ def get_stats(name, corpus, typ):
     uniq_total = set()
     uniq_subs = [set(), set(), set()]
 
+    num_docs_with_anns = 0
     num_docs_with_NL = 0
     num_docs_with_NL_untraslated = 0
     num_NLs_untranslated = 0
 
     for docid, document in corpus.documents.items():
+        doc_has_anns = False
         doc_has_NL = False
         docs_num_NL = 0
 
         for partid, ann in doc_annotations(document, typ):
             if ann.class_id == MUT_CLASS_ID:
+                doc_has_anns = True
                 counts_total += 1
                 counts_subs[ann.subclass] += 1
                 e_uid = ann.text  # We want to compare by text. Irrelevant: ann.gen_corpus_uniq_id(docid, partid)
                 uniq_total.add(e_uid)
                 uniq_subs[ann.subclass].add(e_uid)
 
-                if ann.subclass != ST:  # This considers Alex's manual definition: NL = NL + SST
+                if ann.subclass != ST:  # This considers Alex's manual definition, i.e. NL = NL + SST
                     doc_has_NL = True
                     docs_num_NL += 1
 
                 if ann.subclass in args.listanns:
                     print('\t' + '#' + str(counts_total) + ' (' + str(len(uniq_total)) + ')  ' + str(ann.subclass) + ' ' + MARKER[ann.subclass] + ' : ' + ann.text)
 
-                # for word in ann.text.split(' '):
-                #     WordsCounter[word.lower()] += 1
+        if doc_has_anns:
+            num_docs_with_anns += 1
 
         if doc_has_NL:
             num_docs_with_NL += 1
@@ -148,6 +151,7 @@ def get_stats(name, corpus, typ):
                 num_NLs_untranslated += docs_num_NL
 
     num_docs = len(corpus.documents)
+    num_empty_docs = num_docs - num_docs_with_anns
     num_tokens = get_num_tokens(corpus, typ)
     percents = list(map(lambda x: (PROB.format(x / counts_total) if x > 0 else "0"), counts_subs))
     u_percents = list(map(lambda x: (PROB.format(len(x) / len(uniq_total)) if len(x) > 0 else "0"), uniq_subs))
@@ -161,6 +165,7 @@ def get_stats(name, corpus, typ):
     return [
         name[:7],
         num_docs,
+        num_empty_docs,
         num_tokens,
         counts_total, counts_subs[ST], percents[ST], counts_subs[NL], percents[NL], counts_subs[SST], percents[SST], (counts_subs[NL] + counts_subs[SST]), PROB.format(0 if (counts_total == 0) else (1 - float(percents[ST]))),
         len(uniq_total), len(uniq_subs[ST]), u_percents[ST], len(uniq_subs[NL]), u_percents[NL], len(uniq_subs[SST]), u_percents[SST], (len(uniq_subs[NL]) + len(uniq_subs[SST])), PROB.format(0 if (len(uniq_total) == 0) else (1 - float(u_percents[ST]))),
@@ -176,6 +181,7 @@ def get_stats(name, corpus, typ):
 header = [
     "#Corpus",
     "#docs",
+    "#e_docs",  # number of _empty_ docs (i.e. without annotations)
     "#tokens",
     "#ann", "#ST", "%ST", "#NL", "%NL", "#SST", "%SST", "#NL+SST", "%NL+SST",
     "u#ann", "u#ST", "u%ST", "u#NL", "u%NL", "u#SST", "u%SST", "u#NL+SS", "u%NL+SS", #here called SS (not SST) for lack of column width space for pretty alignment
