@@ -186,7 +186,7 @@ print('\t'.join(header))
 
 for corpus_name in args.corpora:
     realname, typ = get_corpus_type(corpus_name)
-    corpus = get_corpus(realname)
+    corpus = get_corpus(realname, only_class_id=MUT_CLASS_ID)
     columns = get_stats(corpus_name, corpus, typ)
     if args.listanns:
         print('\t'.join(header))
