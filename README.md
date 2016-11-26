@@ -13,7 +13,7 @@ Motivation: _pending submitted paper_ (soon to be updated)
 
 ##  Requirements
 
-* Requires Python 3 (>= 3.4)
+* Requires Python 3 (>= 3.5)
 * [nalaf](https://github.com/Rostlab/nalaf)
   * [unmanaged dependencies by nalaf, see comments in `setup.py`](https://github.com/Rostlab/nalaf/blob/develop/setup.py)
 
