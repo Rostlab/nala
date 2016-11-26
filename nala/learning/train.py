@@ -57,7 +57,7 @@ def train(argv):
                         help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
 
     parser.add_argument('--only_class_id', required=False, default=MUT_CLASS_ID,
-                        help="By default, only the mutation entities are read from corpora (assumed to have class_id == MUT_CLASS_ID). Set this class_id to filter rest out")
+                        help="By default, only the mutation entities are read from corpora (assumed to have class_id == '"+MUT_CLASS_ID+"'). Set this class_id to filter rest out")
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
 
@@ -69,8 +69,7 @@ def train(argv):
     parser.add_argument('--elastic_net', action='store_true',
                         help='Use elastic net regularization')
 
-    parser.add_argument('--word_embeddings', '--we', default='True',
-                        help='Use word embeddings features')
+    parser.add_argument('--word_embeddings', '--we', default='True', help='Use word embeddings features')
     parser.add_argument('--we_additive', type=float, default=0)
     parser.add_argument('--we_multiplicative', type=float, default=1)
     parser.add_argument('--we_model_location', type=str, default=None)
