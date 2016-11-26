@@ -1,6 +1,6 @@
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
 from nalaf.learning.evaluators import MentionLevelEvaluator, Evaluations
-from itertools import combinations
+from itertools import combinations, product, chain
 import os
 import sys
 from nalaf.structures.data import Dataset
@@ -124,7 +124,10 @@ show_only_total_results = True if len(sys.argv) > 2 and sys.argv[2] == "only_tot
 total_dataset = Dataset()
 individual_evaluations = []
 
-for member1, member2 in combinations(members, 2):
+#product_members_pairs = combinations(members, 2)
+product_members_pairs = list(((m1, m2) for (m1, m2) in product(members, members) if m1 != m2))
+
+for member1, member2 in product_members_pairs:
     (dataset, evaluation) = benchmark(member1, member2)
 
     if not show_only_total_results:
