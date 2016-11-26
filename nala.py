@@ -70,4 +70,4 @@ if __name__ == "__main__":
         elif args.file_format == 'pubtator':
             PubTatorFormat(dataset, location=os.path.join(args.output_dir, 'pubtator.txt')).export()
     else:
-        ConsoleWriter(args.color, ent1_class_id=PRO_CLASS_ID, ent2_class_id=MUT_CLASS_ID).write(dataset)
+        ConsoleWriter(ent1_class_id=PRO_CLASS_ID, ent2_class_id=MUT_CLASS_ID, color=args.color).write(dataset)
