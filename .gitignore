@@ -2,6 +2,7 @@
 !.gitignore
 *.class
 *.log
+!resources/*IAA.log
 .tags
 tags
 
