@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     # GNormPlusGeneTagger().tag(dataset, uniprot=True)
 
-    # StubSameSentenceRelationExtractor(PRO_CLASS_ID, MUT_CLASS_ID, PRO_REL_MUT_CLASS_ID).tag(dataset)
+    # StubSameSentenceRelationExtractor(PRO_CLASS_ID, MUT_CLASS_ID, PRO_REL_MUT_CLASS_ID).annotate(dataset)
 
     if args.output_dir:
         if not os.path.isdir(args.output_dir):
