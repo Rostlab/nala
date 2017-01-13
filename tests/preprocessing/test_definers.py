@@ -129,6 +129,9 @@ class TestExclusiveNLDefiner(unittest.TestCase):
         testEqual(2, f("arginine-127 into glutamine"))
         testEqual(2, f("arginine-469 into tryptophan"))
 
+        testEqual(0, f("TP73Δex2/3"))
+        testEqual(1, f("abrogated loss of Chr19"))
+
         # More difficult
 
         testEqual(2, f("chromothripsis"))
