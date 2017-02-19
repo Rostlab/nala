@@ -2,7 +2,7 @@ from nala.bootstrapping.document_filters import DocumentFilter, KeywordsDocument
     StubDocumentFilter
 from nala.bootstrapping.pmid_filters import PMIDFilter, AlreadyConsideredPMIDFilter
 from nala.bootstrapping.utils import UniprotDocumentSelector
-from nalaf.utils.download import  DownloadArticle
+from nalaf.utils.download import DownloadArticle
 from nalaf.utils.cache import Cacheable
 
 
