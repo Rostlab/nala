@@ -206,7 +206,7 @@ def train(argv):
             test_set = None
         elif args.validation == "cross-validation":
             train_set, test_set = train_set.fold_nr_split(int(args.cv_n), int(args.cv_fold))
-        else:
+        elif args.validation == "stratified":
             definer.define(train_set)
             train_set, test_set = train_set.stratified_split()
 
