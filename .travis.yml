@@ -7,13 +7,12 @@ branches:
   only:
     - master
     - develop
-    - feature/adapt_to_nalaf_experimental
 
 cache:
   pip: true
 
 before_install:
-  - pip install git+https://github.com/Rostlab/nalaf.git@feature/Experimental
+  - pip install git+https://github.com/Rostlab/nalaf.git@develop
   - python -m nalaf.download_corpora
   - pip install codecov
 
