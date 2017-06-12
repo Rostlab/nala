@@ -23,7 +23,7 @@ from nalaf.utils.writers import TagTogFormat
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils import MUT_CLASS_ID, THRESHOLD_VALUE
 from nalaf.structures.data import Entity
-from nalaf.learning.taggers import GNormPlusGeneTagger
+from nalaf.domain.bio.gnormplus import GNormPlusGeneTagger
 from nalaf.structures.data import Dataset
 
 from nala.utils import get_prepare_pipeline_for_best_model
@@ -81,6 +81,7 @@ class IterationRound:
             if read_annotations:
                 AnnJsonMergerAnnotationReader(
                     os.path.join(annjson_folder, 'members'),
+                    read_only_class_id=MUT_CLASS_ID,
                     strategy='intersection',
                     entity_strategy='priority',
                     priority=['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
@@ -95,6 +96,7 @@ class IterationRound:
             if read_annotations:
                 AnnJsonMergerAnnotationReader(
                     annjson_folder,
+                    read_only_class_id=MUT_CLASS_ID,
                     strategy='intersection',
                     entity_strategy='priority',
                     priority=['cuhlig', 'abojchevski', 'jmcejuela'],
@@ -107,7 +109,7 @@ class IterationRound:
 
             dataset = HTMLReader(html_folder).read()
             if read_annotations:
-                AnnJsonAnnotationReader(annjson_folder, delete_incomplete_docs=False, read_relations=self.is_random()).annotate(dataset)
+                AnnJsonAnnotationReader(annjson_folder, read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False, read_relations=self.is_random()).annotate(dataset)
 
         print_debug("\t", dataset.__repr__())
         return dataset
@@ -281,15 +283,24 @@ class Iteration:
 
 
     @staticmethod
-    def read_nala_test():
+    def read_nala_test(number_iterations=-1):
         dataset = Dataset()
+
+        number_iterations = -1 if number_iterations is None else number_iterations
+
         for itr in IterationRound.all(including_seed=False):
-            if itr.is_test():
-                try:
-                    dataset.extend_dataset(itr.read())
-                except FileNotFoundError as e:
-                    print_debug(e)
-                    continue
+            if (number_iterations == 0):
+                break
+
+            else:
+                if itr.is_test():
+                    try:
+                        dataset.extend_dataset(itr.read())
+                        number_iterations -= 1
+
+                    except FileNotFoundError as e:
+                        print_debug(e)
+                        continue
 
         return dataset
 
@@ -313,7 +324,7 @@ class Iteration:
         return dataset
 
     @staticmethod
-    def read_IDP4Plus_training(until_iteration = None):
+    def read_IDP4Plus_training(until_iteration=None):
         dataset = Iteration.read_IDP4()
         dataset.extend_dataset(Iteration.read_nala_training(until_iteration))
         return dataset
@@ -322,37 +333,6 @@ class Iteration:
     def read_IDP4Plus_test():
         return Iteration.read_nala_test()
 
-    def check_iterations_stats(self):
-        """
-        At the moment just prints the stats for each iteration.
-        Stats:
-        * total mentions
-        * st mentions
-        * nl mentions
-        * subclass 1 mentions and subclass 2 mentions
-        * nl mentions per document ratio
-        """
-        row_format = "{:>10} | {:>5.2f}"
-        counts = [0,0,0]
-
-        for itr in IterationRound.all():
-            tmp_data = itr.read()
-            sub_counts = [0,0,0]
-            ExclusiveNLDefiner().define(tmp_data)
-            for ann in tmp_data.annotations():
-                sub_counts[ann.subclass] += 1
-
-            counts = [x + y for x, y in zip(counts, sub_counts)]
-
-            print(row_format.format('iter', itr.number))
-            print(row_format.format('total', sum(sub_counts)))
-            print(row_format.format('st', sub_counts[0]))
-            print(row_format.format('nl + ss', sub_counts[1] + sub_counts[2]))
-            print(row_format.format('nl', sub_counts[1]))
-            print(row_format.format('ss', sub_counts[2]))
-            print(row_format.format('nl+ss/doc', (sub_counts[1] + sub_counts[2])/10)) #TODO wrong some iterations like 0 don't have 10 docs
-
-        print('ST:', counts[0], 'NL:', counts[1], 'SS:', counts[2])
 
     def preprocessing(self):
         """
@@ -513,7 +493,7 @@ class Iteration:
         PostProcessing().process(self.candidates)
         GNormPlusGeneTagger().tag(self.candidates)
 
-        self.candidates.validate_annotation_offsets()
+        self.candidates.validate_entity_offsets()
 
         # export to anndoc format
         ttf_candidates = TagTogFormat(self.candidates, use_predicted=True, to_save_to=self.candidates_folder, use_original_partids=False)
@@ -526,10 +506,12 @@ class Iteration:
         :return:
         """
         self.reviewed = HTMLReader(os.path.join(self.candidates_folder, 'html')).read()
-        AnnJsonAnnotationReader(os.path.join(self.candidates_folder, 'annjson'), is_predicted=True,
-                                delete_incomplete_docs=False).annotate(
-            self.reviewed)
-        AnnJsonAnnotationReader(os.path.join(self.reviewed_folder), delete_incomplete_docs=False).annotate(self.reviewed)
+
+        AnnJsonAnnotationReader(os.path.join(self.candidates_folder, 'annjson'),
+                                read_only_class_id=MUT_CLASS_ID, is_predicted=True,
+                                delete_incomplete_docs=False).annotate(self.reviewed)
+
+        AnnJsonAnnotationReader(os.path.join(self.reviewed_folder), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False).annotate(self.reviewed)
         # automatic evaluation
 
     def evaluation(self):
@@ -595,6 +577,7 @@ class Iteration:
         base_folder = os.path.join(os.path.join(self.bootstrapping_folder, 'iteration_0'), 'base')
         data = HTMLReader(os.path.join(base_folder, 'html')).read()
         AnnJsonMergerAnnotationReader(os.path.join(os.path.join(base_folder, 'annjson'), 'members'),
+                                      read_only_class_id=MUT_CLASS_ID,
                                       strategy='intersection', entity_strategy='priority',
                                       priority = ['Ectelion', 'abojchevski', 'sanjeevkrn', 'Shpendi'],
                                       delete_incomplete_docs=True).annotate(data)
@@ -604,7 +587,7 @@ class Iteration:
             iteration_base = os.path.join(self.bootstrapping_folder, "iteration_{}".format(fold))
 
             tmp_data = HTMLReader(os.path.join(os.path.join(iteration_base, 'candidates'), 'html')).read()
-            AnnJsonAnnotationReader(os.path.join(iteration_base, 'reviewed'), delete_incomplete_docs=False).annotate(tmp_data)
+            AnnJsonAnnotationReader(os.path.join(iteration_base, 'reviewed'), read_only_class_id=MUT_CLASS_ID, delete_incomplete_docs=False).annotate(tmp_data)
             data.extend_dataset(tmp_data)
         print_verbose(len(data), 'documents in total')
 

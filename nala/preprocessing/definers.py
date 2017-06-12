@@ -26,42 +26,6 @@ class NLDefiner:
         return
 
 
-class InclusiveNLDefiner(NLDefiner):
-    def __init__(self, min_length=18):
-        self.min_spaces = 3
-        self.min_length = min_length
-
-    def define(self, dataset):
-        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
-            if ann.class_id == MUT_CLASS_ID \
-                    and len(ann.text) >= self.min_length \
-                    and len(ann.text.split(" ")) > self.min_spaces:
-                ann.subclass = True
-            else:
-                ann.subclass = False
-
-    def define_string(self, query):
-        if len(query) >= self.min_length and len(query.split(" ")) > self.min_spaces:
-            return True
-        else:
-            return False
-
-
-class AnkitNLDefiner(NLDefiner):
-    def __init__(self, min_length=28):
-        self.min_spaces = 4
-        self.min_length = min_length
-
-    def define(self, dataset):
-        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
-            if ann.class_id == MUT_CLASS_ID \
-                    and len(ann.text) >= self.min_length \
-                    and len(ann.text.split(" ")) > self.min_spaces:
-                ann.subclass = True
-            else:
-                ann.subclass = False
-
-
 class ExclusiveNLDefiner(NLDefiner):
     """NLDefiner that uses an mixed approach of max words, regexs',
     min words and a dictionary of probable nl words."""
@@ -78,6 +42,7 @@ class ExclusiveNLDefiner(NLDefiner):
 
         conventions_file = pkg_resources.resource_filename('nala.data', 'regex_st.json')
         tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
+        # dictionary with common English words (regarded as NL) that appear in mutation mentions
         dict_nl_words_file = pkg_resources.resource_filename('nala.data', 'dict_nl_words_v2.json')
 
         # read in file regex_st.json into conventions array
@@ -91,7 +56,6 @@ class ExclusiveNLDefiner(NLDefiner):
             regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
             self.compiled_regexps = [re.compile(x) for x in regexps]
 
-        # read dict_nl_words.json - dictionary for distinguishing between standard and partly with low word count
         with open(dict_nl_words_file) as f:
             dict_nl_words = json.load(f)
             self.compiled_dict_nl_words = list(set([re.compile(x, re.IGNORECASE) for x in dict_nl_words]))
@@ -155,17 +119,17 @@ class SimpleExclusiveNLDefiner(NLDefiner):
 
     def define(self, dataset):
         counter = [0, 0]
+
         for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
-            # if ann.class_id == MUT_CLASS_ID:
-            #     print(ann.class_id, ann.text)
             if ann.class_id == MUT_CLASS_ID:
                 if len(ann.text.split(" ")) > self.max_spaces:
                     matches_tmvar = [regex.match(ann.text) for regex in self.compiled_regexps]
                     matches_custom = [regex.match(ann.text) for regex in self.compiled_regexps_custom]
+
                     if not any(matches_custom) and not any(matches_tmvar):
                         ann.subclass = 1
                         counter[1] += 1
-                        # print(ann.text)
+
                     else:
                         ann.subclass = 0
                         counter[0] += 1
@@ -173,7 +137,41 @@ class SimpleExclusiveNLDefiner(NLDefiner):
                     ann.subclass = 0
                     counter[0] += 1
 
-        # print(counter)
+
+class InclusiveNLDefiner(NLDefiner):
+    def __init__(self, min_length=18):
+        self.min_spaces = 3
+        self.min_length = min_length
+
+    def define(self, dataset):
+        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
+            if ann.class_id == MUT_CLASS_ID \
+                    and len(ann.text) >= self.min_length \
+                    and len(ann.text.split(" ")) > self.min_spaces:
+                ann.subclass = True
+            else:
+                ann.subclass = False
+
+    def define_string(self, query):
+        if len(query) >= self.min_length and len(query.split(" ")) > self.min_spaces:
+            return True
+        else:
+            return False
+
+
+class AnkitNLDefiner(NLDefiner):
+    def __init__(self, min_length=28):
+        self.min_spaces = 4
+        self.min_length = min_length
+
+    def define(self, dataset):
+        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
+            if ann.class_id == MUT_CLASS_ID \
+                    and len(ann.text) >= self.min_length \
+                    and len(ann.text.split(" ")) > self.min_spaces:
+                ann.subclass = True
+            else:
+                ann.subclass = False
 
 
 class TmVarRegexNLDefiner(NLDefiner):

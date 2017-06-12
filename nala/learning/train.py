@@ -16,6 +16,8 @@ from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter
 from nalaf import print_debug
 import time
+from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
+
 
 def train(argv):
     parser = argparse.ArgumentParser(description='Train model')
@@ -50,8 +52,12 @@ def train(argv):
 
     parser.add_argument('--labeler', required=False, default="BIEO", choices=["BIEO", "BIO", "IO", "11labels"],
                         help='Labeler to use for training')
-    parser.add_argument('--only_class_id', required=False, default=None,
-                        help="By default corpora's all entities are read. Set this class_id to filter rest out")
+
+    parser.add_argument('--mutations_specific', default='True',
+                        help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
+
+    parser.add_argument('--only_class_id', required=False, default=MUT_CLASS_ID,
+                        help="By default, only the mutation entities are read from corpora (assumed to have class_id == '"+MUT_CLASS_ID+"'). Set this class_id to filter rest out")
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
 
@@ -63,8 +69,7 @@ def train(argv):
     parser.add_argument('--elastic_net', action='store_true',
                         help='Use elastic net regularization')
 
-    parser.add_argument('--word_embeddings', '--we', default='True',
-                        help='Use word embeddings features')
+    parser.add_argument('--word_embeddings', '--we', default='True', help='Use word embeddings features')
     parser.add_argument('--we_additive', type=float, default=0)
     parser.add_argument('--we_multiplicative', type=float, default=1)
     parser.add_argument('--we_model_location', type=str, default=None)
@@ -75,8 +80,6 @@ def train(argv):
     parser.add_argument('--nl_threshold', type=int, default=0)
     parser.add_argument('--nl_window', action='store_true', help='use window feature for NLFeatureGenerator')
 
-    parser.add_argument('--mutations_specific', default='True',
-                        help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
     parser.add_argument('--execute_pp', default='True',
                         help='Execute post processing specific to mutations (default) or not')
     parser.add_argument('--keep_silent', default='True',
@@ -185,8 +188,8 @@ def train(argv):
 
     def stats(dataset, name):
         print('\n\t{} size: {}'.format(name, len(dataset)))
-        # Caveat: the dataset must be defined first
-        print('\tsubclass distribution: {}'.format(Counter(ann.subclass for ann in dataset.annotations())))
+        # Caveat: the dataset must be (mutations) defined first
+        print('\tsubclass distribution: {}'.format(repr(dataset)))
         # Caveat: the dataset must be passed through the pipeline first
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
 
@@ -203,7 +206,7 @@ def train(argv):
             test_set = None
         elif args.validation == "cross-validation":
             train_set, test_set = train_set.fold_nr_split(int(args.cv_n), int(args.cv_fold))
-        else:
+        elif args.validation == "stratified":
             definer.define(train_set)
             train_set, test_set = train_set.stratified_split()
 
@@ -289,7 +292,7 @@ def train(argv):
         if print_eval:
             print(evaluation)
         if print_results:
-            ConsoleWriter(True).write(test_set)
+            ConsoleWriter(ent1_class_id=PRO_CLASS_ID, ent2_class_id=MUT_CLASS_ID, color=True).write(test_set)
 
     # ------------------------------------------------------------------------------
 

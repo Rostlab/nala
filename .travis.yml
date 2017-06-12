@@ -1,7 +1,6 @@
 language: python
 
 python:
-  - "3.4"
   - "3.5"
 
 branches:
@@ -22,7 +21,9 @@ install:
 
 script:
   - nosetests -a \"!slow\" --with-coverage
-  # - "python nala.py -p 2581245"
+  - tmpfile=mktemp && python scripts/get_corpus_stats.py \* --counttokens 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/corpora/stats.tsv`; (([[ -z $errors ]] && True) || (echo $errors && fail))
+  - tmpfile=mktemp && python scripts/getIAA nala 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/nala_IAA.log` && ([[ -z $errors ]] && True) || fail
+  - "python nala.py -s Dummy & simple A78G"
 
 after_success:
   - codecov

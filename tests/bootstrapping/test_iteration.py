@@ -21,7 +21,7 @@ class TestIteration(TestCase):
 
 
         # iteration = Iteration(crfsuite_path=os.path.abspath('crfsuite'), iteration_nr=2)
-        iteration = Iteration(crfsuite_path=os.path.abspath('/usr/local/Cellar/crfsuite/0.12'), iteration_nr=6)
+        iteration = Iteration(iteration_nr=6)
         iteration.before_annotation(nr_new_docs=10)
         # iteration.after_annotation()
 

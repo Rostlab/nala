@@ -5,8 +5,11 @@ from nalaf.utils.ncbi_utils import GNormPlus
 from nalaf.utils.annotation_readers import AnnJsonAnnotationReader
 from nalaf.utils.readers import HTMLReader
 from nala.utils.uniprot_utils import Uniprot
+from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
+
 
 __author__ = 'carst'
+
 
 # todo major merge into tests/learning/test_taggers.py
 @attr('slow')
@@ -14,7 +17,7 @@ class TestTmVarTagger(TestCase):
     def test_generate_abstracts(self):
         pmids = ['12559908']
 
-        data = TmVarTagger().generate_abstracts(pmids)
+        data = TmVarTagger(MUT_CLASS_ID).generate_abstracts(pmids)
 
         print(data)
         for docid in data.documents:

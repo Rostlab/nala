@@ -75,6 +75,7 @@ corpusName = sys.argv[2]
 try:
     corpus = get_corpora(corpusName)
     folderName = sys.argv[3]
+
 except:
     corpus = StringReader(corpusName).read()
     folderName = None  # just print out in standard output

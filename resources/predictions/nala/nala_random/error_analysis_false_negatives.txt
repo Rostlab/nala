@@ -1,0 +1,185 @@
+Legend: (total: 180 missed variations)
+  - * == exact or vague enough large-scale mutation (total: 80/180)
+  - @ == too vague large-scale mutation (total: 47: 180)
+  - + == SNV/SAV (total: 39/180)
+
+* PTEN deletion
+* PTEN loss
+* loss of SMAD4
+* loss of GTPBP2
++ mutation of Thr 101
+* Chk2 ablation
+@ DNA double-strand breaks
+@ DSBs
+@ DSBs
+* AML with inv(3)/t(3;3)
+* Genomic excision of the ectopic enhancer
+* aberrant expression of the stem-cell regulator EVI1
+* both 3q rearrangements reposition a distal GATA2 enhancer
+* absence of either PKM2 or LDHA
+* lactate dehydrogenase A (LDHA) deletion
++ K27M
++ K27M
++ K27M
++ K27M
++ methionine replaces lysine 27
+* Robertsonian translocation between chromosomes 15 and 21
+* amplification of megabase regions of chromosome 21
+* iAMP21
+* iAMP21
+* iAMP21
+* iAMP21
+* iAMP21
+* rob(15;21)(q10;q10)c
+* rob(15;21)c
+* rob(15;21)c
+* rob(15;21)c
+* CHD7 loss
+* CHD7 loss
+* knock-in mutant mouse strain that expresses a stabilized and transcriptionally dead variant of the tumour-suppressor protein p53 (p53(25,26,53,54))
+@ double-strand breaks
+@ DSB
+@ DSB
+@ DSB
+@ DSBs
+@ DSBs
+@ DSBs
+@ double-strand breaks
+* TP73Δex2/3
+* loss of the tumour suppressors TP53 and RB1
+* t(8;21)
+* t(8;21) translocation
+* null mutations in IRF7
+* 13.7 somatic L1 insertions
+* hippocampal neuron L1 insertions
+* intronic L1 insertions
+* abrogated loss of Chr19 in Trp53; Rb1; Pten compound mutant tumors
+* engineered Pten deletion
+* loss of Trp53 and Rb1
+@ CNVs
+* 15q11.2 deletion between breakpoints 1 and 2
+* 15q11.2(BP1-BP2) deletion
+* 15q11.2(BP1-BP2) deletion
+@ CNV
+@ CNV
+@ CNVs
+@ CNVs
+@ CNVs
+@ CNVs
+@ CNVs
+@ copy-number variants
++ E322K
++ nucleotide substitutions occurring at cytosines preceded by thymines (Tp*C sites)
+* C-tail displacement
+* C-tail displacement
+* C-tail truncation
+proline-phenylalanine-glutamine peptide insertion within the uncharacterized Gle1 coiled-coil domain
+@ chromothripsis
+@ Chromothripsis
+@ cataclysmic one-off rearrangements
+@ chromothripsis
+@ chromothripsis
+@ chromothripsis
+@ massive DNA rearrangements
+@ one-off catastrophe
++ Leu98Pro
+* combined deletion of caspases 1 and 8
+* deletion of either caspase alone or of elastase or neutrophil proteinase 3
+* deletion of the inflammasome components caspase-1 and NLRP3
+@ deletion
+* deletion of these receptors
+@ loss
+* In exon 18 of BRCA1, we replace a six-base-pair (bp) genomic region with all possible hexamers
+* the full exon with all possible single nucleotide variants (SNVs)
+@ deletion
+* ΔIEC
+* ΔIEC
+* ΔIEC
+* ΔIEC
++ Substitution of a single amino acid at one of these positions
++ single amino acid substitutions, which occurred at only seven positions in HA immediately adjacent to the receptor binding site
+@ Loss
++ replacement of E90 in the central gate of ChR with positively charged residues
+* Chromosome 18q loss
+@ deletion
+@ deletion
+TAG/TAA stop-codon replacements
+* deletion of subtelomeric regions
+@ loss
++ R172H
++ R248Q
++ R248Q
++ K409Q
++ H3K27M
++ H3K27M
++ H3K9M
++ H3K9M
++ lysine(27)-to-methionine
+@ deletion
+@ lacking
++ G34R/V
++ Gly34Arg/Va
++ K27M
++ K27M
++ K27M
++ K27M
++ Lys27Met
++ lysine-to-methionine substitutions at other known methylated lysines (H3K9 and H3K36)
+@ duplication
++ arginine is replaced by a termination codon
++ p.Arg684Ter
++ p.Arg684Ter
+@ double-knockout
+@ Loss
+@ deletion
+@ truncated
+@ truncation
+@ deletion
+@ Loss
+* amplification of 3q26/28 and 11q13/22
+@ helical domain mutations
+* loss of TRAF3
+* Deletion of the class 2 KNOTTED1-LIKE HOMEOBOX
+* Tgif2 deletion
+* miR-34a knockout and heterozygous
+* Sox2 deletion
+* Sox2 deletion
+* deletion of Sox2
+∆F508
+Deletion of phenylalanine 508
+deletion of F508
+∆F508
+∆F508
+∆F508
+∆F508
+∆F508
+∆F508
+∆F508
+* 22q13 deletion
+* deleted region is SHANK3
+* heterozygous deletions of chromosome 22q13.3
+@ mutations that map to its C-terminal tail
+* deletions of the octapeptide repeats within the flexible tail
+* Δ94-134
++ C124S
++ C124S/+
++ G129E/+
++ PtenC124S
++ PtenG129E
+* Morpholino knockdown
+* loss of CTCF at a domain boundary
+* Mutational inactivation of the LxxLL binding pocket
+Missense mutations of some arginine residues at the surface
+* lack both protein kinase C-ζ (PKC-ζ) and PKM-ζ (Prkcz(-/-) mice)
++ Mutation of Ub Glu16
+Clustered missense mutations were found at the amino-terminal portion of the delta subunit
+* Both absence and overproduction of Toddler
++ location of the mutation, with amino acids 270 and 273
+* one conserved AT-hook is disrupted
+* Oma1 deletion
+* loss of Polq
+* 22q11 deletion syndrome
+* 22q11DS
+* 22q11DS
+* Mfn1 or Mfn2 knockout
+* knocking down mitofusin 1 (Mfn1) or mitofusin 2 (Mfn2)
