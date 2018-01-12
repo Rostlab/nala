@@ -23,7 +23,7 @@ Motivation: _pending submitted paper_ (soon to be updated)
 git clone https://github.com/Rostlab/nala.git
 cd nala
 python3 setup.py install
-python3 -m nalaf.download_corpora
+python3 -m nalaf.download_data
 ```
 
  If you want to run the unit tests (excluding the slow ones) do:
