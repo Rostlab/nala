@@ -1,0 +1,76 @@
+=====Annotated=====                                                                                                                            	|	=====Predicted=====                                                 
+2670delC                                                                                                                                       	|	Deletions of 2670delC                                               
+3073delT                                                                                                                                       	|	3073delT                                                            
+6696-7delTC                                                                                                                                    	|	6696-7delTC                                                         
+deletion of 10 bp near the branch site in intron 7                                                                                             	|	                                                                    
+insertion of 59 nucleotides derived from intron 7                                                                                              	|	                                                                    
+Leu812 to Phe)                                                                                                                                 	|	Leu812 to Phe)                                                      
+Arg831Gln                                                                                                                                      	|	Arg831Gln                                                           
+Leu812Phe                                                                                                                                      	|	Leu812Phe                                                           
+introduced a premature termination codon in three patients (Gln640, Arg752, and Gln640 and Trp751)                                             	|	                                                                    
+Arg831 to Gln                                                                                                                                  	|	                                                                    
+Substitutions for glycine alpha 1-637 and glycine alpha 2-694                                                                                  	|	                                                                    
+substitution of valine for glycine alpha 1-637                                                                                                 	|	substitution of valine for glycine alpha 1-637                      
+substitution of arginine for glycine alpha 2-694                                                                                               	|	substitution of arginine for glycine alpha 2-694                    
+arginine alpha 2-694 substitution                                                                                                              	|	                                                                    
+valine alpha 1-637 substitution                                                                                                                	|	                                                                    
+Asp-128----Gly                                                                                                                                 	|	                                                                    
+pHAAD128G                                                                                                                                      	|	                                                                    
+glycine for aspartic acid at the 128th position                                                                                                	|	                                                                    
+pHAAD128G                                                                                                                                      	|	                                                                    
+Asp to Gly at the 128th position                                                                                                               	|	                                                                    
+                                                                                                                                               	|	substitutions of Glu for Asp                                        
+                                                                                                                                               	|	D-E                                                                 
+p.E69 K                                                                                                                                        	|	p.E69 K                                                             
+p.*164Lext*3                                                                                                                                   	|	p.*164                                                              
+c.2654G → A                                                                                                                                    	|	c.2654G → A                                                         
+p.Arg885His                                                                                                                                    	|	p.Arg885His                                                         
+c.2653C → T                                                                                                                                    	|	c.2653C → T                                                         
+p.Arg885Cys                                                                                                                                    	|	p.Arg885Cys                                                         
+mutations at Arg885                                                                                                                            	|	                                                                    
+substitution of a single amino acid (Gln to Lys), which is caused by a point mutation of a single nucleotide (C to A) in exon 3 at position 187	|	C to A) in exon 3 at position 187                                   
+Substituting Glu334 in motif I or Glu1086 in motif III with Lys                                                                                	|	Glu334 in motif I                                                   
+Substituting Glu334 in motif I or Glu1086 in motif III with Lys                                                                                	|	Glu1086 in motif III with Lys                                       
+substitution of Glu1086 with Gln                                                                                                               	|	substitution of Glu1086 with Gln or substitution of Glu1387 with Ala
+substitution of Glu1387 with Ala                                                                                                               	|	substitution of Glu1086 with Gln or substitution of Glu1387 with Ala
+in-frame 129 bp insertion between the fourth EGF domain and the D domain                                                                       	|	                                                                    
+point mutation at Cys93                                                                                                                        	|	point mutation at Cys93                                             
+--------------------------------------------------------------------------------
+
+=====Detailed Results=====
+Exact:            TP=13	FP=8	FN=20	FP_OVERLAP=6	FN_OVERLAP=6	PREC=61.905%	RECALL=39.394%	F-MEAS=48.148%
+Overlapping:      TP=13	FP=2	FN=14	FP_OVERLAP=6	FN_OVERLAP=6	PREC=92.593%	RECALL=64.103%	F-MEAS=75.758%
+Half-Overlapping: TP=13	FP=2	FN=14	FP_OVERLAP=6	FN_OVERLAP=6	PREC=70.370%	RECALL=48.718%	F-MEAS=57.576%
+Raw-Data:
+{
+    "0": [
+        9,
+        2,
+        5,
+        1,
+        1,
+        0.8181818181818182,
+        0.6428571428571429,
+        0.7200000000000001
+    ],
+    "1": [
+        2,
+        4,
+        11,
+        3,
+        4,
+        0.3333333333333333,
+        0.15384615384615385,
+        0.21052631578947367
+    ],
+    "2": [
+        2,
+        2,
+        4,
+        0,
+        0,
+        0.5,
+        0.3333333333333333,
+        0.4
+    ]
+}

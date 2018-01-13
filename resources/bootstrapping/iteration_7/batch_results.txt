@@ -1,0 +1,70 @@
+=====Annotated=====                                                                             	|	=====Predicted=====                                                                             
+somatic 16-bp deletion                                                                          	|	                                                                                                
+Tyr143His                                                                                       	|	Tyr143His                                                                                       
+Tyr143His                                                                                       	|	Tyr143His                                                                                       
+single (521)T>C substitution leading to a Tyr143His                                             	|	single (521)T>C substitution leading to a Tyr143His                                             
+Tyr143His                                                                                       	|	Tyr143His                                                                                       
+Tyr143Ala                                                                                       	|	Tyr143Ala                                                                                       
+Arg-Thr insertion between 160 and 161 residues                                                  	|	Arg-Thr insertion between 160                                                                   
+Asp163Ala                                                                                       	|	Asp163Ala                                                                                       
+Asp163Ala                                                                                       	|	Asp163Ala                                                                                       
+Tyr143His                                                                                       	|	Tyr143His                                                                                       
+Tyr143His                                                                                       	|	Tyr143His                                                                                       
+a T→G transversion in codon 134 that results in replacement of cysteine by gly cine             	|	a T→G transversion in codon 134 that results in replacement of cysteine by gly cine             
+T→C transition in codon 163 that results in replacement of cysteine by arginine                 	|	T→C transition in codon 163 that results in replacement of cysteine by arginine                 
+nonsense mutation in codon 424 of exon 9 (c.CGA→CGA)                                            	|	nonsense mutation in codon 424 of exon 9                                                        
+p.C134G                                                                                         	|	p.C134G                                                                                         
+p.C163R                                                                                         	|	p.C163R                                                                                         
+Methylation of Q105 or its substitution to alanine                                              	|	Methylation of Q105                                                                             
+Methylation of Q105 or its substitution to alanine                                              	|	its substitution to alanine                                                                     
+methylation of glutamine, occurring on yeast histone H2A at position 105 (Q105)                 	|	                                                                                                
+mutation at the phosphorylation site                                                            	|	                                                                                                
+c.636+1G>A                                                                                      	|	c.636+1G>A                                                                                      
+in-frame insertion of 45 nucleotides                                                            	|	in-frame insertion of 45 nucleotides                                                            
+c.947C>T                                                                                        	|	c.947C>T                                                                                        
+p.Thr316Met                                                                                     	|	p.Thr316Met                                                                                     
+c.161T>C                                                                                        	|	c.161T>C                                                                                        
+p.Phe54Ser                                                                                      	|	p.Phe54Ser                                                                                      
+substitution 253 Gly leads to Arg                                                               	|	substitution 253 Gly leads to Arg                                                               
+substitution of glutamine for arginine at position 505                                          	|	substitution of glutamine for arginine at position 505                                          
+G-->A transition at nucleotide position 1514                                                    	|	consisting of a G-->A transition at nucleotide position 1514                                    
+changes the electric charge at amino acid position 505 by substitution of glutamine for arginine	|	changes the electric charge at amino acid position 505 by substitution of glutamine for arginine
+--------------------------------------------------------------------------------
+
+=====Detailed Results=====
+Exact:            TP=22	FP=5	FN=7	FP_OVERLAP=5	FN_OVERLAP=4	PREC=81.481%	RECALL=75.862%	F-MEAS=78.571%
+Overlapping:      TP=22	FP=0	FN=3	FP_OVERLAP=5	FN_OVERLAP=4	PREC=100.000%	RECALL=91.176%	F-MEAS=95.385%
+Half-Overlapping: TP=22	FP=0	FN=3	FP_OVERLAP=5	FN_OVERLAP=4	PREC=85.484%	RECALL=77.941%	F-MEAS=81.538%
+Raw-Data:
+{
+    "0": [
+        15,
+        1,
+        1,
+        0,
+        0,
+        0.9375,
+        0.9375,
+        0.9375
+    ],
+    "1": [
+        7,
+        2,
+        6,
+        2,
+        2,
+        0.7777777777777778,
+        0.5384615384615384,
+        0.6363636363636364
+    ],
+    "2": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        0.0,
+        NaN,
+        NaN
+    ]
+}

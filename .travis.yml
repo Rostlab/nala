@@ -1,0 +1,29 @@
+language: python
+
+python:
+  - "3.5"
+
+branches:
+  only:
+    - master
+    - develop
+
+cache:
+  pip: true
+
+before_install:
+  - pip install git+https://github.com/Rostlab/nalaf.git@develop
+  - python -m nalaf.download_corpora
+  - pip install codecov
+
+install:
+  - pip install .
+
+script:
+  - nosetests -a \"!slow\" --with-coverage
+  - tmpfile=mktemp && python scripts/get_corpus_stats.py \* --counttokens 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/corpora/stats.tsv`; (([[ -z $errors ]] && True) || (echo $errors && fail))
+  - tmpfile=mktemp && python scripts/getIAA nala 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/nala_IAA.log` && ([[ -z $errors ]] && True) || fail
+  - "python nala.py -s Dummy & simple A78G"
+
+after_success:
+  - codecov

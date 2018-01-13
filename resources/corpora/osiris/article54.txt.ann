@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator"/>
+ <annotators list="tagger,laura,fromIob"/>
+ <Annotation type="file" span="10..1886" confidence="0.0" filename="article54.txt.ann.txt" annotator="tagger" id="1">
+  <Annotation type="ty" span="10..23" confidence="0.0" annotator="laura" id="2"/>
+  <Annotation type="lo" span="24..82" confidence="0.0" annotator="laura" id="3"/>
+  <Annotation type="ge" span="141..145" confidence="0.0" annotator="fromIob" id="4"/>
+  <Annotation type="lo" span="147..153" confidence="0.0" annotator="laura" id="5"/>
+  <Annotation type="ge" span="155..160" confidence="0.0" annotator="laura" id="6"/>
+  <Annotation type="ge" span="194..197" confidence="0.0" annotator="fromIob" id="7"/>
+  <Annotation type="ge" span="202..207" confidence="0.0" annotator="fromIob" id="8"/>
+  <Annotation type="ge" span="293..297" confidence="0.0" annotator="fromIob" id="9"/>
+  <Annotation type="ty" span="454..467" confidence="0.0" annotator="laura" id="10"/>
+  <Annotation type="lo" span="468..539" confidence="0.0" annotator="laura" id="11"/>
+  <Annotation type="ev" span="627..678" confidence="0.0" annotator="laura" id="12"/>
+  <Annotation type="ev" span="680..682" confidence="0.0" annotator="laura" id="13"/>
+  <Annotation type="ev" span="684..690" confidence="0.0" annotator="laura" id="14"/>
+  <Annotation type="ev" span="691..693" confidence="0.0" annotator="laura" id="15"/>
+  <Annotation type="ge" span="694..698" confidence="0.0" annotator="laura" id="16"/>
+  <Annotation type="lo" span="698..701" confidence="0.0" annotator="laura" id="17"/>
+  <Annotation type="sg" span="702..703" confidence="0.0" annotator="laura" id="18"/>
+  <Annotation type="ge" span="704..708" confidence="0.0" annotator="laura" id="19"/>
+  <Annotation type="lo" span="708..712" confidence="0.0" annotator="laura" id="20"/>
+  <Annotation type="sg" span="713..714" confidence="0.0" annotator="laura" id="21"/>
+  <Annotation type="ev" span="715..718" confidence="0.0" annotator="laura" id="22"/>
+  <Annotation type="ev" span="728..753" confidence="0.0" annotator="laura" id="23"/>
+  <Annotation type="ev" span="755..761" confidence="0.0" annotator="laura" id="24"/>
+  <Annotation type="ev" span="762..764" confidence="0.0" annotator="laura" id="25"/>
+  <Annotation type="ge" span="766..770" confidence="0.0" annotator="laura" id="26"/>
+  <Annotation type="lo" span="770..773" confidence="0.0" annotator="laura" id="27"/>
+  <Annotation type="sg" span="774..775" confidence="0.0" annotator="laura" id="28"/>
+  <Annotation type="ge" span="776..780" confidence="0.0" annotator="laura" id="29"/>
+  <Annotation type="lo" span="780..784" confidence="0.0" annotator="laura" id="30"/>
+  <Annotation type="sg" span="785..786" confidence="0.0" annotator="laura" id="31"/>
+  <Annotation type="ev" span="787..791" confidence="0.0" annotator="laura" id="32"/>
+  <Annotation type="ge" span="813..817" confidence="0.0" annotator="fromIob" id="33"/>
+  <Annotation type="lo" span="817..820" confidence="0.0" annotator="laura" id="34"/>
+  <Annotation type="lo" span="825..829" confidence="0.0" annotator="laura" id="35"/>
+  <Annotation type="lo" span="1087..1123" confidence="0.0" annotator="laura" id="36"/>
+  <Annotation type="ge" span="1254..1257" confidence="0.0" annotator="fromIob" id="37"/>
+  <Annotation type="lo" span="1262..1266" confidence="0.0" annotator="laura" id="38"/>
+  <Annotation type="ge" span="1272..1276" confidence="0.0" annotator="laura" id="39"/>
+  <Annotation type="lo" span="1281..1284" confidence="0.0" annotator="laura" id="40"/>
+  <Annotation type="lo" span="1454..1457" confidence="0.0" annotator="laura" id="41"/>
+  <Annotation type="lo" span="1462..1466" confidence="0.0" annotator="laura" id="42"/>
+  <Annotation type="ge" span="1609..1613" confidence="0.0" annotator="fromIob" id="43"/>
+  <Annotation type="ge" span="1780..1784" confidence="0.0" annotator="fromIob" id="44"/>
+  <Annotation type="lo" span="1851..1886" confidence="0.0" annotator="laura" id="45"/>
+ </Annotation>
+</AnnotationFile>

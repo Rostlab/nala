@@ -1,0 +1,282 @@
+SpacyLemmatizer: INIT START
+SpacyLemmatizer: INIT END
+* docid=1334229 part=01-Abstract-p01-p8
+test: 
+pred: K-ras mutation (109/656)
+
+* docid=1334229 part=03-Methods-p02-p8
+test: codon 33: C→A || codon 41: A→G || codon 45: 3 bp deletion || codon 45: C→T
+pred: (codon 45: 3 bp deletion) and SW48 (codon 33 || 41: A→G || 45: C→T
+
+overlapping subclasses do not match 2 0
+overlapping subclasses do not match 2 1
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 2 0
+* docid=1334229 part=03-Methods-p03-p2
+test: 
+pred: G168-15
+
+* docid=1334229 part=04-Results-p01-p2
+test: codons 37 and 45, all were C→T transitions, leading to Ser→Phe amino acid changes || loss of one of the Ser/Thr phosphorylation sites and subsequent stabilisation of the protein, occurred at codons 37 and 45, all were C→T
+pred: amino acid alteration at codons 22 and 29 || occurred at codons 37 and 45, all were C→T
+
+* docid=1360090 part=03-Results-p01-p2
+test: 1799T to A || V600E
+pred: 1799T to A transversion || V600E
+
+overlapping subclasses do not match 2 1
+* docid=1360090 part=03-Results-p01-p3
+test: 1799T to A mutation || V600E
+pred: 1799T to A || V600E
+
+overlapping subclasses do not match 1 2
+* docid=1373649 part=01-Abstract-p01-p7
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=01-Abstract-p01-p9
+test: c.1864C>A || missense (c.1864C>A) mutation in exon 12 || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
+pred: D5S346 || c.1864C>A || p.Pro622Thr || proline 622 to threonine
+
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=1373649 part=02-Background-p01-p6
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=03-Methods-p01-p11
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=03-Methods-p02-p1
+test: 
+pred: D5S346
+
+* docid=1373649 part=04-Results-and-discussion-p01-p6
+test: a c.1864C>A transversion in exon 12 || c.1864C>A || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
+pred: D5S346 || c.1864C>A transversion in exon 12 || p.Pro622Thr || proline 622 to threonine
+
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=1557864 part=03-Methods-p02-p1
+test: 
+pred: D2S123
+
+* docid=1557864 part=04-Results-p01-p3
+test: 
+pred: D2S123
+
+* docid=1557864 part=05-Discussion-p01-p3
+test: 
+pred: p53phe172 mutation [46,47]
+
+* docid=1557864 part=05-Discussion-p02-p1
+test: 
+pred: D2S123
+
+* docid=1557864 part=05-Discussion-p02-p3
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1601966 part=03-Results-p06-p5
+test: M23A
+pred: 
+
+* docid=1601966 part=06-Methods-p03-p3
+test: 
+pred: G1, G2 and G3
+
+* docid=1619718 part=03-Materials-and-methods-p02-p4
+test: 
+pred: sequence at codon 12
+
+* docid=1619718 part=03-Materials-and-methods-p02-p5
+test: A1796 || V599E || V600E
+pred: V599E || V600E
+
+* docid=1619718 part=04-Results-p01-p3
+test: V600E || codon 12 (G→T at position 35 and T→G at position 36)
+pred: 20 G→A || G→C || G→T || G→T at position 35 || T→G || mutation at V600E || six mutations were in codon 13 (all G→A)
+
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 0 1
+* docid=1619718 part=04-Results-p03-p2
+test: 
+pred: G→A || G→A
+
+* docid=1619718 part=05-Discussion-p04-p3
+test: 
+pred: C to A
+
+* docid=1619718 part=05-Discussion-p04-p4
+test: 
+pred: C to A
+
+* docid=2275286 part=03-Methods-p01-p7
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=2275286 part=04-Results-p01-p6
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=2275286 part=04-Results-p02-p4
+test: 
+pred: codon 380 of exon 5
+
+* docid=2275286 part=04-Results-p02-p8
+test: 
+pred: mutation between the MSI-L
+
+* docid=2275286 part=05-Discussion-p02-p1
+test: C1668 C > T || C1886 A > G
+pred: mutation of C1886 A > G, C1668 C > T
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=04-Results-p01-p2
+test: 
+pred: mutations between codon 1250 and 1464 || region from codon 1250 to 1464
+
+* docid=2386495 part=04-Results-p02-p1
+test: 1825del3595 || c.423-1662_531+1825del3595
+pred: c.423-1662_531+1825del3595 || deletion encompassing APC exon 4 || deletion of 86 bp in exon 15 to a deletion
+
+* docid=2386495 part=04-Results-p02-p3
+test: c.2700_2701delTC
+pred: c.2700_2701delTC mutation, which results in frame shift at codon 900
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=04-Results-p02-p4
+test: 
+pred: c.2700_2701delTC mutation in patient C107
+
+* docid=2386495 part=04-Results-p02-p6
+test: c.70C > T substitution which introduces a nonsense mutation in codon 24
+pred: c.70C > T || nonsense mutation in codon 24
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=04-Results-p03-p2
+test: c.835-7T > G
+pred: A search for deletion or duplication of one || c.835-7T > G
+
+* docid=2386495 part=04-Results-p03-p3
+test: c.835-7T > G
+pred: T > G || c.835-7T > G
+
+* docid=2386495 part=04-Results-p03-p4
+test: c. 423 -6delAAATAGGTinsGAAGCAAGATCAG || c.423-6del8ins13 || c.834G > C
+pred: 11-bp deletion in the 3' end of exon 7 || c. 423 -6delAAATAGGTinsGAAGCAAGATCAG || c.423-6del8ins13 || c.834G > C
+
+* docid=2386495 part=05-Discussion-p01-p2
+test: c.3183_3187delACAAA || c.3927_3931del AAAGA || c.3927_3931del AAAGA || c.70C > T
+pred: (C159) is a frameshift at codon 1920 || amino acid position 1309 || c.3183_3187delACAAA || c.3927_3931del || c.3927_3931del AAAGA || c.70C > T
+
+* docid=2386495 part=05-Discussion-p01-p4
+test: 
+pred: mutations between codon 1250
+
+* docid=2386495 part=05-Discussion-p02-p1
+test: c.70C > T
+pred: (C157), carrying the c.70C > T
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=05-Discussion-p02-p4
+test: 
+pred: deletion of APC exon 4
+
+* docid=2386495 part=05-Discussion-p03-p2
+test: c.2700_2701delTC
+pred: c.2700_2701delTC mutation in patient C107
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=05-Discussion-p03-p6
+test: c.834G > C || c.835-7T > G || c.845-17A > G
+pred: c.834G > C substitution at the last nucleotide of exon 7 in patient C633 || c.835-7T > G || c.845-17A > G || mutation at codon 278
+
+Running arguments: 
+	crf_train_params = None
+	cv_fold = None
+	cv_n = None
+	delete_subclasses = []
+	do_train = False
+	elastic_net = False
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
+	labeler = BIEO
+	model_name = None_BIEO_del_None
+	model_name_suffix = 
+	model_path_1 = nala/data/nala_BIEO_del_None_471433.bin
+	model_path_2 = None
+	nl = False
+	nl_features = None
+	nl_threshold = 0
+	nl_window = False
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp9b_s5iu1
+	pruner = parts
+	ps_NL = False
+	ps_ST = False
+	ps_random = 0.0
+	string = None
+	test_corpus = Var120
+	training_corpus = None
+	use_feat_windows = True
+	validation = stratified
+	we_additive = 0
+	we_model_location = None
+	we_multiplicative = 1
+	we_params = {'multiplicative': 1, 'additive': 0, 'location': None}
+	word_embeddings = True
+	write_anndoc = False
+
+
+None_BIEO_del_None
+
+	test size: 10
+	subclass distribution: Counter({0: 106, 1: 9, 2: 5})
+	num sentences: 2130
+
+	crf_train_params = None
+	cv_fold = None
+	cv_n = None
+	delete_subclasses = []
+	do_train = False
+	elastic_net = False
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
+	labeler = BIEO
+	model_name = None_BIEO_del_None
+	model_name_suffix = 
+	model_path_1 = nala/data/nala_BIEO_del_None_471433.bin
+	model_path_2 = None
+	nl = False
+	nl_features = None
+	nl_threshold = 0
+	nl_window = False
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp9b_s5iu1
+	pruner = parts
+	ps_NL = False
+	ps_ST = False
+	ps_random = 0.0
+	string = None
+	test_corpus = Var120
+	training_corpus = None
+	use_feat_windows = True
+	validation = stratified
+	we_additive = 0
+	we_model_location = None
+	we_multiplicative = 1
+	we_params = {'multiplicative': 1, 'additive': 0, 'location': None}
+	word_embeddings = True
+	write_anndoc = False
+
+# class	tp	fp	fn	fp_ov	fn_ov	match	P	P_SE	R	R_SE	F	F_SE	match	P	P_SE	R	R_SE	F	F_SE
+0	90	41	13	9	11	e	0.6870	0.0139	0.8738	0.0136	0.7692	0.0119	o	0.7746	0.0133	0.9821	0.0094	0.8661	0.0098
+1	3	25	9	8	9	e	0.1071	0.0060	0.2500	0.0088	0.1500	0.0181	o	0.5405	0.0129	1.0000	0.0000	0.7018	0.0092
+2	1	7	4	3	4	e	0.1250	0.0078	0.2000	0.0123	0.1538	0.0206	o	0.6667	0.0181	1.0000	0.0000	0.8000	0.0074
+TOTAL	94	73	26	20	24	e	0.5629	0.0119	0.7833	0.0138	0.6551	0.0105	o	0.7225	0.0089	0.9857	0.0060	0.8338	0.0062

@@ -1,0 +1,4 @@
+T53_merge	mutation 2301 2372	c.70C > T substitution which introduces a nonsense mutation in codon 24
+T1	mutation 374 385	1825del3595
+T2	mutation 1357 1373	c.2700_2701delTC
+T34_merge	mutation 359 385	c.423-1662_531+1825del3595

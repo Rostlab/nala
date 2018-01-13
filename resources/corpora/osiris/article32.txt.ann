@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator"/>
+ <annotators list="tagger,laura,fromIob"/>
+ <Annotation type="file" span="10..1215" confidence="0.0" filename="article32.txt.ann.txt" annotator="tagger" id="1">
+  <Annotation type="lo" span="10..14" confidence="0.0" annotator="laura" id="2"/>
+  <Annotation type="so" span="14..15" confidence="0.0" annotator="laura" id="3"/>
+  <Annotation type="sa" span="16..17" confidence="0.0" annotator="laura" id="4"/>
+  <Annotation type="ty" span="18..30" confidence="0.0" annotator="laura" id="5"/>
+  <Annotation type="ge" span="38..48" confidence="0.0" annotator="fromIob" id="6"/>
+  <Annotation type="lo" span="49..62" confidence="0.0" annotator="laura" id="7"/>
+  <Annotation type="ge" span="131..141" confidence="0.0" annotator="fromIob" id="8"/>
+  <Annotation type="ge" span="143..147" confidence="0.0" annotator="laura" id="9"/>
+  <Annotation type="so" span="208..209" confidence="0.0" annotator="laura" id="10"/>
+  <Annotation type="sa" span="210..211" confidence="0.0" annotator="laura" id="11"/>
+  <Annotation type="ty" span="212..224" confidence="0.0" annotator="laura" id="12"/>
+  <Annotation type="lo" span="225..281" confidence="0.0" annotator="laura" id="13"/>
+  <Annotation type="ty" span="370..382" confidence="0.0" annotator="laura" id="14"/>
+  <Annotation type="ty" span="668..697" confidence="0.0" annotator="laura" id="15"/>
+  <Annotation type="sa" span="847..855" confidence="0.0" annotator="laura" id="16"/>
+  <Annotation type="sg" span="1028..1030" confidence="0.0" annotator="laura" id="17"/>
+  <Annotation type="lo" span="1048..1049" confidence="0.0" annotator="fromIob" id="18"/>
+  <Annotation type="sa" span="1103..1105" confidence="0.0" annotator="laura" id="19"/>
+  <Annotation type="lo" span="1172..1176" confidence="0.0" annotator="laura" id="20"/>
+  <Annotation type="ty" span="1177..1207" confidence="0.0" annotator="laura" id="21"/>
+  <Annotation type="ge" span="1211..1215" confidence="0.0" annotator="laura" id="22"/>
+ </Annotation>
+</AnnotationFile>

@@ -4,6 +4,10 @@ import csv
 import re
 import os
 import requests
+import pkg_resources
+from nala.utils import MUT_CLASS_ID
+from itertools import chain
+
 
 class NLDefiner:
     """
@@ -13,55 +17,94 @@ class NLDefiner:
     * Implement the abstract method define
     * Set the value
     """
+
     @abc.abstractmethod
     def define(self, dataset):
         """
-        :type dataset: structures.data.Dataset
+        :type dataset: nalaf.structures.data.Dataset
         """
         return
 
 
-class InclusiveNLDefiner(NLDefiner):
-
-    def __init__(self, min_length=18):
-        self.min_spaces = 3
-        self.min_length = min_length
-
-    def define(self, dataset):
-        for ann in dataset.annotations():
-            if ann.class_id == 'e_2' \
-                    and len(ann.text) >= self.min_length \
-                    and len(ann.text.split(" ")) > self.min_spaces:
-                ann.is_nl = True
-            else:
-                ann.is_nl = False
-
-
-class AnkitNLDefiner(NLDefiner):
-
-    def __init__(self, min_length=28):
-        self.min_spaces = 4
-        self.min_length = min_length
-
-    def define(self, dataset):
-        for ann in dataset.annotations():
-            if ann.class_id == 'e_2' \
-                    and len(ann.text) >= self.min_length \
-                    and len(ann.text.split(" ")) > self.min_spaces:
-                ann.is_nl = True
-            else:
-                ann.is_nl = False
-
-
 class ExclusiveNLDefiner(NLDefiner):
+    """NLDefiner that uses an mixed approach of max words, regexs',
+    min words and a dictionary of probable nl words."""
 
-    """docstring for ExclusiveNLDefiner"""
+    VERSION = "20160801"
 
     def __init__(self):
+        self.max_words = 4
+
+        # Before the splitter was just based on space (' ')
+        # Now hyphens or slashes sourrounded by letters or space-separated brackets also produce a word
+        # note, the letters are actually captured so the words are not complete. But we only care about the length
+        self.word_tokenizer = re.compile(" +|(?:[a-zA-Z])[-/](?:[a-zA-Z])")
+
+        conventions_file = pkg_resources.resource_filename('nala.data', 'regex_st.json')
+        tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
+        # dictionary with common English words (regarded as NL) that appear in mutation mentions
+        dict_nl_words_file = pkg_resources.resource_filename('nala.data', 'dict_nl_words_v2.json')
+
+        # read in file regex_st.json into conventions array
+        with open(conventions_file, 'r') as f:
+            conventions = json.loads(f.read())
+            self.compiled_regexps_custom = [re.compile(x) for x in conventions]
+
+        # read RegEx.NL (only codes)
+        with open(tmvarregex_file) as file:
+            raw_regexps = list(csv.reader(file, delimiter='\t'))
+            regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
+            self.compiled_regexps = [re.compile(x) for x in regexps]
+
+        with open(dict_nl_words_file) as f:
+            dict_nl_words = json.load(f)
+            self.compiled_dict_nl_words = list(set([re.compile(x, re.IGNORECASE) for x in dict_nl_words]))
+
+
+    def define(self, dataset):
+        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
+            if ann.class_id == MUT_CLASS_ID:
+                ann.subclass = self.define_string(ann.text)
+
+
+    def define_string(self, query):
+        """
+        Checks for definer but on string.
+        :param query:
+        :return: subclass id, which in default is 0 (standard), 1(natural language) or 2 (semi standard)
+        """
+        matches_tmvar = (regex.match(query) for regex in self.compiled_regexps)
+        matches_custom = (regex.match(query) for regex in self.compiled_regexps_custom)
+
+        num_nl_words_lazy = None
+
+        def num_nl_words():
+            nonlocal num_nl_words_lazy
+            if num_nl_words_lazy:
+                return num_nl_words_lazy
+            else:
+                num_nl_words_lazy = sum((regex.search(query) is not None for regex in self.compiled_dict_nl_words))
+                return num_nl_words_lazy
+
+        words = self.word_tokenizer.split(query)
+
+        if any(matches_custom) or any(matches_tmvar):
+            return 0
+        elif len(words) > self.max_words or num_nl_words() >= 2:
+            return 1
+        elif num_nl_words() >= 1:
+            return 2
+        else:
+            return 0
+
+
+class SimpleExclusiveNLDefiner(NLDefiner):
+    """docstring for ExclusiveNLDefiner"""
+    # TODO correct test class for renamed function
+    def __init__(self):
         self.max_spaces = 2
-        # TODO save that in config file
-        self.conventions_file = 'resources/regex_st.json'
-        self.tmvarregex_file = 'resources/RegEx.NL'
+        self.conventions_file = pkg_resources.resource_filename('nala.data', 'regex_st.json')
+        self.tmvarregex_file = pkg_resources.resource_filename('nala.data', 'RegEx.NL')
 
         # read in file regex_st.json into conventions array
         with open(self.conventions_file, 'r') as f:
@@ -71,19 +114,64 @@ class ExclusiveNLDefiner(NLDefiner):
         # read RegEx.NL (only codes)
         with open(self.tmvarregex_file) as file:
             raw_regexps = list(csv.reader(file, delimiter='\t'))
-        regexps = [ x[0] for x in raw_regexps if len(x[0]) < 265 ]
-        self.compiled_regexps = [ re.compile(x) for x in regexps]
+        regexps = [x[0] for x in raw_regexps if len(x[0]) < 265]
+        self.compiled_regexps = [re.compile(x) for x in regexps]
 
     def define(self, dataset):
-        for ann in dataset.annotations():
-            # if ann.class_id == 'e_2':
-            #     print(ann.class_id, ann.text)
-            if ann.class_id == 'e_2' \
-                    and not(len(ann.text.split(" ")) <= self.max_spaces):
-                matches_tmvar = [regex.match(ann.text) for regex in self.compiled_regexps]
-                matches_custom = [regex.match(ann.text) for regex in self.compiled_regexps_custom]
-                if not any(matches_custom) and not any(matches_tmvar):
-                    ann.is_nl = True
+        counter = [0, 0]
+
+        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
+            if ann.class_id == MUT_CLASS_ID:
+                if len(ann.text.split(" ")) > self.max_spaces:
+                    matches_tmvar = [regex.match(ann.text) for regex in self.compiled_regexps]
+                    matches_custom = [regex.match(ann.text) for regex in self.compiled_regexps_custom]
+
+                    if not any(matches_custom) and not any(matches_tmvar):
+                        ann.subclass = 1
+                        counter[1] += 1
+
+                    else:
+                        ann.subclass = 0
+                        counter[0] += 1
+                else:
+                    ann.subclass = 0
+                    counter[0] += 1
+
+
+class InclusiveNLDefiner(NLDefiner):
+    def __init__(self, min_length=18):
+        self.min_spaces = 3
+        self.min_length = min_length
+
+    def define(self, dataset):
+        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
+            if ann.class_id == MUT_CLASS_ID \
+                    and len(ann.text) >= self.min_length \
+                    and len(ann.text.split(" ")) > self.min_spaces:
+                ann.subclass = True
+            else:
+                ann.subclass = False
+
+    def define_string(self, query):
+        if len(query) >= self.min_length and len(query.split(" ")) > self.min_spaces:
+            return True
+        else:
+            return False
+
+
+class AnkitNLDefiner(NLDefiner):
+    def __init__(self, min_length=28):
+        self.min_spaces = 4
+        self.min_length = min_length
+
+    def define(self, dataset):
+        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
+            if ann.class_id == MUT_CLASS_ID \
+                    and len(ann.text) >= self.min_length \
+                    and len(ann.text.split(" ")) > self.min_spaces:
+                ann.subclass = True
+            else:
+                ann.subclass = False
 
 
 class TmVarRegexNLDefiner(NLDefiner):
@@ -97,8 +185,9 @@ class TmVarRegexNLDefiner(NLDefiner):
 
     Implements the abstract class NLDefiner.
     """
+
     def define(self, dataset):
-        with open('resources/RegEx.NL') as file:
+        with open(pkg_resources.resource_filename('nala.data', 'RegEx.NL')) as file:
             regexps = list(csv.reader(file, delimiter='\t'))
 
         compiled_regexps = []
@@ -112,11 +201,11 @@ class TmVarRegexNLDefiner(NLDefiner):
             else:
                 compiled_regexps.append(re.compile(regex[0]))
 
-        for ann in dataset.annotations():
-            if ann.class_id == 'e_2':
+        for ann in chain(dataset.annotations(), dataset.predicted_annotations()):
+            if ann.class_id == MUT_CLASS_ID:
                 matches = [regex.match(ann.text) for regex in compiled_regexps]
                 if not any(matches):
-                    ann.is_nl = True
+                    ann.subclass = True
 
 
 class TmVarNLDefiner(NLDefiner):
@@ -130,8 +219,11 @@ class TmVarNLDefiner(NLDefiner):
         then it is considered a standard mention
     otherwise we consider it a natural language mention.
 
+    NOTE: Make sure to clear the cache (delete cache.ini file) when running the definer for different corpora.
+
     Implements the abstract class NLDefiner.
     """
+
     def define(self, dataset):
         if os.path.isfile('cache.json'):
             tm_var = json.load(open('cache.json'))
@@ -162,6 +254,6 @@ class TmVarNLDefiner(NLDefiner):
                 denotations = [text[d['span']['begin']:d['span']['end']] for d in denotations]
 
                 for part_id, part in doc.parts.items():
-                    for ann in part.annotations:
-                        if ann.class_id == 'e_2' and ann.text not in denotations:
-                            ann.is_nl = True
+                    for ann in chain(part.annotations, part.predicted_annotations):
+                        if ann.class_id == MUT_CLASS_ID and ann.text not in denotations:
+                            ann.subclass = True

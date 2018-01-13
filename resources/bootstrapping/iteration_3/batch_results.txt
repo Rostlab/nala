@@ -1,0 +1,110 @@
+=====Annotated=====                                                                                                 	|	=====Predicted=====                                           
+replacement of a proline residue at position 183                                                                    	|	replacement of a proline residue at position 183              
+Glu102Lys                                                                                                           	|	Glu102Lys                                                     
+Glu102Lys                                                                                                           	|	Glu102Lys                                                     
+Gla14Lys                                                                                                            	|	                                                              
+Lys substitution for Glu102                                                                                         	|	Lys substitution for Glu102                                   
+substitution of Lys for Glu102                                                                                      	|	substitution of Lys for Glu102                                
+Pro for Ser334                                                                                                      	|	Pro for Ser334                                                
+Lys for Glu102                                                                                                      	|	Lys for Glu102                                                
+Glu102Lys                                                                                                           	|	Glu102Lys                                                     
+substitution of Lys for Glu102                                                                                      	|	substitution of Lys for Glu102                                
+Lys for Gla+ 14                                                                                                     	|	                                                              
+Lys for Gla+14                                                                                                      	|	                                                              
+Ile(157)-->Thr(157)                                                                                                 	|	Ile(157)-->Thr(157)                                           
+Ile(157)--> Thr(157)                                                                                                	|	                                                              
+Ile(157)--> Thr(157)                                                                                                	|	                                                              
+(Val/Met) at codon 832 in the region                                                                                	|	(Val/Met) at codon 832 in the region                          
+IVS1+6T/C                                                                                                           	|	IVS1+6T/C                                                     
+Gly 35 to Asp 35                                                                                                    	|	Gly 35 to Asp                                                 
+K561R                                                                                                               	|	K561R                                                         
+D1428A                                                                                                              	|	D1428A                                                        
+lacking the carboxy terminal 24 amino acids encoded by exon 44                                                      	|	                                                              
+single amino acid substitution at a conserved residue within the C-terminal 24 amino acids                          	|	                                                              
+F474L                                                                                                               	|	F474L                                                         
+insertion of an adenine between nucleotide positions 395 and 396                                                    	|	                                                              
+Asp73 with Ala                                                                                                      	|	Asp73 with Ala                                                
+D73A                                                                                                                	|	D73A                                                          
+D73A                                                                                                                	|	D73A                                                          
+                                                                                                                    	|	P/D                                                           
+                                                                                                                    	|	C33A                                                          
+C122A                                                                                                               	|	C122A                                                         
+C122A                                                                                                               	|	C122A                                                         
+C122A                                                                                                               	|	C122A                                                         
+N78A                                                                                                                	|	N78A                                                          
+N110A                                                                                                               	|	N110A                                                         
+C122A                                                                                                               	|	C122A                                                         
+p. G1157D                                                                                                           	|	p. G1157D                                                     
+G and A heterozygosis mutation at the exon 48                                                                       	|	                                                              
+D20S195                                                                                                             	|	D20S                                                          
+rs2057262                                                                                                           	|	rs2057262                                                     
+rs1291139                                                                                                           	|	rs1291139                                                     
+c.386A-->T                                                                                                          	|	c.386A-->T                                                    
+p.D129V                                                                                                             	|	p.D129V                                                       
+c.481G-->A                                                                                                          	|	c.481G-->A                                                    
+p.E161K                                                                                                             	|	p.E161K                                                       
+D129V                                                                                                               	|	D129V                                                         
+D20S847                                                                                                             	|	                                                              
+nonconservative substitution of a valine residue for a phylogenetically conserved aspartic acid residue at codon 129	|	                                                              
+missense substitution of lysine for a conserved glutamic acid residue at codon 161                                  	|	                                                              
+Deletion of the C-terminal                                                                                          	|	Deletion of the C                                             
+c.214T>C                                                                                                            	|	c.214T>C                                                      
+c.521T>C                                                                                                            	|	c.521T>C                                                      
+c.(*)24G>A)                                                                                                         	|	c.(*)24G>A)                                                   
+c.214T>C                                                                                                            	|	c.214T>C                                                      
+c.521T>C                                                                                                            	|	c.521T>C                                                      
+c.(*)24G>A                                                                                                          	|	c.(*)24G>A                                                    
+c.5G>A                                                                                                              	|	c.5G>A                                                        
+(p.G2D) at the N-terminus                                                                                           	|	(p.G2D) at the N-terminus                                     
+G2D                                                                                                                 	|	G2D                                                           
+deletion of p75(NTR)                                                                                                	|	deletion of p75                                               
+a gly-->arg change at amino acid 675                                                                                	|	a gly-->arg change at amino acid 675                          
+-1 frameshift at amino acid 669                                                                                     	|	                                                              
+Deletion of amino acids Asp487-Ser488-Phe489                                                                        	|	Deletion of amino acids Asp487-Ser488-Phe489                  
+eliminating codons 487-489 (Asp-Ser-Phe)                                                                            	|	eliminating codons 487-489 (Asp-Ser                           
+duplication of the nine most 3' located nucleotides of exon 49                                                      	|	duplication of the nine most 3' located nucleotides of exon 49
+the first nucleotide of intron 49                                                                                   	|	the first nucleotide of intron 49                             
+proline to threonine and an arginine to glutamine substitution in the C-terminal end                                	|	a proline to threonine                                        
+proline to threonine and an arginine to glutamine substitution in the C-terminal end                                	|	an arginine to glutamine substitution                         
+a termination codon in exon 4                                                                                       	|	                                                              
+genomic deletion extending 3' of intron 8                                                                           	|	                                                              
+D17S829                                                                                                             	|	D17S                                                          
+--------------------------------------------------------------------------------
+
+=====Detailed Results=====
+Exact:            TP=45	FP=10	FN=22	FP_OVERLAP=8	FN_OVERLAP=7	PREC=81.818%	RECALL=67.164%	F-MEAS=73.770%
+Overlapping:      TP=45	FP=2	FN=15	FP_OVERLAP=8	FN_OVERLAP=7	PREC=96.774%	RECALL=80.000%	F-MEAS=87.591%
+Half-Overlapping: TP=45	FP=2	FN=15	FP_OVERLAP=8	FN_OVERLAP=7	PREC=84.677%	RECALL=70.000%	F-MEAS=76.642%
+Raw-Data:
+{
+    "0": [
+        32,
+        5,
+        7,
+        3,
+        3,
+        0.8648648648648649,
+        0.8205128205128205,
+        0.8421052631578947
+    ],
+    "1": [
+        8,
+        1,
+        11,
+        1,
+        1,
+        0.8888888888888888,
+        0.42105263157894735,
+        0.5714285714285714
+    ],
+    "2": [
+        5,
+        4,
+        4,
+        2,
+        2,
+        0.5555555555555556,
+        0.5555555555555556,
+        0.5555555555555556
+    ]
+}

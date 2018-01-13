@@ -1,0 +1,418 @@
+Iteration: 61_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_61_random/
+	 Dataset(2 documents and 4 annotations)
+Iteration: 62_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_62_random/
+	 Dataset(3 documents and 9 annotations)
+Iteration: 63_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_63_random/
+	 Dataset(5 documents and 29 annotations)
+Iteration: 64_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_64_random/
+	 Dataset(6 documents and 14 annotations)
+Iteration: 65_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_65_random/
+	 Dataset(7 documents and 31 annotations)
+Iteration: 66_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_66_random/
+	 Dataset(1 documents and 1 annotations)
+Iteration: 67_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_67_random/
+	 Dataset(1 documents and 1 annotations)
+Iteration: 68_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_68_random/
+	 Dataset(1 documents and 3 annotations)
+Iteration: 69_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_69_random/
+	 Dataset(15 documents and 27 annotations)
+Iteration: 70_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_70_random/
+	 Dataset(11 documents and 35 annotations)
+Iteration: 71_random : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_71_random/
+	 Dataset(26 documents and 61 annotations)
+Spacy NLP English: INIT START
+Spacy NLP English: INIT END 8.414766073226929
+Apply feature generator: <class 'nalaf.features.stemming.SpacyLemmatizer'>
+Apply feature generator: <class 'nalaf.features.simple.SentenceMarkerFeatureGenerator'>
+Apply feature generator: <class 'nala.features.tmvar.TmVarFeatureGenerator'>
+Apply feature generator: <class 'nala.features.tmvar.TmVarDictionaryFeatureGenerator'>
+Apply feature generator: <class 'nalaf.features.window.WindowFeatureGenerator'>
+* docid=23201680 part=s1p2
+test: PTEN deletion || PTEN loss || loss of SMAD4
+pred: 
+
+* docid=25061210 part=s1p2
+test: loss of GTPBP2
+pred: 
+
+* docid=24572362 part=s1p2
+test: mutation of Thr 101
+pred: 
+
+* docid=24482479 part=s1p1
+test: Chk2 ablation
+pred: 
+
+* docid=24482479 part=s1p2
+test: DNA double-strand breaks || DSBs || DSBs
+pred: 
+
+* docid=24703711 part=s1p2
+test: AML with inv(3)/t(3;3) || Genomic excision of the ectopic enhancer || aberrant expression of the stem-cell regulator EVI1 || both 3q rearrangements reposition a distal GATA2 enhancer
+pred: 
+
+* docid=25215489 part=s1p2
+test: absence of either PKM2 or LDHA || lactate dehydrogenase A (LDHA) deletion
+pred: 
+
+* docid=25525250 part=s1p1
+test: K27M
+pred: 
+
+* docid=25525250 part=s1p2
+test: K27M || K27M || K27M || methionine replaces lysine 27
+pred: 3K27M || K27M amino acid substitution || methionine replaces lysine 27
+
+* docid=24670643 part=s1p2
+test: Robertsonian translocation between chromosomes 15 and 21 || amplification of megabase regions of chromosome 21 || iAMP21 || iAMP21 || iAMP21 || iAMP21 || iAMP21 || rob(15;21)(q10;q10)c || rob(15;21)c || rob(15;21)c || rob(15;21)c
+pred: 
+
+* docid=25119037 part=s1p2
+test: CHD7 loss || CHD7 loss || knock-in mutant mouse strain that expresses a stabilized and transcriptionally dead variant of the tumour-suppressor protein p53 (p53(25,26,53,54))
+pred: 
+
+* docid=23498941 part=s1p1
+test: double-strand breaks
+pred: 
+
+* docid=23498941 part=s1p2
+test: DSB || DSB || DSB || DSBs || DSBs || DSBs || double-strand breaks
+pred: 
+
+* docid=26168399 part=s1p2
+test: TP73Δex2/3 || loss of the tumour suppressors TP53 and RB1
+pred: 
+
+* docid=23812588 part=s1p2
+test: t(8;21) || t(8;21) translocation
+pred: 
+
+* docid=25814066 part=s1p2
+test: null mutations in IRF7
+pred: 
+
+* docid=25860606 part=s1p2
+test: 13.7 somatic L1 insertions || hippocampal neuron L1 insertions || intronic L1 insertions
+pred: 
+
+* docid=24630729 part=s1p2
+test: abrogated loss of Chr19 in Trp53; Rb1; Pten compound mutant tumors || engineered Pten deletion || loss of Trp53 and Rb1
+pred: 
+
+* docid=24352232 part=s1p1
+test: CNVs
+pred: 
+
+* docid=24352232 part=s1p2
+test: 15q11.2 deletion between breakpoints 1 and 2 || 15q11.2(BP1-BP2) deletion || 15q11.2(BP1-BP2) deletion || CNV || CNV || CNVs || CNVs || CNVs || CNVs || CNVs || copy-number variants
+pred: 
+
+* docid=24390348 part=s1p2
+test: E322K || nucleotide substitutions occurring at cytosines preceded by thymines (Tp*C sites)
+pred: E322K
+
+* docid=23604253 part=s1p2
+test: C-tail displacement || C-tail displacement || C-tail truncation
+pred: 
+
+* docid=24243016 part=s1p2
+test: proline-phenylalanine-glutamine peptide insertion within the uncharacterized Gle1 coiled-coil domain
+pred: 
+
+* docid=23498933 part=s1p1
+test: chromothripsis
+pred: 
+
+* docid=23498933 part=s1p2
+test: Chromothripsis || cataclysmic one-off rearrangements || chromothripsis || chromothripsis || chromothripsis || massive DNA rearrangements || one-off catastrophe
+pred: 
+
+* docid=25274309 part=s1p2
+test: Leu98Pro || combined deletion of caspases 1 and 8 || deletion of either caspase alone or of elastase or neutrophil proteinase 3 || deletion of the inflammasome components caspase-1 and NLRP3
+pred: Leu98Pro
+
+* docid=26068853 part=s1p2
+test: deletion
+pred: 
+
+* docid=24025838 part=s1p2
+test: deletion of these receptors
+pred: 
+
+* docid=23766326 part=s1p2
+test: loss
+pred: 
+
+* docid=25141179 part=s1p2
+test: In exon 18 of BRCA1, we replace a six-base-pair (bp) genomic region with all possible hexamers || the full exon with all possible single nucleotide variants (SNVs)
+pred: 
+
+* docid=24185009 part=s1p2
+test: deletion || ΔIEC || ΔIEC || ΔIEC || ΔIEC
+pred: 
+
+* docid=24264991 part=s1p2
+test: Substitution of a single amino acid at one of these positions || single amino acid substitutions, which occurred at only seven positions in HA immediately adjacent to the receptor binding site
+pred: 
+
+* docid=23201690 part=s1p2
+test: Loss
+pred: 
+
+* docid=24674867 part=s1p2
+test: replacement of E90 in the central gate of ChR with positively charged residues
+pred: 
+
+* docid=23446422 part=s1p2
+test: Chromosome 18q loss
+pred: 
+
+* docid=24120138 part=s1p1
+test: deletion
+pred: 
+
+* docid=24120138 part=s1p2
+test: deletion
+pred: 
+
+* docid=24674868 part=s1p2
+test: TAG/TAA stop-codon replacements || deletion of subtelomeric regions || loss
+pred: 
+
+* docid=23348505 part=s1p2
+test: K409Q
+pred: E17K || K409Q
+
+* docid=25170156 part=s1p2
+test: H3K27M || H3K27M || H3K9M || H3K9M || lysine(27)-to-methionine
+pred: H3K9M
+
+* docid=26627735 part=s1p2
+test: deletion || lacking
+pred: 
+
+* docid=23539183 part=s1p2
+test: G34R/V || Gly34Arg/Va || K27M || K27M || K27M || K27M || Lys27Met || lysine-to-methionine substitutions at other known methylated lysines (H3K9 and H3K36)
+pred: G34R/V || Gly34Arg || K-to-M || K27M || K27M || Lys27Met
+
+* docid=24092741 part=s1p2
+test: duplication
+pred: 
+
+* docid=25043022 part=s1p2
+test: arginine is replaced by a termination codon || p.Arg684Ter || p.Arg684Ter
+pred: 
+
+* docid=26416733 part=s1p2
+test: double-knockout
+pred: 
+
+* docid=25768905 part=s1p2
+test: Loss
+pred: 
+
+* docid=23604256 part=s1p2
+test: deletion || truncated || truncation
+pred: 
+
+* docid=25985180 part=s1p2
+test: deletion
+pred: 
+
+* docid=24836610 part=s1p2
+test: Loss
+pred: 
+
+* docid=25631445 part=s1p2
+test: amplification of 3q26/28 and 11q13/22 || helical domain mutations || loss of TRAF3
+pred: 
+
+* docid=23449590 part=s1p2
+test: Deletion of the class 2 KNOTTED1-LIKE HOMEOBOX
+pred: 
+
+* docid=25043055 part=s1p2
+test: Tgif2 deletion || miR-34a knockout and heterozygous
+pred: 
+
+* docid=24909994 part=s1p2
+test: Sox2 deletion || Sox2 deletion || deletion of Sox2
+pred: 
+
+* docid=26618866 part=s1p1
+test: ∆F508
+pred: 
+
+* docid=26618866 part=s1p2
+test: Deletion of phenylalanine 508 || deletion of F508 || ∆F508 || ∆F508 || ∆F508 || ∆F508 || ∆F508 || ∆F508 || ∆F508
+pred: Deletion of phenylalanine 508 || deletion of F508
+
+* docid=24132240 part=s1p1
+test: 22q13 deletion
+pred: 
+
+* docid=24132240 part=s1p2
+test: deleted region is SHANK3 || heterozygous deletions of chromosome 22q13.3
+pred: 
+
+* docid=23704370 part=s1p2
+test: mutations that map to its C-terminal tail
+pred: 
+
+* docid=23903654 part=s1p2
+test: deletions of the octapeptide repeats within the flexible tail || Δ94-134
+pred: 
+
+* docid=24766807 part=s1p2
+test: C124S || C124S/+ || G129E/+ || PtenC124S || PtenG129E
+pred: C124S || C124S || G129E || PtenG129E
+
+* docid=26258302 part=s1p2
+test: Morpholino knockdown
+pred: 
+
+* docid=26700815 part=s1p2
+test: loss of CTCF at a domain boundary
+pred: 
+
+* docid=23393263 part=s1p2
+test: Mutational inactivation of the LxxLL binding pocket
+pred: 
+
+* docid=23599266 part=s1p2
+test: Missense mutations of some arginine residues at the surface
+pred: 
+
+* docid=23283171 part=s1p2
+test: lack both protein kinase C-ζ (PKC-ζ) and PKM-ζ (Prkcz(-/-) mice)
+pred: 
+
+* docid=23746843 part=s1p2
+test: Mutation of Ub Glu16
+pred: 
+
+* docid=25858979 part=s1p2
+test: Clustered missense mutations were found at the amino-terminal portion of the delta subunit
+pred: 
+
+* docid=24407481 part=s1p2
+test: Both absence and overproduction of Toddler
+pred: 
+
+* docid=23452848 part=s1p2
+test: location of the mutation, with amino acids 270 and 273 || one conserved AT-hook is disrupted
+pred: MeCP2-G273X || R270X || R270X
+
+* docid=23990561 part=s1p2
+test: Knockdown of IFT81
+pred: 
+
+* docid=26785494 part=s1p2
+test: Oma1 deletion
+pred: 
+
+* docid=25642960 part=s1p2
+test: loss of Polq
+pred: 
+
+* docid=24904170 part=s1p2
+test: 22q11 deletion syndrome || 22q11DS || 22q11DS
+pred: 
+
+* docid=24074868 part=s1p2
+test: Mfn1 or Mfn2 knockout || knocking down mitofusin 1 (Mfn1) or mitofusin 2 (Mfn2)
+pred: 
+
+Elapsed time:  22.174561023712158
+Pipeline specific to mutations
+Running arguments: 
+	crf_train_params = None
+	cv_fold = None
+	cv_n = None
+	delete_subclasses = []
+	do_train = False
+	elastic_net = False
+	execute_pp = True
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
+	labeler = BIEO
+	model_name = nala_random
+	model_name_suffix = 
+	model_path_1 = nala/data/nala_BIEO_del_None_471433.bin
+	model_path_2 = None
+	mutations_specific = True
+	nl = False
+	nl_features = None
+	nl_threshold = 0
+	nl_window = False
+	only_class_id = None
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpt4m9n9ks
+	pruner = parts
+	ps_NL = False
+	ps_ST = False
+	ps_random = 0.0
+	string = None
+	test_corpus = nala_random
+	training_corpus = None
+	use_feat_windows = True
+	validation = stratified
+	we_additive = 0
+	we_model_location = None
+	we_multiplicative = 1
+	we_params = {}
+	word_embeddings = False
+	write_anndoc = False
+
+
+nala_random
+
+	test size: 78
+	subclass distribution: Counter({0: 104, 1: 71, 2: 40})
+	num sentences: 662
+
+	crf_train_params = None
+	cv_fold = None
+	cv_n = None
+	delete_subclasses = []
+	do_train = False
+	elastic_net = False
+	execute_pp = True
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
+	labeler = BIEO
+	model_name = nala_random
+	model_name_suffix = 
+	model_path_1 = nala/data/nala_BIEO_del_None_471433.bin
+	model_path_2 = None
+	mutations_specific = True
+	nl = False
+	nl_features = None
+	nl_threshold = 0
+	nl_window = False
+	only_class_id = None
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmpt4m9n9ks
+	pruner = parts
+	ps_NL = False
+	ps_ST = False
+	ps_random = 0.0
+	string = None
+	test_corpus = nala_random
+	training_corpus = None
+	use_feat_windows = True
+	validation = stratified
+	we_additive = 0
+	we_model_location = None
+	we_multiplicative = 1
+	we_params = {}
+	word_embeddings = False
+	write_anndoc = False
+
+# class	tp	fp	fn	fp_ov	fn_ov	e|P	e|R	e|F	e|F_SE	o|P	o|R	o|F	o|F_SE
+0	47	9	57	5	5	0.8393	0.4519	0.5875	0.0079	0.9344	0.5229	0.6706	0.0078
+1	2	0	69	0	0	1.0000	0.0282	0.0548	0.0035	1.0000	0.0282	0.0548	0.0034
+2	1	1	39	0	0	0.5000	0.0250	0.0476	0.0037	0.5000	0.0250	0.0476	0.0038
+TOTAL	50	10	165	5	5	0.8333	0.2326	0.3636	0.0056	0.9231	0.2727	0.4211	0.0061

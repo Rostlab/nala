@@ -1,0 +1,78 @@
+=====Annotated=====                                                    	|	=====Predicted=====                                                    
+H1736L                                                                 	|	H1736L                                                                 
+H1736L                                                                 	|	H1736L                                                                 
+H1736L                                                                 	|	H1736L                                                                 
+                                                                       	|	loss of P                                                              
+removal of an arginine residue from position 608                       	|	removal of an arginine residue from position 608                       
+delta R608                                                             	|	delta R608                                                             
+R496L                                                                  	|	R496L                                                                  
+delta R608                                                             	|	delta R608 mutation                                                    
+delta R608                                                             	|	delta R608 mutation                                                    
+delta R608                                                             	|	delta R608 mutation                                                    
+R496L                                                                  	|	R496L                                                                  
+delta R608                                                             	|	delta R608 mutation                                                    
+three-base deletion was identified of nucleotides 1821-1823            	|	                                                                       
+serine-to-alanine mutation at position 121                             	|	serine-to-alanine mutation at position 121                             
+                                                                       	|	pT69/71                                                                
+                                                                       	|	phosphorylation of ATF-2 at threonine residues 69                      
+                                                                       	|	71 (Thr-69/71                                                          
+                                                                       	|	pT69                                                                   
+                                                                       	|	pT69/71                                                                
+                                                                       	|	at Ser-340                                                             
+                                                                       	|	71                                                                     
+                                                                       	|	at Ser-340                                                             
+substitution of a glutamic acid for a lysine at amino acid position 304	|	substitution of a glutamic acid for a lysine at amino acid position 304
+A----G change at nucleotide position 985                               	|	                                                                       
+S1012I                                                                 	|	S1012I                                                                 
+synonymous 696T>C                                                      	|	synonymous 696T>C                                                      
+heterozygous missense 3035G>T                                          	|	                                                                       
+missense Glu285Ala                                                     	|	missense Glu285Ala                                                     
+A to C base change, at nucleotide 854                                  	|	                                                                       
+mutation of Thr-206 to aspartic acid                                   	|	mutation of Thr-206 to aspartic acid                                   
+T206D                                                                  	|	T206D                                                                  
+T206D                                                                  	|	T206D                                                                  
+N133H                                                                  	|	N133H                                                                  
+T319M                                                                  	|	T319M                                                                  
+Y423X                                                                  	|	Y423X                                                                  
+P42S                                                                   	|	P42S                                                                   
+R293H                                                                  	|	R293H                                                                  
+R653Q                                                                  	|	R653Q                                                                  
+--------------------------------------------------------------------------------
+
+=====Detailed Results=====
+Exact:            TP=21	FP=13	FN=8	FP_OVERLAP=4	FN_OVERLAP=4	PREC=61.765%	RECALL=72.414%	F-MEAS=66.667%
+Overlapping:      TP=21	FP=9	FN=4	FP_OVERLAP=4	FN_OVERLAP=4	PREC=76.316%	RECALL=87.879%	F-MEAS=81.690%
+Half-Overlapping: TP=21	FP=9	FN=4	FP_OVERLAP=4	FN_OVERLAP=4	PREC=65.789%	RECALL=75.758%	F-MEAS=70.423%
+Raw-Data:
+{
+    "0": [
+        17,
+        5,
+        5,
+        0,
+        0,
+        0.7727272727272727,
+        0.7727272727272727,
+        0.7727272727272727
+    ],
+    "1": [
+        4,
+        1,
+        3,
+        0,
+        0,
+        0.8,
+        0.5714285714285714,
+        0.6666666666666666
+    ],
+    "2": [
+        0,
+        7,
+        0,
+        0,
+        0,
+        0.0,
+        NaN,
+        NaN
+    ]
+}

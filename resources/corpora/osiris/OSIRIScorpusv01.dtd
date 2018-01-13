@@ -1,0 +1,26 @@
+<!-- ========================================================================================== -->
+<!-- OSIRIS corpus DTD version 0.1                                                              -->
+<!-- Contact: Laura Ines Furlong <lfurlong@imim.es>                                             -->
+<!-- ========================================================================================== -->
+
+<!ELEMENT Articles (Article)+>
+
+<!ELEMENT Article (Pmid, Title, Abstract)>
+
+<!ELEMENT Pmid (#PCDATA)>
+
+<!ELEMENT Title	(#PCDATA | gene | variant)*>
+
+<!ELEMENT gene	(#PCDATA)>
+<!ATTLIST gene g_lex CDATA #REQUIRED
+	           g_id CDATA #REQUIRED
+>
+
+<!ELEMENT variant	(#PCDATA)>
+
+<!ATTLIST variant v_lex CDATA #REQUIRED
+	              v_id CDATA #REQUIRED
+>
+
+<!ELEMENT Abstract (#PCDATA | gene | variant)*>
+

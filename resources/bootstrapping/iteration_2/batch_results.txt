@@ -1,0 +1,69 @@
+=====Annotated=====                                                                                             	|	=====Predicted=====
+Glu480Lys                                                                                                       	|	Glu480Lys    
+GAG --> AAG mutation                                                                                            	|	             
+Glu480Lys                                                                                                       	|	Glu480Lys    
+1267N                                                                                                           	|	             
+R15C                                                                                                            	|	R15C         
+R15C                                                                                                            	|	R15C         
+D123H                                                                                                           	|	D123H        
+codon 123 (GAC --> CAC)                                                                                         	|	             
+D123H                                                                                                           	|	D123H        
+D123H                                                                                                           	|	D123H        
+S65T                                                                                                            	|	S65T         
+D183S                                                                                                           	|	D183S        
+K213N                                                                                                           	|	K213N        
+M267I                                                                                                           	|	M267I        
+S65T                                                                                                            	|	S65T         
+S65T                                                                                                            	|	S65T         
+14 nucleotides downstream was activated and resulted in an insertion of 14 bp and a frameshift stop at codon 106	|	             
+codon 392 (Gly----Asp) mutation                                                                                 	|	             
+second base of codon 392 having a G----A substitution                                                           	|	             
+p.Ser262Phe                                                                                                     	|	p.Ser262Phe  
+p.Thr5Met                                                                                                       	|	p.Thr5Met    
+Pro3----Arg                                                                                                     	|	Pro3----Arg  
+Pro4----Arg                                                                                                     	|	Pro4----Arg  
+Pro165----Arg                                                                                                   	|	Pro165----Arg
+Pro165----Arg                                                                                                   	|	Pro165----Arg
+Pro165----Arg                                                                                                   	|	Pro165----Arg
+Pro165----Arg                                                                                                   	|	Pro165----Arg
+Pro3----Arg                                                                                                     	|	Pro3----Arg  
+Pro4----Arg                                                                                                     	|	Pro4----Arg  
+--------------------------------------------------------------------------------
+
+=====Detailed Results=====
+Exact:            TP=23	FP=0	FN=6	FP_OVERLAP=0	FN_OVERLAP=0	PREC=100.000%	RECALL=79.310%	F-MEAS=88.462%
+Overlapping:      TP=23	FP=0	FN=6	FP_OVERLAP=0	FN_OVERLAP=0	PREC=100.000%	RECALL=79.310%	F-MEAS=88.462%
+Half-Overlapping: TP=23	FP=0	FN=6	FP_OVERLAP=0	FN_OVERLAP=0	PREC=100.000%	RECALL=79.310%	F-MEAS=88.462%
+Raw-Data:
+{
+    "0": [
+        23,
+        0,
+        1,
+        0,
+        0,
+        1.0,
+        0.9583333333333334,
+        0.9787234042553191
+    ],
+    "1": [
+        0,
+        0,
+        3,
+        0,
+        0,
+        NaN,
+        0.0,
+        NaN
+    ],
+    "2": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        NaN,
+        0.0,
+        NaN
+    ]
+}

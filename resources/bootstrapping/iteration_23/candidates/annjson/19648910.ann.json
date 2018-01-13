@@ -1,0 +1,1 @@
+{"metas": {}, "relations": [], "anncomplete": false, "sources": [{"id": "19648910", "url": "", "name": "ORIG"}], "annotatable": {"parts": ["s1p1", "s1p2"]}, "entities": [{"part": "s1p2", "classId": "e_2", "normalizations": {}, "confidence": {"prob": 1, "who": ["ml:nalaf"], "state": "pre-added"}, "offsets": [{"text": "Ser 131-to-Asp", "start": 668}], "fields": {}}]}

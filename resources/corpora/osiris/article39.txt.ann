@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator"/>
+ <annotators list="tagger,laura,fromIob"/>
+ <Annotation type="file" span="32..1373" confidence="0.0" filename="article39.txt.ann.txt" annotator="tagger" id="1">
+  <Annotation type="ge" span="32..35" confidence="0.0" annotator="fromIob" id="2"/>
+  <Annotation type="ty" span="36..58" confidence="0.0" annotator="laura" id="3"/>
+  <Annotation type="ge" span="83..86" confidence="0.0" annotator="fromIob" id="4"/>
+  <Annotation type="ty" span="87..108" confidence="0.0" annotator="laura" id="5"/>
+  <Annotation type="ty" span="110..113" confidence="0.0" annotator="laura" id="6"/>
+  <Annotation type="ty" span="197..210" confidence="0.0" annotator="laura" id="7"/>
+  <Annotation type="ty" span="323..327" confidence="0.0" annotator="laura" id="8"/>
+  <Annotation type="ge" span="396..399" confidence="0.0" annotator="fromIob" id="9"/>
+  <Annotation type="ge" span="799..802" confidence="0.0" annotator="fromIob" id="10"/>
+  <Annotation type="ty" span="803..825" confidence="0.0" annotator="laura" id="11"/>
+  <Annotation type="ge" span="940..943" confidence="0.0" annotator="fromIob" id="12"/>
+  <Annotation type="ty" span="944..957" confidence="0.0" annotator="laura" id="13"/>
+  <Annotation type="lo" span="1196..1200" confidence="0.0" annotator="laura" id="14"/>
+  <Annotation type="so" span="1200..1201" confidence="0.0" annotator="laura" id="15"/>
+  <Annotation type="sa" span="1202..1203" confidence="0.0" annotator="laura" id="16"/>
+  <Annotation type="ty" span="1204..1216" confidence="0.0" annotator="laura" id="17"/>
+  <Annotation type="ge" span="1264..1267" confidence="0.0" annotator="fromIob" id="18"/>
+  <Annotation type="ty" span="1268..1281" confidence="0.0" annotator="laura" id="19"/>
+  <Annotation type="ge" span="1320..1323" confidence="0.0" annotator="fromIob" id="20"/>
+  <Annotation type="ty" span="1363..1373" confidence="0.0" annotator="laura" id="21"/>
+ </Annotation>
+</AnnotationFile>

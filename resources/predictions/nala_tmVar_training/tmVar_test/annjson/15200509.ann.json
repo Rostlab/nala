@@ -1,0 +1,1 @@
+{"relations": [], "annotatable": {"parts": ["title", "abstract"]}, "anncomplete": false, "sources": [{"name": "ORIG", "url": "", "id": "15200509"}], "metas": {}, "entities": [{"part": "abstract", "classId": "e_2", "normalizations": {}, "offsets": [{"start": 541, "text": "Tyr246X"}], "fields": {}, "confidence": {"state": "", "who": ["ml:nalaf"], "prob": 0.9885179710455256}}]}

@@ -1,75 +1,47 @@
-# Goals:
+[![Build Status](https://travis-ci.org/Rostlab/nala.svg?branch=develop)](https://travis-ci.org/Rostlab/nala)
+[![codecov](https://codecov.io/gh/Rostlab/nala/branch/develop/graph/badge.svg)](https://codecov.io/gh/Rostlab/nala)
 
-1. Study significance of NL mentions in mutation mention recognition
-  * ratio of standard vs NL in abstracts & full text
-  * % of novel mutations not present in SwissProt (would require manual annotation of protein relations)
-  * dataset of NLs (size depends on significance of NLs)
-2. Method for mutation mention extraction grounded to their genes/proteins
-  * Mutation mention recognizer better than tmVar for standard mentions
-  * If NLs are relevant, prove good F1 performance (> 70-80)
-  * Simple or optionally advanced normalization method
-  * Easy to use program:
-    * *Good documentation:*
-      * code
-      * end-user (biology researcher level, how to call from the command line, ...)
-    * Accept inputs: programmatical call (string), text file, corpora' formats**
-    * Accept outputs: ann.json (tagtog suitable)   
-3. Paper
-  * Full draft (1 or 2 papers?) by end of August submittable to Burkhard Rost
-  * Submit by September-October
+
+# nala
+
+_Text mining_ method for the extraction of _sequence variants_ (genes or proteins) written in standard (ST) format (e.g. "E6V") or complex **natural language** (NL) (e.g. "glutamic acid was substituted by valine at residue 6").
+
+Publication: [Cejuela et al., nala: text mining natural language mutation mentions, Bioinformatics, 2018](https://academic.oup.com/bioinformatics/article/33/12/1852/2991428)
+
 
 # Install
 
-    git clone https://github.com/carstenuhlig/thesis-alex-carsten.git
-    cd thesis-alex-carsten
-    pytnon setup.py install
-    python -m nala.download_corpora
- 
- If you want to run the unit tests do:
- 
-    python setup.py test
- 
- Note: When we eventually register the package on pypi, the first 3 steps will be replaced with just this next one:
- 
-    pip install nala
- 
 ##  Requirements
 
-* Requires Python 3
+* Requires Python 3 (>= 3.5)
+* [nalaf](https://github.com/Rostlab/nalaf)  
 
-# Carsten's thesis
+## Install Code
 
-Bachelor thesis about named entity recognition for natural language mentions of mutation names in the biomedical domain.
+```shell
+git clone https://github.com/Rostlab/nala.git
+cd nala
+# We recommend you use python virtualenv: https://pypi.python.org/pypi/virtualenv
+pip3 install -r requirements.txt
+# Make sure you did install nalaf's data: python3 -m nalaf.download_data
+```
 
-## Title: Semi-supervised learning of natural language mutation mentions
+ If you want to run the unit tests (excluding the slow ones) do:
 
-## Abstract
-Research and development in the biomedical domain is constantly growing. Millions of documents have been already published on various platforms including PubMed. But do people use the curated literature efficiently?
-Looking at just a few papers that describe a particular protein can limit the understanding of occurring protein mutations. Through automating the process of identifying relevant protein mutations, research can be increased significantly.
+```shell
+python3 setup.py nosetests -a '!slow'
+```
 
-We plan to use state-of-the-art conditional random fields (CRFs), train with a massive number of features, and use semi-supervised learning. We aim to vastly increase an existing corpus of mutation mentions by introducing semi-automatically annotations.
+### Troubleshooting on Windows
 
-Furthermore, the major focus of this thesis will be on mutation mentions that are expressed in natural language, that is, not written in standard format. To this date, no other tool treated natural language mentions.
+The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the [original module](https://github.com/tpeng/python-crfsuite).
 
-By the end of the thesis, the main deliverable will be a pipeline for mutation mention recognition and protein normalization grounding for the purpose of faster research finding. We will specially care in creating an easy-to-use, well documented, and extendable tool.
+# Examples
 
-## Timeframe
+* Simple:
+  * `python3 nala.py -p 15878741 12625412 # i.e. list of PMIDs to tag`
+  * `python3 nala.py -s "Standard (ST) examples: Asp8Asn or delPhe1388. Semi-standard (SST) examples: 3992-9g-->a mutation. Natural language (NL) examples: glycine was substituted by lysine at residue 18 (Gly18Lys)"`
 
-* Actual start: **@March-26th**
-* Official start: **@June-15th**
-* Method finished: **@August-15th**
-* Official end: **@Octobre-15th**
+* Programmatic access: [nala/learning/train.py](nala/learning/train.py)
 
-# Alex's thesis 
-
-## Title: Semi-supervised learning for biomedical named-entity recognition
-
-
-## Abstract
-As the volume of published research in the biomedical domain increases, the need for effective information extraction systems grows with it. In this context, the task of named-entity recognition (NER), defined as classifying chunks of text in natural language to a set of predefined categories such as genes, proteins or other entities, is essential.
-
-The performance of NER models, in general, is intrinsically limited by the availability of high-quality-annotated corpora. The construction of such corpora is usually costly and even more so when there is a need for expert annotators. In the biomedical domain, the difficulty of the task is even greater compared to other domains, due do the much higher number of possible named entities, which keeps increasing constantly as new proteins, genes and mutations get discovered.
-
-To combat the lack of large annotated corpora, we turn to the exploitation of large volumes of unlabeled text, applying a semi-supervised learning approach. Using techniques for unsupervised feature learning we aim to increase the performance of traditional NER models. More specifically, this thesis focuses on augmenting common conditional random field (CRF) approaches combined with novel word representation features learned from large bodies of biomedical text. The goal is to evaluate the usefulness and effect on performance of different approaches such as word embeddings based on deep architectures, distributional representations or clustering based methods.
-
-In support of the thesis, to evaluate the semi-supervised learning approach, we aim to develop a complete pipeline for biomedical named-entity recognition including preprocessing steps, feature generation, model learning and normalized prediction.
+* API annotation service via tagtog.net: https://www.tagtog.net/-corpora/IDP4+

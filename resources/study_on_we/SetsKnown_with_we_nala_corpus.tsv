@@ -1,0 +1,1672 @@
+reading from cache /Users/jmcejuela/.nalaf/DownloadArticle_cache.json
+writing the cache /Users/jmcejuela/.nalaf/DownloadArticle_cache.json
+Iteration: 52_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_52_test/
+	 Dataset(10 documents and 28 annotations)
+Iteration: 53_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_53_test/
+	 Dataset(10 documents and 55 annotations)
+Iteration: 54_test_IAA : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_54_test_IAA/
+	 Dataset(10 documents and 27 annotations)
+Iteration: 55_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_55_test/
+	 Dataset(10 documents and 52 annotations)
+Iteration: 56_test_IAA : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_56_test_IAA/
+	 Dataset(10 documents and 45 annotations)
+Iteration: 57_test_IAA : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_57_test_IAA/
+	 Dataset(10 documents and 36 annotations)
+Iteration: 58_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_58_test/
+	 Dataset(10 documents and 42 annotations)
+Iteration: 59_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_59_test/
+	 Dataset(10 documents and 25 annotations)
+Iteration: 60_test : /Users/jmcejuela/Work/hck/nala/resources/bootstrapping/iteration_60_test/
+	 Dataset(10 documents and 29 annotations)
+Spacy NLP English: INIT START
+Spacy NLP English: INIT END 8.552016973495483
+word embddings loaded with vocab size: 519819
+Apply feature generator: <class 'nalaf.features.stemming.SpacyLemmatizer'>
+Apply feature generator: <class 'nalaf.features.simple.SentenceMarkerFeatureGenerator'>
+Apply feature generator: <class 'nala.features.tmvar.TmVarFeatureGenerator'>
+Apply feature generator: <class 'nala.features.tmvar.TmVarDictionaryFeatureGenerator'>
+Apply feature generator: <class 'nalaf.features.window.WindowFeatureGenerator'>
+Apply feature generator: <class 'nalaf.features.embeddings.WordEmbeddingsFeatureGenerator'>
+* docid=10090486 part=abstract
+test: CD6 -G || CDs 108 /112-12nt || CDs 130/131 + GCCT
+pred: 112-12nt || CD6 -G || CDs 108
+
+* docid=10094553 part=abstract
+test: 
+pred: non-frameshift deletion || one frameshift deletion
+
+* docid=10094560 part=title
+test: 1172delC || 544delG || 862+5A || C184Y || D289V || E459K || G145V || H154Y || M45L || R119H || R411X
+pred: 1172delC || 544delG || C184Y || D289V || E459K || G145V || H154Y || M45L || R119H || R411X
+
+* docid=10094560 part=abstract
+test: 1172delC || 544delG || 862 + 5A || C184Y || D289V || E459K || G145V || H154Y || M45L || R119H || R411X
+pred: 1172delC || 544delG || C184Y || D289V || E459K || G145V || H154Y || M45L || R119H || R411X
+
+* docid=10330344 part=abstract
+test: Arg85Ser || Gly607Val || His598Tyr
+pred: Arg85Ser and to His598Tyr;Gly607Val
+
+overlapping subclasses do not match 0 2
+* docid=10408782 part=abstract
+test: IVS10nt-11 || IVS11nt5 || IVS12nt1 || Q232X || R252W || R408W || V388M
+pred: IVS10nt-11 || IVS11nt5 || Q232X || R252W || R408W || V388M
+
+* docid=10477429 part=abstract
+test: M133T || codon 133 (ATG--> ACG
+pred: M133T || TP53 gene at codon 133 (ATG--> ACG
+
+overlapping subclasses do not match 2 1
+* docid=10486328 part=abstract
+test: 
+pred: D11S1351 || D11S4144 || D11S933 || D11S934
+
+* docid=10521296 part=abstract
+test: Ala797Thr || Ala797Thr || Arg249Gln || Arg403Trp || Arg403Trp || Arg645His || Arg719Gln || Arg92Trp || Arg92Trp || Arg92Trp || Deltac756 || Gln499Lys || Val896Met
+pred: Ala797Thr || Ala797Thr || Arg249Gln || Arg403Trp || Arg403Trp || Arg645His || Arg719Gln || Arg92Trp || Arg92Trp || Arg92Trp || Gln499Lys || Val896Met
+
+* docid=10712209 part=abstract
+test: 
+pred: D1S212
+
+* docid=10712225 part=abstract
+test: 
+pred: maternal allele with 36 CAG repeats (to 66
+
+* docid=10739770 part=abstract
+test: 
+pred: D22S1177 || D22S283 || D22S683
+
+* docid=10790218 part=abstract
+test: Y667X
+pred: Y667X || premature STOP codon at codon 667
+
+* docid=10862097 part=title
+test: 11745+2 ins3 || Q3820X || Y4236X
+pred: 2 ins3 || Q3820X || Y4236X
+
+* docid=11058905 part=abstract
+test: 1593insC || 1593insC || 261delA || 261delA || 934+2T-->G || E60X || E60X || P32R || P32R || S443P || S443P
+pred: (1593insC) in exon 10 || 1593insC || 261delA || 261delA || 934+2T-->G || E60X || E60X || P32R || P32R || S443P || S443P
+
+overlapping subclasses do not match 0 1
+* docid=11078480 part=abstract
+test: 
+pred: chromosome 13q12-13, 380 kb on chromosome 19q13.2, and 120 kb on chromosome 22q13
+
+* docid=11083946 part=title
+test: 
+pred: 28-kb deletion spanning D15S63
+
+* docid=11083946 part=abstract
+test: 
+pred: 28-kb deletion spanning the D15S63 || D15S63 || D15S63
+
+* docid=11139239 part=abstract
+test: 
+pred: premature termination codon
+
+* docid=11283796 part=abstract
+test: 
+pred: Deletions of a region 35 kb || Deletions of the exon 1 region
+
+* docid=11385711 part=abstract
+test: 330A>G || Arg to Gly change at codon 71 || R71G || R71G || R71G
+pred: 22 bp of exon 5 were deleted, creating with the first bases of exon 6 a termination codon at position 64 || Arg to Gly change at codon 71 || R71G || R71G || R71G || missense mutation 330A>G
+
+overlapping subclasses do not match 0 1
+* docid=11443547 part=abstract
+test: 1397-1401delAGAAC || Q119X || R150G
+pred: 1397-1401delAGAAC || A-->G || Q119X || R150G amino acid substitution || genomic 5-bp deletion
+
+* docid=11462173 part=abstract
+test: K193E || Q634X || R280H
+pred: Apart from a frameshift mutation in exon 13 || K193E || Q634X || R280H || codons 204, 227, 279, 280, and 304 || mutation in the 3' splice site for exon 5
+
+* docid=11524734 part=abstract
+test: 2104-2105delGGins29-bp || D468V || IVS12-1G>C || IVS13-2delA || Q436X || S206P
+pred: D468V || IVS12-1G>C || IVS13-2delA || Q436X || S206P || intragenic deletion of SLC26A3 exons 7 || one insertion/deletion mutation
+
+* docid=11577372 part=abstract
+test: 450delA
+pred: D11S898 || deletion mutation, 450delA || frameshift in codon 150
+
+overlapping subclasses do not match 0 1
+* docid=11668643 part=abstract
+test: F188del || G190D || G27R || G27R || IVS5+1G-->A || Q89X || R179X || R275Q || c.164insA || c.861insG
+pred: G190D || G27R || G27R || IVS5+1G-->A || Q89X || R179X || R275Q || c.164insA || c.861insG || deletion of a phenylalanine residue (F188del)
+
+overlapping subclasses do not match 0 1
+* docid=11731936 part=abstract
+test: 
+pred: chromosome 22 is duplicated
+
+* docid=11793474 part=abstract
+test: 
+pred: 304 of the 882
+
+* docid=11799475 part=abstract
+test: 
+pred: D1S3721 || D4S2367
+
+* docid=11813133 part=abstract
+test: G --> A polymorphism was identified at -112 bp
+pred: G --> A
+
+overlapping subclasses do not match 1 0
+* docid=11822023 part=abstract
+test: (C-->T) at position -158 upstream
+pred: C-->T
+
+overlapping subclasses do not match 1 0
+* docid=11845408 part=abstract
+test: 
+pred: D16S514
+
+* docid=12145747 part=abstract
+test: Leu-->Pro mutation at position 293,357
+pred: Leu-->Pro mutation at position 293 || deletion/insertion mutation
+
+* docid=12402331 part=abstract
+test: G843D || R798G || c.2097-2098insT
+pred: G843D || R798G || c.2097-2098insT || exon 18 frameshift mutation || single nucleotide deletions in exons 5
+
+* docid=12474144 part=abstract
+test: 
+pred: rs760761
+
+* docid=12552571 part=abstract
+test: I177N || K175-D176del || L263fsX286 || R304W
+pred: I177N || K175-D176del || L263fsX286 || R304W || r291-464del || r485-1283del
+
+* docid=12618959 part=abstract
+test: 1599-1605TCTTCTA-->CTAGAAG
+pred: homozygous 1599-1605TCTTCTA-->CTAGAAG substitution in exon 13
+
+overlapping subclasses do not match 0 1
+* docid=12632327 part=abstract
+test: 137C-->T || 569T-->C || P46L || V190A
+pred: 137C-->T transition || 569T-->C || D2S2151 || D2S2248 || D2S2248 || P46L || V190A
+
+overlapping subclasses do not match 0 2
+* docid=12655559 part=abstract
+test: c.1263+5G>C || c.2115ins35bp || c.2528T>C || c.2528T>C || c.2623A>G || c.2623A>G || c.3036_3038delGGT || c.3558+1G>C || c.4101+2T>C || c.712C>T
+pred: c.2115ins35bp, the splice site mutations c.1263+5G>C || c.2528T>C || c.2528T>C || c.2623A>G || c.2623A>G || c.3036_3038delGGT || c.3558+1G>C || c.4101+2T>C || nonsense mutations c.712C>T
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+* docid=12673802 part=abstract
+test: c.27_28ins12 || p.11_12insAAAA
+pred: c.27_28ins12
+
+* docid=12717633 part=abstract
+test: 
+pred: D12S1300 || D12S346 || D16S769 || D3S1763
+
+* docid=12740763 part=abstract
+test: Ala62Thr || Ala62Thr
+pred: 407, 333, 462, and 216 amino acids || Ala62Thr || Ala62Thr
+
+* docid=1284474 part=abstract
+test: 
+pred: 8 amino acid deletion from the extracellular domain || substitution of guanine for adenine in the third position of codon 180 that did not change the amino acid encoded
+
+* docid=1284538 part=abstract
+test: 1078delT || 1898 + 3A-->G || 541delC || E585X || G178R || G85E || I148T || R347H || R347P || R352Q || delta 508 || non-delta F508
+pred: 1078delT || 1898 + 3A-->G || 541delC || E585X || G178R || G85E || I148T || R347H || R347P || R352Q || delta F508
+
+overlapping subclasses do not match 2 0
+* docid=12938095 part=abstract
+test: A368fsX24 || C382Y || D170H || E48K || G346fsX1 || I407K || IVS4+1G>A || K426fsX23 || L414S || Q279R || Q279R || W226C || W81S || W95X || Y216fsX15 || c.1037delG || c.1102delGinsTTATAC || c.1145G>A || c.1220T>A || c.1241T>C || c.1277_1278delAA || c.142G>A || c.242G>C || c.284G>A || c.508G>C || c.639+1G>A || c.646_647insT || c.678G>T || c.836A>G
+pred: (c.1102delGinsTTATAC), and one splice-site mutation IVS4+1G>A || (insertion and deletion) A368fsX24 || C382Y || D170H || E48K || I407K || K426fsX23 || L414S || Q279R || Q279R || W226C || W81S || W95X || c.1037delG || c.1145G>A || c.1220T>A || c.1241T>C || c.1277_1278delAA || c.142G>A || c.242G>C || c.284G>A || c.508G>C || c.639+1G>A || c.646_647insT || c.678G>T || c.836A>G || one insertion Y216fsX15 || two small deletions G346fsX1
+
+overlapping subclasses do not match 0 2
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+* docid=12958705 part=abstract
+test: 
+pred: D21S1903 || D21S1903
+
+* docid=1301924 part=abstract
+test: 
+pred: trinucleotide repeat (CTG) at the 3' end
+
+* docid=1301950 part=abstract
+test: 
+pred: spanning 500 to 800 bp of sequence encoding one
+
+* docid=1301957 part=abstract
+test: 
+pred: 2 bp deletion in exon 1 || 571 bp deletion which removed exon 6 and resulted in a frameshift in exon 7 || lysine-arginine substitution in exon 6
+
+* docid=1329505 part=abstract
+test: 
+pred: valine-to-methionine substitution in the carboxyl-terminal domain
+
+* docid=1346075 part=abstract
+test: 
+pred: deletion or duplication of chromosome 21 sequences
+
+* docid=1346482 part=abstract
+test: 
+pred: D4S10
+
+* docid=1357966 part=abstract
+test: 
+pred: RFLPs span > 130 kb
+
+* docid=1363805 part=abstract
+test: 985A-->G || 985A-->G || 985A-->G || glutamate substitution for lysine-304
+pred: 985A-->G || 985A-->G || 985A-->G causes glutamate substitution for lysine-304
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 1 0
+* docid=1373934 part=title
+test: 
+pred: nonframeshift 84-bp deletion in exon 13
+
+* docid=1373934 part=abstract
+test: 1949del84
+pred: 1949del84 || 500 bp of the 5' end of exon 13 || 84-bp deletion in exon 13 || delta F508 deletion
+
+* docid=1415228 part=abstract
+test: 
+pred: D15S10 || D15S13
+
+* docid=14517964 part=abstract
+test: c.1007-8T>C || c.481G>A
+pred: base substitution 8 bp upstream of exon 10 || c.1007-8T>C || c.481G>A (CAG>CAA
+
+* docid=14681830 part=abstract
+test: A1555G || C1494T || C1494T || C1494T || C1494T
+pred: C1494-1555G pair created by the deafness-associated A1555G || C1494T || C1494T || C1494T || C1494T || homoplasmic C-to-T transition at position 1494
+
+overlapping subclasses do not match 0 1
+* docid=14691730 part=abstract
+test: 
+pred: D12S1631 || D12S1701 || D12S339
+
+* docid=14695528 part=abstract
+test: 
+pred: deletion due to a 3-bp deletion at the site || terminal 1q deletion, and a terminal 3p deletion
+
+* docid=15024732 part=abstract
+test: c.655A>G || p.Ile219Val
+pred: bearing different stop-codon or frame-shift mutations, or in-frame deletions || c.655A>G || p.Ile219Val
+
+* docid=15154114 part=abstract
+test: *207G-->C || IVS1+26G-->A || IVS10-18C-->T || IVS11+21G-->A || IVS12+15C-->T || IVS12+32C-->A || IVS12-3C-->T || IVS12-82G-->C || IVS2+88G-->C || IVS6+9C-->T || IVS7+37G-->A || IVS7+87A-->G || IVS7-151_152delGA || IVS7-35G-->A || IVS7-99C-->A || IVS8+28C-->T || IVS8-35G-->A || IVS9-36G-->A || p.C337W || p.G87R || p.M560V || p.M560V || p.P390L || p.P554L || p.V629I || p.Y317X || p.Y498
+pred: 207G-->C || IVS1+26G-->A || IVS10-18C-->T || IVS11+21G-->A || IVS12+15C-->T || IVS12+32C-->A || IVS12-3C-->T || IVS12-82G-->C || IVS2+88G-->C || IVS6+9C-->T || IVS7+37G-->A || IVS7+87A-->G || IVS7-151_152delGA || IVS7-35G-->A || IVS7-99C-->A || IVS8+28C-->T || IVS8-35G-->A || IVS9-36G-->A || p.C337W || p.G87R || p.L472 || p.M560V || p.M560V || p.P390L || p.P554L || p.V629I || p.Y317X || p.Y498
+
+* docid=15154117 part=abstract
+test: 
+pred: in exon 5 || rs1044396 || rs1044397
+
+* docid=15208783 part=abstract
+test: 
+pred: D18S477 || chromosome 18q22 signal (D18S541
+
+* docid=15272417 part=abstract
+test: 
+pred: 3.47 at 155 cM || C6S1848 at 146 cM to 164 cM near D6S1035 || D6S2436
+
+* docid=1539591 part=title
+test: 
+pred: lacking the C-terminal domains
+
+* docid=1539591 part=abstract
+test: 
+pred: deletion introduces an early termination codon || have a frameshift deletion of exons 42
+
+* docid=15449241 part=abstract
+test: 
+pred: CAA/- || rs2307973 || rs2307981 || rs2308169 || rs308963 || rs795009
+
+* docid=15776395 part=abstract
+test: 
+pred: T1D
+
+* docid=15952089 part=abstract
+test: 1228insC
+pred: premature termination codon || single C insertion (1228insC)
+
+overlapping subclasses do not match 0 1
+* docid=1598907 part=abstract
+test: C----T transition at nucleotide 571 || Gln106----Stop || T----C transition for codon 86 (TGG) at nucleotide 511 || Trp86----Arg || Trp86----Arg
+pred: C----T transition at nucleotide 571 || T----C transition for codon 86 (TGG) at nucleotide 511 || Trp86----Arg || Trp86----Arg mutation in exon 3 || codon CAG encoding Gln106 and producing Gln106----Stop
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+* docid=1609795 part=abstract
+test: 
+pred: single gene to be at 7q22
+
+* docid=16211558 part=abstract
+test: 1209delC || A443T || R357H || c.1070G>A || c.1327G>A || c.1405C>T || c.654A>T || frameshift at residue F382 || p.A443T || p.R218S || p.R357H || p.R469W || p.R469W
+pred: 1209delC || A443T || R357H || c.1070G>A || c.1327G>A || c.1405C>T || c.654A>T || p.A443T || p.R218S || p.R357H || p.R469W || p.R469W || resulting from a frameshift at residue F382
+
+* docid=16380917 part=abstract
+test: 
+pred: D20S173
+
+* docid=16532386 part=abstract
+test: 
+pred: D4S413
+
+* docid=16642433 part=abstract
+test: 
+pred: rs2297660 || rs2297660 || rs2297660
+
+* docid=16642441 part=abstract
+test: 
+pred: rs4343 || rs4343 || rs4343 || rs4343 || rs4351 || rs4351 || rs4351 || rs4351
+
+* docid=16671095 part=abstract
+test: 
+pred: knockout
+
+* docid=16773577 part=abstract
+test: 
+pred: D13S1296 || D13S162
+
+* docid=17024664 part=abstract
+test: 
+pred: nonsense or frameshift mutation than in those with deletions
+
+* docid=17041889 part=abstract
+test: c.[2484C>T]+[2484C>T || p.Gly828
+pred: 7-nucleotide deletion in exon 12 || c.[2484C>T]+[2484C>T || p.Gly828
+
+* docid=17160901 part=title
+test: c.2970-2972 delAAT
+pred: 3-bp inframe deletion in exon 17 || c.2970-2972 delAAT
+
+* docid=17160901 part=abstract
+test: ACA-->ACG change of codon 990 || c.2970-2972 delAAT || c.2970-2972 delAAT || p.990delM
+pred: (c.2970-2972 delAAT) in exon 17 || Delta AAT mutation || Delta Met991), in conjunction with silent ACA-->ACG change of codon 990 || c.2970-2972 delAAT || loss of one of two adjacent methionines (codon 991 or 992) || p.990delM
+
+overlapping subclasses do not match 0 1
+* docid=17203459 part=abstract
+test: 
+pred: nonsense or frameshift
+
+* docid=17236129 part=abstract
+test: 
+pred: absence of this deletion
+
+* docid=17285591 part=abstract
+test: 
+pred: AZFc partial deletion || sY1191
+
+* docid=17436244 part=abstract
+test: 
+pred: knockout mouse model
+
+* docid=17492639 part=abstract
+test: p.F106L || p.I35T || t(16;22)(p13.3;q11.2)
+pred: p.F106L || p.I35T
+
+* docid=17503325 part=abstract
+test: 
+pred: deletion downstream of exon 30 || deletion upstream of exon 30 || deletion upstream of exon 30
+
+* docid=17503332 part=abstract
+test: -30G-->A
+pred: -30G-->A || rs1799884 || rs7903146
+
+* docid=17621639 part=abstract
+test: 
+pred: OaCGH244K
+
+* docid=17701907 part=abstract
+test: C/T(-13910)
+pred: 
+
+* docid=17847001 part=abstract
+test: 
+pred: deletion affecting only a single gene, MBD5, which codes for the methyl-CpG-binding domain
+
+* docid=17879353 part=abstract
+test: Arg460Ter || c.1378C>T || c.1546_1547insC || c.249_252delGTCT || c.628_631delACAG
+pred: Arg460Ter || c.1378C>T || c.1546_1547insC || c.249_252delGTCT || c.628_631delACAG || deletion at codons 210-211 || deletion at codons 83-84 || insertion at codon 516
+
+* docid=17999359 part=title
+test: 135G-->C
+pred: RAD51 135G-->C
+
+* docid=18179885 part=abstract
+test: T/C(-3712) || T/G(-13915)
+pred: 
+
+* docid=18252214 part=abstract
+test: 3243A-->G
+pred: mutation 3243A-->G
+
+overlapping subclasses do not match 0 2
+* docid=18381613 part=abstract
+test: c.2905_2923delinsCTCCGAGCGCA || p.Gln829X
+pred: c.2905_2923delinsCTCCGAGCGCA mutation || p.Gln829X
+
+overlapping subclasses do not match 0 2
+* docid=18429048 part=abstract
+test: D409H || D409H || D409H || D409H || H255Q || H255Q || H255Q || p.[D448H;H294Q]
+pred: D409H || D409H || D409H || D409H || H255Q || H255Q || H255Q || H294Q || p.[D448H
+
+* docid=18452888 part=abstract
+test: 5943 delA || 9527 delG
+pred: 1 bp deletion at position 5943 || 5943 delA || 9527 delG || single-nucleotide deletion at position 9527
+
+* docid=18454449 part=abstract
+test: 
+pred: CAG --> TAG
+
+* docid=18674750 part=abstract
+test: 
+pred: rs2548861 || rs2548861 || rs2548861 || rs2548861
+
+* docid=19084217 part=abstract
+test: C282Y || C282Y
+pred: confirmed the known C282Y || rs1799852 || rs1799852 || rs1830084 || rs1830084 || rs2280673 || rs2280673) plus the HFE C282Y || rs3811647 || rs3811647 (within intron 11 of
+
+overlapping subclasses do not match 0 2
+* docid=19118813 part=abstract
+test: 
+pred: rs10748842 || rs10883866 || rs6584400
+
+* docid=19230858 part=abstract
+test: 
+pred: intron 1 to intron 4
+
+* docid=19268277 part=abstract
+test: 
+pred: D14S1005 || D14S1022
+
+* docid=19718767 part=abstract
+test: p.G56R
+pred: single p.G56R
+
+overlapping subclasses do not match 0 2
+* docid=19732864 part=abstract
+test: 
+pred: rs12936231
+
+* docid=19847796 part=abstract
+test: rs11614913 || rs11614913 || rs11614913 || rs2910164 || rs2910164 || rs2910164 || rs3746444 || rs3746444 || rs3746444
+pred: SNPs rs2910164 || rs11614913 || rs11614913 || rs11614913 || rs2910164 || rs2910164 || rs3746444 || rs3746444 || rs3746444
+
+* docid=19853236 part=abstract
+test: 
+pred: chromosome 6q24 (rs592423 || rs12661667 || rs7023923
+
+* docid=20186687 part=abstract
+test: 
+pred: knock-down
+
+* docid=20579627 part=abstract
+test: LW || P23H || W161R || W177R || W177R || c. 529T>C || p. W177R
+pred: P23H || W161R || W177R || W177R || c. 529T>C || p. W177R]) in exon 3
+
+* docid=20598277 part=abstract
+test: c.5217G>A || p.Val1724_Thr1739del
+pred: c.5217G>A || loss of 16 amino acids || mutation at the last nucleotide of exon 31 || p.Val1724_Thr1739del || removing the last 48 nucleotides from exon 31
+
+* docid=20887961 part=abstract
+test: c.1328_1329delTG || c.773G>A || p.C258Y || p.V443DfsX83
+pred: 2 bp deletion in exon 8 || c.1328_1329delTG || c.773G>A || p.C258Y || p.V443DfsX83
+
+* docid=21194677 part=abstract
+test: 
+pred: rs2732552 || rs2732552 || rs2732552 || rs2732552 || rs2732552 || rs387619 || rs387619
+
+* docid=21473986 part=abstract
+test: 
+pred: in-frame homozygous deletion of exon 5
+
+* docid=21565291 part=abstract
+test: 
+pred: rs1464311
+
+* docid=21636067 part=abstract
+test: 
+pred: 173 bp to 9104 bp at the site
+
+* docid=22036171 part=abstract
+test: 
+pred: deletion of exon 18
+
+* docid=22052681 part=abstract
+test: c.385G<T || glycine by cysteine at codon 129 || p.Gly129Cys || p.Gly129Cys || p.Gly129Cys
+pred: cysteine at codon 129 || heterozygous c.385G || p.Gly129Cys || p.Gly129Cys || p.Gly129Cys
+
+overlapping subclasses do not match 0 2
+* docid=22521416 part=abstract
+test: 
+pred: knockdown of CEP135 through RNA interference
+
+* docid=22703880 part=abstract
+test: c.125C>T || c.125C>T || p.Thr42Met
+pred: c.125C>T || c.125C>T || knockdown || p.Thr42Met
+
+* docid=22770979 part=abstract
+test: 
+pred: T1D
+
+* docid=22770981 part=abstract
+test: Arg207Cys
+pred: Arg207Cys || substitution of a cysteine for an arginine at amino acid residue 207
+
+* docid=23084292 part=abstract
+test: 
+pred: rs2246618 || rs8192591
+
+* docid=23122587 part=abstract
+test: 6559C>T || c.5508delC || c.6347C>T || p.Ala1838ProfsX31 || p.Arg2187X || p.Pro2116Leu || p.Pro2116Leu
+pred: c. 6559C>T || c.5508delC || c.6347C>T || p.Ala1838ProfsX31 || p.Arg2187X || p.Pro2116Leu || p.Pro2116Leu || premature stop codon
+
+* docid=7509237 part=title
+test: 4114 ATA-->TT
+pred: 4114 ATA-->TT in exon 22
+
+overlapping subclasses do not match 0 1
+* docid=7599640 part=title
+test: 
+pred: T146T
+
+* docid=7611293 part=abstract
+test: E144K || G139R || I278T || I278T || I278T || I278T || I278T || T833C || threonine for isoleucine at codon 278
+pred: E144K || G139R || I278T || I278T || I278T || I278T || I278T || T833C || substitution of threonine for isoleucine at codon 278
+
+* docid=7668286 part=abstract
+test: 341C to T
+pred: mutation 341C to T || mutations at nt positions 191, 282, 481, 590, 803, and 857
+
+overlapping subclasses do not match 2 1
+* docid=7726158 part=abstract
+test: 
+pred: arginine to cysteine and arginine to glutamine || proline to leucine and threonine to methionine || remethylation of homocysteine to methionine
+
+* docid=7728151 part=abstract
+test: 
+pred: mutations in codon 238
+
+* docid=7728155 part=title
+test: 
+pred: 68-bp deletion involving 3' splice site of intron 7
+
+* docid=7762554 part=abstract
+test: 
+pred: deletion of exon 7
+
+* docid=7762555 part=abstract
+test: A114V || A114V || A1224-2C || A1224-2C || C-to-T transition at base 770 in exon 7 || E131D || G-to-A transition at base 374 in exon 3 || G307S || G307S || I278T || I278T || P145L || P88S || R125Q || T257M || arginine-to-glutamic acid substitution at position 125 || proline-to-serine substitution at position 88 || threonine-to-methionine substitution at amino acid 257
+pred: A114V || A114V || C-to-T transition at base 770 in exon 7 || C-to-T transition in exon 2 at base 262 || E131D || G-to-A transition at base 374 in exon 3 || G307S || G307S || I278T || I278T || P145L || P88S || R125Q || T257M || arginine-to-glutamic acid substitution at position 125 || insertion of 68 bp in exon 8 at base 844 || proline-to-serine substitution at position 88 || threonine-to-methionine substitution at amino acid 257 of the protein
+
+* docid=7825583 part=title
+test: 
+pred: D14S280 || D14S291 || D14S81
+
+* docid=7825583 part=abstract
+test: 
+pred: D14S256 || D14S280 || D14S280 || D14S280 || D14S280 || D14S291 || D14S291 || D14S291 || D14S291 || D14S81 || D14S81 || D14S81 || D14S81
+
+* docid=7847381 part=abstract
+test: 
+pred: 1 trisomy 18 || 2 trisomy 13
+
+* docid=7977356 part=abstract
+test: 
+pred: D9S163 || D9S163 || D9S163
+
+* docid=7977368 part=abstract
+test: A118T || A192V || G280R || R272C || R304W || R304W || R363L
+pred: A118T || A192V || G280R || R272C || R304W || R304W || R363L || absence of an exon 7 or exon 13 || deletion of exon 13 sequence and a 7-bp deletion in exon 16 || deletion of the first 7 bp in exon 16 || insertion of 37 bp within exons 15
+
+* docid=7977378 part=abstract
+test: 
+pred: D11S480 || D11S903 || D11S903 || D11S986
+
+* docid=8019556 part=abstract
+test: 
+pred: deletion/frameshift in the paired-domain of PAX3 || premature termination codon
+
+* docid=8037214 part=abstract
+test: 
+pred: D5S519
+
+* docid=8102508 part=abstract
+test: 
+pred: D8S198-D8S274 || D8S256 || D8S284
+
+* docid=8105686 part=abstract
+test: codon 228 in exon 6, because of a CGA-->TGA
+pred: G-->C || because of a CGA-->TGA point mutation || nonsense mutation in codon 228 in exon 6
+
+* docid=8198127 part=abstract
+test: 
+pred: D6S286
+
+* docid=8199594 part=abstract
+test: 
+pred: T to G
+
+* docid=8279475 part=abstract
+test: 
+pred: D11S871 || D11S956
+
+* docid=8328452 part=abstract
+test: Gln310-->Ter || Gln310-->Ter || Gly409-->Arg || Gly409-->Arg || Thr366-->Pro || Thr366-->Pro || Tyr64-->Ter || Tyr64-->Ter
+pred: Gln310-->Ter || Gly409-->Arg || Gly409-->Arg in exon 9 and Ter-->Cys in exon 14 || Ter-->Cys || Thr366-->Pro || Thr366-->Pro || Tyr64-->Ter || Tyr64-->Ter
+
+overlapping subclasses do not match 0 1
+* docid=8328462 part=abstract
+test: Gly --> Ser269
+pred: alpha Gly --> Ser269
+
+* docid=8352275 part=abstract
+test: C4B || D6S10 || D6S105 || D6S109 || D6S89 || DQA1/A2 || F13A
+pred: D6S10 || D6S105 || D6S109 || D6S89 || F13A
+
+* docid=8364588 part=title
+test: alpha 1 Ser-415
+pred: 
+
+* docid=8364588 part=abstract
+test: Gly-415 with serine
+pred: G-to-A || substitution of Gly-415 with serine
+
+overlapping subclasses do not match 2 1
+* docid=8387722 part=abstract
+test: -104A-55G || A-to-C base substitution at nucleotide position -61 || T to A and A to G, at positions -104 and -55G, respectively
+pred: -104A-55G || A-to-C base substitution at nucleotide position -61 || T to A and A to G, at positions -104 and -55G
+
+* docid=8401541 part=title
+test: Q254X || del nt1050-54
+pred: Q254X
+
+* docid=8460646 part=title
+test: 
+pred: D17S579
+
+* docid=8460646 part=abstract
+test: 
+pred: D17S579
+
+* docid=8477263 part=abstract
+test: -87 (C-A)
+pred: IVS-1 || IVS-1 nt 6 || IVS-2 || nt 110 || nt 848 || two frameshift 106
+
+* docid=8535449 part=title
+test: 
+pred: A 48-bp insertion between exon 13
+
+* docid=8571955 part=abstract
+test: 1520 C/T
+pred: 1520 C/T || G deletion within the exon 10 || delta Ex10
+
+* docid=8644710 part=abstract
+test: 
+pred: D13S160 || D13S162 || D13S162 || D13S162
+
+* docid=8651275 part=abstract
+test: 
+pred: single base substitution within a 5' splice site
+
+* docid=8723680 part=abstract
+test: Asp335 by Val || Met274 substituted arylsulfatase || T274M
+pred: Met274 substituted || T274M || substitution of Asp335 by Val
+
+overlapping subclasses do not match 2 1
+* docid=8755927 part=abstract
+test: 
+pred: D9S149
+
+* docid=8829645 part=title
+test: 
+pred: A 66-basepair insertion in exon 6
+
+* docid=8829650 part=abstract
+test: C73R || G to T transversion of the last nucleotide of exon 4, || L4F || V82F
+pred: C73R || G to T transversion of the last nucleotide of exon 4 || L4F || V82F
+
+* docid=8940265 part=abstract
+test: 
+pred: AG-->G substitution in an intron || G:C-to-A || far apart from the coding region
+
+* docid=8956037 part=abstract
+test: frameshift after amino acid 525 (glycine) and leads to a premature termination codon at amino acid position 538
+pred: deletion and insertion event replacing a 13-bp segment of the normal exon 11 sequence || insertion of 4 nucleotides in exon 11 || nt1225 to nt1241 || premature termination codon at amino acid position 538 || translational frameshift after amino acid 525 (glycine)
+
+* docid=8956055 part=title
+test: R552O
+pred: R552O mutation in exon 13
+
+overlapping subclasses do not match 0 1
+* docid=8981950 part=abstract
+test: 
+pred: substitution of leucine for arginine
+
+* docid=9090528 part=abstract
+test: 13 bp/Ex15&IVS-15 || G280R || G324S || IVS-13(+5) || IVS-15(-1) || IVS-6(-2) || R272C || R279Q || R279Q || R304W || R304W || deletion of the first seven bases in exon 16 || delta 11 bp/IVS-15 || delta 11 bp/IVS-15 || delta 7 b/Ex16 || ins37 b/Ex15&16
+pred: (IVS-15(-1)) || Ex15 || G280R) were found in exon 12 || G324S || IVS-13(+5) || IVS-15 || IVS-6(-2) || IVS-6(-2) (delta Ex7) || R272C || R279Q || R279Q || R304W || R304W || deletion of the first seven bases in exon 16 || delta 11 bp || delta 11 bp || delta 13 bp || delta Ex13
+
+* docid=9143924 part=abstract
+test: 2393del9 || N543H || missense Asn543
+pred: (2393del9) in exon 17 || N543H || in-frame 9-bp deletion
+
+overlapping subclasses do not match 0 1
+* docid=9143927 part=abstract
+test: 
+pred: Deletions of the entire gene
+
+* docid=9150164 part=abstract
+test: 
+pred: D11S4120 || D11S912
+
+* docid=9259194 part=abstract
+test: 2789 + 5 G > A || 3845 + 10kb C > T || 3849 + 10kb C > T || 3849 + 10kb C > T || 3849 + 10kb C > T || 3849 + 10kb C > T || D1152H || G85E || R117H || R117H || R117H || R117H || R117H || R117H || R334W || R334W || R347P || R553X || R75Q || S945L || delta F508
+pred: 2789 + 5 G > A, 3849 + 10kb C > T || 3849 + 10kb C > T || 3849 + 10kb C > T || D1152H || G85E || R117H || R117H || R117H || R117H || R117H, 3845 + 10kb C > T || R117H-9T || R334W || R334W || R347P || R553X || R75Q || S945L || delta F508/3849 + 10kb C > T genotype were 9T
+
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 1 0
+* docid=9259197 part=abstract
+test: 1078delT || 1609delCA || 1677delTA || 1717-1G-->A || 1717-1G-->A || 1811 + 1.6kbA-->G || 1898 + 1G-->A || 2183AA-->G || 2183AA-->G || 2789 + 5G-->A || 3659delC || 3849 + 10kbC-->T || 3905insT || 394delTT || 451 + 1G--A || 621 + 1G-->T || 621 + 1G-->T || 711 + 1G-->T || A455E || G542X || G542X || G551D || G551D || G85E || N1303K || N1303K || R1066C || R1162X || R1162X || R117H || R334W || R347H || R347P || R553X || R553X || R560T || S549R || T338I || W1282X || W1282X || delta F308 || delta F508 || delta I507
+pred: 1078delT || 1609delCA || 1677delTA || 1717-1G-->A || 1717-1G-->A || 1898 + 1G-->A || 2183AA-->G || 2183AA-->G || 2789 + 5G-->A || 3659delC || 3849 + 10kbC-->T || 3905insT || 394delTT || 621 + 1G-->T || 621 + 1G-->T || 6kbA-->G || 711 + 1G-->T || A455E || G542X || G542X || G551D || G551D || G85E || N1303K || N1303K || R1066C || R1162X || R1162X || R117H || R334W || R347H || R347P || R553X || R553X || R560T || S549R || T338I || W1282X || W1282X || delta F308 || delta F508 || delta I507
+
+* docid=9326322 part=abstract
+test: 
+pred: IVS13-8 || intron region near splice sites (IVS10+3
+
+* docid=9326328 part=abstract
+test: 
+pred: D2S124 || D2S306
+
+* docid=9382104 part=abstract
+test: 
+pred: D6S1663 || D6S1691 || D6S299
+
+* docid=9401011 part=abstract
+test: 
+pred: deletions of repeat units
+
+* docid=9452040 part=title
+test: 
+pred: nonsense mutation in exon 15
+
+* docid=9452055 part=title
+test: 
+pred: two amino acid insertion after Asp 118
+
+* docid=9497249 part=abstract
+test: 
+pred: D2S364
+
+* docid=9497253 part=abstract
+test: 
+pred: A-->G || G-->C mutation at the splice-donor site in the intron, between exon 1 and exon 2 || premature translation-termination codon in exon 1
+
+* docid=9545410 part=abstract
+test: 
+pred: D18S1099 || D18S1118 || D18S487
+
+* docid=9633815 part=abstract
+test: DEL366S || F405H || G158D || IVS12+5(g-a) || IVS2+1(g-t) || IVS6-1(g-c) || IVS6-1(g-t) || IVS8-1(g-c) || P261L
+pred: F405H || G158D || IVS12+5 || IVS6-1(g-c) || IVS6-1(g-t) || IVS8-1(g-c) || P261L || deletion of serine (DEL366S) || deletion of three nucleotides || three splice site mutations: IVS2+1(g-t)
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+* docid=9718346 part=title
+test: 
+pred: D9S1779
+
+* docid=9718346 part=abstract
+test: 
+pred: D9S1779 || deletions of chromosomes 9 and 10
+
+* docid=9792408 part=title
+test: 
+pred: A frequent TG deletion
+
+* docid=9792408 part=abstract
+test: (deltaTG) was found in the 3' untranslated region (3'UTR) of the gene, 7 bp upstream from the polyadenylation signal || IVS-2 + 1G-->A
+pred: G-->A || G-->A || IVS-2 + 1G-->A || TG deletion (deltaTG)
+
+overlapping subclasses do not match 1 2
+* docid=9829906 part=abstract
+test: 
+pred: base pair substitution in exon 5 that alters aspartic acid to asparagine
+
+* docid=9837820 part=abstract
+test: 964del13 || 964del13 || 964del13 || 964del13 || 964del13 || L28P || R15L || R257* || Y90C
+pred: 13-bp deletion || 964del13 || 964del13 || 964del13 || 964del13 || 964del13 || L28P || R15L || Y90C
+
+* docid=9915955 part=abstract
+test: 
+pred: D9S1790 || D9S1867
+
+* docid=9973288 part=abstract
+test: 
+pred: D1S191 || D1S2848
+
+* docid=22051099 part=abstract
+test: Ex2+860G>C || S276T || rs2234671 || rs2234671 || rs2234671
+pred: S276T || rs2234671 || rs2234671 || rs2234671 at position Ex2+860G>C
+
+* docid=22188495 part=abstract
+test: 3190C>T || Arg987Ter || Arg987Ter
+pred: 3190C>T in exon 24 || Arg987Ter || Arg987Ter || replacement of an arginine residue at position 573 by termination codon
+
+overlapping subclasses do not match 0 1
+* docid=21881116 part=abstract
+test: 
+pred: insertion of A between nucleotides 1900 and 1901, which resulted in a 3-nucleotide change within the Kozak sequence || single nucleotide insertion/deletion
+
+* docid=21559944 part=abstract
+test: c.104delT || p.Val35AlafsX25
+pred: c.104delT || p.Val35AlafsX25 || panel of 262,000 single nucleotide polymorphism || premature termination codon
+
+* docid=21798259 part=abstract
+test: rs16754 || rs16754
+pred: All exon 7 mutations were frameshift mutations || including the insertion within codon 313 and codon 314 || rs16754 || rs16754 single nucleotide polymorphism was G
+
+* docid=21897748 part=abstract
+test: c.130G>A || c.130G>A || p.V44M
+pred: D13S1316 || D13S1316 || D13S175 || D13S175 || c.130G>A || c.130G>A || non-conservative substitution of valine-to-methionine at codon 44 || p.V44M
+
+* docid=21911891 part=abstract
+test: 
+pred: 4G/5G || single base pair guanine insertion/deletion polymorphism (4G/5G)
+
+* docid=21757944 part=title
+test: 
+pred: 13-bp deletion in the 3' untranslated region
+
+* docid=21757944 part=abstract
+test: CD +90 del 13 bp || IVSII-1 (G > A) || IVSII-1 (G > A)
+pred: 13-bp deletion || 13-bp deletion at nucleotide 90 downstream of the termination codon || 13-bp deletion in the 3' UTR || 13-bp deletion in the 3' UTR || CD +90 del 13 bp || G > A || G > A
+
+* docid=22129472 part=title
+test: 
+pred: single base pair substitution activates a 10-base downstream cryptic splice acceptor site in exon 12
+
+* docid=22129472 part=abstract
+test: c.1706-1715del.ATCTCCTCAG || c.1706-2 A>T || p.(Asp569Valfs*93)
+pred: 10-base deletion from the beginning of exon 12 || Asp569Valfs || c.1706-1715del || c.1706-2 A>T || deletion generates a frameshift and a premature termination codon (c.1991-1993
+
+* docid=21682595 part=abstract
+test: Arg399Gln || Arg399Gln || Arg399Gln || Arg399Gln || rs25487
+pred: Arg versus Arg || Arg versus Arg || Arg399Gln || Arg399Gln || Arg399Gln || Arg399Gln || rs25487
+
+* docid=21054465 part=abstract
+test: 
+pred: C35322C || C35322C || C35322T || deletion at 5063 || substitution of C to T at 33468 in exon 8
+
+* docid=20648600 part=abstract
+test: A1762T || E164D || G1764A || G1896A || G1899A || I195M || L180M || L180M || M204V || M204V || V173L || V173L
+pred: A1762T || G1764A || G1896A || G1899A || rtL180M || rtL180M + rtM204V || rtM204V || rtV173L || rtV173L || sE164D || sI195M
+
+* docid=20846357 part=abstract
+test: c.263C>T || c.263C>T || p.Ala88Val || p.Ala88Val || p.Asp50Asn
+pred: c.263C>T || c.263C>T || leading to a substitution of alanine for valine at position 88 || p.Ala88Val || p.Ala88Val || p.Asp50Asn
+
+* docid=21445905 part=abstract
+test: 
+pred: C to T substitution at a polymorphic site 13
+
+* docid=21325775 part=abstract
+test: 
+pred: G to C at codon 158 of exon 4 || amino acid substitution of arginine residue for the proline residue at position 158 of apoE
+
+* docid=21099701 part=abstract
+test: G303E || c.908G>A
+pred: G303E || c.908G>A within exon 8 || substitution of the amino acid glycine at position 303
+
+* docid=20738799 part=abstract
+test: I597T || T>C
+pred: I597T || heterozygous T>C nucleotide substitution on exon 14
+
+overlapping subclasses do not match 0 1
+* docid=20801104 part=abstract
+test: -1240 L/S || -521 C/T || -521 C/T || -521C/T || -616C/G
+pred: -120 bp duplication, -616C/G || -1240 L/S || -521 C/T || -521 C/T || -521C/T
+
+* docid=21135151 part=title
+test: delta32
+pred: 
+
+* docid=20709368 part=title
+test: 10034C>T
+pred: fibrinogen gamma 10034C>T
+
+* docid=20709368 part=abstract
+test: 10034C>T || 10034C>T || rs2066865
+pred: FGG 10034 T || FGG 10034C>T || FGG 10034C>T || rs2066865
+
+* docid=21138945 part=abstract
+test: 
+pred: lack of CDKN2A
+
+* docid=20801540 part=abstract
+test: c.2554+1G>T
+pred: c.2554+1G>T || deletion of amino acids 809-852
+
+* docid=20454699 part=abstract
+test: C119Y || C119Y || c.356G>A || rs13267
+pred: C119Y || c.356G>A || leading to amino acid substitution C119Y || rs13267
+
+overlapping subclasses do not match 0 1
+* docid=20367983 part=abstract
+test: IVS3 + 18C > T || IVS3 + 18C > T || c.1546_1547insC
+pred: IVS3 + 18C > T || c.1546_1547insC || single nucleotide polymorphism (SNP) in intron 3 (IVS3 + 18C > T)
+
+* docid=20335448 part=abstract
+test: (G-->A) at nucleotide position 2141
+pred: (G-->A) at nucleotide position 2141 (exon 8), which resulted in substitution of arginine by glutamine at amino acid position 714 || replacement of arginine by glutamine at position 714
+
+* docid=20154289 part=abstract
+test: codon 104 G --> A
+pred: nondeletional mutation Hb Sallanches (alpha 2 codon 104 G --> A)
+
+* docid=20019594 part=abstract
+test: p.C152G || p.D157fsX158 || p.E180K || p.R194S || p.S173fsX174
+pred: p.C152G || p.D157fsX158 || p.E180K || p.R194S
+
+* docid=19881468 part=abstract
+test: rs1052133 || rs1052133 || rs1052133
+pred: rs1052133 || rs1052133 || rs1052133 || substitution of the amino acid at codon 326 from Ser to Cys
+
+* docid=19823838 part=abstract
+test: c.263 G>C || c.264 C>A
+pred: c.263 G>C || c.264 C>A || substitution from cytosine to adenine at position 264 || substitution from guanine to cytosine at position 263 of the nucleotide sequence
+
+* docid=19624920 part=abstract
+test: 
+pred: 672 insertion sequence 6110
+
+* docid=19624485 part=title
+test: 
+pred: G 14 bp insertion/deletion polymorphism
+
+* docid=19624485 part=abstract
+test: rs16375
+pred: 14 bp insertion/deletion polymorphism || 14 bp insertion/deletion polymorphism || G 14 bp deletion/insertion polymorphism || rs16375
+
+* docid=19561170 part=abstract
+test: 
+pred: deletion of a termination-codon-containing region
+
+* docid=19223935 part=abstract
+test: G-669A || Glu98X || Leu203fsX15 || Ser863Asn
+pred: (Glu98X) and a missense single nucleotide substitution in exon 12 (Ser863Asn) || G-669A || Leu203fsX15 || deletion of TG at the nucleotide position 608-609 in exon 5 || nonsense mutation at the nucleotide position 292 in exon 3
+
+overlapping subclasses do not match 0 1
+* docid=19196567 part=abstract
+test: 
+pred: Deletion/Deletion (DD)
+
+* docid=18945288 part=abstract
+test: R58fs || c.342delA || p.Arg58fs || p.R58fs
+pred: R58fs || p.Arg58fs || single nucleotide deletion c.342delA, located in exon 3, which resulted in a frameshift at amino acid position 58
+
+overlapping subclasses do not match 0 1
+* docid=18726896 part=abstract
+test: 
+pred: SRO of deletion (10-Mb or less) at 11q23
+
+* docid=18672102 part=abstract
+test: 118-119insA || 125-126insAA || 46delS || A442V || A6V || E359K || E359K || P163S || P407Q || S429T || c.1146+25insA
+pred: 118-119insA || 125-126insAA || 46delS || A442V || A6V || E359K || E359K || P163S || P407Q || S429T || c.1146+25insA in exon 6
+
+overlapping subclasses do not match 0 1
+* docid=18606230 part=abstract
+test: R1858X || Y1854X || Y1854X
+pred: C to G transversion (Y1854X) || R1858X || Y1854X
+
+overlapping subclasses do not match 0 1
+* docid=18492086 part=abstract
+test: c.2068-4T>A
+pred: 7-bp deletion in exon 21 and a base insertion in exon 26 || c.2068-4T>A || nonsense mutation in exon 19 || nonsense mutation in exon 24
+
+* docid=18397285 part=abstract
+test: L1503Q || L1503R || L1503R || L1503R || T-->G transversion at nucleotide 4508
+pred: L1503Q || L1503R || L1503R || heterozygous T-->G transversion at nucleotide 4508 || substitution of L1503R
+
+overlapping subclasses do not match 0 1
+* docid=18246537 part=abstract
+test: 
+pred: deletion of 13q14 || deletion of 13q14 || deletion of ATM (11q22) || deletion of TP53
+
+* docid=18189233 part=abstract
+test: A/G transition -1,071 bp || D541E || D541E || K294E || R462Q || R462Q
+pred: 20 bp insertion/deletion polymorphism 1,109 bp upstream of the initiation codon || D541E || D541E || G transition -1,071 bp from the transcriptional start site || K294E || R462Q || R462Q
+
+* docid=18166824 part=abstract
+test: M200V || P29S
+pred: M200V || P29S || replacement of a non-polar amino acid (proline) with a polar amino acid (serine) at position 29
+
+* docid=19276632 part=abstract
+test: 25*G>A || Ala88Thr || Ser424Ser || Tyr428Tyr || c.1272C>T || c.1284T>C || c.262G>A || c.97GCC[9]+[10]
+pred: Ala88Thr || G>A substitution in the 3'-untranslated region || Ser424Ser || Tyr428Tyr || c.1272C>T || c.1284T>C || c.262G>A || c.97GCC[9]+[10] || extra alanine within exon 1
+
+overlapping subclasses do not match 0 1
+* docid=17968299 part=abstract
+test: -1082(G/A) || G/A
+pred: polymorphic nucleotide A at position -1082
+
+* docid=17961316 part=abstract
+test: G > C || IVS1-1G > A || IVS1-1G > C || IVS1-1G > C || IVS1-1G > C
+pred: G > C || IVS1-1G > A || IVS1-1G > C || IVS1-1G > C substitution || IVS1-1G > C substitution of exon 1
+
+overlapping subclasses do not match 0 2
+overlapping subclasses do not match 0 1
+* docid=17935240 part=abstract
+test: g.ORF15 + 652-653delAG || g.ORF15 + 652-653delAG
+pred: 652-653delAG || 652-653delAG || heterozygous AG-deletion at nucleotide 652 and 653
+
+* docid=17909797 part=abstract
+test: Delta32 || Delta32 || Delta32 || Delta32
+pred: 
+
+* docid=17292585 part=abstract
+test: A149P || A174D || N334K
+pred: A149P || A174D || Delta4E4 || N334K
+
+* docid=17157502 part=abstract
+test: 
+pred: in-frame deletion
+
+* docid=17065198 part=abstract
+test: 
+pred: C to T || p53 codon 72 || p53 codon 72 genotype
+
+* docid=17059986 part=abstract
+test: c.2633+1G>C || c.2633+1G>C || p.Ser555Leu || r.2521_2634del
+pred: 1 skipping the entire exon 22 || c.2633+1G>C || c.2633+1G>C || p.Ser555Leu || r.2521_2634del || substitution of serine by leucine at amino acid position 555
+
+* docid=17003357 part=abstract
+test: 1858C/T || 1858C/T || 2250G/C
+pred: 1858C/T || 1858C/T || 2250G/C || premature termination codon after exon 17
+
+* docid=16780885 part=abstract
+test: 
+pred: C-to-T || C-to-T single nucleotide substitution
+
+* docid=16728705 part=abstract
+test: -863C > A || -863C > A || C > A substitution at position -863
+pred: 863C > A || C > A substitution at position -863 || allele of the TNFA-863C > A
+
+overlapping subclasses do not match 0 1
+* docid=16540739 part=abstract
+test: 
+pred: D9S974
+
+* docid=16525586 part=abstract
+test: Arg260His || Ser263Phe || Ser290/Ala291fs || Ser413Leu || Tyr547fs || Tyr69X || Val414Phe || c.1642_1644dupA || c.2045-1G > A || c.210T > G || c.791C > T || c.892_895dupG
+pred: (c.892_895dupG) at codons Ser290/Ala291fs || Arg260His || Ser263Phe || Ser413Leu || Tyr69X || Val414Phe || at codonTyr547fs || c.1642_1644dupA || c.2045-1G > A || c.210T > G || c.791C > T || single base 'G' duplication
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 2
+* docid=16480574 part=abstract
+test: 
+pred: 30-bp deletion || codon: 346-355
+
+* docid=16424663 part=title
+test: 
+pred: deletion of cDNA nucleotide 81
+
+* docid=16424663 part=abstract
+test: 
+pred: nt 81G deletion
+
+* docid=16380922 part=abstract
+test: 
+pred: single-nucleotide insertion or deletion
+
+* docid=16379547 part=abstract
+test: 
+pred: C to T
+
+* docid=16330669 part=abstract
+test: 
+pred: deletion of chromosome 14q32.33
+
+* docid=16252083 part=abstract
+test: A --> G transition at 127 position || Asn --> Ser substitution at codon 127 || Asn127Ser || G --> A transition at 1032 position || Gly --> Asp change at codon 322 || Gly322Asp || Gly322Asp || Gly322Asp
+pred: A --> G transition at 127 position producing an Asn --> Ser substitution at codon 127 (the Asn127Ser || G --> A transition at 1032 position || Gly --> Asp change at codon 322 || Gly/Gly phenotype of the Gly322Asp || Gly322Asp || the Gly322Asp polymorphism
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+* docid=16186368 part=abstract
+test: K386T || S482X
+pred: 15-bp deletion in exon 7 || 15-bp deletion that included the 3' splice site for exon 7 || K386T || S482X || deletion mutation in exon 7
+
+* docid=16181814 part=abstract
+test: A467T || A467T || A467T || A467T || A467T || E873-TAG || E873stop || E873stop || E873stop || E873stop
+pred: A467T || A467T || A467T || A467T || A467T || E873-TAG || E873stop || E873stop || E873stop || E873stop || premature termination codon (TAG) in exon 17 || threonine to alanine substitution at a highly conserved site in exon 7
+
+* docid=16143638 part=abstract
+test: IVS2-58_55insT
+pred: IVS2-58_55insT || insertion in IVS2
+
+* docid=16088915 part=abstract
+test: Arg792Gly || Arg792Gly
+pred: A to G transition at nucleotide +79 of exon 41 || Arg792Gly || Arg792Gly substitution is located at the Y-position of Gly-X-Y || converted the codon for arginine at amino acid 792 to a codon for glycine
+
+overlapping subclasses do not match 0 1
+* docid=16051693 part=abstract
+test: V175M || V175M || V175M || V175M
+pred: Met/Met at residue 175 || V175M || V175M || V175M || V175M
+
+* docid=16001362 part=abstract
+test: C-->T
+pred: heterozygous C-->T single-nucleotide substitution, 16 nt upstream of the putative translation initiation site
+
+overlapping subclasses do not match 0 1
+* docid=15951966 part=abstract
+test: 
+pred: deletion of about 1.4 kb including exon 3
+
+* docid=15867855 part=abstract
+test: 157delMTTTVP || 157delMTTTVP || rs2277025
+pred: 1 insertion/deletion polymorphism || 157delMTTTVP || 157delMTTTVP || rs2277025
+
+* docid=15820770 part=abstract
+test: ACG-->AAG substitution in codon 420 || GAT-->GAG
+pred: GAT-->GAG substitution replaces aspartic acid by glutamic acid in codon 416; and ACG-->AAG substitution in codon 420 leads to an exchange of threonine for lysine
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 1 0
+* docid=15770495 part=abstract
+test: 217_218insC || 217_218insC || A207D || A207D || A49T || A49T || G158R || G158R || G183S || G183S || G196S || G196S || IVS3+1G>A || IVS3+1G>A || Q126R || Q126R || Q126R || R246W || R266W || V89L || del418T || del642T || del642T
+pred: 217_218insC plus the A49T || A207D || A207D || A49T || G158R || G158R || G183S || G183S || G196S || G196S || IVS3+1G>A || IVS3+1G>A || Q126R || Q126R || Q126R || R246W || R266W || V89L || del418T || del642T || del642T || single nucleotide deletion || the insertion of a cytosine (217_218insC)
+
+overlapping subclasses do not match 0 2
+overlapping subclasses do not match 0 1
+* docid=15754732 part=abstract
+test: 222insT || 835del18 || 912delTA || D418D || GAC/GAT || L89R || P291A || Q536X || R171Q
+pred: 222insT || D418D || L89R || P291A || Q536X, exon 10 || R171Q || one frameshift deletion (912delTA, exon 5), one in-frame deletion (835del18, exon 4)
+
+overlapping subclasses do not match 0 1
+* docid=15749661 part=abstract
+test: 1469T->G || 1665delC || C282Y || I238M || I238M || L490R || L490R || L490R || V561X || V561X
+pred: 1469T->G || 1665delC || 594-597 deletion || 714C-> || C282Y || I238M || I238M || L490R || L490R || L490R || V561X || V561X
+
+* docid=15672026 part=title
+test: A>G polymorphism at position -670
+pred: single nucleotide A>G polymorphism at position -670
+
+* docid=15672026 part=abstract
+test: 
+pred: ) to guanine (G) substitution at position -670
+
+* docid=15668505 part=abstract
+test: 203G > A || N372H || N372H || N372H || N372H || N372H
+pred: 203G > A || N372H || N372H || N372H || N372H || nonconservative amino acid substitution polymorphism N372H
+
+overlapping subclasses do not match 0 1
+* docid=15667541 part=abstract
+test: E29K || E29K || Glu29 to Lys || g.3907G >A
+pred: E29K || E29K || F7 gene deletion || codon for Glu29 to Lys || g.3907G >A
+
+overlapping subclasses do not match 2 1
+* docid=15661214 part=abstract
+test: 
+pred: A guanine insertion (2G) polymorphism at nucleotide -1607
+
+* docid=15636431 part=abstract
+test: 
+pred: T to C substitution at position 1833 || all males were heterozygous in nucleotides 1678, 1694, 1699, 1708 and 1825 || exon 12
+
+* docid=15579915 part=abstract
+test: IVS10 + 4G
+pred: A to G substitution denoted IVS10 + 4G
+
+overlapping subclasses do not match 0 1
+* docid=15485686 part=abstract
+test: G-->A substitution at codon 1763 || I1762A || V1763M || V1764M
+pred: G-->A substitution at codon 1763, which changed a valine (GTG) to a methionine (ATG) || I1762A || V1763M || V1764M
+
+* docid=15464247 part=abstract
+test: 1188-A/C
+pred: bp insertion/deletion
+
+* docid=15461822 part=abstract
+test: Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30 || Delta30
+pred: Delta30 || rDEN2Delta30-4995 || rDEN2Delta30-4995
+
+* docid=15200509 part=abstract
+test: Tyr246X
+pred: Tyr246X || premature stop codon at the 246 residue || substitution of cytosine (C) for guanine (G) at codon 246 in exon 6
+
+* docid=15147378 part=abstract
+test: 
+pred: resulting from the loss of repeat units 7
+
+* docid=15086338 part=abstract
+test: 5504delA || 5504delA || 6573 + 1G > C || 6573 + 1G > C
+pred: 5504delA || 5504delA || 6573 + 1G > C || 6573 + 1G > C || deletion mutation || intron 81 || single-nucleotide deletion within exon 64
+
+* docid=15009222 part=abstract
+test: C435G || del 329C
+pred: C435G || del 329C || single-nucleotide deletion at position 329
+
+* docid=14751036 part=abstract
+test: 1242G>T || 1780C>A || 1780C>A || 2068G>C || 2068G>C || 2084G>A || 9 +1G>T
+pred: 1242G>T || 1780C>A || 1780C>A || 2068G>C in exon 11 || 2084G>A || C insertion in exon 14 between positions 2505-2511 || GGCC insertion at exon 8 (1277) and a nucleotide substitution in exon 11 (2068G>C) || homozygous GGCC insertion at exon 8 || intron 9 +1G>T
+
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 1
+overlapping subclasses do not match 0 2
+* docid=14734447 part=abstract
+test: 
+pred: D16S2622 || D16S475 || D16S523
+
+* docid=14562027 part=abstract
+test: +142C/G || +142C/G || +355G/T || +355G/T || -1001C/T || -1001C/T || -1001C/T || -13C/T || -13C/T || -13C/T || -263G/A || -263G/A || -263G/A
+pred: +142C/G || +142C/G || +355G/T || +355G/T || -1001C/T || -1001C/T || -13C/T || -13C/T || -13C/T || -263G/A || -263G/A || G-C-C-G of -1001C/T, -263G
+
+overlapping subclasses do not match 0 1
+* docid=14508191 part=abstract
+test: A/C1166 || A/C1166 || A/C1166 || T/C-344 || T/C-344 || T/C-344 || T/C704 || T/C704 || T/C704
+pred: A/C1166 || A/C1166 || C allele of AGT T/C704, the A allele of AT1 A/C1166 || T/C-344 || T/C-344 || T/C-344 || T/C704 || T/C704
+
+overlapping subclasses do not match 0 1
+* docid=12925671 part=abstract
+test: 620-621del in cDNA || C877T in cDNA
+pred: C877T || deletion (620-621del
+
+* docid=12918106 part=abstract
+test: 
+pred: D5S410 || D5S416 || D5S416 || D5S428
+
+* docid=12915397 part=abstract
+test: -866 promoter (G/A) || A55V || Ala55Val
+pred: nonsynonymous (Ala55Val or A55V) single-nucleotide polymorphism in exon 4
+
+overlapping subclasses do not match 0 1
+* docid=12872254 part=abstract
+test: c.399_402delAGAG || c.399_402delAGAG || c.399_402delAGAG || c.399_402delAGAG || c.399_402delAGAG
+pred: 4-bp deletion in exon 3 || c.399_402delAGAG || c.399_402delAGAG || c.399_402delAGAG || c.399_402delAGAG || c.399_402delAGAG
+
+* docid=12829659 part=abstract
+test: C-174G || G-308A || G-308A
+pred: C-174C || C-174C || C-174G || G-308A || G-308A || G-308G
+
+* docid=12716337 part=abstract
+test: 
+pred: G to C substitution at position -174
+
+* docid=12661032 part=abstract
+test: 
+pred: deletion of KLF5
+
+* docid=12650796 part=title
+test: 3020insC
+pred: 3020insC frameshift mutation
+
+* docid=12650796 part=abstract
+test: 3020insC || 3020insC || 3020insC || 3020insC
+pred: 3020insC || 3020insC || 3020insC || 3020insC || cytosine insertion at position 3020 of exon 11
+
+* docid=1334229 part=01-Abstract-p01-p8
+test: 
+pred: K-ras mutation (109/656)
+
+* docid=1334229 part=03-Methods-p02-p8
+test: codon 33: C→A || codon 41: A→G || codon 45: 3 bp deletion || codon 45: C→T
+pred: (codon 45: 3 bp deletion) and SW48 (codon 33 || 41: A→G || 45: C→T
+
+overlapping subclasses do not match 2 0
+overlapping subclasses do not match 2 1
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 2 0
+* docid=1334229 part=03-Methods-p03-p2
+test: 
+pred: G168-15
+
+* docid=1334229 part=04-Results-p01-p2
+test: codons 37 and 45, all were C→T transitions, leading to Ser→Phe amino acid changes || loss of one of the Ser/Thr phosphorylation sites and subsequent stabilisation of the protein, occurred at codons 37 and 45, all were C→T
+pred: amino acid alteration at codons 22 and 29 || occurred at codons 37 and 45, all were C→T
+
+* docid=1360090 part=03-Results-p01-p2
+test: 1799T to A || V600E
+pred: 1799T to A transversion || V600E
+
+overlapping subclasses do not match 2 1
+* docid=1360090 part=03-Results-p01-p3
+test: 1799T to A mutation || V600E
+pred: 1799T to A || V600E
+
+overlapping subclasses do not match 1 2
+* docid=1373649 part=01-Abstract-p01-p7
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=01-Abstract-p01-p9
+test: c.1864C>A || missense (c.1864C>A) mutation in exon 12 || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
+pred: D5S346 || c.1864C>A || p.Pro622Thr || proline 622 to threonine
+
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=1373649 part=02-Background-p01-p6
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=03-Methods-p01-p11
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1373649 part=03-Methods-p02-p1
+test: 
+pred: D5S346
+
+* docid=1373649 part=04-Results-and-discussion-p01-p6
+test: a c.1864C>A transversion in exon 12 || c.1864C>A || p.Pro622Thr || proline 622 to threonine (p.Pro622Thr) amino acid substitution
+pred: D5S346 || c.1864C>A transversion in exon 12 || p.Pro622Thr || proline 622 to threonine
+
+overlapping subclasses do not match 1 2
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=1557864 part=03-Methods-p02-p1
+test: 
+pred: D2S123
+
+* docid=1557864 part=04-Results-p01-p3
+test: 
+pred: D2S123
+
+* docid=1557864 part=05-Discussion-p01-p3
+test: 
+pred: p53phe172 mutation [46,47]
+
+* docid=1557864 part=05-Discussion-p02-p1
+test: 
+pred: D2S123
+
+* docid=1557864 part=05-Discussion-p02-p3
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=1601966 part=03-Results-p06-p5
+test: M23A
+pred: 
+
+* docid=1601966 part=06-Methods-p03-p3
+test: 
+pred: G1, G2 and G3
+
+* docid=1619718 part=03-Materials-and-methods-p02-p4
+test: 
+pred: sequence at codon 12
+
+* docid=1619718 part=03-Materials-and-methods-p02-p5
+test: A1796 || V599E || V600E
+pred: V599E || V600E
+
+* docid=1619718 part=04-Results-p01-p3
+test: V600E || codon 12 (G→T at position 35 and T→G at position 36)
+pred: 20 G→A || G→C || G→T || G→T at position 35 || T→G || mutation at V600E || six mutations were in codon 13 (all G→A)
+
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 0 1
+* docid=1619718 part=04-Results-p03-p2
+test: 
+pred: G→A || G→A
+
+* docid=1619718 part=05-Discussion-p04-p3
+test: 
+pred: C to A
+
+* docid=1619718 part=05-Discussion-p04-p4
+test: 
+pred: C to A
+
+* docid=2275286 part=03-Methods-p01-p7
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=2275286 part=04-Results-p01-p6
+test: 
+pred: D17S250 || D2S123 || D5S346
+
+* docid=2275286 part=04-Results-p02-p4
+test: 
+pred: codon 380 of exon 5
+
+* docid=2275286 part=04-Results-p02-p8
+test: 
+pred: mutation between the MSI-L
+
+* docid=2275286 part=05-Discussion-p02-p1
+test: C1668 C > T || C1886 A > G
+pred: mutation of C1886 A > G, C1668 C > T
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=04-Results-p01-p2
+test: 
+pred: mutations between codon 1250 and 1464 || region from codon 1250 to 1464
+
+* docid=2386495 part=04-Results-p02-p1
+test: 1825del3595 || c.423-1662_531+1825del3595
+pred: c.423-1662_531+1825del3595 || deletion encompassing APC exon 4 || deletion of 86 bp in exon 15 to a deletion
+
+* docid=2386495 part=04-Results-p02-p3
+test: c.2700_2701delTC
+pred: c.2700_2701delTC mutation, which results in frame shift at codon 900
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=04-Results-p02-p4
+test: 
+pred: c.2700_2701delTC mutation in patient C107
+
+* docid=2386495 part=04-Results-p02-p6
+test: c.70C > T substitution which introduces a nonsense mutation in codon 24
+pred: c.70C > T || nonsense mutation in codon 24
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=04-Results-p03-p2
+test: c.835-7T > G
+pred: A search for deletion or duplication of one || c.835-7T > G
+
+* docid=2386495 part=04-Results-p03-p3
+test: c.835-7T > G
+pred: T > G || c.835-7T > G
+
+* docid=2386495 part=04-Results-p03-p4
+test: c. 423 -6delAAATAGGTinsGAAGCAAGATCAG || c.423-6del8ins13 || c.834G > C
+pred: 11-bp deletion in the 3' end of exon 7 || c. 423 -6delAAATAGGTinsGAAGCAAGATCAG || c.423-6del8ins13 || c.834G > C
+
+* docid=2386495 part=05-Discussion-p01-p2
+test: c.3183_3187delACAAA || c.3927_3931del AAAGA || c.3927_3931del AAAGA || c.70C > T
+pred: (C159) is a frameshift at codon 1920 || amino acid position 1309 || c.3183_3187delACAAA || c.3927_3931del || c.3927_3931del AAAGA || c.70C > T
+
+* docid=2386495 part=05-Discussion-p01-p4
+test: 
+pred: mutations between codon 1250
+
+* docid=2386495 part=05-Discussion-p02-p1
+test: c.70C > T
+pred: (C157), carrying the c.70C > T
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=05-Discussion-p02-p4
+test: 
+pred: deletion of APC exon 4
+
+* docid=2386495 part=05-Discussion-p03-p2
+test: c.2700_2701delTC
+pred: c.2700_2701delTC mutation in patient C107
+
+overlapping subclasses do not match 0 1
+* docid=2386495 part=05-Discussion-p03-p6
+test: c.834G > C || c.835-7T > G || c.845-17A > G
+pred: c.834G > C substitution at the last nucleotide of exon 7 in patient C633 || c.835-7T > G || c.845-17A > G || mutation at codon 278
+
+* docid=10601491 part=s1p2
+test: W362F || W362F || W362F || W362F || W362F || W362F || W362F || deletion of Kv1.4 || deletion of the Kv1.4
+pred: 2W362F || 2W362F || 2W362F || 2W362F || 2W362F || 2W362F || 2W362F || deletion of Kv1.4 || deletion of the Kv1.4
+
+* docid=11698344 part=s1p2
+test: ((157)G/A) || (157)(G/A) || (157)(G/A) || (157)(G/A) || (157)(G/A) || (1721)(G/A) || (1721)(G/A) || (1721)(G/A) || (1721)(G/A) || (2417)(A/G) || (2417)(A/G) || (2417)(A/G) || (2417)(A/G) || Arg(554)Lys || Met(786)Val || substitution of a G by an A at position 157
+pred: ((157)G/A) || (157)(G/A) || (157)(G/A) || (157)(G/A) || (1721)(G/A) || (1721)(G/A) || (1721)(G/A) || (1721)(G/A) || (2417)(A/G) || (2417)(A/G) || (2417)(A/G) || (2417)(A/G) || Arg(554)Lys || Met(786)Val || substitution of a G by an A at position 157 (157)(G/A)
+
+overlapping subclasses do not match 0 1
+* docid=10209029 part=s1p2
+test: T445A || T445A || T445D || T480A || T480A || T480D || substitution of Thr445 || substitution of Thr445
+pred: AdducinT445D || T480A || T480A || T480D || Thr480 by Ala || Thr480 by Asp || adducinT445A || adducinT445A || substitution of Thr445 || substitution of Thr445
+
+* docid=10634139 part=s1p2
+test: L311V || L311V || Leu311 to Val || S145C || S145C || Ser145 to Cys (S145C) || substitutions of C with G at positions 434 and 931
+pred: L311V || L311V || Leu311 to Val || S145C || S145C || S145C || Ser145 to Cys || substitutions of C with G at positions 434 and 931
+
+overlapping subclasses do not match 2 0
+* docid=7669785 part=s1p2
+test: H112Q || H112Q || I298C || K79M || Lys79 to methionine || Mutation of Ile298 || Tyr49 to phenylalamine or histidine || V299C || Val299 || Y49F || Y49H
+pred: H112Q || H112Q || I298C || K79M || Lys79 to methionine || Mutation of Ile298 || Tyr49 to phenylalamine or histidine || V299C || Y49F || Y49H
+
+* docid=8244338 part=s1p2
+test: Arg­<­-->Leu substitution || C­<­-->T at nt 257 || C­<­-->T at nucleotide (nt) 183 || T­<­-->G at nt 320 || Val­<­-->Ala substitution
+pred: -->T at nucleotide (nt) 183, C<-->T at nt 257
+
+overlapping subclasses do not match 2 1
+* docid=6582480 part=s1p2
+test: glutamine leads to lysine substitution || the glutamine adjacent to lysine was substituted by lysine
+pred: glutamine adjacent to lysine was substituted by lysine || glutamine leads to lysine substitution
+
+* docid=8383511 part=s1p2
+test: Arg16-->Gly || Arg16-->Gly || Arg16-->Gly || Gln27-->Glu || Nine different point mutations were found in both heterozygous and homozygous forms at nucleic acid residues 46, 79, 100, 252, 491, 523, 1053, 1098, and 1239 || arginine 16 to glycine || cause changes in the encoded amino acids at residues 16, 27, 34, and 164 || glutamine 27 to glutamic acid || threonine 164 to isoleucine || valine 34 to methionine
+pred: Arg16-->Gly || Arg16-->Gly || Arg16-->Gly || Gln27-->Glu || Gln27-->Glu || Nine different point mutations were found in both heterozygous and homozygous forms at nucleic acid residues 46, 79, 100, 252, 491, 523, 1053, 1098, and 1239 || arginine 16 to glycine || cause changes in the encoded amino acids at residues 16, 27, 34, and 164 || glutamine 27 to glutamic acid || valine 34 to methionine, and threonine || valine 34 to methionine, and threonine
+
+overlapping subclasses do not match 2 1
+* docid=9250352 part=s1p2
+test: 2 base deletion at nt 1297 || 2 base deletion at nt 1297 || 3 base deletion coupled with a 21 base insertion at intron 6/exon 7 || 5 base insertion at nt 1311 || Pro-->Ala at protein position 329 || consequent premature chain termination at protein position 434 || heterozygous with C-->G at nt 985 || premature chain termination at protein position 457
+pred: 2 base deletion at nt 1297 || 2 base deletion at nt 1297 || 3 base deletion coupled with a 21 base insertion at intron 6/exon 7 || 5 base insertion at nt 1311 || C-->G at nt 985 || Pro-->Ala at protein position 329 || consequent premature chain termination at protein position 434 || premature chain termination at protein position 457
+
+overlapping subclasses do not match 1 2
+* docid=8227344 part=s1p2
+test: Arg101 > Leu || Arg101 > Leu || Arg156 > His || Arg156 > His || IVS 10, 3'ss G-34 > A || IVS 10, 5'ss G+1 > A || IVS 5, 5'ss T+6 > A || Ser291 > Leu || Val177 > Met || delta 1019-1020 || delta 1019-1020 || delta 1019-1020 || delta 1019-1020 || delta 955-959 || three missense (Arg156 > His
+pred: 3'ss G-34 > A || 5'ss G+1 > A || 5'ss T+6 > A || Arg101 > Leu || Arg101 > Leu || Arg156 > His || Arg156 > His || Ser291 > Leu || Val177 > Met || delta 1019-1020 || delta 1019-1020 || delta 1019-1020 || delta 1019-1020 || delta 955-959 || three missense (Arg156 > His
+
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+overlapping subclasses do not match 1 0
+* docid=19855092 part=s1p2
+test: 
+pred: lacking the modified Thr residues
+
+* docid=9158150 part=s1p2
+test: 127ins5 || 553del 7 || C190T || P245L || P245L || R147L || R147L || R311W || R311W || R64X
+pred: 127ins5 || 553del 7 || P245L || P245L || R147L || R147L || R311W || R311W || R64X || epsilonC190T
+
+* docid=8645224 part=s1p2
+test: single serine-to-cysteine substitution at position 88 (position 84 in the liver sequence
+pred: position 84 in the liver sequence || single serine-to-cysteine substitution at position 88
+
+* docid=15670731 part=s1p2
+test: Arg-482 mutants (G, I, M, S, T, D, N, K, Y) || Arg-482 variants || R482K || R482K and Y || R482K, Y || replacements at position 482 || single amino acid changes at position 482
+pred: Arg-482 mutants (G, I, M || Arg-482 variants || R482K || R482K and Y || R482K, Y || replacements at position 482 || single amino acid changes at position 482
+
+* docid=11146000 part=s1p2
+test: Mutation of this site (Ala(345,346) || mutation of either Ser(345,346) || palmitoylation-less mutant (Gly(341
+pred: Mutation of this site (Ala(345,346)beta || mutation of either Ser(345,346)
+
+* docid=12174217 part=s1p2
+test: 1396G or 1396A || G or A base at nucleotide 1396 || aspartic acid or asparagine at codon 466
+pred: 1396A || 1396G || G or A base at nucleotide 1396 || aspartic acid or asparagine at codon 466
+
+Elapsed time:  558.8248219490051
+Pipeline specific to mutations
+Running arguments: 
+	crf_train_params = None
+	cv_fold = None
+	cv_n = None
+	delete_subclasses = []
+	do_train = False
+	elastic_net = False
+	execute_pp = True
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
+	labeler = BIEO
+	model_name = SETH,tmVar_test,Var120,nala_test
+	model_name_suffix = 
+	model_path_1 = nala/data/nala_BIEO_del_None_471433.bin
+	model_path_2 = None
+	mutations_specific = True
+	nl = False
+	nl_features = None
+	nl_threshold = 0
+	nl_window = False
+	only_class_id = None
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp3hjmf2ha
+	pruner = parts
+	ps_NL = False
+	ps_ST = False
+	ps_random = 0.0
+	string = None
+	test_corpus = SETH,tmVar_test,Var120,nala_test
+	training_corpus = None
+	use_feat_windows = True
+	validation = stratified
+	we_additive = 0
+	we_model_location = None
+	we_multiplicative = 1
+	we_params = {'additive': 0, 'multiplicative': 1, 'location': None}
+	word_embeddings = True
+	write_anndoc = False
+
+
+SETH,tmVar_test,Var120,nala_test
+
+	test size: 895
+	subclass distribution: Counter({0: 1585, 1: 200, 2: 41})
+	num sentences: 9699
+
+	crf_train_params = None
+	cv_fold = None
+	cv_n = None
+	delete_subclasses = []
+	do_train = False
+	elastic_net = False
+	execute_pp = True
+	keep_genetic_markers = True
+	keep_rs_ids = True
+	keep_silent = True
+	keep_unnumbered = True
+	labeler = BIEO
+	model_name = SETH,tmVar_test,Var120,nala_test
+	model_name_suffix = 
+	model_path_1 = nala/data/nala_BIEO_del_None_471433.bin
+	model_path_2 = None
+	mutations_specific = True
+	nl = False
+	nl_features = None
+	nl_threshold = 0
+	nl_window = False
+	only_class_id = None
+	output_folder = /var/folders/w7/tmrzzhhx5918x4qcnyv8_dy00000gn/T/tmp3hjmf2ha
+	pruner = parts
+	ps_NL = False
+	ps_ST = False
+	ps_random = 0.0
+	string = None
+	test_corpus = SETH,tmVar_test,Var120,nala_test
+	training_corpus = None
+	use_feat_windows = True
+	validation = stratified
+	we_additive = 0
+	we_model_location = None
+	we_multiplicative = 1
+	we_params = {'additive': 0, 'multiplicative': 1, 'location': None}
+	word_embeddings = True
+	write_anndoc = False
+
+# class	tp	fp	fn	fp_ov	fn_ov	e|P	e|R	e|F	e|F_SE	o|P	o|R	o|F	o|F_SE
+0	1389	363	193	133	147	0.7928	0.8780	0.8332	0.0012	0.8789	0.9732	0.9236	0.0008
+1	155	253	48	44	47	0.3799	0.7635	0.5074	0.0028	0.5407	0.9960	0.7009	0.0025
+2	21	53	20	16	16	0.2838	0.5122	0.3652	0.0053	0.5889	0.9298	0.7211	0.0052
+TOTAL	1565	669	261	193	210	0.7005	0.8571	0.7709	0.0013	0.8052	0.9747	0.8819	0.0008

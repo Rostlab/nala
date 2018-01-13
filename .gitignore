@@ -1,31 +1,28 @@
+.*
+!.gitignore
 *.class
 *.log
-
-# sbt specific
-.cache
-.history
-.lib/
-.DS_Store
-dist/*
-target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
-
-# Scala-IDE specific
-.scala_dependencies
-.worksheet
-
-# Sublime Text
-*.sublime-*
+!resources/*IAA.log
+.tags
+tags
 
 # idp-4 resources
 IDP4_*/
 node_modules/
+/crfsuite/*
+bin_model
+*.bin
+*.zip
+*.tar.gz
+*.tar
+
+# Word embeddings model
+nala/data/word_embeddings*
 
 # Python egg metadata, regenerated from source files by setuptools.
 /*.egg-info
+.eggs/
+*.egg*
 
 # Setuptools distribution folder.
 /dist/
@@ -37,9 +34,16 @@ node_modules/
 # PyCharm related files
 .idea/
 __pycache__/
+/*.iml
 
 # Config file with the paths
 config.ini
 
 # Cache files
-cache.json
+*cache.json
+
+# Mac OS X specific
+.DS_Store
+
+# Atom related files
+.remote-sync.json

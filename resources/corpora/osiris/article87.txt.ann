@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><AnnotationFile version="2.4">
+ <features list="filename,annotator"/>
+ <annotators list="tagger,laura,fromIob"/>
+ <Annotation type="file" span="34..1479" confidence="0.0" filename="article87.txt.ann.txt" annotator="tagger" id="1">
+  <Annotation type="ge" span="34..38" confidence="0.0" annotator="fromIob" id="2"/>
+  <Annotation type="ge" span="178..182" confidence="0.0" annotator="fromIob" id="3"/>
+  <Annotation type="ge" span="334..338" confidence="0.0" annotator="fromIob" id="4"/>
+  <Annotation type="lo" span="415..419" confidence="0.0" annotator="laura" id="5"/>
+  <Annotation type="so" span="420..421" confidence="0.0" annotator="laura" id="6"/>
+  <Annotation type="sa" span="422..423" confidence="0.0" annotator="laura" id="7"/>
+  <Annotation type="ge" span="467..471" confidence="0.0" annotator="fromIob" id="8"/>
+  <Annotation type="ge" span="565..582" confidence="0.0" annotator="fromIob" id="9"/>
+  <Annotation type="lo" span="725..729" confidence="0.0" annotator="laura" id="10"/>
+  <Annotation type="so" span="729..730" confidence="0.0" annotator="laura" id="11"/>
+  <Annotation type="sa" span="731..732" confidence="0.0" annotator="laura" id="12"/>
+  <Annotation type="ge" span="733..737" confidence="0.0" annotator="fromIob" id="13"/>
+  <Annotation type="so" span="1080..1082" confidence="0.0" annotator="laura" id="14"/>
+  <Annotation type="sg" span="1088..1090" confidence="0.0" annotator="laura" id="15"/>
+  <Annotation type="sa" span="1096..1098" confidence="0.0" annotator="laura" id="16"/>
+  <Annotation type="ge" span="1291..1308" confidence="0.0" annotator="fromIob" id="17"/>
+  <Annotation type="lo" span="1447..1451" confidence="0.0" annotator="laura" id="18"/>
+  <Annotation type="so" span="1451..1452" confidence="0.0" annotator="laura" id="19"/>
+  <Annotation type="sa" span="1453..1454" confidence="0.0" annotator="laura" id="20"/>
+  <Annotation type="ge" span="1475..1479" confidence="0.0" annotator="fromIob" id="21"/>
+ </Annotation>
+</AnnotationFile>

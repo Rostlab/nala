@@ -1,0 +1,1 @@
+{"sources": [{"id": "15776395", "url": "", "name": "ORIG"}], "metas": {}, "annotatable": {"parts": ["title", "abstract"]}, "entities": [{"confidence": {"prob": 0.5958481658459452, "state": "", "who": ["ml:nalaf"]}, "offsets": [{"start": 72, "text": "T1D"}], "classId": "e_2", "fields": {}, "normalizations": {}, "part": "abstract"}], "anncomplete": false, "relations": []}

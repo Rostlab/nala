@@ -1,0 +1,1 @@
+{"metas": {}, "relations": [], "sources": [{"id": "1925564", "name": "ORIG", "url": ""}], "annotatable": {"parts": ["s1p1", "s1p2"]}, "entities": [{"confidence": {"who": ["ml:nalaf"], "prob": 0.751307698266208, "state": "pre-added"}, "offsets": [{"start": 502, "text": "Phe for Val"}], "classId": "e_2", "part": "s1p2", "fields": {}, "normalizations": {}}], "anncomplete": false}

@@ -1,0 +1,1 @@
+{"metas": {}, "anncomplete": false, "entities": [{"confidence": {"prob": 0.5069028303036116, "state": "", "who": ["ml:nalaf"]}, "part": "s1p2", "offsets": [{"start": 580, "text": "miR-34a knockout"}], "classId": "e_2", "normalizations": {}, "fields": {}}], "relations": [], "sources": [{"id": "25043055", "name": "ORIG", "url": ""}], "annotatable": {"parts": ["s1p1", "s1p2"]}}
