@@ -6,6 +6,7 @@ def readme():
     with open('README.md') as file:
         return file.read()
 
+
 setup(
     name='nala',
     version='0.1.1',
@@ -14,7 +15,7 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Text Processing :: Linguistic'
     ],
     keywords='crf mutation natural language ner',
@@ -23,9 +24,9 @@ setup(
     author_email='nala@rostlab.org',
     #license='UNKNOWN',
     packages=find_packages(exclude=['tests']),
-    #install_requires=[
-    #    'nalaf'
-    #],
+    install_requires=[
+        # 'nalaf == 0.3.0'
+    ],
     #dependency_links=[
     #    'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
     #],
