@@ -9,7 +9,7 @@ def readme():
 
 setup(
     name='nala',
-    version='0.1.1',
+    version='0.2.0',
     description='Pipeline for NER of natural language mutation mentions',
     long_description=readme(),
     classifiers=[
