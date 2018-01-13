@@ -23,6 +23,7 @@ git clone https://github.com/Rostlab/nala.git
 cd nala
 # We recommend you use python virtualenv: https://pypi.python.org/pypi/virtualenv
 pip3 install -r requirements.txt
+# Make sure you did install nalaf's data: python3 -m nalaf.download_data
 ```
 
  If you want to run the unit tests (excluding the slow ones) do:
