@@ -7,9 +7,7 @@ from nalaf.utils.readers import TextFilesReader, PMIDReader
 from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter, TagTogFormat, PubTatorFormat
 from nalaf.learning.crfsuite import PyCRFSuite
-from nala.utils import PRO_CLASS_ID, MUT_CLASS_ID, PRO_REL_MUT_CLASS_ID, get_prepare_pipeline_for_best_model
-from nalaf.domain.bio.gnormplus import GNormPlusGeneTagger
-from nalaf.learning.taggers import StubSameSentenceRelationExtractor
+from nala.utils import PRO_CLASS_ID, MUT_CLASS_ID, get_prepare_pipeline_for_best_model
 from nala.learning.postprocessing import PostProcessing
 
 
@@ -56,10 +54,6 @@ if __name__ == "__main__":
 
     crf.tag(dataset, bin_model, MUT_CLASS_ID)
     PostProcessing().process(dataset)
-
-    # GNormPlusGeneTagger().tag(dataset, uniprot=True)
-
-    # StubSameSentenceRelationExtractor(PRO_CLASS_ID, MUT_CLASS_ID, PRO_REL_MUT_CLASS_ID).annotate(dataset)
 
     if args.output_dir:
         if not os.path.isdir(args.output_dir):
