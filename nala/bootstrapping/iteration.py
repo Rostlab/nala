@@ -28,6 +28,7 @@ from nalaf.structures.data import Dataset
 
 from nala.utils import get_prepare_pipeline_for_best_model
 
+
 class IterationRound:
     """
     Class to represent a single iteration round
