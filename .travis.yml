@@ -12,18 +12,17 @@ cache:
   pip: true
 
 before_install:
-  - pip install git+https://github.com/Rostlab/nalaf.git@develop
-  - python -m nalaf.download_corpora
   - pip install codecov
 
 install:
-  - pip install .
+  - pip install -r requirements.txt
+  - python -m nalaf.download_data
 
 script:
   - nosetests -a \"!slow\" --with-coverage
-  - tmpfile=mktemp && python scripts/get_corpus_stats.py \* --counttokens 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/corpora/stats.tsv`; (([[ -z $errors ]] && True) || (echo $errors && fail))
-  - tmpfile=mktemp && python scripts/getIAA nala 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/nala_IAA.log` && ([[ -z $errors ]] && True) || fail
-  - "python nala.py -s Dummy & simple A78G"
+  # - tmpfile=mktemp && python scripts/get_corpus_stats.py \* --counttokens 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/corpora/stats.tsv`; (([[ -z $errors ]] && True) || (echo $errors && fail))
+  # - tmpfile=mktemp && python scripts/getIAA.py nala 2>/dev/null > $tmpfile && errors=`diff $tmpfile resources/nala_IAA.log` && ([[ -z $errors ]] && True) || fail
+  - 'python3 nala.py -s "Standard (ST) examples: Asp8Asn or delPhe1388. Semi-standard (SST) examples: 3992-9g-->a mutation. Natural language (NL) examples: glycine was substituted by lysine at residue 18 (Gly18Lys)"'
 
 after_success:
   - codecov
