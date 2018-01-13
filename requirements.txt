@@ -13,7 +13,8 @@ gensim==0.13.3
 idna==2.6
 jmespath==0.9.3
 murmurhash==0.26.4
--e git+https://github.com/Rostlab/nalaf.git@682a965891de5a60408f5df762772f5face800ee#egg=nalaf
+nalaf==0.3.1
+# -e git+https://github.com/Rostlab/nalaf.git@682a965891de5a60408f5df762772f5face800ee#egg=nalaf
 nltk==3.2.1
 numpy==1.11.2
 pathlib==1.0.1

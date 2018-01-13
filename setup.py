@@ -9,7 +9,7 @@ def readme():
 
 setup(
     name='nala',
-    version='0.2.0',
+    version='0.2.1-SNAPSHOT',
     description='Pipeline for NER of natural language mutation mentions',
     long_description=readme(),
     classifiers=[
@@ -22,14 +22,14 @@ setup(
     url='https://github.com/Rostlab/nala',
     author='Aleksandar Bojchevski, Carsten Uhlig, Juan Miguel Cejuela',
     author_email='nala@rostlab.org',
-    #license='UNKNOWN',
+    # license='UNKNOWN',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        # 'nalaf == 0.3.0'
+        'nalaf == 0.3.1'
     ],
-    #dependency_links=[
+    # dependency_links=[
     #    'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
-    #],
+    # ],
     include_package_data=True,
     zip_safe=False,
     test_suite='nose.collector',
