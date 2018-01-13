@@ -2,7 +2,6 @@ import argparse
 import os
 import sys
 import tempfile
-from collections import Counter
 from nala.preprocessing.definers import ExclusiveNLDefiner
 from nala.utils.corpora import get_corpus, get_corpora
 from nalaf.preprocessing.labelers import BIEOLabeler, BIOLabeler, IOLabeler, TmVarLabeler
@@ -57,7 +56,7 @@ def train(argv):
                         help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
 
     parser.add_argument('--only_class_id', required=False, default=MUT_CLASS_ID,
-                        help="By default, only the mutation entities are read from corpora (assumed to have class_id == '"+MUT_CLASS_ID+"'). Set this class_id to filter rest out")
+                        help="By default, only the mutation entities are read from corpora (assumed to have class_id == '" + MUT_CLASS_ID + "'). Set this class_id to filter rest out")
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
 
