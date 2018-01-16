@@ -1,6 +1,6 @@
 import os
 from nala.utils import nala_repo_path
-from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
+from nala.utils import MUT_CLASS_ID
 from nala.bootstrapping.iteration import Iteration
 from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, \
     PMIDReader, HTMLReader, ProteinResidueCorpusPartialReader
