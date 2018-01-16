@@ -26,11 +26,13 @@ ALL_CORPORA = [
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
+
 def get_corpora(names, only_class_id=None):
     dataset = Dataset()
     for name in names.split(','):
         dataset.extend_dataset(get_corpus(name, only_class_id))
     return dataset
+
 
 def get_corpus(name, only_class_id=None):
     if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
