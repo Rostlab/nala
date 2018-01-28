@@ -36,7 +36,7 @@ class NalaSingleModelTagger(Tagger):
         self.features_pipeline = features_pipeline if features_pipeline else get_prepare_pipeline_for_best_model()
         self.execute_pipeline = execute_pipeline
         # ---
-        self.crf = PyCRFSuite()
+        self.crf = PyCRFSuite(model_file=self.bin_model)
 
         self.post = None
         if execute_pp:
@@ -50,7 +50,7 @@ class NalaSingleModelTagger(Tagger):
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
 
-        self.crf.tag(dataset, self.bin_model, class_id)
+        self.crf.annotate(dataset, class_id)
         if self.post:
             self.post.process(dataset, class_id=class_id)
 
