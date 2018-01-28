@@ -187,7 +187,6 @@ def train(argv):
 
     def stats(dataset, name):
         print('\n\t{} size: {}'.format(name, len(dataset)))
-        # Caveat: the dataset must be (mutations) defined first
         print('\tsubclass distribution: {}'.format(repr(dataset)))
         # Caveat: the dataset must be passed through the pipeline first
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
@@ -298,15 +297,14 @@ def train(argv):
     assert(args.model_path_1 is not None)
 
     if args.model_path_2:
-        tagger = NalaMultipleModelTagger(
-                                       st_model=args.model_path_1,
-                                       all3_model=args.model_path_2,
-                                       features_pipeline=features_pipeline,
-                                       execute_pp=args.execute_pp,
-                                       keep_silent=args.keep_silent,
-                                       keep_genetic_markers=args.keep_genetic_markers,
-                                       keep_unnumbered=args.keep_unnumbered,
-                                       keep_rs_ids=args.keep_rs_ids)
+        tagger = NalaMultipleModelTagger(st_model=args.model_path_1,
+                                         all3_model=args.model_path_2,
+                                         features_pipeline=features_pipeline,
+                                         execute_pp=args.execute_pp,
+                                         keep_silent=args.keep_silent,
+                                         keep_genetic_markers=args.keep_genetic_markers,
+                                         keep_unnumbered=args.keep_unnumbered,
+                                         keep_rs_ids=args.keep_rs_ids)
     else:
         tagger = NalaSingleModelTagger(bin_model=args.model_path_1,
                                        features_pipeline=features_pipeline,
