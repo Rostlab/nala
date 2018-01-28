@@ -222,7 +222,7 @@ class TmVarTagger(Cacheable, Tagger):
                     start, end = TmVarTagger._adjust_offsets(part.text, pred_part['text'], start, end)
 
                     part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))
-        except:
+        except Exception:
             print("ERROR PARSING JSON", response_text)
             raise
 
@@ -273,7 +273,7 @@ class TmVarTagger(Cacheable, Tagger):
                         s = requests.get(r.url)
                         response_text = s.text
                         s = s.status_code
-                    response_text = '['+response_text+']'
+                    response_text = '[' + response_text + ']'
                     self.cache[doc_id] = response_text
                 else:
                     continue
