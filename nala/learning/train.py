@@ -341,7 +341,7 @@ def train(argv):
         "tagger": tagger,
         "trained_model_path": args.model_path_1,
         "training_num_docs": 0 if train_set is None else len(train_set.documents),
-        "training_num_annotations": 0 if train_set is None else sum(1 for e in train.set.entities() if e.class_id == args.only_class_id)
+        "training_num_annotations": 0 if train_set is None else sum(1 for e in train_set.entities() if e.class_id == args.only_class_id)
     }
 
 
