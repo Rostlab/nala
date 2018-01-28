@@ -26,6 +26,7 @@ THRESHOLD_VALUE = 1
 
 __nala_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
+
 def nala_repo_path(listOrString):
     if type(listOrString) is str:
         return os.path.join(__nala_repo_root, listOrString)

@@ -145,6 +145,7 @@ class IterationRound:
         else:
             return last.number
 
+
 class Iteration:
     """
     This is the class to perform one iteration of bootstrapping. There are various options.

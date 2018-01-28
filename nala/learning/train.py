@@ -308,8 +308,7 @@ def train(argv):
                                        keep_unnumbered=args.keep_unnumbered,
                                        keep_rs_ids=args.keep_rs_ids)
     else:
-        tagger = NalaSingleModelTagger(
-                                       bin_model=args.model_path_1,
+        tagger = NalaSingleModelTagger(bin_model=args.model_path_1,
                                        features_pipeline=features_pipeline,
                                        execute_pp=args.execute_pp,
                                        keep_silent=args.keep_silent,
