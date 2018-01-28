@@ -6,9 +6,8 @@ import pkg_resources
 from nalaf.utils.readers import TextFilesReader, PMIDReader
 from nalaf.utils.readers import StringReader
 from nalaf.utils.writers import ConsoleWriter, TagTogFormat, PubTatorFormat
-from nalaf.learning.crfsuite import PyCRFSuite
-from nala.utils import PRO_CLASS_ID, MUT_CLASS_ID, get_prepare_pipeline_for_best_model
-from nala.learning.postprocessing import PostProcessing
+from nala.utils import PRO_CLASS_ID, MUT_CLASS_ID
+from nala.learning.taggers import NalaSingleModelTagger
 
 
 if __name__ == "__main__":
@@ -45,15 +44,10 @@ if __name__ == "__main__":
     else:
         raise FileNotFoundError('directory or file "{}" does not exist'.format(args.dir_or_file))
 
-
-    pipeline = get_prepare_pipeline_for_best_model()
-    crf = PyCRFSuite()
     bin_model = pkg_resources.resource_filename('nala.data', 'default_model')
+    tagger = NalaSingleModelTagger(class_id=MUT_CLASS_ID, bin_model=bin_model)
 
-    pipeline.execute(dataset)
-
-    crf.tag(dataset, bin_model, MUT_CLASS_ID)
-    PostProcessing().process(dataset)
+    tagger.tag(dataset)
 
     if args.output_dir:
         if not os.path.isdir(args.output_dir):
