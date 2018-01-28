@@ -339,7 +339,12 @@ def train(argv):
 
     print_debug("Elapsed time: ", (end_time - start_time))
 
-    return tagger
+    return {
+        "tagger": tagger,
+        "trained_model_path": args.model_path_1,
+        "training_num_docs": 0 if train_set is None else len(train_set.documents),
+        "training_num_annotations": 0 if train_set is None else sum(1 for e in train.set.entities() if e.class_id == args.only_class_id)
+    }
 
 
 if __name__ == "__main__":
