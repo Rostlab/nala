@@ -221,8 +221,8 @@ def train(argv):
 
     def verify_corpus(corpus):
         if corpus is not None:
-            assert len(corpus) > 0, 'The corpus has no documents: {}'.format(args.training_corpus)
-            # assert next(corpus.annotations(), None) is not None, 'The corpus has no annotations'
+            assert len(corpus) > 0, 'The corpus should have at least one document; had 0: {}'.format(args.training_corpus)
+            assert next(corpus.annotations(), None) is not None, 'The corpus should have at least one annotation; had 0'
 
     verify_corpus(train_set)
 
