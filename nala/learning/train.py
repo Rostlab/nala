@@ -90,8 +90,10 @@ def train(argv):
     parser.add_argument('--keep_rs_ids', default='True',
                         help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `rs1801280` or `ss221`')
 
-    parser.add_argument('--hdfs_url', required=False, type=str)
-    parser.add_argument('--hdfs_user', required=False, type=str)
+    parser.add_argument('--hdfs_url', required=False, default=None, type=str,
+                        help='URL of hdfs if this is used')
+    parser.add_argument('--hdfs_user', required=False, default=None, type=str,
+                        help="user of hdfs if this used. Must be given if `hdfs_url` is given")
 
     FALSE = ['false', 'f', '0', 'no', 'none']
 
