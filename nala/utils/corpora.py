@@ -36,16 +36,16 @@ def get_corpora(names, only_class_id=None):
     return dataset
 
 
-def get_corpus(name, only_class_id=None):
+def get_corpus(name, only_class_id=None, hdfs_url=None, hdfs_user=None):
     if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
-        return get_annjson_corpus(name, only_class_id=only_class_id)
+        return get_annjson_corpus(name, only_class_id=only_class_id, hdfs_url=hdfs_url, hdfs_user=hdfs_user)
     else:
         return get_corpus_name(name, only_class_id=only_class_id)
 
 
-def get_annjson_corpus(folder, only_class_id=None):
-    ret = HTMLReader(folder, whole_basename_as_docid=True).read()
-    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id, whole_basename_as_docid=True).annotate(ret)
+def get_annjson_corpus(folder, only_class_id=None, hdfs_url=None, hdfs_user=None):
+    ret = HTMLReader(folder, whole_basename_as_docid=True, hdfs_url=hdfs_url, hdfs_user=hdfs_user).read()
+    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id, whole_basename_as_docid=True, hdfs_url=hdfs_url, hdfs_user=hdfs_user).annotate(ret)
     return ret
 
 
