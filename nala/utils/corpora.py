@@ -29,16 +29,18 @@ __corpora_folder = nala_repo_path(["resources", "corpora"])
 
 def get_corpora(names, only_class_id=None):
     dataset = Dataset()
+
     for name in names.split(','):
-        dataset.extend_dataset(get_corpus(name, only_class_id))
+        dataset.extend_dataset(get_corpus(name, only_class_id=only_class_id))
+
     return dataset
 
 
 def get_corpus(name, only_class_id=None):
     if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
-        return get_annjson_corpus(name, only_class_id)
+        return get_annjson_corpus(name, only_class_id=only_class_id)
     else:
-        return get_corpus_name(name, only_class_id)
+        return get_corpus_name(name, only_class_id=only_class_id)
 
 
 def get_annjson_corpus(folder, only_class_id=None):
