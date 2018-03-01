@@ -53,7 +53,7 @@ def get_corpus_name(name, only_class_id=None):
     """
     :rtype: nalaf.structures.data.Dataset
     """
-    assert only_class_id == MUT_CLASS_ID, "(corpus name: {}) The class_id to read (only) is always assumed to be `{}}`".format(name, MUT_CLASS_ID)
+    assert only_class_id == MUT_CLASS_ID, "(corpus name: {}) The class_id to read (only) is always assumed to be `{}`".format(name, MUT_CLASS_ID)
 
     parts = name.split("_")
     training = test = random = False
