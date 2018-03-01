@@ -37,7 +37,7 @@ def get_corpora(names, only_class_id=None):
 
 
 def get_corpus(name, only_class_id=None, hdfs_url=None, hdfs_user=None):
-    if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
+    if (name.startswith(os.sep) or name.endswith(os.sep)):
         return get_annjson_corpus(name, only_class_id=only_class_id, hdfs_url=hdfs_url, hdfs_user=hdfs_user)
     else:
         return get_corpus_name(name, only_class_id=only_class_id)
