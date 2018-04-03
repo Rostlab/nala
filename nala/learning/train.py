@@ -90,6 +90,11 @@ def train(argv):
     parser.add_argument('--keep_rs_ids', default='True',
                         help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `rs1801280` or `ss221`')
 
+    parser.add_argument('--hdfs_url', required=False, default=None, type=str,
+                        help='URL of hdfs if this is used')
+    parser.add_argument('--hdfs_user', required=False, default=None, type=str,
+                        help="user of hdfs if this used. Must be given if `hdfs_url` is given")
+
     FALSE = ['false', 'f', '0', 'no', 'none']
 
     def arg_bool(arg_value):
@@ -194,10 +199,10 @@ def train(argv):
     definer = ExclusiveNLDefiner()
 
     if args.training_corpus:
-        train_set = get_corpus(args.training_corpus, args.only_class_id)
+        train_set = get_corpus(args.training_corpus, only_class_id=args.only_class_id, hdfs_url=args.hdfs_url, hdfs_user=args.hdfs_user)
 
         if args.test_corpus:
-            test_set = get_corpus(args.test_corpus, args.only_class_id)
+            test_set = get_corpus(args.test_corpus, only_class_id=args.only_class_id, hdfs_url=args.hdfs_url, hdfs_user=args.hdfs_user)
         elif args.string:
             test_set = StringReader(args.string).read()
         elif args.validation == "none":

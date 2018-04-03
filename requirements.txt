@@ -1,4 +1,4 @@
-nalaf==0.3.4
+nalaf==0.4.0
 # -e git+https://github.com/Rostlab/nalaf.git@682a965891de5a60408f5df762772f5face800ee#egg=nalaf
 # -e ../nalaf/
 #
@@ -11,9 +11,11 @@ certifi==2017.11.5
 chardet==3.0.4
 cloudpickle==0.5.2
 cymem==1.31.2
+docopt==0.6.2
 docutils==0.14
 elasticsearch==6.0.0
 gensim==0.13.3
+hdfs==2.1.0
 idna==2.6
 jmespath==0.9.3
 murmurhash==0.26.4
