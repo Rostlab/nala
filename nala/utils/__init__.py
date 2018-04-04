@@ -102,7 +102,7 @@ def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None
     windows_include = []
 
     if dictionaries_folder:
-        dics_feat_generators = DictionaryFeatureGenerator.construct_all_from_folder(string_tokenizer=tokenizer.tokenize_string, case_sensitive=False, dictionaries_folder=dictionaries_folder, hdfs_url=hdfs_url, hdfs_user=hdfs_user, stop_words=dictionaries_stop_words)
+        dics_feat_generators = DictionaryFeatureGenerator.construct_all_from_folder(dictionaries_folder=dictionaries_folder, string_tokenizer=tokenizer.tokenize_string, case_sensitive=False, hdfs_url=hdfs_url, hdfs_user=hdfs_user, stop_words=dictionaries_stop_words)
         generators.extend(dics_feat_generators)
         for dic in dics_feat_generators:
             windows_include.append(dic.key + "[0]")
