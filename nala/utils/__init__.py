@@ -12,6 +12,7 @@ import os
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.features.simple import SentenceMarkerFeatureGenerator
 from nalaf.features.stemming import SpacyLemmatizer
+from nalaf.features.dictionaries import DictionaryFeatureGenerator
 from nalaf.features.parsing import SpacyPosTagger
 from nalaf.features.window import WindowFeatureGenerator
 from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
@@ -75,7 +76,7 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
     return PrepareDatasetPipeline(feature_generators=generators)
 
 
-def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None, nl_features=None):
+def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None, dictionaries_folder=None, hdfs_url=None, hdfs_user=None, dictionaries_stop_words=None):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating any-domain mentions.
@@ -100,12 +101,11 @@ def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None
 
     windows_include = []
 
-    if nl_features:
-        f = NLMentionFeatureGenerator(nl_features['threshold'])
-        if nl_features['window']:
-            windows_include.extend(['tag_dict[0]', 'nl_tag_dict[0]'])
-
-        generators.append(f)
+    if dictionaries_folder:
+        dics_feat_generators = DictionaryFeatureGenerator.construct_all_from_folder(string_tokenizer=tokenizer.tokenize_string, case_sensitive=False, dictionaries_folder=dictionaries_folder, hdfs_url=hdfs_url, hdfs_user=hdfs_user, stop_words=dictionaries_stop_words)
+        generators.extend(dics_feat_generators)
+        for dic in dics_feat_generators:
+            windows_include.append(dic.key + "[0]")
 
     if use_windows:
         windows_include.extend(['stem[0]', 'pos[0]'])
