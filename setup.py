@@ -25,7 +25,7 @@ setup(
     # license='UNKNOWN',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'nalaf == 0.4.0'
+        'nalaf == 0.5.0'
     ],
     # dependency_links=[
     #    'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
