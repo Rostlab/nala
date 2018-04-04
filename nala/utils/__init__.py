@@ -76,7 +76,7 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
     return PrepareDatasetPipeline(feature_generators=generators)
 
 
-def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None, dictionaries_folder=None, hdfs_url=None, hdfs_user=None, dictionaries_stop_words=None):
+def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None, dictionaries_paths=None, hdfs_url=None, hdfs_user=None, dictionaries_stop_words=None):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating any-domain mentions.
@@ -101,8 +101,11 @@ def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None
 
     windows_include = []
 
-    if dictionaries_folder:
-        dics_feat_generators = DictionaryFeatureGenerator.construct_all_from_folder(dictionaries_folder=dictionaries_folder, string_tokenizer=tokenizer.tokenize_string, case_sensitive=False, hdfs_url=hdfs_url, hdfs_user=hdfs_user, stop_words=dictionaries_stop_words)
+    if dictionaries_paths:
+        if type(dictionaries_paths) is str:
+            dictionaries_paths = dictionaries_paths.split()
+
+        dics_feat_generators = DictionaryFeatureGenerator.construct_all_from_paths(dictionaries_paths=dictionaries_paths, string_tokenizer=tokenizer.tokenize_string, case_sensitive=False, hdfs_url=hdfs_url, hdfs_user=hdfs_user, stop_words=dictionaries_stop_words)
         generators.extend(dics_feat_generators)
         for dic in dics_feat_generators:
             windows_include.append(dic.key + "[0]")

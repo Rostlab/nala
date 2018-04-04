@@ -90,7 +90,7 @@ def train(argv):
     parser.add_argument('--keep_rs_ids', default='True',
                         help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `rs1801280` or `ss221`')
 
-    parser.add_argument('--dictionaries_folder', default=None, help='Folder where dictionaries are to be found to use as features. Can be used within hdfs')
+    parser.add_argument('--dictionaries_paths', default=None, help='Dictionary paths to use for dictionary features. Can be used within hdfs')
     parser.add_argument('--dictionaries_stop_words', default=None, help='Stop words for dictionaries if these are used')
 
     parser.add_argument('--hdfs_url', required=False, default=None, type=str,
@@ -241,7 +241,7 @@ def train(argv):
         features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
     else:
         print("Pipeline is general")
-        features_pipeline = get_prepare_pipeline_for_best_model_general(args.use_feat_windows, args.we_params, args.dictionaries_folder, args.hdfs_url, args.hdfs_user, args.dictionaries_stop_words)
+        features_pipeline = get_prepare_pipeline_for_best_model_general(args.use_feat_windows, args.we_params, args.dictionaries_paths, args.hdfs_url, args.hdfs_user, args.dictionaries_stop_words)
 
     # ------------------------------------------------------------------------------
 
