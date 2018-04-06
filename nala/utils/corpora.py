@@ -1,6 +1,6 @@
 import os
 from nala.utils import nala_repo_path
-from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
+from nala.utils import MUT_CLASS_ID
 from nala.bootstrapping.iteration import Iteration
 from nalaf.utils.readers import VerspoorReader, TmVarReader, OSIRISReader, MutationFinderReader, \
     PMIDReader, HTMLReader, ProteinResidueCorpusPartialReader
@@ -26,22 +26,26 @@ ALL_CORPORA = [
 
 __corpora_folder = nala_repo_path(["resources", "corpora"])
 
+
 def get_corpora(names, only_class_id=None):
     dataset = Dataset()
+
     for name in names.split(','):
-        dataset.extend_dataset(get_corpus(name, only_class_id))
+        dataset.extend_dataset(get_corpus(name, only_class_id=only_class_id))
+
     return dataset
 
-def get_corpus(name, only_class_id=None):
-    if (name.startswith(os.sep) or name.endswith(os.sep)) and os.path.isdir(name):
-        return get_annjson_corpus(name, only_class_id)
+
+def get_corpus(name, only_class_id=None, hdfs_url=None, hdfs_user=None):
+    if (name.startswith(os.sep) or name.endswith(os.sep)):
+        return get_annjson_corpus(name, only_class_id=only_class_id, hdfs_url=hdfs_url, hdfs_user=hdfs_user)
     else:
-        return get_corpus_name(name, only_class_id)
+        return get_corpus_name(name, only_class_id=only_class_id)
 
 
-def get_annjson_corpus(folder, only_class_id=None):
-    ret = HTMLReader(folder, whole_basename_as_docid=True).read()
-    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id, whole_basename_as_docid=True).annotate(ret)
+def get_annjson_corpus(folder, only_class_id=None, hdfs_url=None, hdfs_user=None):
+    ret = HTMLReader(folder, whole_basename_as_docid=True, hdfs_url=hdfs_url, hdfs_user=hdfs_user).read()
+    AnnJsonAnnotationReader(folder, read_only_class_id=only_class_id, whole_basename_as_docid=True, hdfs_url=hdfs_url, hdfs_user=hdfs_user).annotate(ret)
     return ret
 
 
@@ -49,7 +53,7 @@ def get_corpus_name(name, only_class_id=None):
     """
     :rtype: nalaf.structures.data.Dataset
     """
-    assert only_class_id == MUT_CLASS_ID, "The class_id to read (only) is always assumed to be `MUT_CLASS_ID`"
+    assert only_class_id == MUT_CLASS_ID, "(corpus name: {}) The class_id to read (only) is always assumed to be `{}`".format(name, MUT_CLASS_ID)
 
     parts = name.split("_")
     training = test = random = False

@@ -71,6 +71,7 @@ class SemiStandardFeatureGenerator(FeatureGenerator):
                             token.features['semi_standard'] = 'word'
                         if token.word.lower() in self.amino_acids:
                             token.features['semi_standard'] = 'aa'
+                            
 
 class NLMentionFeatureGenerator(FeatureGenerator):
     """

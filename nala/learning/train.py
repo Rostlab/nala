@@ -90,6 +90,14 @@ def train(argv):
     parser.add_argument('--keep_rs_ids', default='True',
                         help='Keep unnumbered mentions (default) or not, i.e., delete mentions like `rs1801280` or `ss221`')
 
+    parser.add_argument('--dictionaries_paths', default=None, help='Dictionary paths to use for dictionary features. Can be used within hdfs')
+    parser.add_argument('--dictionaries_stop_words', default=None, help='Stop words for dictionaries if these are used')
+
+    parser.add_argument('--hdfs_url', required=False, default=None, type=str,
+                        help='URL of hdfs if this is used')
+    parser.add_argument('--hdfs_user', required=False, default=None, type=str,
+                        help="user of hdfs if this used. Must be given if `hdfs_url` is given")
+
     FALSE = ['false', 'f', '0', 'no', 'none']
 
     def arg_bool(arg_value):
@@ -187,7 +195,6 @@ def train(argv):
 
     def stats(dataset, name):
         print('\n\t{} size: {}'.format(name, len(dataset)))
-        # Caveat: the dataset must be (mutations) defined first
         print('\tsubclass distribution: {}'.format(repr(dataset)))
         # Caveat: the dataset must be passed through the pipeline first
         print('\tnum sentences: {}\n'.format(sum(1 for x in dataset.sentences())))
@@ -195,10 +202,10 @@ def train(argv):
     definer = ExclusiveNLDefiner()
 
     if args.training_corpus:
-        train_set = get_corpus(args.training_corpus, args.only_class_id)
+        train_set = get_corpus(args.training_corpus, only_class_id=args.only_class_id, hdfs_url=args.hdfs_url, hdfs_user=args.hdfs_user)
 
         if args.test_corpus:
-            test_set = get_corpus(args.test_corpus, args.only_class_id)
+            test_set = get_corpus(args.test_corpus, only_class_id=args.only_class_id, hdfs_url=args.hdfs_url, hdfs_user=args.hdfs_user)
         elif args.string:
             test_set = StringReader(args.string).read()
         elif args.validation == "none":
@@ -222,8 +229,8 @@ def train(argv):
 
     def verify_corpus(corpus):
         if corpus is not None:
-            assert len(corpus) > 0, 'The corpus has no documents: {}'.format(args.training_corpus)
-            assert next(corpus.annotations(), None) is not None, 'The corpus has no annotations'
+            assert len(corpus) > 0, 'The corpus should have at least one document; had 0: {}'.format(args.training_corpus)
+            assert next(corpus.annotations(), None) is not None, 'The corpus should have at least one annotation; had 0'
 
     verify_corpus(train_set)
 
@@ -234,7 +241,7 @@ def train(argv):
         features_pipeline = get_prepare_pipeline_for_best_model(args.use_feat_windows, args.we_params, args.nl_features)
     else:
         print("Pipeline is general")
-        features_pipeline = get_prepare_pipeline_for_best_model_general(args.use_feat_windows, args.we_params, args.nl_features)
+        features_pipeline = get_prepare_pipeline_for_best_model_general(args.use_feat_windows, args.we_params, args.dictionaries_paths, args.hdfs_url, args.hdfs_user, args.dictionaries_stop_words)
 
     # ------------------------------------------------------------------------------
 
@@ -298,18 +305,16 @@ def train(argv):
     assert(args.model_path_1 is not None)
 
     if args.model_path_2:
-        tagger = NalaMultipleModelTagger(
-                                       st_model=args.model_path_1,
-                                       all3_model=args.model_path_2,
-                                       features_pipeline=features_pipeline,
-                                       execute_pp=args.execute_pp,
-                                       keep_silent=args.keep_silent,
-                                       keep_genetic_markers=args.keep_genetic_markers,
-                                       keep_unnumbered=args.keep_unnumbered,
-                                       keep_rs_ids=args.keep_rs_ids)
+        tagger = NalaMultipleModelTagger(st_model=args.model_path_1,
+                                         all3_model=args.model_path_2,
+                                         features_pipeline=features_pipeline,
+                                         execute_pp=args.execute_pp,
+                                         keep_silent=args.keep_silent,
+                                         keep_genetic_markers=args.keep_genetic_markers,
+                                         keep_unnumbered=args.keep_unnumbered,
+                                         keep_rs_ids=args.keep_rs_ids)
     else:
-        tagger = NalaSingleModelTagger(
-                                       bin_model=args.model_path_1,
+        tagger = NalaSingleModelTagger(bin_model=args.model_path_1,
                                        features_pipeline=features_pipeline,
                                        execute_pp=args.execute_pp,
                                        keep_silent=args.keep_silent,
@@ -340,7 +345,12 @@ def train(argv):
 
     print_debug("Elapsed time: ", (end_time - start_time))
 
-    return tagger
+    return {
+        "tagger": tagger,
+        "trained_model_path": args.model_path_1,
+        "training_num_docs": 0 if train_set is None else len(train_set.documents),
+        "training_num_annotations": 0 if train_set is None else sum(1 for e in train_set.entities() if e.class_id == args.only_class_id)
+    }
 
 
 if __name__ == "__main__":

@@ -36,7 +36,7 @@ class NalaSingleModelTagger(Tagger):
         self.features_pipeline = features_pipeline if features_pipeline else get_prepare_pipeline_for_best_model()
         self.execute_pipeline = execute_pipeline
         # ---
-        self.crf = PyCRFSuite()
+        self.crf = PyCRFSuite(model_file=self.bin_model)
 
         self.post = None
         if execute_pp:
@@ -50,7 +50,7 @@ class NalaSingleModelTagger(Tagger):
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
 
-        self.crf.tag(dataset, self.bin_model, class_id)
+        self.crf.annotate(dataset, class_id)
         if self.post:
             self.post.process(dataset, class_id=class_id)
 
@@ -222,7 +222,7 @@ class TmVarTagger(Cacheable, Tagger):
                     start, end = TmVarTagger._adjust_offsets(part.text, pred_part['text'], start, end)
 
                     part.predicted_annotations.append(Entity(MUT_CLASS_ID, start, part.text[start:end]))
-        except:
+        except Exception:
             print("ERROR PARSING JSON", response_text)
             raise
 
@@ -273,7 +273,7 @@ class TmVarTagger(Cacheable, Tagger):
                         s = requests.get(r.url)
                         response_text = s.text
                         s = s.status_code
-                    response_text = '['+response_text+']'
+                    response_text = '[' + response_text + ']'
                     self.cache[doc_id] = response_text
                 else:
                     continue
