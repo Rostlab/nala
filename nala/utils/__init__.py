@@ -12,10 +12,12 @@ import os
 from nalaf.structures.dataset_pipelines import PrepareDatasetPipeline
 from nalaf.features.simple import SentenceMarkerFeatureGenerator
 from nalaf.features.stemming import SpacyLemmatizer
+from nalaf.features.dictionaries import DictionaryFeatureGenerator
 from nalaf.features.parsing import SpacyPosTagger
 from nalaf.features.window import WindowFeatureGenerator
 from nala.features.tmvar import TmVarFeatureGenerator, TmVarDictionaryFeatureGenerator
 from nala.features.nl_mutations import NLMentionFeatureGenerator
+from nalaf.preprocessing.tokenizers import TmVarTokenizer
 
 PRO_CLASS_ID = 'e_1'
 MUT_CLASS_ID = 'e_2'
@@ -39,6 +41,7 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
     Helper method that returns an instance of PrepareDatasetPipeline
     which uses the best configuration for predicating mutation mentions.
     if we_params is empty dict, no we is applied
+
     :returns nalaf.structures.dataset_pipelines.PrepareDatasetPipeline
     """
 
@@ -73,15 +76,18 @@ def get_prepare_pipeline_for_best_model(use_windows=True, we_params=None, nl_fea
     return PrepareDatasetPipeline(feature_generators=generators)
 
 
-def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None, nl_features=None):
+def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None, dictionaries_paths=None, hdfs_url=None, hdfs_user=None, dictionaries_stop_words=None):
     """
     Helper method that returns an instance of PrepareDatasetPipeline
-    which uses the best configuration for predicating mutation mentions.
+    which uses the best configuration for predicating any-domain mentions.
 
     if we_params is empty dict, no we is applied
 
     :returns nalaf.structures.dataset_pipelines.PrepareDatasetPipeline
     """
+
+    # MAYBE ml-performance: use more general-domain tokenizer such as NLTK's
+    tokenizer = TmVarTokenizer()
 
     default_we_params = {'additive': None, 'multiplicative': None, 'location': None}
     we_params = default_we_params if we_params is None else we_params
@@ -95,12 +101,14 @@ def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None
 
     windows_include = []
 
-    if nl_features:
-        f = NLMentionFeatureGenerator(nl_features['threshold'])
-        if nl_features['window']:
-            windows_include.extend(['tag_dict[0]', 'nl_tag_dict[0]'])
+    if dictionaries_paths:
+        if type(dictionaries_paths) is str:
+            dictionaries_paths = [x.strip() for x in dictionaries_paths.split(",")]
 
-        generators.append(f)
+        dics_feat_generators = DictionaryFeatureGenerator.construct_all_from_paths(dictionaries_paths=dictionaries_paths, string_tokenizer=tokenizer.tokenize_string, case_sensitive=False, hdfs_url=hdfs_url, hdfs_user=hdfs_user, stop_words=dictionaries_stop_words)
+        generators.extend(dics_feat_generators)
+        for dic in dics_feat_generators:
+            windows_include.append(dic.key + "[0]")
 
     if use_windows:
         windows_include.extend(['stem[0]', 'pos[0]'])
@@ -110,7 +118,7 @@ def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None
     if we_params:
         generators.append(get_word_embeddings_feature_generator(we_params['location'], we_params['additive'], we_params['multiplicative']))
 
-    return PrepareDatasetPipeline(feature_generators=generators)
+    return PrepareDatasetPipeline(tokenizer=tokenizer, feature_generators=generators)
 
 
 _SINGLETON_WE_GENERATOR = None
