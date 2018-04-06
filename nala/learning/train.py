@@ -260,6 +260,8 @@ def train(argv):
         definer.define(train_set)
         train_set.delete_subclass_annotations(args.delete_subclasses)
         features_pipeline.execute(train_set)
+        for token in train_set.tokens():
+            print(token.features)
         labeler.label(train_set)
 
         if args.pruner == "parts":
