@@ -101,12 +101,9 @@ def get_prepare_pipeline_for_best_model_general(use_windows=True, we_params=None
 
     windows_include = []
 
-    print("0", dictionaries_paths)
     if dictionaries_paths:
-        print("a", dictionaries_paths)
         if type(dictionaries_paths) is str:
             dictionaries_paths = [x.strip() for x in dictionaries_paths.split(",")]
-        print("b", dictionaries_paths)
 
         dics_feat_generators = DictionaryFeatureGenerator.construct_all_from_paths(dictionaries_paths=dictionaries_paths, string_tokenizer=tokenizer.tokenize_string, case_sensitive=False, hdfs_url=hdfs_url, hdfs_user=hdfs_user, stop_words=dictionaries_stop_words)
         generators.extend(dics_feat_generators)

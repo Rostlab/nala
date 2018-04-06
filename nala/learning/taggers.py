@@ -49,8 +49,6 @@ class NalaSingleModelTagger(Tagger):
         class_id = self.class_id if class_id is None else class_id
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
-        for token in dataset.tokens():
-            print("-", token.features)
 
         self.crf.annotate(dataset, class_id)
         if self.post:
