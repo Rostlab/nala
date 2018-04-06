@@ -1,6 +1,6 @@
-nalaf==0.5.1
+# nalaf==0.5.2
 # -e git+https://github.com/Rostlab/nalaf.git@682a965891de5a60408f5df762772f5face800ee#egg=nalaf
-# -e ../nalaf/
+-e ../nalaf/
 #
 beautifulsoup4==4.6.0
 boto==2.48.0
