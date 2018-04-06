@@ -9,7 +9,7 @@ def readme():
 
 setup(
     name='nala',
-    version='0.3.0',
+    version='0.3.1',
     description='Pipeline for NER of natural language mutation mentions',
     long_description=readme(),
     classifiers=[
@@ -25,7 +25,7 @@ setup(
     # license='UNKNOWN',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'nalaf == 0.5.1'
+        'nalaf == 0.5.2'
     ],
     # dependency_links=[
     #    'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
