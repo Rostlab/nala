@@ -1,4 +1,4 @@
-nalaf==0.5.2
+nalaf==0.5.4
 # -e git+https://github.com/Rostlab/nalaf.git@682a965891de5a60408f5df762772f5face800ee#egg=nalaf
 # -e ../nalaf/
 #
