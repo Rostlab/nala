@@ -2,7 +2,7 @@
 
 This library is not maintained anymore.
 
-We moved the state-of-the-art Mutation Mentions Recognizer to [the text annotation tool, tagtog](https://www.tagtog.net):
+We moved nala to [the text annotation tool, tagtog](https://www.tagtog.net):
 
 [![tagtog, The Text Annotation Tool to Train AI](http://docs.tagtog.net/assets/img/circle_2leafstext.png)](https://www.tagtog.net)
 
