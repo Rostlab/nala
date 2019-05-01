@@ -1,6 +1,6 @@
 # ☝️ We moved
 
-This library is not maintained anymore, and is only ocassionally receiving bugfixes.
+This library is not maintained anymore.
 
 We moved the state-of-the-art Mutation Mentions Recognizer to [the text annotation tool, tagtog](https://www.tagtog.net):
 
