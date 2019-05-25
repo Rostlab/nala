@@ -4,9 +4,10 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+nalaf = {editable = true,path = "./../nalaf"}
 
 [packages]
-nalaf = {editable = true,path = "./../nalaf"}
+nalaf = "==0.5.9"
 
 [requires]
 python_version = "3.6"
