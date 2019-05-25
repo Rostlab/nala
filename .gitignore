@@ -1,5 +1,6 @@
 .*
 !.gitignore
+!.flake8
 *.class
 *.log
 !resources/*IAA.log
