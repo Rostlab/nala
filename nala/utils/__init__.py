@@ -162,9 +162,8 @@ def get_word_embeddings_feature_generator(model_location=None, additive=None, mu
                 # Unpack the model
                 print_verbose('Extracting')
 
-                tar = tarfile.open(we_model_tar_gz)
-                tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
-                tar.close()
+                with tarfile.open(we_model_tar_gz) as tar:
+                    tar.extractall(path=pkg_resources.resource_filename('nala.data', ''))
 
             _SINGLETON_WE_GENERATOR = WordEmbeddingsFeatureGenerator(we_model, additive, multiplicative)
         else:
