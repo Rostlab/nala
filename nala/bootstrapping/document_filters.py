@@ -159,13 +159,13 @@ class QuickNalaFilter(DocumentFilter):
         """used labeler"""
 
     def filter(self, documents):
-        pycrf = PyCRFSuite()
+        pycrf = PyCRFSuite(self.binary_model)
         for pmid, doc in documents:
             dataset = Dataset()
             dataset.documents[pmid] = doc
             self.pipeline.execute(dataset)
             self.labeler.label(dataset)
-            pycrf.tag(dataset, self.binary_model)
+            pycrf.tag(dataset, MUT_CLASS_ID)
             PostProcessing().process(dataset)
             ExclusiveNLDefiner().define(dataset)
             total_nl_mentions = []
@@ -277,7 +277,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
         _i_array = [0, 0]
 
         last_found = 0
-        crf = PyCRFSuite()
+        crf = PyCRFSuite(self.location_binary_model)
 
         # counter_to_stop_for_caching = 0
 
@@ -299,7 +299,7 @@ class HighRecallRegexDocumentFilter(DocumentFilter):
             if use_nala:
                 self.pipeline.execute(data_nala)
                 self.labeler.label(data_nala)
-                crf.tag(data_nala, self.location_binary_model)
+                crf.tag(data_nala, MUT_CLASS_ID)
                 PostProcessing().process(data_nala)
                 ExclusiveNLDefiner().define(data_nala)
 

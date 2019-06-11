@@ -273,10 +273,8 @@ def train(argv):
 
         stats(train_set, "training")
 
-        crf = PyCRFSuite()
-
         model_path = os.path.join(args.output_folder, args.model_name + ".bin")
-        crf.train(train_set, model_path, args.crf_train_params)
+        PyCRFSuite.train(train_set, model_path, args.crf_train_params)
 
         return model_path
 
