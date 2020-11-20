@@ -1,11 +1,11 @@
 -i https://pypi.org/simple
 beautifulsoup4==4.7.1
-boto3==1.9.156
+boto3==1.9.165
 boto==2.49.0
-botocore==1.12.156
+botocore==1.12.165
 certifi==2019.3.9
 chardet==3.0.4
-cloudpickle==1.1.1
+cloudpickle==1.2.1
 cymem==1.31.2
 docopt==0.6.2
 docutils==0.14
@@ -14,9 +14,9 @@ hdfs==2.1.0
 idna==2.8
 jmespath==0.9.4
 murmurhash==0.26.4
-nalaf==0.5.9
-nltk==3.4.1
-numpy==1.16.3
+nalaf==0.5.10
+nltk==3.4.3
+numpy==1.16.4
 pathlib==1.0.1
 plac==1.0.0
 preshed==0.46.4
@@ -24,12 +24,12 @@ progress==1.5
 python-crfsuite==0.9.6
 python-dateutil==2.8.0 ; python_version >= '2.7'
 requests==2.22.0
-s3transfer==0.2.0
+s3transfer==0.2.1
 scikit-learn==0.20.3
-scipy==1.2.1
+scipy==1.2.2
 semver==2.8.1
 six==1.12.0
-smart-open==1.8.3
+smart-open==1.8.4
 soupsieve==1.9.1
 spacy==1.2.0
 sputnik==0.9.3
