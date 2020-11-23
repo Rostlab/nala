@@ -32,7 +32,5 @@ setup(
     #    'git+ssh://git@github.com/Rostlab/nalaf/tree/develop#egg=nalaf'
     # ],
     include_package_data=True,
-    zip_safe=False,
-    test_suite='nose.collector',
-    setup_requires=['nose>=1.0'],
+    zip_safe=False
 )
