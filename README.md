@@ -40,7 +40,7 @@ python3 -m nalaf.download_data
  If you want to run the unit tests (excluding the slow ones) do:
 
 ```shell
-python3 setup.py nosetests -a '!slow'
+nosetests -a '!slow'
 ```
 
 ### Troubleshooting on Windows
