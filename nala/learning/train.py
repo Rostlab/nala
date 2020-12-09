@@ -230,7 +230,7 @@ def train(argv):
     def verify_corpus(corpus):
         if corpus is not None:
             assert len(corpus) > 0, 'The corpus should have at least one document; had 0: {}'.format(args.training_corpus)
-            assert next(corpus.annotations(), None) is not None, 'The corpus should have at least one annotation; had 0'
+            assert next(corpus.entities(), None) is not None, "The corpus should have at least one entity; had 0"
 
     verify_corpus(train_set)
 
