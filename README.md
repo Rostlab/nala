@@ -14,30 +14,34 @@ We moved nala to [the text annotation tool, tagtog](https://www.tagtog.net):
 [![codecov](https://codecov.io/gh/Rostlab/nala/branch/develop/graph/badge.svg)](https://codecov.io/gh/Rostlab/nala)
 
 
-# nala
+## nala
 
 _Text mining_ method for the extraction of _sequence variants_ (genes or proteins) written in standard (ST) format (e.g. "E6V") or complex **natural language** (NL) (e.g. "glutamic acid was substituted by valine at residue 6").
 
 Publication: [Cejuela et al., nala: text mining natural language mutation mentions, Bioinformatics, 2018](https://academic.oup.com/bioinformatics/article/33/12/1852/2991428)
 
 
-# Install
+## Install
 
-##  Requirements
+Requires Python 3.6
 
-* Requires Python 3 (>= 3.5)
 
-## Install Code
+### From source
 
 ```shell
 git clone https://github.com/Rostlab/nala.git
 cd nala
-# We recommend you use python virtualenv: https://pypi.python.org/pypi/virtualenv
-pip3 install -r requirements.txt
+poetry shell
+poetry install
 python3 -m nalaf.download_data
 ```
 
- If you want to run the unit tests (excluding the slow ones) do:
+
+## Developing
+
+### Test
+
+If you want to run the unit tests (excluding the slow ones) do:
 
 ```shell
 nosetests -a '!slow'
@@ -47,7 +51,8 @@ nosetests -a '!slow'
 
 The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the [original module](https://github.com/tpeng/python-crfsuite).
 
-# Examples
+
+### Run Examples
 
 * Simple:
   * `python3 nala.py -p 15878741 12625412 # i.e. list of PMIDs to tag`
