@@ -36,6 +36,13 @@ poetry install
 python3 -m nalaf.download_data
 ```
 
+NOTE: if you prefer installing with `pip` (instead of `poetry`), you will need pip >= 19.0, and then do:
+
+```shell
+pip install -r requirements.txt
+pip install .
+```
+
 
 ## Developing
 
