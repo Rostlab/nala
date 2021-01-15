@@ -62,8 +62,8 @@ The module `python-crfsuite` (`pycrfsuite`) may not install on Windows. See the 
 ### Run Examples
 
 * Simple:
-  * `python3 nala.py -p 15878741 12625412 # i.e. list of PMIDs to tag`
-  * `python3 nala.py -s "Standard (ST) examples: Asp8Asn or delPhe1388. Semi-standard (SST) examples: 3992-9g-->a mutation. Natural language (NL) examples: glycine was substituted by lysine at residue 18 (Gly18Lys)"`
+  * `python3 nala_demo.py -p 15878741 12625412 # i.e. list of PMIDs to tag`
+  * `python3 nala_demo.py -s "Standard (ST) examples: Asp8Asn or delPhe1388. Semi-standard (SST) examples: 3992-9g-->a mutation. Natural language (NL) examples: glycine was substituted by lysine at residue 18 (Gly18Lys)"`
 
 * Programmatic access: [nala/learning/train.py](nala/learning/train.py)
 
