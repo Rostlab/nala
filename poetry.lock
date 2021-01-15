@@ -124,7 +124,7 @@ python-versions = "*"
 
 [[package]]
 name = "nalaf"
-version = "0.6.0.dev1"
+version = "0.6.0"
 description = "Natural Language Framework, for NER and RE"
 category = "main"
 optional = false
@@ -407,7 +407,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.6.*"
-content-hash = "3fd0b13eea32328f042dee957dd6a5db0a92399c7b596c452ce171f14c6f9962"
+content-hash = "10d5c28b175d43a5de9f5bde4649be8c4fd7c4772767941b8c8267754132d280"
 
 [metadata.files]
 beautifulsoup4 = [
@@ -501,8 +501,8 @@ murmurhash = [
     {file = "murmurhash-0.26.4.tar.gz", hash = "sha256:869897c7c617aa94728a89edef5ae496180e85670f3c918dfc59c164912c1b66"},
 ]
 nalaf = [
-    {file = "nalaf-0.6.0.dev1-py3-none-any.whl", hash = "sha256:4280195b812e2ce7669eb06e249f8746eb702b7c040841e667772373a2f70d76"},
-    {file = "nalaf-0.6.0.dev1.tar.gz", hash = "sha256:eb89b015235f7d99b0f22c325c705f6979ef3655164b5deadbd903bdce87a995"},
+    {file = "nalaf-0.6.0-py3-none-any.whl", hash = "sha256:bb3b4185297582e17a478cef7880bf3c8493e35f053a9d52c1c4676ea5cc8711"},
+    {file = "nalaf-0.6.0.tar.gz", hash = "sha256:9b66ccb948fe6daae0c7839ecaa04954c50aef4a33ba3ef59c8f4b9dff0ac42e"},
 ]
 nltk = [
     {file = "nltk-3.5.zip", hash = "sha256:845365449cd8c5f9731f7cb9f8bd6fd0767553b9d53af9eb1b3abf7700936b35"},

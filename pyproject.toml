@@ -30,7 +30,7 @@ python = "3.6.*"
 # Switch this when you are actively developing nalaf
 # nalaf = {path = "../nalaf"}
 # nalaf = {develop = true, git = "https://github.com/Rostlab/nalaf.git", branch = "feature/improve-performance"}
-nalaf = "0.6.0.dev1"
+nalaf = "0.6.0"
 
 
 [tool.poetry.dev-dependencies]
