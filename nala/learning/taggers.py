@@ -39,6 +39,7 @@ class NalaSingleModelTagger(Tagger):
         self.crf = PyCRFSuite(model_file=self.bin_model)
 
         self.post = None
+
         if execute_pp:
             self.post = PostProcessing(keep_silent=keep_silent,
                                        keep_genetic_markers=keep_genetic_markers,
@@ -47,10 +48,12 @@ class NalaSingleModelTagger(Tagger):
 
     def tag(self, dataset, class_id=None):
         class_id = self.class_id if class_id is None else class_id
+
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
 
         self.crf.annotate(dataset, class_id)
+
         if self.post:
             self.post.process(dataset, class_id=class_id)
 
