@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "nala"
+version = "0.4.0"
+description = "NER of natural language mutation mentions"
+homepage = "https://github.com/Rostlab/nala"
+# license = UNKNOWN
+
+authors = [
+  "Juan Miguel Cejuela <juanmi@tagtog.net>",
+  "Aleksandar Bojchevski <aleksandar.bojchevski@gmail.com>",
+  "Carsten Uhlig"
+]
+
+readme = "README.md"
+keywords=["mutations", "mutation mentions", "NLP", "NLU", "NER", "RE", "natural language", "CRF", "SVM", "entity extraction", "relation extraction"]
+classifiers = [
+ "Natural Language :: English",
+ "Topic :: Text Processing :: Linguistic"
+]
+
+exclude = [
+  "nala/data/word_embeddings_2016-03-28*",
+  "nala/data/default_model"
+]
+
+
+[tool.poetry.dependencies]
+python = "3.6.*"
+
+# Switch this when you are actively developing nalaf
+# nalaf = {path = "../nalaf"}
+# nalaf = {develop = true, git = "https://github.com/Rostlab/nalaf.git", branch = "feature/improve-performance"}
+nalaf = "0.6.0"
+
+
+[tool.poetry.dev-dependencies]
+pyflakes = "^2.2.0"
+nose = "^1.3.7"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

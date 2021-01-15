@@ -1,5 +1,4 @@
-from nala.bootstrapping.document_filters import DocumentFilter, KeywordsDocumentFilter, HighRecallRegexDocumentFilter, \
-    StubDocumentFilter
+from nala.bootstrapping.document_filters import DocumentFilter, StubDocumentFilter
 from nala.bootstrapping.pmid_filters import PMIDFilter, AlreadyConsideredPMIDFilter
 from nala.bootstrapping.utils import UniprotDocumentSelector
 from nalaf.utils.download import DownloadArticle
