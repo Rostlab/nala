@@ -16,6 +16,7 @@ from nalaf.utils.writers import ConsoleWriter
 from nalaf import print_debug
 import time
 from nala.utils import MUT_CLASS_ID, PRO_CLASS_ID
+from itertools import chain
 
 
 def train(argv):
@@ -55,7 +56,7 @@ def train(argv):
     parser.add_argument('--mutations_specific', default='True',
                         help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
 
-    parser.add_argument('--only_class_id', required=False, default=MUT_CLASS_ID,
+    parser.add_argument('--only_class_id', required=False, default=None,
                         help="By default, only the mutation entities are read from corpora (assumed to have class_id == '" + MUT_CLASS_ID + "'). Set this class_id to filter rest out")
     parser.add_argument('--delete_subclasses', required=False, default="",
                         help='Comma-separated subclasses to delete. Example: "2,3"')
@@ -202,7 +203,7 @@ def train(argv):
     definer = ExclusiveNLDefiner()
 
     if args.training_corpus:
-        train_set = get_corpus(args.training_corpus, only_class_id=args.only_class_id, hdfs_url=args.hdfs_url, hdfs_user=args.hdfs_user)
+        train_set = get_corpus(args.training_corpus, only_class_id=None, hdfs_url=args.hdfs_url, hdfs_user=args.hdfs_user)
 
         if args.test_corpus:
             test_set = get_corpus(args.test_corpus, only_class_id=args.only_class_id, hdfs_url=args.hdfs_url, hdfs_user=args.hdfs_user)
@@ -215,7 +216,7 @@ def train(argv):
         elif args.validation == "stratified":
             definer.define(train_set)
             train_set, test_set = train_set.stratified_split()
-
+ 
     elif args.test_corpus:
         train_set = None
         test_set = get_corpora(args.test_corpus, args.only_class_id)
@@ -233,7 +234,7 @@ def train(argv):
             assert next(corpus.entities(), None) is not None, "The corpus should have at least one entity; had 0"
 
     verify_corpus(train_set)
-
+    
     # ------------------------------------------------------------------------------
 
     if args.mutations_specific:
@@ -255,13 +256,11 @@ def train(argv):
     print_run_args()
 
     # ------------------------------------------------------------------------------
-
     def train(train_set):
-        definer.define(train_set)
-        train_set.delete_subclass_annotations(args.delete_subclasses)
-        features_pipeline.execute(train_set)
-        labeler.label(train_set)
-
+                                     
+        #we don't need to call "delete_subclass_annotations" function because we don't have any subclasses
+        #train_set.delete_subclass_annotations(args.delete_subclasses)
+    
         if args.pruner == "parts":
             train_set.prune_empty_parts()
         else:
@@ -277,11 +276,40 @@ def train(argv):
         PyCRFSuite.train(train_set, model_path, args.crf_train_params)
 
         return model_path
-
+    
+ # ------------------------------------------------------------------------------
+    def new_train(train_set):    
+        definer.define(train_set)   
+        features_pipeline.execute(train_set)
+        
+        if args.only_class_id is not None:
+            labeler.label(train_set,only_class_id=args.only_class_id)
+            return train(train_set)
+        
+        else:
+            list_of_entity_class=[]
+            for document in train_set:
+                for part in document:
+                    for e in chain(part.annotations, part.predicted_annotations):
+                        if e.class_id  not in list_of_entity_class:
+                            list_of_entity_class.append(e.class_id)
+                            
+            print("list of entity",list_of_entity_class)
+            
+            model_path_list=[]
+            
+            for entity_class in list_of_entity_class:
+                labeler.label(train_set,only_class_id=entity_class)
+                model_path= train(train_set)
+                model_path_list.append(model_path)
+                
+            print("model path list", model_path_list)
+            return model_path_list[0]
+        
     # ------------------------------------------------------------------------------
 
     if args.do_train:
-        args.model_path_1 = train(train_set)
+        args.model_path_1 = new_train(train_set)
 
     # ------------------------------------------------------------------------------
 
