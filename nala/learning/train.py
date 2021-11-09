@@ -55,10 +55,10 @@ def train(argv):
     parser.add_argument('--mutations_specific', default='True',
                         help='Apply feature pipelines specific to mutations or otherwise (false) use general one')
 
-    parser.add_argument('--only_class_id', required=False, default=MUT_CLASS_ID,
-                        help="By default, only the mutation entities are read from corpora (assumed to have class_id == '" + MUT_CLASS_ID + "'). Set this class_id to filter rest out")
-    parser.add_argument('--delete_subclasses', required=False, default="",
-                        help='Comma-separated subclasses to delete. Example: "2,3"')
+    parser.add_argument('--only_class_id', required=False, default=None,
+                        help="By default, all entity classes are read from corpora. Set this to one class only, if you need to filter the rest out.")
+    parser.add_argument('--delete_subclasses', required=False, default=None,
+                        help='If given, comma-separated subclasses to delete. Example: "2,3"')
 
     parser.add_argument('--pruner', required=False, default="parts", choices=["parts", "sentences"])
     parser.add_argument('--ps_ST', required=False, default=False, action='store_true')
@@ -109,18 +109,19 @@ def train(argv):
 
     # ------------------------------------------------------------------------------
 
-    delete_subclasses = []
-    for c in args.delete_subclasses.split(","):
-        c.strip()
-        if c:
-            delete_subclasses.append(int(c))
+    if args.delete_subclasses is not None:
+        delete_subclasses = []
+        for c in args.delete_subclasses.split(","):
+            c.strip()
+            if c:
+                delete_subclasses.append(int(c))
 
-    args.delete_subclasses = delete_subclasses
+        args.delete_subclasses = delete_subclasses
+
+    str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ', '')
 
     if not args.output_folder:
         args.output_folder = tempfile.mkdtemp()
-
-    str_delete_subclasses = "None" if not args.delete_subclasses else str(args.delete_subclasses).strip('[]').replace(' ', '')
 
     if args.labeler == "BIEO":
         labeler = BIEOLabeler()
