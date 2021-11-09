@@ -259,7 +259,7 @@ def train(argv):
 
     def train(train_set):
         definer.define(train_set)
-        train_set.delete_subclass_annotations(args.delete_subclasses)
+        train_set.delete_subclass_entities(args.delete_subclasses)
         features_pipeline.execute(train_set)
         labeler.label(train_set)
 
