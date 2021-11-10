@@ -47,14 +47,13 @@ class NalaSingleModelTagger(Tagger):
                                        keep_rs_ids=keep_rs_ids)
 
     def tag(self, dataset, class_id=None):
-        class_id = self.class_id if class_id is None else class_id
-
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
 
         self.crf.annotate(dataset)
 
         if self.post:
+            class_id = self.class_id if class_id is None else class_id
             self.post.process(dataset, class_id=class_id)
 
 
