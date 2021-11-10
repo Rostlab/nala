@@ -46,8 +46,8 @@ class NalaSingleModelTagger(Tagger):
                                        keep_unnumbered=keep_unnumbered,
                                        keep_rs_ids=keep_rs_ids)
 
-    def tag(self, dataset):
-        class_id = self.class_id
+    def tag(self, dataset, class_id=None):
+        class_id = self.class_id if class_id is None else class_id
 
         if self.execute_pipeline:
             self.features_pipeline.execute(dataset)
